@@ -23,11 +23,11 @@ Defining the scenario parameters
 
 slot=1   #Add more time slot for more accurate result
 
-number_of_EVs=20
+number_of_EVs=10
 
 number_of_Chargers=0  #took it from dataFile output later
 
-number_of_scenarios=1
+number_of_scenarios=20
            
 number_of_timeslot=24*slot
 
@@ -66,7 +66,7 @@ list_header=["Model","Scenario","Number_of_EVs","EV_No","Arrival","Depart","EV_T
 #list_row.append(list_header)
 
 #row to be add as aheader of model_data: store Scenarios information
-row=["Model","scenario","obj_value","number_of_EVs","Demand"]
+row=["Model","Scenario","obj_value","number_of_EVs","Demand"]
 
 for ch in Charger_Type:
     row.append('AvailabeType_'+str(ch))
@@ -139,19 +139,21 @@ for scenario in range(1,number_of_scenarios+1):
         if (results.solver.status == SolverStatus.ok) and (results.solver.termination_condition == TerminationCondition.optimal):
             #if solver find an feasible solution
             list_data=save_scenario(number_of_EVs,
-                              number_of_Chargers,
-                              arrival, 
-                              depart, 
-                              distance, 
-                              demand, 
-                              charge_power,
-                              installed_chargers, 
-                              installed_cost, 
-                              TFC,
-                              model,
-                              EV_samples,
-                              scenario,
-                              scenario_model) 
+                                    number_of_Chargers,
+                                    arrival, 
+                                    depart,
+                                    distance,
+                                    demand, 
+                                    charge_power,
+                                    installed_chargers, 
+                                    installed_cost, 
+                                    TFC,
+                                    model,
+                                    EV_samples,
+                                    scenario,
+                                    scenario_model) 
+            # print("\n***** List *****")
+            # print(list_data)
             #check if there is error in data
             if list_data:
                 break
@@ -214,18 +216,17 @@ for scenario in range(1,number_of_scenarios+1):
         
     model_data.append(row)
     
-    #print infor about number of scenarios
-    if scenario % 10 ==0:
+    #print info about number of scenarios
+    if scenario % 10 == 0:
         number_of_EVs +=5
-        check= save_model(model_data, list_data, file_model , file_data)
-        if check:
-            model_data.clear()
-            list_data.clear()
-            print("Saved data for scenario:",scenario)
+        # check= save_model(model_data, list_data, file_model , file_data)
+        # if check:
+        #     model_data.clear()
+        #     list_data.clear()
+        #     print("Saved data for scenario:",scenario)
             
             
         
-        # print("solved scenarios:",scenario)
     
     if scenario % 10 ==0:
         print("solved scenarios:",scenario)
@@ -239,8 +240,8 @@ Storing data and results
 """
 print(">>>>>>>>>  time taken:{:0.3f} <<<<<<<".format(time.time()-start_time))
 
-gant_chart(model)
-# check=save_model(model_data, list_data, file_model , file_data)   
+# gant_chart(model)
+check=save_model(model_data, list_data, file_model , file_data)   
  
         
     

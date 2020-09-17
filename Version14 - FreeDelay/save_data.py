@@ -58,8 +58,6 @@ def save_scenario(number_of_EVs,
     
     list_row=[]
     
-#    if scenario==1:
-#        list_row.append(list_header)
 
     alloc_charger=[]
     is_charged=False
@@ -90,15 +88,16 @@ def save_scenario(number_of_EVs,
     #         print("NAN")
     #         return False
                     
-    
+    no=scenario
     for i in range(number_of_EVs):    
         if value(model.C[i+1])-value(model.depart[i+1]) > 0 :
             delay=value(model.C[i+1])-value(model.depart[i+1])
         else:
             delay=0
-         
+        
+            
         row=[scenario_model,
-             scenario,
+             no,
              number_of_EVs,
              i+1,
              arrival[i],
@@ -111,25 +110,11 @@ def save_scenario(number_of_EVs,
              delay]
         
         list_row.append(row)
+    
      
     return list_row   
         
-#    if scenario==1:
-#        timestr = time.strftime("%Y%m%d-%H%M%S")
-#        file_name='EVs_Info_'+timestr+'.csv'
-#        
-#        with open(file_name, 'w', newline='') as file:
-#            csv_writer = writer(file)
-#            for rw in list_row:
-#                csv_writer.writerow(rw)
-#    else:
-#        file_name=name
-#        with open(file_name, 'a+', newline='') as file:
-#            csv_writer = writer(file)
-#            for rw in list_row:
-#                csv_writer.writerow(rw)
-    
-#    return file_name
+
 
 #create required files to store results
 def csv_file(list_header,row,scenario_model):
@@ -159,8 +144,8 @@ def save_model(model_data, list_data, file_model , file_data):
                 csv_writer.writerow(rw)
                 
     # file_name='EVs_Info_'+scenario_model+timestr+'.csv'
-    with open(file_data, 'a+', newline='') as file:
-            csv_writer = writer(file)
+    with open(file_data, 'a+', newline='') as new_file:
+            csv_writer = writer(new_file)
             for rw in list_data:
                 csv_writer.writerow(rw)
     return True
