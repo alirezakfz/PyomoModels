@@ -9,6 +9,8 @@ from csv import writer
 import time
 
 
+    
+
 def save_scenario(number_of_EVs,
               number_of_Chargers,
               arrival, 
@@ -22,6 +24,7 @@ def save_scenario(number_of_EVs,
               model,
               EV_samples,
               scenario,
+              scenario_model
               ):
     
     # list_header=["senario","Number_of_EVs","EV_NO","Arrival","Depart","Type","BatteryCapacity","Distance","Demand","alloc_charger","delay"]
@@ -94,7 +97,8 @@ def save_scenario(number_of_EVs,
         else:
             delay=0
          
-        row=[scenario,
+        row=[scenario_model,
+             scenario,
              number_of_EVs,
              i+1,
              arrival[i],
@@ -126,18 +130,37 @@ def save_scenario(number_of_EVs,
 #                csv_writer.writerow(rw)
     
 #    return file_name
-    
-def save_model(list_element, list_data):
+
+#create required files to store results
+def csv_file(list_header,row,scenario_model):
     timestr = time.strftime("%Y%m%d-%H%M%S")
-#    file_name='Model_data_'+timestr+'.csv'
-    file_name='Model_data_NoDelay_'+timestr+'.csv'
-    with open(file_name, 'a+', newline='') as file:
+    
+    file_model = 'Model_data_'+scenario_model+'_'+timestr+'.csv'
+    with open(file_model, 'a+', newline='') as file:
             csv_writer = writer(file)
-            for rw in list_element:
+            csv_writer.writerow(row)
+    
+    
+    file_data = 'EVs_Info_'+scenario_model+timestr+'.csv'
+    with open(file_data, 'a+', newline='') as file:
+            csv_writer = writer(file)
+            csv_writer.writerow(list_header)
+            
+    return file_model,file_data
+
+def save_model(model_data, list_data, file_model , file_data):
+    # timestr = time.strftime("%Y%m%d-%H%M%S")
+    # file_name='Model_data_'+timestr+'.csv'
+    # file_name='Model_data_'+scenario_model+'_'+timestr+'.csv'
+    
+    with open(file_model, 'a+', newline='') as file:
+            csv_writer = writer(file)
+            for rw in model_data:
                 csv_writer.writerow(rw)
                 
-    file_name='EVs_Info_NoDelay_'+timestr+'.csv'
-    with open(file_name, 'w', newline='') as file:
+    # file_name='EVs_Info_'+scenario_model+timestr+'.csv'
+    with open(file_data, 'a+', newline='') as file:
             csv_writer = writer(file)
             for rw in list_data:
                 csv_writer.writerow(rw)
+    return True

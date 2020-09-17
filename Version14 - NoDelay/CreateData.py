@@ -141,6 +141,7 @@ def dataFile(number_of_EVs,
         
     total_demand=sum(demand)
     
+    #Total number of available chargers that could be installed
     total_chargers=0
     for ch in Charger_Type:
         total_chargers += math.ceil((total_demand/(ch*time_slot)))
@@ -155,12 +156,13 @@ def dataFile(number_of_EVs,
         cost=charger_cost[i]
         no=math.ceil((total_demand/(ch*time_slot))) #+ int(total_demand/(ev_no*25))
         #limit the number of availabel chargers. Maximum 30 percent of possible chargers
-        if no > 0.3*total_chargers and ev_no > 25:
+        
+        if (no > 0.3*total_chargers) and (ev_no > 25):
             no=math.ceil(0.3*total_chargers)
         
-        if ev_no > 25 and ch==4:
+        if (no>0.15*total_chargers) and (ch==4) and (ev_no>25):
             no=math.ceil(0.15*total_chargers)
-        
+            
         for i in range(no):
             installed_chargers.append(ch)
             installed_cost.append(cost)
