@@ -15,6 +15,7 @@ from CreateData import dataFile
 from chart import gant_chart
 from save_data import save_scenario
 from save_data import save_model
+from save_data import csv_file
 
 """
 Defining the scenario parameters
@@ -22,7 +23,7 @@ Defining the scenario parameters
 
 slot=1   #Add more time slot for more accurate result
 
-number_of_EVs=200
+number_of_EVs=110
 
 number_of_Chargers=0  #took it from dataFile output later
 
@@ -61,18 +62,18 @@ list_row=[]
 list_data=[]
 
 #save scenario data
-list_header=["senario","Number_of_EVs","EV","Arrival","Depart","Type","BatteryCapacity","Distance","Demand","alloc_charger","delay"]
-list_row.append(list_header)
+list_header=["Model","Scenario","Number_of_EVs","EV_No","Arrival","Depart","EV_Type","BatteryCapacity","Distance","Demand","Alloc_charger","Delay"]
+#list_row.append(list_header)
 
 #row to be add as aheader of model_data: store Scenarios information
-row=["scenario","obj_value","number_of_EVs","Demand"]
+row=["Model","scenario","obj_value","number_of_EVs","Demand"]
 
 for ch in Charger_Type:
     row.append('AvailabeType_'+str(ch))
     row.append('InstalledType_'+str(ch))
 
 #The first row Initialized    
-model_data.append(row)
+#model_data.append(row)
 
 
 """
@@ -80,7 +81,13 @@ Start Scenario Creation and execution
 """
 start_time= time.time()
 
+scenario_model="NoDelay"
 solver_name="cplex"
+
+#Call csv file creator to store results
+file_model , file_data = csv_file(list_header,row,scenario_model)
+
+
 # solver=SolverFactory(solver_name)
 
 for scenario in range(1,number_of_scenarios+1):
@@ -143,7 +150,8 @@ for scenario in range(1,number_of_scenarios+1):
                               TFC,
                               model,
                               EV_samples,
-                              scenario) 
+                              scenario,
+                              scenario_model) 
             #check if there is error in data
             if list_data:
                 break
@@ -188,7 +196,7 @@ for scenario in range(1,number_of_scenarios+1):
     for row in list_data:
         list_row.append(row)
     
-    row=[scenario,value(model.obj),number_of_EVs,sum(demand)]
+    row=[scenario_model,scenario,value(model.obj),number_of_EVs,sum(demand)]
     
     available_dict={i:0 for i in Charger_Type}
     chargers_dict={i:0 for i in Charger_Type}
@@ -207,8 +215,16 @@ for scenario in range(1,number_of_scenarios+1):
     model_data.append(row)
     
     #print infor about number of scenarios
-    if scenario % 200 ==0:
+    if scenario % 10 ==0:
         number_of_EVs +=5
+        check= save_model(model_data, list_data, file_model , file_data)
+        if check:
+            model_data.clear()
+            list_data.clear()
+            print("Saved data for scenario:",scenario)
+            
+            
+        
         # print("solved scenarios:",scenario)
     
     if scenario % 10 ==0:
@@ -224,8 +240,8 @@ Storing data and results
 print(">>>>>>>>>  time taken:{:0.3f} <<<<<<<".format(time.time()-start_time))
 
 gant_chart(model)
-# save_model(model_data,list_row)
-    
+check=save_model(model_data, list_data, file_model , file_data)   
+ 
         
     
     
