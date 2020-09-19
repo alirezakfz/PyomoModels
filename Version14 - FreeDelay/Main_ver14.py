@@ -23,11 +23,11 @@ Defining the scenario parameters
 
 slot=1   #Add more time slot for more accurate result
 
-number_of_EVs=10
+number_of_EVs=80
 
 number_of_Chargers=0  #took it from dataFile output later
 
-number_of_scenarios=20
+number_of_scenarios=1
            
 number_of_timeslot=24*slot
 
@@ -240,8 +240,8 @@ Storing data and results
 """
 print(">>>>>>>>>  time taken:{:0.3f} <<<<<<<".format(time.time()-start_time))
 
-# gant_chart(model)
-check=save_model(model_data, list_data, file_model , file_data)   
+gant_chart(model)
+# check=save_model(model_data, list_data, file_model , file_data)   
  
         
     

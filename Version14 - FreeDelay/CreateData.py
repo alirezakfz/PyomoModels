@@ -145,8 +145,12 @@ def dataFile(number_of_EVs,
     total_chargers=0
     for ch in Charger_Type:
         total_chargers += math.ceil((total_demand/(ch*time_slot)))
+        # total_chargers += math.ceil((total_demand/(ch)))
+        
         
     
+    print("total chargers:",total_chargers)
+    print("total demand:", total_demand)
     required_chargers=[]
     
     installed_chargers=[]
@@ -157,11 +161,32 @@ def dataFile(number_of_EVs,
         no=math.ceil((total_demand/(ch*time_slot))) #+ int(total_demand/(ev_no*25))
         #limit the number of availabel chargers. Maximum 30 percent of possible chargers
         
-        if (no > 0.3*total_chargers) and (ev_no > 25):
-            no=math.ceil(0.3*total_chargers)
+        if ch ==4 and ev_no>25:
+            # no=math.ceil((total_chargers *0.4)/ev_no)
+            no=math.ceil((total_chargers *0.07))
+            print("Available CH4:",no)
         
-        if (no>0.15*total_chargers) and (ch==4) and (ev_no>25):
-            no=math.ceil(0.15*total_chargers)
+        if ch==8 and ev_no>25:
+            # no=math.ceil((total_chargers *0.8)/ev_no)
+            no=math.ceil((total_chargers *0.25))
+            print("Available CH8:",no)
+        
+        if ch==19 and ev_no>25:
+            # no=math.ceil((total_chargers *0.07*19)/ev_no)
+            no=math.ceil((total_chargers *0.2))
+            print("Available CH19:",no)
+            
+        if ch==50 and ev_no>25:
+            # no=math.ceil((total_chargers *0.3)/ev_no)
+            no=math.ceil((total_chargers *0.03))
+            print("Available CH50:",no)
+            
+            
+        # if (no > 0.20*total_chargers) and (ev_no > 25):
+        #     no=math.ceil(0.20*total_chargers)
+        
+        # if (no>0.7*total_chargers) and (ch==4) and (ev_no>25):
+        #     no=math.ceil(0.7*total_chargers)
             
         for i in range(no):
             installed_chargers.append(ch)
