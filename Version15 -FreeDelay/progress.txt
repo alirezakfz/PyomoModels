@@ -1,0 +1,354 @@
+Saved Scenarios: 10Saved Scenarios: 20Saved Scenarios: 30Saved Scenarios: 40solved Scenarios: 10
+solved Scenarios: 20
+solved Scenarios: 30
+solved Scenarios: 40
+solved Scenarios: 50
+solved Scenarios: 60
+solved Scenarios: 70
+solved Scenarios: 80
+solved Scenarios: 90
+solved Scenarios: 100
+solved Scenarios: 110
+solved Scenarios: 120
+solved Scenarios: 130
+solved Scenarios: 140
+solved Scenarios: 150
+solved Scenarios: 160
+solved Scenarios: 170
+solved Scenarios: 180
+solved Scenarios: 190
+Saved Scenarios: 200  Number of EVs: 10
+solved Scenarios: 200
+solved Scenarios: 210
+solved Scenarios: 220
+solved Scenarios: 230
+solved Scenarios: 240
+solved Scenarios: 250
+solved Scenarios: 260
+solved Scenarios: 270
+solved Scenarios: 280
+solved Scenarios: 290
+solved Scenarios: 300
+solved Scenarios: 310
+solved Scenarios: 320
+solved Scenarios: 330
+solved Scenarios: 340
+solved Scenarios: 350
+solved Scenarios: 360
+solved Scenarios: 370
+solved Scenarios: 380
+solved Scenarios: 390
+Saved Scenarios: 400  Number of EVs: 15
+solved Scenarios: 400
+solved Scenarios: 410
+solved Scenarios: 420
+solved Scenarios: 430
+solved Scenarios: 440
+solved Scenarios: 450
+solved Scenarios: 460
+solved Scenarios: 470
+solved Scenarios: 480
+solved Scenarios: 490
+solved Scenarios: 500
+solved Scenarios: 510
+solved Scenarios: 520
+solved Scenarios: 530
+solved Scenarios: 540
+solved Scenarios: 550
+solved Scenarios: 560
+solved Scenarios: 570
+solved Scenarios: 580
+solved Scenarios: 590
+Saved Scenarios: 600  Number of EVs: 20
+solved Scenarios: 600
+solved Scenarios: 610
+solved Scenarios: 620
+solved Scenarios: 630
+solved Scenarios: 640
+solved Scenarios: 650
+solved Scenarios: 660
+solved Scenarios: 670
+solved Scenarios: 680
+solved Scenarios: 690
+solved Scenarios: 700
+solved Scenarios: 710
+solved Scenarios: 720
+solved Scenarios: 730
+solved Scenarios: 740
+solved Scenarios: 750
+solved Scenarios: 760
+solved Scenarios: 770
+solved Scenarios: 780
+solved Scenarios: 790
+Saved Scenarios: 800  Number of EVs: 25
+solved Scenarios: 800
+solved Scenarios: 810
+solved Scenarios: 820
+solved Scenarios: 830
+solved Scenarios: 840
+solved Scenarios: 850
+solved Scenarios: 860
+solved Scenarios: 870
+solved Scenarios: 880
+solved Scenarios: 890
+solved Scenarios: 900
+solved Scenarios: 910
+solved Scenarios: 920
+solved Scenarios: 930
+solved Scenarios: 940
+solved Scenarios: 950
+solved Scenarios: 960
+solved Scenarios: 970
+solved Scenarios: 980
+solved Scenarios: 990
+Saved Scenarios: 1000  Number of EVs: 30
+solved Scenarios: 1000
+solved Scenarios: 1010
+solved Scenarios: 1020
+solved Scenarios: 1030
+solved Scenarios: 1040
+solved Scenarios: 1050
+solved Scenarios: 1060
+solved Scenarios: 1070
+solved Scenarios: 1080
+solved Scenarios: 1090
+solved Scenarios: 1100
+solved Scenarios: 1110
+solved Scenarios: 1120
+solved Scenarios: 1130
+solved Scenarios: 1140
+solved Scenarios: 1150
+solved Scenarios: 1160
+solved Scenarios: 1170
+solved Scenarios: 1180
+solved Scenarios: 1190
+Saved Scenarios: 1200  Number of EVs: 35
+solved Scenarios: 1200
+solved Scenarios: 1210
+solved Scenarios: 1220
+solved Scenarios: 1230
+solved Scenarios: 1240
+solved Scenarios: 1250
+solved Scenarios: 1260
+solved Scenarios: 1270
+solved Scenarios: 1280
+solved Scenarios: 1290
+solved Scenarios: 1300
+solved Scenarios: 1310
+solved Scenarios: 1320
+solved Scenarios: 1330
+solved Scenarios: 1340
+solved Scenarios: 1350
+solved Scenarios: 1360
+solved Scenarios: 1370
+solved Scenarios: 1380
+solved Scenarios: 1390
+Saved Scenarios: 1400  Number of EVs: 40
+solved Scenarios: 1400
+solved Scenarios: 1410
+solved Scenarios: 1420
+solved Scenarios: 1430
+solved Scenarios: 1440
+solved Scenarios: 1450
+solved Scenarios: 1460
+solved Scenarios: 1470
+solved Scenarios: 1480
+solved Scenarios: 1490
+solved Scenarios: 1500
+solved Scenarios: 1510
+solved Scenarios: 1520
+solved Scenarios: 1530
+solved Scenarios: 1540
+solved Scenarios: 1550
+solved Scenarios: 1560
+solved Scenarios: 1570
+solved Scenarios: 1580
+solved Scenarios: 1590
+Saved Scenarios: 1600  Number of EVs: 45
+solved Scenarios: 1600
+solved Scenarios: 1610
+solved Scenarios: 1620
+solved Scenarios: 1630
+solved Scenarios: 1640
+solved Scenarios: 1650
+solved Scenarios: 1660
+solved Scenarios: 1670
+solved Scenarios: 1680
+solved Scenarios: 1690
+solved Scenarios: 1700
+solved Scenarios: 1710
+solved Scenarios: 1720
+solved Scenarios: 1730
+solved Scenarios: 1740
+solved Scenarios: 1750
+solved Scenarios: 1760
+solved Scenarios: 1770
+solved Scenarios: 1780
+solved Scenarios: 1790
+Saved Scenarios: 1800  Number of EVs: 50
+solved Scenarios: 1800
+solved Scenarios: 1810
+solved Scenarios: 1820
+solved Scenarios: 1830
+solved Scenarios: 1840
+solved Scenarios: 1850
+solved Scenarios: 1860
+solved Scenarios: 1870
+solved Scenarios: 1880
+solved Scenarios: 1890
+solved Scenarios: 1900
+solved Scenarios: 1910
+solved Scenarios: 1920
+solved Scenarios: 1930
+solved Scenarios: 1940
+solved Scenarios: 1950
+solved Scenarios: 1960
+solved Scenarios: 1970
+solved Scenarios: 1980
+solved Scenarios: 1990
+Saved Scenarios: 2000  Number of EVs: 55
+solved Scenarios: 2000
+solved Scenarios: 2010
+solved Scenarios: 2020
+solved Scenarios: 2030
+solved Scenarios: 2040
+solved Scenarios: 2050
+solved Scenarios: 2060
+solved Scenarios: 2070
+solved Scenarios: 2080
+solved Scenarios: 2090
+solved Scenarios: 2100
+solved Scenarios: 2110
+solved Scenarios: 2120
+solved Scenarios: 2130
+solved Scenarios: 2140
+solved Scenarios: 2150
+solved Scenarios: 2160
+solved Scenarios: 2170
+solved Scenarios: 2180
+solved Scenarios: 2190
+Saved Scenarios: 2200  Number of EVs: 60
+solved Scenarios: 2200
+solved Scenarios: 2210
+solved Scenarios: 2220
+solved Scenarios: 2230
+solved Scenarios: 2240
+solved Scenarios: 2250
+solved Scenarios: 2260
+solved Scenarios: 2270
+solved Scenarios: 2280
+solved Scenarios: 2290
+solved Scenarios: 2300
+solved Scenarios: 2310
+solved Scenarios: 2320
+solved Scenarios: 2330
+solved Scenarios: 2340
+solved Scenarios: 2350
+solved Scenarios: 2360
+solved Scenarios: 2370
+solved Scenarios: 2380
+solved Scenarios: 2390
+Saved Scenarios: 2400  Number of EVs: 65
+solved Scenarios: 2400
+solved Scenarios: 2410
+solved Scenarios: 2420
+solved Scenarios: 2430
+solved Scenarios: 2440
+solved Scenarios: 2450
+solved Scenarios: 2460
+solved Scenarios: 2470
+solved Scenarios: 2480
+solved Scenarios: 2490
+solved Scenarios: 2500
+solved Scenarios: 2510
+solved Scenarios: 2520
+solved Scenarios: 2530
+solved Scenarios: 2540
+solved Scenarios: 2550
+solved Scenarios: 2560
+solved Scenarios: 2570
+solved Scenarios: 2580
+solved Scenarios: 2590
+Saved Scenarios: 2600  Number of EVs: 70
+solved Scenarios: 2600
+solved Scenarios: 2610
+solved Scenarios: 2620
+solved Scenarios: 2630
+solved Scenarios: 2640
+solved Scenarios: 2650
+solved Scenarios: 2660
+solved Scenarios: 2670
+solved Scenarios: 2680
+solved Scenarios: 2690
+solved Scenarios: 2700
+solved Scenarios: 2710
+solved Scenarios: 2720
+solved Scenarios: 2730
+solved Scenarios: 2610
+solved Scenarios: 2620
+solved Scenarios: 2630
+solved Scenarios: 2640
+solved Scenarios: 2650
+solved Scenarios: 2660
+solved Scenarios: 2670
+solved Scenarios: 2680
+solved Scenarios: 2690
+solved Scenarios: 2700
+solved Scenarios: 2710
+solved Scenarios: 2720
+solved Scenarios: 2730
+solved Scenarios: 2740
+solved Scenarios: 2750
+solved Scenarios: 2760
+solved Scenarios: 2770
+solved Scenarios: 2780
+solved Scenarios: 2790
+Saved Scenarios: 2800  Number of EVs: 75
+solved Scenarios: 2800
+solved Scenarios: 2810
+solved Scenarios: 2820
+solved Scenarios: 2830
+solved Scenarios: 2840
+solved Scenarios: 2850
+solved Scenarios: 2860
+solved Scenarios: 2870
+solved Scenarios: 2880
+solved Scenarios: 2890
+solved Scenarios: 2900
+solved Scenarios: 2910
+solved Scenarios: 2920
+solved Scenarios: 2930
+solved Scenarios: 2940
+solved Scenarios: 2950
+solved Scenarios: 2960
+solved Scenarios: 2970
+solved Scenarios: 2980
+solved Scenarios: 2990
+Saved Scenarios: 3000  Number of EVs: 80
+solved Scenarios: 3000
+solved Scenarios: 3010
+NAN in:3001
+NAN in:3002
+NAN in:3003
+NAN in:3004
+NAN in:3005
+NAN in:3006
+NAN in:3007
+NAN in:3008
+NAN in:3009
+NAN in:1
+Saved Scenarios: 1  Number of EVs: 20  Running Time: 14.224992275238037
+NAN in:1
+Saved Scenarios: 1  Number of EVs: 20  Running Time: 22.01800298690796
+NAN in:1
+NAN in:2
+NAN in:3
+NAN in:4
+NAN in:5
+NAN in:6
+NAN in:7
+NAN in:8
+NAN in:9
+NAN in:10
+solved Scenarios: 10
+Saved Scenarios: 10  Number of EVs: 20  Running Time: 135.43399739265442
