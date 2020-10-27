@@ -24,7 +24,7 @@ Defining the scenario parameters
 
 slot=1   #Add more time slot for more accurate result
 
-number_of_EVs=80
+number_of_EVs=10
 
 number_of_Chargers=0  #took it from dataFile output later
 
@@ -82,16 +82,15 @@ Start Scenario Creation and execution
 """
 start_time= time.time()
 
-scenario_model="FreeDelay"
-SOLVER_NAME="gurobi"
-TIME_LIMIT=10800
+scenario_model="OneSlotDelay"
+solver_name="gurobi"
 
 #Create CSV Files to store results
 model_file, data_file = csv_files(row,list_header, scenario_model)
 
 # solver=SolverFactory(solver_name)
 
-for scenario in range(3061,number_of_scenarios+1): #number_of_scenarios+1
+for scenario in range(1,number_of_scenarios+1): #number_of_scenarios+1
     
     arrival.clear()
     depart.clear()
@@ -133,15 +132,7 @@ for scenario in range(3061,number_of_scenarios+1): #number_of_scenarios+1
     """
     solve the model
     """    
-    solver=SolverFactory(SOLVER_NAME)
-    
-    if SOLVER_NAME == 'cplex':
-        solver.options['timelimit'] = TIME_LIMIT
-    elif SOLVER_NAME == 'glpk':         
-        solver.options['tmlim'] = TIME_LIMIT
-    elif SOLVER_NAME == 'gurobi':           
-        solver.options['TimeLimit'] = TIME_LIMIT
-    
+    solver=SolverFactory(solver_name)
     results = solver.solve(model)
     
     while True:
@@ -185,10 +176,8 @@ for scenario in range(3061,number_of_scenarios+1): #number_of_scenarios+1
         #check for data           
         elif (results.solver.termination_condition == TerminationCondition.infeasible or results.solver.status != SolverStatus.ok ):
             # Do something when model in infeasible
-            #print("******** Infeasible Problem ************")  
-            progress="******** Infeasible Problem ************" +str(scenario) +"\n"
-            save_progress(progress)
-            #dt=time.time()
+            print("******** Infeasible Problem ************")  
+            dt=time.time()
             
             #create new scenario data
             arrival, depart, distance, demand, charge_power,installed_chargers,\
@@ -227,27 +216,24 @@ for scenario in range(3061,number_of_scenarios+1): #number_of_scenarios+1
         
     model_data.append(row)
     
-    
-    
-    if scenario % 10 ==0:
-        # progress="solved Scenarios: "+str(scenario) +"\n"
-        # save_progress(progress)
-        check=save_model(model_data,list_row,model_file, data_file)
-        model_data.clear()
-        list_row.clear()
-        progress="Saved Scenarios: "+str(scenario) + "  Number of EVs: "+ str(number_of_EVs) +"\n"
-        save_progress(progress)
-    #     print("solved scenarios: ",scenario)
-    
     #print infor about number of scenarios
     if scenario % 200 ==0:
         number_of_EVs +=5
-        # check=save_model(model_data,list_row,model_file, data_file)
-        # model_data.clear()
-        # list_row.clear()
-        # progress="Saved Scenarios: "+str(scenario) + "  Number of EVs: "+ str(number_of_EVs-5) +"\n"
-        # save_progress(progress)
+        #check=save_model(model_data,list_row,model_file, data_file)
+        #model_data.clear()
+        #list_row.clear()
+        #progress="Saved Scenarios: "+str(scenario) + "  Number of EVs: "+ str(number_of_EVs-5) +"\n"
+        #save_progress(progress)
         # print("solved scenarios:",scenario)
+    
+    if scenario % 10 ==0:
+        #progress="solved Scenarios: "+str(scenario) +"\n"
+        check=save_model(model_data,list_row,model_file, data_file)
+        model_data.clear()
+        list_row.clear()
+        progress="Saved Scenarios: "+str(scenario) + "  Number of EVs: "+ str(number_of_EVs-5) +"\n"
+        save_progress(progress)
+    #     print("solved scenarios: ",scenario)
     
 #    gant_chart(model)
 

@@ -24,8 +24,8 @@ def createModel(number_of_EVs=5,
     
     
     bigM=10**10
-    delay=1
-    prf=round(0.2 * number_of_EVs)
+    delay=0 #1
+    prf=0 #round(0.2 * number_of_EVs)
     
     """
     Model Creation
@@ -178,19 +178,19 @@ def createModel(number_of_EVs=5,
     """
     version 8 constraints
     """
-    def performance_rule(model):
-        return sum(model.z[j] for j in model.N ) <= prf
-    model.performance_con=Constraint( rule=performance_rule)
+#     def performance_rule(model):
+#         return sum(model.z[j] for j in model.N ) <= prf
+#     model.performance_con=Constraint( rule=performance_rule)
     
-    def disjuctive1_rule(model,j):
-#        p=sum(model.d[j] for j in model.N)
-        return model.C[j] - model.depart[j] + (1-model.z[j])*bigM >= 0
-    model.disjuctive1_con=Constraint(model.N, rule=disjuctive1_rule)
+#     def disjuctive1_rule(model,j):
+# #        p=sum(model.d[j] for j in model.N)
+#         return model.C[j] - model.depart[j] + (1-model.z[j])*bigM >= 0
+#     model.disjuctive1_con=Constraint(model.N, rule=disjuctive1_rule)
     
-    def disjuctive2_rule(model,j):
-#        p=sum(model.s[i,t]*t for t in model.T)
-        return model.C[j] - model.depart[j] - delay*model.z[j] <= 0   #model.z[i,k]*bigM
-    model.disjuctive2_con=Constraint(model.N, rule=disjuctive2_rule)
+#     def disjuctive2_rule(model,j):
+# #        p=sum(model.s[i,t]*t for t in model.T)
+#         return model.C[j] - model.depart[j] - delay*model.z[j] <= 0   #model.z[i,k]*bigM
+#     model.disjuctive2_con=Constraint(model.N, rule=disjuctive2_rule)
     
     
     """
