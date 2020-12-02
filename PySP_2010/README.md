@@ -1,13 +1,13 @@
 # PyomoModels
-This is repository for Pyomo Models .
 
-Version folders contain simulation for scheduling jobs on machines with different processing time.
+Stochastic Optimization
 
-The number of EVs = N 
+Fall 2010
 
-The number of chargers found by assumption formula= M
+Coopr Tutorial Project
 
-The number of time slots= T
+Description of the problems and formulation could be found in StochasticOptimizationExamples_2010.pdf or in the following link.
 
-The max time needed to complete task of charging on each machine (Time for Completion) =TFC
+
+https://projects.coin-or.org/Coopr/export/9398/pyomo.data/trunk/pyomo/data/pysp/UTPySPExamples.pdf
 
