@@ -35,7 +35,7 @@ Coldville's expert weather forecasting team has predicted that the winter will b
 
 Sets and formula are:
 
-![](images/Formula.jpeg)
+![](images/Formula.jpg)
 
 The objective minimizes the total cost as the sum of the summer cost and the expected winter cost over
 all weather scenarios. Constraint (2) enforces capacity. Constraint (3) ensures demand is met.
