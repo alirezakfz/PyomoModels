@@ -1,0 +1,630 @@
+# IMPORTANT - THE STAGES ARE ASSUMED TO BE IN TIME-ORDER.
+
+set Stages := FirstStage SecondStage ;
+
+set Nodes := RootNode 
+             Scenario1Node
+Scenario2Node
+Scenario3Node
+Scenario4Node
+Scenario5Node
+Scenario6Node
+Scenario7Node
+Scenario8Node
+Scenario9Node
+Scenario10Node
+Scenario11Node
+Scenario12Node
+Scenario13Node
+Scenario14Node
+Scenario15Node
+Scenario16Node
+Scenario17Node
+Scenario18Node
+Scenario19Node
+Scenario20Node
+Scenario21Node
+Scenario22Node
+Scenario23Node
+Scenario24Node
+Scenario25Node
+Scenario26Node
+Scenario27Node
+Scenario28Node
+Scenario29Node
+Scenario30Node
+Scenario31Node
+Scenario32Node
+Scenario33Node
+Scenario34Node
+Scenario35Node
+Scenario36Node
+Scenario37Node
+Scenario38Node
+Scenario39Node
+Scenario40Node
+Scenario41Node
+Scenario42Node
+Scenario43Node
+Scenario44Node
+Scenario45Node
+Scenario46Node
+Scenario47Node
+Scenario48Node
+Scenario49Node
+Scenario50Node
+Scenario51Node
+Scenario52Node
+Scenario53Node
+Scenario54Node
+Scenario55Node
+Scenario56Node
+Scenario57Node
+Scenario58Node
+Scenario59Node
+Scenario60Node
+Scenario61Node
+Scenario62Node
+Scenario63Node
+Scenario64Node
+Scenario65Node
+Scenario66Node
+Scenario67Node
+Scenario68Node
+Scenario69Node
+Scenario70Node
+Scenario71Node
+Scenario72Node
+Scenario73Node
+Scenario74Node
+Scenario75Node
+Scenario76Node
+Scenario77Node
+Scenario78Node
+Scenario79Node
+Scenario80Node
+Scenario81Node
+Scenario82Node
+Scenario83Node
+Scenario84Node
+Scenario85Node
+Scenario86Node
+Scenario87Node
+Scenario88Node
+Scenario89Node
+Scenario90Node
+Scenario91Node
+Scenario92Node
+Scenario93Node
+Scenario94Node
+Scenario95Node
+Scenario96Node
+Scenario97Node
+Scenario98Node
+Scenario99Node
+Scenario100Node
+ ;
+
+param NodeStage := RootNode           FirstStage
+                   Scenario1Node	SecondStage
+Scenario2Node	SecondStage
+Scenario3Node	SecondStage
+Scenario4Node	SecondStage
+Scenario5Node	SecondStage
+Scenario6Node	SecondStage
+Scenario7Node	SecondStage
+Scenario8Node	SecondStage
+Scenario9Node	SecondStage
+Scenario10Node	SecondStage
+Scenario11Node	SecondStage
+Scenario12Node	SecondStage
+Scenario13Node	SecondStage
+Scenario14Node	SecondStage
+Scenario15Node	SecondStage
+Scenario16Node	SecondStage
+Scenario17Node	SecondStage
+Scenario18Node	SecondStage
+Scenario19Node	SecondStage
+Scenario20Node	SecondStage
+Scenario21Node	SecondStage
+Scenario22Node	SecondStage
+Scenario23Node	SecondStage
+Scenario24Node	SecondStage
+Scenario25Node	SecondStage
+Scenario26Node	SecondStage
+Scenario27Node	SecondStage
+Scenario28Node	SecondStage
+Scenario29Node	SecondStage
+Scenario30Node	SecondStage
+Scenario31Node	SecondStage
+Scenario32Node	SecondStage
+Scenario33Node	SecondStage
+Scenario34Node	SecondStage
+Scenario35Node	SecondStage
+Scenario36Node	SecondStage
+Scenario37Node	SecondStage
+Scenario38Node	SecondStage
+Scenario39Node	SecondStage
+Scenario40Node	SecondStage
+Scenario41Node	SecondStage
+Scenario42Node	SecondStage
+Scenario43Node	SecondStage
+Scenario44Node	SecondStage
+Scenario45Node	SecondStage
+Scenario46Node	SecondStage
+Scenario47Node	SecondStage
+Scenario48Node	SecondStage
+Scenario49Node	SecondStage
+Scenario50Node	SecondStage
+Scenario51Node	SecondStage
+Scenario52Node	SecondStage
+Scenario53Node	SecondStage
+Scenario54Node	SecondStage
+Scenario55Node	SecondStage
+Scenario56Node	SecondStage
+Scenario57Node	SecondStage
+Scenario58Node	SecondStage
+Scenario59Node	SecondStage
+Scenario60Node	SecondStage
+Scenario61Node	SecondStage
+Scenario62Node	SecondStage
+Scenario63Node	SecondStage
+Scenario64Node	SecondStage
+Scenario65Node	SecondStage
+Scenario66Node	SecondStage
+Scenario67Node	SecondStage
+Scenario68Node	SecondStage
+Scenario69Node	SecondStage
+Scenario70Node	SecondStage
+Scenario71Node	SecondStage
+Scenario72Node	SecondStage
+Scenario73Node	SecondStage
+Scenario74Node	SecondStage
+Scenario75Node	SecondStage
+Scenario76Node	SecondStage
+Scenario77Node	SecondStage
+Scenario78Node	SecondStage
+Scenario79Node	SecondStage
+Scenario80Node	SecondStage
+Scenario81Node	SecondStage
+Scenario82Node	SecondStage
+Scenario83Node	SecondStage
+Scenario84Node	SecondStage
+Scenario85Node	SecondStage
+Scenario86Node	SecondStage
+Scenario87Node	SecondStage
+Scenario88Node	SecondStage
+Scenario89Node	SecondStage
+Scenario90Node	SecondStage
+Scenario91Node	SecondStage
+Scenario92Node	SecondStage
+Scenario93Node	SecondStage
+Scenario94Node	SecondStage
+Scenario95Node	SecondStage
+Scenario96Node	SecondStage
+Scenario97Node	SecondStage
+Scenario98Node	SecondStage
+Scenario99Node	SecondStage
+Scenario100Node	SecondStage
+
+ ;
+
+set Children[RootNode] := 
+Scenario1Node
+Scenario2Node
+Scenario3Node
+Scenario4Node
+Scenario5Node
+Scenario6Node
+Scenario7Node
+Scenario8Node
+Scenario9Node
+Scenario10Node
+Scenario11Node
+Scenario12Node
+Scenario13Node
+Scenario14Node
+Scenario15Node
+Scenario16Node
+Scenario17Node
+Scenario18Node
+Scenario19Node
+Scenario20Node
+Scenario21Node
+Scenario22Node
+Scenario23Node
+Scenario24Node
+Scenario25Node
+Scenario26Node
+Scenario27Node
+Scenario28Node
+Scenario29Node
+Scenario30Node
+Scenario31Node
+Scenario32Node
+Scenario33Node
+Scenario34Node
+Scenario35Node
+Scenario36Node
+Scenario37Node
+Scenario38Node
+Scenario39Node
+Scenario40Node
+Scenario41Node
+Scenario42Node
+Scenario43Node
+Scenario44Node
+Scenario45Node
+Scenario46Node
+Scenario47Node
+Scenario48Node
+Scenario49Node
+Scenario50Node
+Scenario51Node
+Scenario52Node
+Scenario53Node
+Scenario54Node
+Scenario55Node
+Scenario56Node
+Scenario57Node
+Scenario58Node
+Scenario59Node
+Scenario60Node
+Scenario61Node
+Scenario62Node
+Scenario63Node
+Scenario64Node
+Scenario65Node
+Scenario66Node
+Scenario67Node
+Scenario68Node
+Scenario69Node
+Scenario70Node
+Scenario71Node
+Scenario72Node
+Scenario73Node
+Scenario74Node
+Scenario75Node
+Scenario76Node
+Scenario77Node
+Scenario78Node
+Scenario79Node
+Scenario80Node
+Scenario81Node
+Scenario82Node
+Scenario83Node
+Scenario84Node
+Scenario85Node
+Scenario86Node
+Scenario87Node
+Scenario88Node
+Scenario89Node
+Scenario90Node
+Scenario91Node
+Scenario92Node
+Scenario93Node
+Scenario94Node
+Scenario95Node
+Scenario96Node
+Scenario97Node
+Scenario98Node
+Scenario99Node
+Scenario100Node
+
+ ;
+
+param ConditionalProbability := 
+RootNode           1.0
+Scenario1Node	0.01
+Scenario2Node	0.01
+Scenario3Node	0.01
+Scenario4Node	0.01
+Scenario5Node	0.01
+Scenario6Node	0.01
+Scenario7Node	0.01
+Scenario8Node	0.01
+Scenario9Node	0.01
+Scenario10Node	0.01
+Scenario11Node	0.01
+Scenario12Node	0.01
+Scenario13Node	0.01
+Scenario14Node	0.01
+Scenario15Node	0.01
+Scenario16Node	0.01
+Scenario17Node	0.01
+Scenario18Node	0.01
+Scenario19Node	0.01
+Scenario20Node	0.01
+Scenario21Node	0.01
+Scenario22Node	0.01
+Scenario23Node	0.01
+Scenario24Node	0.01
+Scenario25Node	0.01
+Scenario26Node	0.01
+Scenario27Node	0.01
+Scenario28Node	0.01
+Scenario29Node	0.01
+Scenario30Node	0.01
+Scenario31Node	0.01
+Scenario32Node	0.01
+Scenario33Node	0.01
+Scenario34Node	0.01
+Scenario35Node	0.01
+Scenario36Node	0.01
+Scenario37Node	0.01
+Scenario38Node	0.01
+Scenario39Node	0.01
+Scenario40Node	0.01
+Scenario41Node	0.01
+Scenario42Node	0.01
+Scenario43Node	0.01
+Scenario44Node	0.01
+Scenario45Node	0.01
+Scenario46Node	0.01
+Scenario47Node	0.01
+Scenario48Node	0.01
+Scenario49Node	0.01
+Scenario50Node	0.01
+Scenario51Node	0.01
+Scenario52Node	0.01
+Scenario53Node	0.01
+Scenario54Node	0.01
+Scenario55Node	0.01
+Scenario56Node	0.01
+Scenario57Node	0.01
+Scenario58Node	0.01
+Scenario59Node	0.01
+Scenario60Node	0.01
+Scenario61Node	0.01
+Scenario62Node	0.01
+Scenario63Node	0.01
+Scenario64Node	0.01
+Scenario65Node	0.01
+Scenario66Node	0.01
+Scenario67Node	0.01
+Scenario68Node	0.01
+Scenario69Node	0.01
+Scenario70Node	0.01
+Scenario71Node	0.01
+Scenario72Node	0.01
+Scenario73Node	0.01
+Scenario74Node	0.01
+Scenario75Node	0.01
+Scenario76Node	0.01
+Scenario77Node	0.01
+Scenario78Node	0.01
+Scenario79Node	0.01
+Scenario80Node	0.01
+Scenario81Node	0.01
+Scenario82Node	0.01
+Scenario83Node	0.01
+Scenario84Node	0.01
+Scenario85Node	0.01
+Scenario86Node	0.01
+Scenario87Node	0.01
+Scenario88Node	0.01
+Scenario89Node	0.01
+Scenario90Node	0.01
+Scenario91Node	0.01
+Scenario92Node	0.01
+Scenario93Node	0.01
+Scenario94Node	0.01
+Scenario95Node	0.01
+Scenario96Node	0.01
+Scenario97Node	0.01
+Scenario98Node	0.01
+Scenario99Node	0.01
+Scenario100Node	0.01
+;
+
+set Scenarios := Scenario1
+Scenario2
+Scenario3
+Scenario4
+Scenario5
+Scenario6
+Scenario7
+Scenario8
+Scenario9
+Scenario10
+Scenario11
+Scenario12
+Scenario13
+Scenario14
+Scenario15
+Scenario16
+Scenario17
+Scenario18
+Scenario19
+Scenario20
+Scenario21
+Scenario22
+Scenario23
+Scenario24
+Scenario25
+Scenario26
+Scenario27
+Scenario28
+Scenario29
+Scenario30
+Scenario31
+Scenario32
+Scenario33
+Scenario34
+Scenario35
+Scenario36
+Scenario37
+Scenario38
+Scenario39
+Scenario40
+Scenario41
+Scenario42
+Scenario43
+Scenario44
+Scenario45
+Scenario46
+Scenario47
+Scenario48
+Scenario49
+Scenario50
+Scenario51
+Scenario52
+Scenario53
+Scenario54
+Scenario55
+Scenario56
+Scenario57
+Scenario58
+Scenario59
+Scenario60
+Scenario61
+Scenario62
+Scenario63
+Scenario64
+Scenario65
+Scenario66
+Scenario67
+Scenario68
+Scenario69
+Scenario70
+Scenario71
+Scenario72
+Scenario73
+Scenario74
+Scenario75
+Scenario76
+Scenario77
+Scenario78
+Scenario79
+Scenario80
+Scenario81
+Scenario82
+Scenario83
+Scenario84
+Scenario85
+Scenario86
+Scenario87
+Scenario88
+Scenario89
+Scenario90
+Scenario91
+Scenario92
+Scenario93
+Scenario94
+Scenario95
+Scenario96
+Scenario97
+Scenario98
+Scenario99
+Scenario100
+ ;
+
+param ScenarioLeafNode := Scenario1	Scenario1Node
+Scenario2	Scenario2Node
+Scenario3	Scenario3Node
+Scenario4	Scenario4Node
+Scenario5	Scenario5Node
+Scenario6	Scenario6Node
+Scenario7	Scenario7Node
+Scenario8	Scenario8Node
+Scenario9	Scenario9Node
+Scenario10	Scenario10Node
+Scenario11	Scenario11Node
+Scenario12	Scenario12Node
+Scenario13	Scenario13Node
+Scenario14	Scenario14Node
+Scenario15	Scenario15Node
+Scenario16	Scenario16Node
+Scenario17	Scenario17Node
+Scenario18	Scenario18Node
+Scenario19	Scenario19Node
+Scenario20	Scenario20Node
+Scenario21	Scenario21Node
+Scenario22	Scenario22Node
+Scenario23	Scenario23Node
+Scenario24	Scenario24Node
+Scenario25	Scenario25Node
+Scenario26	Scenario26Node
+Scenario27	Scenario27Node
+Scenario28	Scenario28Node
+Scenario29	Scenario29Node
+Scenario30	Scenario30Node
+Scenario31	Scenario31Node
+Scenario32	Scenario32Node
+Scenario33	Scenario33Node
+Scenario34	Scenario34Node
+Scenario35	Scenario35Node
+Scenario36	Scenario36Node
+Scenario37	Scenario37Node
+Scenario38	Scenario38Node
+Scenario39	Scenario39Node
+Scenario40	Scenario40Node
+Scenario41	Scenario41Node
+Scenario42	Scenario42Node
+Scenario43	Scenario43Node
+Scenario44	Scenario44Node
+Scenario45	Scenario45Node
+Scenario46	Scenario46Node
+Scenario47	Scenario47Node
+Scenario48	Scenario48Node
+Scenario49	Scenario49Node
+Scenario50	Scenario50Node
+Scenario51	Scenario51Node
+Scenario52	Scenario52Node
+Scenario53	Scenario53Node
+Scenario54	Scenario54Node
+Scenario55	Scenario55Node
+Scenario56	Scenario56Node
+Scenario57	Scenario57Node
+Scenario58	Scenario58Node
+Scenario59	Scenario59Node
+Scenario60	Scenario60Node
+Scenario61	Scenario61Node
+Scenario62	Scenario62Node
+Scenario63	Scenario63Node
+Scenario64	Scenario64Node
+Scenario65	Scenario65Node
+Scenario66	Scenario66Node
+Scenario67	Scenario67Node
+Scenario68	Scenario68Node
+Scenario69	Scenario69Node
+Scenario70	Scenario70Node
+Scenario71	Scenario71Node
+Scenario72	Scenario72Node
+Scenario73	Scenario73Node
+Scenario74	Scenario74Node
+Scenario75	Scenario75Node
+Scenario76	Scenario76Node
+Scenario77	Scenario77Node
+Scenario78	Scenario78Node
+Scenario79	Scenario79Node
+Scenario80	Scenario80Node
+Scenario81	Scenario81Node
+Scenario82	Scenario82Node
+Scenario83	Scenario83Node
+Scenario84	Scenario84Node
+Scenario85	Scenario85Node
+Scenario86	Scenario86Node
+Scenario87	Scenario87Node
+Scenario88	Scenario88Node
+Scenario89	Scenario89Node
+Scenario90	Scenario90Node
+Scenario91	Scenario91Node
+Scenario92	Scenario92Node
+Scenario93	Scenario93Node
+Scenario94	Scenario94Node
+Scenario95	Scenario95Node
+Scenario96	Scenario96Node
+Scenario97	Scenario97Node
+Scenario98	Scenario98Node
+Scenario99	Scenario99Node
+Scenario100	Scenario100Node
+ ;
+
+set StageVariables[FirstStage] := X[*];
+set StageVariables[SecondStage] :=  Y[*,*] Z[*];
+
+param StageCostVariable := FirstStage    FirstStageCost
+                           SecondStage   SecondStageCost ;
+
+#param ScenarioBasedData := False ;

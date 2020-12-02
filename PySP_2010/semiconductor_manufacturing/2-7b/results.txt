@@ -1,0 +1,7 @@
+WARNING: DEPRECATED: The 'StageCostVariable' scenario tree model parameter has
+    been renamed to 'StageCost'. Please update your scenario tree structure
+    model.
+WARNING: The following options were explicitly set but never accessed:
+     - solve: True
+     - solver: gurobi
+    If you believe this is a bug, please report it to the PySP developers.
