@@ -32,3 +32,11 @@ Coldville's expert weather forecasting team has predicted that the winter will b
 0:4 and cold with probability 0:6.
 
 ![](images/Table1.jpeg)
+
+Sets and formula are:
+
+![](images/Formula.jpeg)
+
+The objective minimizes the total cost as the sum of the summer cost and the expected winter cost over
+all weather scenarios. Constraint (2) enforces capacity. Constraint (3) ensures demand is met.
+Constraints (4) and (5) ensure the supply of resources is maintained. All variables are non-negative.
