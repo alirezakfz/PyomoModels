@@ -1,0 +1,128 @@
+#
+# Stochastic Optimization PS#1 Problem 7
+# Coldville snow removal
+#
+
+#
+# Imports
+#
+from pyomo.core import *
+from pyomo.environ import *
+from pyomo.opt import SolverFactory
+
+#
+# Model
+#
+model = AbstractModel()
+
+#
+# Parameters
+#
+
+# Define sets
+model.MATERIALS = Set()
+model.METHODS = Set()
+
+# Data_deterministic
+model.SummerMaterialCost = Param(model.MATERIALS, within=PositiveReals)
+model.MaterialSalvagePrice = Param(model.MATERIALS, within=PositiveReals)
+model.FleetCapacity = Param(within=PositiveReals)
+model.MaterialRequirement = Param(model.MATERIALS, model.METHODS)
+
+#Data_stochastic
+model.WinterMaterialCost = Param(model.MATERIALS, within=PositiveReals)
+model.TruckCost = Param(within=PositiveReals)
+model.Efficiency = Param(model.METHODS, within=PositiveReals)
+model.TruckdayRequirement = Param(within=PositiveReals)
+
+#
+# Variables
+#
+#NOTE: (Part f) change upper bound for SummerMaterialPurchase to 0
+model.SummerMaterialPurchase = Var(model.MATERIALS, bounds=(0.0, None))
+model.WinterMaterialPurchase = Var(model.MATERIALS, bounds=(0.0, None))
+model.SalvagedMaterial = Var(model.MATERIALS, bounds=(0.0, None))
+model.TruckdayUsedinMethod = Var(model.METHODS, bounds=(0.0, None))
+
+model.FirstStageCost = Var()
+model.SecondStageCost = Var()
+
+#
+# Constraints
+#
+def total_truckday_rule(model):
+    return sum(model.TruckdayUsedinMethod[j] for j in model.METHODS) <= model.FleetCapacity
+model.TotalTruckdayRule = Constraint(rule=total_truckday_rule)
+
+def demand_rule(model):
+    return sum(model.Efficiency[j]*model.TruckdayUsedinMethod[j] for j in model.METHODS) >= model.TruckdayRequirement
+model.DemandRule = Constraint(rule=demand_rule)
+
+def balance_rule(model,i):
+    return model.SummerMaterialPurchase[i] + model.WinterMaterialPurchase[i] - (sum(model.MaterialRequirement[i,j] * model.TruckdayUsedinMethod[j] for j in model.METHODS))\
+    - model.SalvagedMaterial[i] == 0
+model.BalanceRule = Constraint(model.MATERIALS, rule=balance_rule)
+
+#
+# Stage-specific cost computations
+#
+def first_stage_cost_rule(model):
+    return (model.FirstStageCost - sum(model.SummerMaterialCost[i]*model.SummerMaterialPurchase[i] for i in model.MATERIALS)) == 0.0
+model.ComputeFirstStageCost = Constraint(rule=first_stage_cost_rule)
+
+
+def second_stage_cost_rule(model):
+    expcost = sum(model.WinterMaterialCost[i] * model.WinterMaterialPurchase[i] for i in model.MATERIALS)
+    expcost += model.TruckCost * ( sum(model.TruckdayUsedinMethod[j] for j in model.METHODS) ) 
+    expcost -= sum(model.MaterialSalvagePrice[i]*model.SalvagedMaterial[i] for i in model.MATERIALS)
+    return (model.SecondStageCost - expcost) == 0.0
+model.ComputeSecondStageCost = Constraint(rule=second_stage_cost_rule)
+
+#
+# Objective
+#
+def total_cost_rule(model):
+    return (model.FirstStageCost + model.SecondStageCost)
+model.Total_Cost_Objective = Objective(rule=total_cost_rule, sense=minimize)
+
+
+#
+# Solve model with data by opt
+#
+#warmwinter = model.create_instance('DeterministicScenario_WarmWinter.dat')
+#opt = SolverFactory('glpk')
+#opt.keepfile = True
+#results_warmwinter = opt.solve(warmwinter)
+#results_warmwinter.write()
+
+#coldwinter = model.create_instance('DeterministicScenario_ColdWinter.dat')
+#opt = SolverFactory('glpk')
+#opt.keepfile = True
+#results_coldwinter = opt.solve(coldwinter)
+#results_warmwinter.write()
+
+#print (results_warmwinter.solution.objective.f)
+#print (results_coldwinter.solution.objective.f)
+
+
+
+data = DataPortal(model=model)
+data.load(filename='DeterministicScenario_WarmWinter.dat')
+warmwinter = model.create_instance(data)
+opt = SolverFactory('glpk')
+#opt.keepfile = True
+results_warmwinter = opt.solve(warmwinter)
+#results_warmwinter.write()
+
+
+data2 = DataPortal(model=model)
+data2.load(filename='DeterministicScenario_ColdWinter.dat')
+coldwinter = model.create_instance(data2)
+opt = SolverFactory('glpk')
+#opt.keepfile = True
+results_coldwinter = opt.solve(coldwinter)
+#results_warmwinter.write()
+
+
+print (results_warmwinter)
+print (results_coldwinter)

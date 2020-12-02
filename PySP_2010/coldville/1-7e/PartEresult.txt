@@ -1,0 +1,103 @@
+WARNING: DEPRECATION WARNING: Using the 'Model' class is deprecated.  Please
+    use the AbstractModel or ConcreteModel class instead.
+WARNING: DEPRECATED: The 'StageCostVariable' scenario tree model parameter has
+    been renamed to 'StageCost'. Please update your scenario tree structure
+    model.
+
+Initializing extensive form algorithm for stochastic programming problems.
+EF solve completed and solution status is optimal
+EF solve termination condition is optimal
+EF objective: 858179.16667
+EF gap:            0.00000
+EF bound:     858179.16667
+
+Extensive form solution:
+----------------------------------------------------
+Tree Nodes:
+
+	Name=ColdWinterNode
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		TruckdayUsedinMethod[PLOWING]=1891.6666666666658
+		TruckdayUsedinMethod[SALTING]=2916.666666666667
+
+	Name=RootNode
+	Stage=FirstStage
+	Parent=None
+	Variables: 
+		SummerMaterialPurchase[FUEL]=4808.333333333333
+		SummerMaterialPurchase[SALT]=2916.666666666667
+
+	Name=WarmWinterNode
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		SalvagedMaterial[FUEL]=1891.666666666666
+		TruckdayUsedinMethod[SALTING]=2916.666666666667
+
+
+Extensive form costs:
+Scenario Tree Costs
+----------------------------------------------------
+Tree Nodes:
+
+	Name=ColdWinterNode
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.7000
+	Children:
+		None
+	Scenarios:
+		ColdWinterScenario
+	Expected cost of (sub)tree rooted at node=577000.0000
+
+	Name=RootNode
+	Stage=FirstStage
+	Parent=None
+	Conditional probability=1.0000
+	Children:
+		ColdWinterNode
+		WarmWinterNode
+	Scenarios:
+		ColdWinterScenario
+		WarmWinterScenario
+	Expected cost of (sub)tree rooted at node=858179.1667
+
+	Name=WarmWinterNode
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.3000
+	Children:
+		None
+	Scenarios:
+		WarmWinterScenario
+	Expected cost of (sub)tree rooted at node=197875.0000
+
+----------------------------------------------------
+Scenarios:
+
+	Name=ColdWinterScenario
+	Probability=0.7000
+	Leaf Node=ColdWinterNode
+	Tree node sequence:
+		RootNode
+		ColdWinterNode
+	Stage=          FirstStage     Cost=394916.6667
+	Stage=         SecondStage     Cost=577000.0000
+	Total scenario cost=971916.6667
+
+	Name=WarmWinterScenario
+	Probability=0.3000
+	Leaf Node=WarmWinterNode
+	Tree node sequence:
+		RootNode
+		WarmWinterNode
+	Stage=          FirstStage     Cost=394916.6667
+	Stage=         SecondStage     Cost=197875.0000
+	Total scenario cost=592791.6667
+
+----------------------------------------------------
+
+Total EF execution time=0.93 seconds
+

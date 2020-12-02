@@ -1,0 +1,3049 @@
+WARNING: DEPRECATED: The 'StageCostVariable' scenario tree model parameter has
+    been renamed to 'StageCost'. Please update your scenario tree structure
+    model.
+
+Initializing extensive form algorithm for stochastic programming problems.
+EF solve completed and solution status is optimal
+EF solve termination condition is optimal
+EF objective:   1934.99357
+EF gap:            0.00000
+EF bound:       1934.99357
+
+Extensive form solution:
+----------------------------------------------------
+Tree Nodes:
+
+	Name=RootNode
+	Stage=FirstStage
+	Parent=None
+	Variables: 
+		X[J1,R1]=9.99999999999998
+		X[J2,R2]=2.3330000000000037
+		X[J2,R3]=4.99999999999999
+		X[J2,R4]=11.666999999999977
+		X[J3,R2]=15.333000000000029
+		X[J3,R5]=9.666999999999977
+		X[J4,R1]=9.99999999999998
+		X[J4,R3]=4.99999999999999
+
+	Name=Scenario100Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=50.0
+		Y[R2]=50.004999999999995
+		Y[R3]=40.0
+		Y[R4]=164.995
+		Y[R5]=339.657
+
+	Name=Scenario10Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=303.29336363600004
+
+	Name=Scenario11Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=303.69740404
+
+	Name=Scenario12Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=304.10144444400004
+
+	Name=Scenario13Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=304.505484848
+
+	Name=Scenario14Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=304.909525253
+
+	Name=Scenario15Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=305.31356565699997
+
+	Name=Scenario16Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=305.717606061
+
+	Name=Scenario17Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=306.12164646499997
+
+	Name=Scenario18Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=306.525686869
+
+	Name=Scenario19Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=306.92972727299997
+
+	Name=Scenario1Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=299.657
+
+	Name=Scenario20Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=307.333767677
+
+	Name=Scenario21Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=307.73780808099997
+
+	Name=Scenario22Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=308.141848485
+
+	Name=Scenario23Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=308.54588888899997
+
+	Name=Scenario24Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=308.949929293
+
+	Name=Scenario25Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=309.35396969699997
+
+	Name=Scenario26Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=309.758010101
+
+	Name=Scenario27Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=310.16205050499997
+
+	Name=Scenario28Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=310.566090909
+
+	Name=Scenario29Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=310.97013131299997
+
+	Name=Scenario2Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=300.06104040400004
+
+	Name=Scenario30Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=311.374171717
+
+	Name=Scenario31Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=311.77821212099997
+
+	Name=Scenario32Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=312.182252525
+
+	Name=Scenario33Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=312.58629292899997
+
+	Name=Scenario34Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=312.990333333
+
+	Name=Scenario35Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=313.39437373699997
+
+	Name=Scenario36Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=313.798414141
+
+	Name=Scenario37Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=314.20245454499997
+
+	Name=Scenario38Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=314.606494949
+
+	Name=Scenario39Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=315.01053535399996
+
+	Name=Scenario3Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=300.465080808
+
+	Name=Scenario40Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=315.414575758
+
+	Name=Scenario41Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=315.81861616199996
+
+	Name=Scenario42Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=316.222656566
+
+	Name=Scenario43Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=316.62669696999995
+
+	Name=Scenario44Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=317.030737374
+
+	Name=Scenario45Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=317.43477777799995
+
+	Name=Scenario46Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=317.838818182
+
+	Name=Scenario47Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=318.24285858599995
+
+	Name=Scenario48Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=318.64689899
+
+	Name=Scenario49Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=319.05093939399995
+
+	Name=Scenario4Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=300.86912121200004
+
+	Name=Scenario50Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=319.454979798
+
+	Name=Scenario51Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=0.505050505000014
+		Y[R2]=0.5100505049999917
+		Y[R3]=0.4040404039999999
+		Y[R4]=1.6616666669999915
+		Y[R5]=319.85902020199995
+
+	Name=Scenario52Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=1.5151515150000137
+		Y[R2]=1.5201515149999913
+		Y[R3]=1.2121212119999996
+		Y[R4]=4.9950000000000045
+		Y[R5]=320.263060606
+
+	Name=Scenario53Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=2.5252525250000133
+		Y[R2]=2.530252524999991
+		Y[R3]=2.0202020199999993
+		Y[R4]=8.328333333000018
+		Y[R5]=320.66710100999995
+
+	Name=Scenario54Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=3.535353535000013
+		Y[R2]=3.54035353499999
+		Y[R3]=2.828282827999999
+		Y[R4]=11.661666666999992
+		Y[R5]=321.071141414
+
+	Name=Scenario55Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=4.545454545000013
+		Y[R2]=4.55045454499999
+		Y[R3]=3.6363636359999987
+		Y[R4]=14.995000000000005
+		Y[R5]=321.47518181799995
+
+	Name=Scenario56Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=5.555555556000002
+		Y[R2]=5.5605555559999935
+		Y[R3]=4.444444443999998
+		Y[R4]=18.328333333000018
+		Y[R5]=321.879222222
+
+	Name=Scenario57Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=6.565656565999974
+		Y[R2]=6.570656565999994
+		Y[R3]=5.2525252529999875
+		Y[R4]=21.66166666699999
+		Y[R5]=322.28326262599995
+
+	Name=Scenario58Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=7.575757576000002
+		Y[R2]=7.580757575999993
+		Y[R3]=6.060606060999987
+		Y[R4]=24.995000000000005
+		Y[R5]=322.68730303
+
+	Name=Scenario59Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=8.585858585999972
+		Y[R2]=8.590858585999992
+		Y[R3]=6.868686868999987
+		Y[R4]=28.328333333000018
+		Y[R5]=323.09134343399995
+
+	Name=Scenario5Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=301.273161616
+
+	Name=Scenario60Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=9.595959596
+		Y[R2]=9.600959595999992
+		Y[R3]=7.676767676999986
+		Y[R4]=31.66166666699999
+		Y[R5]=323.495383838
+
+	Name=Scenario61Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=10.606060606000028
+		Y[R2]=10.611060605999992
+		Y[R3]=8.484848484999986
+		Y[R4]=34.995000000000005
+		Y[R5]=323.89942424199995
+
+	Name=Scenario62Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=11.616161616
+		Y[R2]=11.621161615999991
+		Y[R3]=9.292929292999986
+		Y[R4]=38.32833333300002
+		Y[R5]=324.303464646
+
+	Name=Scenario63Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=12.62626262600003
+		Y[R2]=12.631262625999993
+		Y[R3]=10.101010101000014
+		Y[R4]=41.66166666699999
+		Y[R5]=324.70750505099994
+
+	Name=Scenario64Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=13.636363635999999
+		Y[R2]=13.641363635999989
+		Y[R3]=10.909090909000014
+		Y[R4]=44.995000000000005
+		Y[R5]=325.111545455
+
+	Name=Scenario65Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=14.646464646000027
+		Y[R2]=14.65146464599999
+		Y[R3]=11.717171717000014
+		Y[R4]=48.32833333300002
+		Y[R5]=325.51558585899994
+
+	Name=Scenario66Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=15.656565656999987
+		Y[R2]=15.661565656999992
+		Y[R3]=12.525252525000013
+		Y[R4]=51.66166666699999
+		Y[R5]=325.919626263
+
+	Name=Scenario67Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=16.666666667000015
+		Y[R2]=16.671666666999993
+		Y[R3]=13.333333333000013
+		Y[R4]=54.995000000000005
+		Y[R5]=326.32366666699994
+
+	Name=Scenario68Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=17.676767676999987
+		Y[R2]=17.681767676999993
+		Y[R3]=14.141414141000013
+		Y[R4]=58.32833333300002
+		Y[R5]=326.727707071
+
+	Name=Scenario69Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=18.686868687000015
+		Y[R2]=18.691868686999992
+		Y[R3]=14.949494949000014
+		Y[R4]=61.66166666699999
+		Y[R5]=327.13174747499994
+
+	Name=Scenario6Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=301.67720202000004
+
+	Name=Scenario70Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=19.696969696999986
+		Y[R2]=19.701969696999992
+		Y[R3]=15.757575758000003
+		Y[R4]=64.995
+		Y[R5]=327.535787879
+
+	Name=Scenario71Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=20.707070707000014
+		Y[R2]=20.71207070699999
+		Y[R3]=16.565656566
+		Y[R4]=68.32833333300002
+		Y[R5]=327.93982828299994
+
+	Name=Scenario72Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=21.717171716999985
+		Y[R2]=21.72217171699999
+		Y[R3]=17.373737374
+		Y[R4]=71.66166666699999
+		Y[R5]=328.343868687
+
+	Name=Scenario73Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=22.727272727000013
+		Y[R2]=22.73227272699999
+		Y[R3]=18.181818182
+		Y[R4]=74.995
+		Y[R5]=328.74790909099994
+
+	Name=Scenario74Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=23.737373736999984
+		Y[R2]=23.74237373699999
+		Y[R3]=18.98989899
+		Y[R4]=78.32833333300002
+		Y[R5]=329.151949495
+
+	Name=Scenario75Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=24.747474747000012
+		Y[R2]=24.75247474699999
+		Y[R3]=19.797979798
+		Y[R4]=81.66166666700002
+		Y[R5]=329.55598989899994
+
+	Name=Scenario76Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=25.757575757999973
+		Y[R2]=25.762575757999993
+		Y[R3]=20.606060606
+		Y[R4]=84.995
+		Y[R5]=329.960030303
+
+	Name=Scenario77Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=26.767676768000005
+		Y[R2]=26.772676767999993
+		Y[R3]=21.414141414
+		Y[R4]=88.32833333299999
+		Y[R5]=330.36407070699994
+
+	Name=Scenario78Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=27.777777777999972
+		Y[R2]=27.782777777999996
+		Y[R3]=22.222222222
+		Y[R4]=91.66166666700002
+		Y[R5]=330.768111111
+
+	Name=Scenario79Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=28.787878787999997
+		Y[R2]=28.792878787999992
+		Y[R3]=23.03030303
+		Y[R4]=94.995
+		Y[R5]=331.17215151499994
+
+	Name=Scenario7Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=302.081242424
+
+	Name=Scenario80Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=29.79797979799997
+		Y[R2]=29.80297979799999
+		Y[R3]=23.838383838
+		Y[R4]=98.32833333299999
+		Y[R5]=331.576191919
+
+	Name=Scenario81Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=30.808080808
+		Y[R2]=30.81308080799999
+		Y[R3]=24.646464646
+		Y[R4]=101.66166666700002
+		Y[R5]=331.98023232299994
+
+	Name=Scenario82Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=31.818181818000028
+		Y[R2]=31.82318181799999
+		Y[R3]=25.454545454999987
+		Y[R4]=104.99500000000002
+		Y[R5]=332.384272727
+
+	Name=Scenario83Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=32.828282828
+		Y[R2]=32.833282827999994
+		Y[R3]=26.262626262999987
+		Y[R4]=108.32833333299997
+		Y[R5]=332.78831313099994
+
+	Name=Scenario84Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=33.83838383800003
+		Y[R2]=33.843383837999994
+		Y[R3]=27.070707070999987
+		Y[R4]=111.661666667
+		Y[R5]=333.192353535
+
+	Name=Scenario85Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=34.848484848
+		Y[R2]=34.853484847999994
+		Y[R3]=27.878787878999987
+		Y[R4]=114.995
+		Y[R5]=333.59639393899994
+
+	Name=Scenario86Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=35.858585859000016
+		Y[R2]=35.86358585899998
+		Y[R3]=28.68686868699999
+		Y[R4]=118.32833333299999
+		Y[R5]=334.000434343
+
+	Name=Scenario87Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=36.86868686899999
+		Y[R2]=36.87368686899998
+		Y[R3]=29.49494949499999
+		Y[R4]=121.66166666700002
+		Y[R5]=334.40447474699994
+
+	Name=Scenario88Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=37.878787879000015
+		Y[R2]=37.88378787899998
+		Y[R3]=30.303030303000018
+		Y[R4]=124.995
+		Y[R5]=334.808515152
+
+	Name=Scenario89Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=38.888888888999986
+		Y[R2]=38.89388888899998
+		Y[R3]=31.111111111000017
+		Y[R4]=128.328333333
+		Y[R5]=335.2125555559999
+
+	Name=Scenario8Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=302.48528282800004
+
+	Name=Scenario90Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=39.898989899000014
+		Y[R2]=39.90398989899998
+		Y[R3]=31.91919191900001
+		Y[R4]=131.66166666700002
+		Y[R5]=335.61659596
+
+	Name=Scenario91Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=40.909090908999985
+		Y[R2]=40.91409090900001
+		Y[R3]=32.72727272700001
+		Y[R4]=134.995
+		Y[R5]=336.0206363639999
+
+	Name=Scenario92Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=41.91919191900001
+		Y[R2]=41.92419191900001
+		Y[R3]=33.53535353500001
+		Y[R4]=138.328333333
+		Y[R5]=336.424676768
+
+	Name=Scenario93Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=42.929292928999985
+		Y[R2]=42.93429292900001
+		Y[R3]=34.34343434300001
+		Y[R4]=141.66166666700002
+		Y[R5]=336.8287171719999
+
+	Name=Scenario94Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=43.93939393900001
+		Y[R2]=43.94439393900001
+		Y[R3]=35.151515152
+		Y[R4]=144.995
+		Y[R5]=337.232757576
+
+	Name=Scenario95Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=44.949494948999984
+		Y[R2]=44.95449494900001
+		Y[R3]=35.95959596
+		Y[R4]=148.328333333
+		Y[R5]=337.6367979799999
+
+	Name=Scenario96Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=45.95959596
+		Y[R2]=45.96459596
+		Y[R3]=36.767676768
+		Y[R4]=151.66166666700002
+		Y[R5]=338.040838384
+
+	Name=Scenario97Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=46.96969696999997
+		Y[R2]=46.97469697
+		Y[R3]=37.575757576
+		Y[R4]=154.995
+		Y[R5]=338.4448787879999
+
+	Name=Scenario98Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=47.97979798
+		Y[R2]=47.984797979999996
+		Y[R3]=38.383838384
+		Y[R4]=158.328333333
+		Y[R5]=338.848919192
+
+	Name=Scenario99Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R1]=48.98989898999997
+		Y[R2]=48.994898989999996
+		Y[R3]=39.191919192
+		Y[R4]=161.66166666700002
+		Y[R5]=339.2529595959999
+
+	Name=Scenario9Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		Y[R5]=302.889323232
+
+
+Extensive form costs:
+Scenario Tree Costs
+----------------------------------------------------
+Tree Nodes:
+
+	Name=RootNode
+	Stage=FirstStage
+	Parent=None
+	Conditional probability=1.0000
+	Children:
+		Scenario100Node
+		Scenario10Node
+		Scenario11Node
+		Scenario12Node
+		Scenario13Node
+		Scenario14Node
+		Scenario15Node
+		Scenario16Node
+		Scenario17Node
+		Scenario18Node
+		Scenario19Node
+		Scenario1Node
+		Scenario20Node
+		Scenario21Node
+		Scenario22Node
+		Scenario23Node
+		Scenario24Node
+		Scenario25Node
+		Scenario26Node
+		Scenario27Node
+		Scenario28Node
+		Scenario29Node
+		Scenario2Node
+		Scenario30Node
+		Scenario31Node
+		Scenario32Node
+		Scenario33Node
+		Scenario34Node
+		Scenario35Node
+		Scenario36Node
+		Scenario37Node
+		Scenario38Node
+		Scenario39Node
+		Scenario3Node
+		Scenario40Node
+		Scenario41Node
+		Scenario42Node
+		Scenario43Node
+		Scenario44Node
+		Scenario45Node
+		Scenario46Node
+		Scenario47Node
+		Scenario48Node
+		Scenario49Node
+		Scenario4Node
+		Scenario50Node
+		Scenario51Node
+		Scenario52Node
+		Scenario53Node
+		Scenario54Node
+		Scenario55Node
+		Scenario56Node
+		Scenario57Node
+		Scenario58Node
+		Scenario59Node
+		Scenario5Node
+		Scenario60Node
+		Scenario61Node
+		Scenario62Node
+		Scenario63Node
+		Scenario64Node
+		Scenario65Node
+		Scenario66Node
+		Scenario67Node
+		Scenario68Node
+		Scenario69Node
+		Scenario6Node
+		Scenario70Node
+		Scenario71Node
+		Scenario72Node
+		Scenario73Node
+		Scenario74Node
+		Scenario75Node
+		Scenario76Node
+		Scenario77Node
+		Scenario78Node
+		Scenario79Node
+		Scenario7Node
+		Scenario80Node
+		Scenario81Node
+		Scenario82Node
+		Scenario83Node
+		Scenario84Node
+		Scenario85Node
+		Scenario86Node
+		Scenario87Node
+		Scenario88Node
+		Scenario89Node
+		Scenario8Node
+		Scenario90Node
+		Scenario91Node
+		Scenario92Node
+		Scenario93Node
+		Scenario94Node
+		Scenario95Node
+		Scenario96Node
+		Scenario97Node
+		Scenario98Node
+		Scenario99Node
+		Scenario9Node
+	Scenarios:
+		Scenario1
+		Scenario10
+		Scenario100
+		Scenario11
+		Scenario12
+		Scenario13
+		Scenario14
+		Scenario15
+		Scenario16
+		Scenario17
+		Scenario18
+		Scenario19
+		Scenario2
+		Scenario20
+		Scenario21
+		Scenario22
+		Scenario23
+		Scenario24
+		Scenario25
+		Scenario26
+		Scenario27
+		Scenario28
+		Scenario29
+		Scenario3
+		Scenario30
+		Scenario31
+		Scenario32
+		Scenario33
+		Scenario34
+		Scenario35
+		Scenario36
+		Scenario37
+		Scenario38
+		Scenario39
+		Scenario4
+		Scenario40
+		Scenario41
+		Scenario42
+		Scenario43
+		Scenario44
+		Scenario45
+		Scenario46
+		Scenario47
+		Scenario48
+		Scenario49
+		Scenario5
+		Scenario50
+		Scenario51
+		Scenario52
+		Scenario53
+		Scenario54
+		Scenario55
+		Scenario56
+		Scenario57
+		Scenario58
+		Scenario59
+		Scenario6
+		Scenario60
+		Scenario61
+		Scenario62
+		Scenario63
+		Scenario64
+		Scenario65
+		Scenario66
+		Scenario67
+		Scenario68
+		Scenario69
+		Scenario7
+		Scenario70
+		Scenario71
+		Scenario72
+		Scenario73
+		Scenario74
+		Scenario75
+		Scenario76
+		Scenario77
+		Scenario78
+		Scenario79
+		Scenario8
+		Scenario80
+		Scenario81
+		Scenario82
+		Scenario83
+		Scenario84
+		Scenario85
+		Scenario86
+		Scenario87
+		Scenario88
+		Scenario89
+		Scenario9
+		Scenario90
+		Scenario91
+		Scenario92
+		Scenario93
+		Scenario94
+		Scenario95
+		Scenario96
+		Scenario97
+		Scenario98
+		Scenario99
+	Expected cost of (sub)tree rooted at node= 1934.9936
+
+	Name=Scenario100Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario100
+	Expected cost of (sub)tree rooted at node= 3074.6870
+
+	Name=Scenario10Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario10
+	Expected cost of (sub)tree rooted at node=  303.2934
+
+	Name=Scenario11Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario11
+	Expected cost of (sub)tree rooted at node=  303.6974
+
+	Name=Scenario12Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario12
+	Expected cost of (sub)tree rooted at node=  304.1014
+
+	Name=Scenario13Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario13
+	Expected cost of (sub)tree rooted at node=  304.5055
+
+	Name=Scenario14Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario14
+	Expected cost of (sub)tree rooted at node=  304.9095
+
+	Name=Scenario15Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario15
+	Expected cost of (sub)tree rooted at node=  305.3136
+
+	Name=Scenario16Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario16
+	Expected cost of (sub)tree rooted at node=  305.7176
+
+	Name=Scenario17Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario17
+	Expected cost of (sub)tree rooted at node=  306.1216
+
+	Name=Scenario18Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario18
+	Expected cost of (sub)tree rooted at node=  306.5257
+
+	Name=Scenario19Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario19
+	Expected cost of (sub)tree rooted at node=  306.9297
+
+	Name=Scenario1Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario1
+	Expected cost of (sub)tree rooted at node=  299.6570
+
+	Name=Scenario20Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario20
+	Expected cost of (sub)tree rooted at node=  307.3338
+
+	Name=Scenario21Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario21
+	Expected cost of (sub)tree rooted at node=  307.7378
+
+	Name=Scenario22Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario22
+	Expected cost of (sub)tree rooted at node=  308.1418
+
+	Name=Scenario23Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario23
+	Expected cost of (sub)tree rooted at node=  308.5459
+
+	Name=Scenario24Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario24
+	Expected cost of (sub)tree rooted at node=  308.9499
+
+	Name=Scenario25Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario25
+	Expected cost of (sub)tree rooted at node=  309.3540
+
+	Name=Scenario26Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario26
+	Expected cost of (sub)tree rooted at node=  309.7580
+
+	Name=Scenario27Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario27
+	Expected cost of (sub)tree rooted at node=  310.1621
+
+	Name=Scenario28Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario28
+	Expected cost of (sub)tree rooted at node=  310.5661
+
+	Name=Scenario29Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario29
+	Expected cost of (sub)tree rooted at node=  310.9701
+
+	Name=Scenario2Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario2
+	Expected cost of (sub)tree rooted at node=  300.0610
+
+	Name=Scenario30Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario30
+	Expected cost of (sub)tree rooted at node=  311.3742
+
+	Name=Scenario31Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario31
+	Expected cost of (sub)tree rooted at node=  311.7782
+
+	Name=Scenario32Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario32
+	Expected cost of (sub)tree rooted at node=  312.1823
+
+	Name=Scenario33Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario33
+	Expected cost of (sub)tree rooted at node=  312.5863
+
+	Name=Scenario34Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario34
+	Expected cost of (sub)tree rooted at node=  312.9903
+
+	Name=Scenario35Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario35
+	Expected cost of (sub)tree rooted at node=  313.3944
+
+	Name=Scenario36Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario36
+	Expected cost of (sub)tree rooted at node=  313.7984
+
+	Name=Scenario37Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario37
+	Expected cost of (sub)tree rooted at node=  314.2025
+
+	Name=Scenario38Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario38
+	Expected cost of (sub)tree rooted at node=  314.6065
+
+	Name=Scenario39Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario39
+	Expected cost of (sub)tree rooted at node=  315.0105
+
+	Name=Scenario3Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario3
+	Expected cost of (sub)tree rooted at node=  300.4651
+
+	Name=Scenario40Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario40
+	Expected cost of (sub)tree rooted at node=  315.4146
+
+	Name=Scenario41Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario41
+	Expected cost of (sub)tree rooted at node=  315.8186
+
+	Name=Scenario42Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario42
+	Expected cost of (sub)tree rooted at node=  316.2227
+
+	Name=Scenario43Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario43
+	Expected cost of (sub)tree rooted at node=  316.6267
+
+	Name=Scenario44Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario44
+	Expected cost of (sub)tree rooted at node=  317.0307
+
+	Name=Scenario45Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario45
+	Expected cost of (sub)tree rooted at node=  317.4348
+
+	Name=Scenario46Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario46
+	Expected cost of (sub)tree rooted at node=  317.8388
+
+	Name=Scenario47Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario47
+	Expected cost of (sub)tree rooted at node=  318.2429
+
+	Name=Scenario48Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario48
+	Expected cost of (sub)tree rooted at node=  318.6469
+
+	Name=Scenario49Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario49
+	Expected cost of (sub)tree rooted at node=  319.0509
+
+	Name=Scenario4Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario4
+	Expected cost of (sub)tree rooted at node=  300.8691
+
+	Name=Scenario50Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario50
+	Expected cost of (sub)tree rooted at node=  319.4550
+
+	Name=Scenario51Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario51
+	Expected cost of (sub)tree rooted at node=  347.5153
+
+	Name=Scenario52Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario52
+	Expected cost of (sub)tree rooted at node=  403.1718
+
+	Name=Scenario53Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario53
+	Expected cost of (sub)tree rooted at node=  458.8284
+
+	Name=Scenario54Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario54
+	Expected cost of (sub)tree rooted at node=  514.4850
+
+	Name=Scenario55Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario55
+	Expected cost of (sub)tree rooted at node=  570.1415
+
+	Name=Scenario56Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario56
+	Expected cost of (sub)tree rooted at node=  625.7981
+
+	Name=Scenario57Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario57
+	Expected cost of (sub)tree rooted at node=  681.4547
+
+	Name=Scenario58Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario58
+	Expected cost of (sub)tree rooted at node=  737.1112
+
+	Name=Scenario59Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario59
+	Expected cost of (sub)tree rooted at node=  792.7678
+
+	Name=Scenario5Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario5
+	Expected cost of (sub)tree rooted at node=  301.2732
+
+	Name=Scenario60Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario60
+	Expected cost of (sub)tree rooted at node=  848.4244
+
+	Name=Scenario61Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario61
+	Expected cost of (sub)tree rooted at node=  904.0809
+
+	Name=Scenario62Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario62
+	Expected cost of (sub)tree rooted at node=  959.7375
+
+	Name=Scenario63Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario63
+	Expected cost of (sub)tree rooted at node= 1015.3941
+
+	Name=Scenario64Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario64
+	Expected cost of (sub)tree rooted at node= 1071.0506
+
+	Name=Scenario65Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario65
+	Expected cost of (sub)tree rooted at node= 1126.7072
+
+	Name=Scenario66Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario66
+	Expected cost of (sub)tree rooted at node= 1182.3638
+
+	Name=Scenario67Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario67
+	Expected cost of (sub)tree rooted at node= 1238.0203
+
+	Name=Scenario68Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario68
+	Expected cost of (sub)tree rooted at node= 1293.6769
+
+	Name=Scenario69Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario69
+	Expected cost of (sub)tree rooted at node= 1349.3335
+
+	Name=Scenario6Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario6
+	Expected cost of (sub)tree rooted at node=  301.6772
+
+	Name=Scenario70Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario70
+	Expected cost of (sub)tree rooted at node= 1404.9900
+
+	Name=Scenario71Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario71
+	Expected cost of (sub)tree rooted at node= 1460.6466
+
+	Name=Scenario72Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario72
+	Expected cost of (sub)tree rooted at node= 1516.3032
+
+	Name=Scenario73Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario73
+	Expected cost of (sub)tree rooted at node= 1571.9597
+
+	Name=Scenario74Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario74
+	Expected cost of (sub)tree rooted at node= 1627.6163
+
+	Name=Scenario75Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario75
+	Expected cost of (sub)tree rooted at node= 1683.2729
+
+	Name=Scenario76Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario76
+	Expected cost of (sub)tree rooted at node= 1738.9294
+
+	Name=Scenario77Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario77
+	Expected cost of (sub)tree rooted at node= 1794.5860
+
+	Name=Scenario78Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario78
+	Expected cost of (sub)tree rooted at node= 1850.2426
+
+	Name=Scenario79Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario79
+	Expected cost of (sub)tree rooted at node= 1905.8991
+
+	Name=Scenario7Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario7
+	Expected cost of (sub)tree rooted at node=  302.0812
+
+	Name=Scenario80Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario80
+	Expected cost of (sub)tree rooted at node= 1961.5557
+
+	Name=Scenario81Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario81
+	Expected cost of (sub)tree rooted at node= 2017.2123
+
+	Name=Scenario82Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario82
+	Expected cost of (sub)tree rooted at node= 2072.8688
+
+	Name=Scenario83Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario83
+	Expected cost of (sub)tree rooted at node= 2128.5254
+
+	Name=Scenario84Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario84
+	Expected cost of (sub)tree rooted at node= 2184.1819
+
+	Name=Scenario85Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario85
+	Expected cost of (sub)tree rooted at node= 2239.8385
+
+	Name=Scenario86Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario86
+	Expected cost of (sub)tree rooted at node= 2295.4951
+
+	Name=Scenario87Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario87
+	Expected cost of (sub)tree rooted at node= 2351.1516
+
+	Name=Scenario88Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario88
+	Expected cost of (sub)tree rooted at node= 2406.8082
+
+	Name=Scenario89Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario89
+	Expected cost of (sub)tree rooted at node= 2462.4648
+
+	Name=Scenario8Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario8
+	Expected cost of (sub)tree rooted at node=  302.4853
+
+	Name=Scenario90Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario90
+	Expected cost of (sub)tree rooted at node= 2518.1213
+
+	Name=Scenario91Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario91
+	Expected cost of (sub)tree rooted at node= 2573.7779
+
+	Name=Scenario92Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario92
+	Expected cost of (sub)tree rooted at node= 2629.4345
+
+	Name=Scenario93Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario93
+	Expected cost of (sub)tree rooted at node= 2685.0910
+
+	Name=Scenario94Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario94
+	Expected cost of (sub)tree rooted at node= 2740.7476
+
+	Name=Scenario95Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario95
+	Expected cost of (sub)tree rooted at node= 2796.4042
+
+	Name=Scenario96Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario96
+	Expected cost of (sub)tree rooted at node= 2852.0607
+
+	Name=Scenario97Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario97
+	Expected cost of (sub)tree rooted at node= 2907.7173
+
+	Name=Scenario98Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario98
+	Expected cost of (sub)tree rooted at node= 2963.3739
+
+	Name=Scenario99Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario99
+	Expected cost of (sub)tree rooted at node= 3019.0304
+
+	Name=Scenario9Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario9
+	Expected cost of (sub)tree rooted at node=  302.8893
+
+----------------------------------------------------
+Scenarios:
+
+	Name=Scenario1
+	Probability=0.0100
+	Leaf Node=Scenario1Node
+	Tree node sequence:
+		RootNode
+		Scenario1Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  299.6570
+	Total scenario cost= 1224.3220
+
+	Name=Scenario10
+	Probability=0.0100
+	Leaf Node=Scenario10Node
+	Tree node sequence:
+		RootNode
+		Scenario10Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  303.2934
+	Total scenario cost= 1227.9584
+
+	Name=Scenario100
+	Probability=0.0100
+	Leaf Node=Scenario100Node
+	Tree node sequence:
+		RootNode
+		Scenario100Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 3074.6870
+	Total scenario cost= 3999.3520
+
+	Name=Scenario11
+	Probability=0.0100
+	Leaf Node=Scenario11Node
+	Tree node sequence:
+		RootNode
+		Scenario11Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  303.6974
+	Total scenario cost= 1228.3624
+
+	Name=Scenario12
+	Probability=0.0100
+	Leaf Node=Scenario12Node
+	Tree node sequence:
+		RootNode
+		Scenario12Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  304.1014
+	Total scenario cost= 1228.7664
+
+	Name=Scenario13
+	Probability=0.0100
+	Leaf Node=Scenario13Node
+	Tree node sequence:
+		RootNode
+		Scenario13Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  304.5055
+	Total scenario cost= 1229.1705
+
+	Name=Scenario14
+	Probability=0.0100
+	Leaf Node=Scenario14Node
+	Tree node sequence:
+		RootNode
+		Scenario14Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  304.9095
+	Total scenario cost= 1229.5745
+
+	Name=Scenario15
+	Probability=0.0100
+	Leaf Node=Scenario15Node
+	Tree node sequence:
+		RootNode
+		Scenario15Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  305.3136
+	Total scenario cost= 1229.9786
+
+	Name=Scenario16
+	Probability=0.0100
+	Leaf Node=Scenario16Node
+	Tree node sequence:
+		RootNode
+		Scenario16Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  305.7176
+	Total scenario cost= 1230.3826
+
+	Name=Scenario17
+	Probability=0.0100
+	Leaf Node=Scenario17Node
+	Tree node sequence:
+		RootNode
+		Scenario17Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  306.1216
+	Total scenario cost= 1230.7866
+
+	Name=Scenario18
+	Probability=0.0100
+	Leaf Node=Scenario18Node
+	Tree node sequence:
+		RootNode
+		Scenario18Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  306.5257
+	Total scenario cost= 1231.1907
+
+	Name=Scenario19
+	Probability=0.0100
+	Leaf Node=Scenario19Node
+	Tree node sequence:
+		RootNode
+		Scenario19Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  306.9297
+	Total scenario cost= 1231.5947
+
+	Name=Scenario2
+	Probability=0.0100
+	Leaf Node=Scenario2Node
+	Tree node sequence:
+		RootNode
+		Scenario2Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  300.0610
+	Total scenario cost= 1224.7260
+
+	Name=Scenario20
+	Probability=0.0100
+	Leaf Node=Scenario20Node
+	Tree node sequence:
+		RootNode
+		Scenario20Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  307.3338
+	Total scenario cost= 1231.9988
+
+	Name=Scenario21
+	Probability=0.0100
+	Leaf Node=Scenario21Node
+	Tree node sequence:
+		RootNode
+		Scenario21Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  307.7378
+	Total scenario cost= 1232.4028
+
+	Name=Scenario22
+	Probability=0.0100
+	Leaf Node=Scenario22Node
+	Tree node sequence:
+		RootNode
+		Scenario22Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  308.1418
+	Total scenario cost= 1232.8068
+
+	Name=Scenario23
+	Probability=0.0100
+	Leaf Node=Scenario23Node
+	Tree node sequence:
+		RootNode
+		Scenario23Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  308.5459
+	Total scenario cost= 1233.2109
+
+	Name=Scenario24
+	Probability=0.0100
+	Leaf Node=Scenario24Node
+	Tree node sequence:
+		RootNode
+		Scenario24Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  308.9499
+	Total scenario cost= 1233.6149
+
+	Name=Scenario25
+	Probability=0.0100
+	Leaf Node=Scenario25Node
+	Tree node sequence:
+		RootNode
+		Scenario25Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  309.3540
+	Total scenario cost= 1234.0190
+
+	Name=Scenario26
+	Probability=0.0100
+	Leaf Node=Scenario26Node
+	Tree node sequence:
+		RootNode
+		Scenario26Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  309.7580
+	Total scenario cost= 1234.4230
+
+	Name=Scenario27
+	Probability=0.0100
+	Leaf Node=Scenario27Node
+	Tree node sequence:
+		RootNode
+		Scenario27Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  310.1621
+	Total scenario cost= 1234.8271
+
+	Name=Scenario28
+	Probability=0.0100
+	Leaf Node=Scenario28Node
+	Tree node sequence:
+		RootNode
+		Scenario28Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  310.5661
+	Total scenario cost= 1235.2311
+
+	Name=Scenario29
+	Probability=0.0100
+	Leaf Node=Scenario29Node
+	Tree node sequence:
+		RootNode
+		Scenario29Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  310.9701
+	Total scenario cost= 1235.6351
+
+	Name=Scenario3
+	Probability=0.0100
+	Leaf Node=Scenario3Node
+	Tree node sequence:
+		RootNode
+		Scenario3Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  300.4651
+	Total scenario cost= 1225.1301
+
+	Name=Scenario30
+	Probability=0.0100
+	Leaf Node=Scenario30Node
+	Tree node sequence:
+		RootNode
+		Scenario30Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  311.3742
+	Total scenario cost= 1236.0392
+
+	Name=Scenario31
+	Probability=0.0100
+	Leaf Node=Scenario31Node
+	Tree node sequence:
+		RootNode
+		Scenario31Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  311.7782
+	Total scenario cost= 1236.4432
+
+	Name=Scenario32
+	Probability=0.0100
+	Leaf Node=Scenario32Node
+	Tree node sequence:
+		RootNode
+		Scenario32Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  312.1823
+	Total scenario cost= 1236.8473
+
+	Name=Scenario33
+	Probability=0.0100
+	Leaf Node=Scenario33Node
+	Tree node sequence:
+		RootNode
+		Scenario33Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  312.5863
+	Total scenario cost= 1237.2513
+
+	Name=Scenario34
+	Probability=0.0100
+	Leaf Node=Scenario34Node
+	Tree node sequence:
+		RootNode
+		Scenario34Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  312.9903
+	Total scenario cost= 1237.6553
+
+	Name=Scenario35
+	Probability=0.0100
+	Leaf Node=Scenario35Node
+	Tree node sequence:
+		RootNode
+		Scenario35Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  313.3944
+	Total scenario cost= 1238.0594
+
+	Name=Scenario36
+	Probability=0.0100
+	Leaf Node=Scenario36Node
+	Tree node sequence:
+		RootNode
+		Scenario36Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  313.7984
+	Total scenario cost= 1238.4634
+
+	Name=Scenario37
+	Probability=0.0100
+	Leaf Node=Scenario37Node
+	Tree node sequence:
+		RootNode
+		Scenario37Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  314.2025
+	Total scenario cost= 1238.8675
+
+	Name=Scenario38
+	Probability=0.0100
+	Leaf Node=Scenario38Node
+	Tree node sequence:
+		RootNode
+		Scenario38Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  314.6065
+	Total scenario cost= 1239.2715
+
+	Name=Scenario39
+	Probability=0.0100
+	Leaf Node=Scenario39Node
+	Tree node sequence:
+		RootNode
+		Scenario39Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  315.0105
+	Total scenario cost= 1239.6755
+
+	Name=Scenario4
+	Probability=0.0100
+	Leaf Node=Scenario4Node
+	Tree node sequence:
+		RootNode
+		Scenario4Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  300.8691
+	Total scenario cost= 1225.5341
+
+	Name=Scenario40
+	Probability=0.0100
+	Leaf Node=Scenario40Node
+	Tree node sequence:
+		RootNode
+		Scenario40Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  315.4146
+	Total scenario cost= 1240.0796
+
+	Name=Scenario41
+	Probability=0.0100
+	Leaf Node=Scenario41Node
+	Tree node sequence:
+		RootNode
+		Scenario41Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  315.8186
+	Total scenario cost= 1240.4836
+
+	Name=Scenario42
+	Probability=0.0100
+	Leaf Node=Scenario42Node
+	Tree node sequence:
+		RootNode
+		Scenario42Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  316.2227
+	Total scenario cost= 1240.8877
+
+	Name=Scenario43
+	Probability=0.0100
+	Leaf Node=Scenario43Node
+	Tree node sequence:
+		RootNode
+		Scenario43Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  316.6267
+	Total scenario cost= 1241.2917
+
+	Name=Scenario44
+	Probability=0.0100
+	Leaf Node=Scenario44Node
+	Tree node sequence:
+		RootNode
+		Scenario44Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  317.0307
+	Total scenario cost= 1241.6957
+
+	Name=Scenario45
+	Probability=0.0100
+	Leaf Node=Scenario45Node
+	Tree node sequence:
+		RootNode
+		Scenario45Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  317.4348
+	Total scenario cost= 1242.0998
+
+	Name=Scenario46
+	Probability=0.0100
+	Leaf Node=Scenario46Node
+	Tree node sequence:
+		RootNode
+		Scenario46Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  317.8388
+	Total scenario cost= 1242.5038
+
+	Name=Scenario47
+	Probability=0.0100
+	Leaf Node=Scenario47Node
+	Tree node sequence:
+		RootNode
+		Scenario47Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  318.2429
+	Total scenario cost= 1242.9079
+
+	Name=Scenario48
+	Probability=0.0100
+	Leaf Node=Scenario48Node
+	Tree node sequence:
+		RootNode
+		Scenario48Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  318.6469
+	Total scenario cost= 1243.3119
+
+	Name=Scenario49
+	Probability=0.0100
+	Leaf Node=Scenario49Node
+	Tree node sequence:
+		RootNode
+		Scenario49Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  319.0509
+	Total scenario cost= 1243.7159
+
+	Name=Scenario5
+	Probability=0.0100
+	Leaf Node=Scenario5Node
+	Tree node sequence:
+		RootNode
+		Scenario5Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  301.2732
+	Total scenario cost= 1225.9382
+
+	Name=Scenario50
+	Probability=0.0100
+	Leaf Node=Scenario50Node
+	Tree node sequence:
+		RootNode
+		Scenario50Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  319.4550
+	Total scenario cost= 1244.1200
+
+	Name=Scenario51
+	Probability=0.0100
+	Leaf Node=Scenario51Node
+	Tree node sequence:
+		RootNode
+		Scenario51Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  347.5153
+	Total scenario cost= 1272.1803
+
+	Name=Scenario52
+	Probability=0.0100
+	Leaf Node=Scenario52Node
+	Tree node sequence:
+		RootNode
+		Scenario52Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  403.1718
+	Total scenario cost= 1327.8368
+
+	Name=Scenario53
+	Probability=0.0100
+	Leaf Node=Scenario53Node
+	Tree node sequence:
+		RootNode
+		Scenario53Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  458.8284
+	Total scenario cost= 1383.4934
+
+	Name=Scenario54
+	Probability=0.0100
+	Leaf Node=Scenario54Node
+	Tree node sequence:
+		RootNode
+		Scenario54Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  514.4850
+	Total scenario cost= 1439.1500
+
+	Name=Scenario55
+	Probability=0.0100
+	Leaf Node=Scenario55Node
+	Tree node sequence:
+		RootNode
+		Scenario55Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  570.1415
+	Total scenario cost= 1494.8065
+
+	Name=Scenario56
+	Probability=0.0100
+	Leaf Node=Scenario56Node
+	Tree node sequence:
+		RootNode
+		Scenario56Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  625.7981
+	Total scenario cost= 1550.4631
+
+	Name=Scenario57
+	Probability=0.0100
+	Leaf Node=Scenario57Node
+	Tree node sequence:
+		RootNode
+		Scenario57Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  681.4547
+	Total scenario cost= 1606.1197
+
+	Name=Scenario58
+	Probability=0.0100
+	Leaf Node=Scenario58Node
+	Tree node sequence:
+		RootNode
+		Scenario58Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  737.1112
+	Total scenario cost= 1661.7762
+
+	Name=Scenario59
+	Probability=0.0100
+	Leaf Node=Scenario59Node
+	Tree node sequence:
+		RootNode
+		Scenario59Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  792.7678
+	Total scenario cost= 1717.4328
+
+	Name=Scenario6
+	Probability=0.0100
+	Leaf Node=Scenario6Node
+	Tree node sequence:
+		RootNode
+		Scenario6Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  301.6772
+	Total scenario cost= 1226.3422
+
+	Name=Scenario60
+	Probability=0.0100
+	Leaf Node=Scenario60Node
+	Tree node sequence:
+		RootNode
+		Scenario60Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  848.4244
+	Total scenario cost= 1773.0894
+
+	Name=Scenario61
+	Probability=0.0100
+	Leaf Node=Scenario61Node
+	Tree node sequence:
+		RootNode
+		Scenario61Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  904.0809
+	Total scenario cost= 1828.7459
+
+	Name=Scenario62
+	Probability=0.0100
+	Leaf Node=Scenario62Node
+	Tree node sequence:
+		RootNode
+		Scenario62Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  959.7375
+	Total scenario cost= 1884.4025
+
+	Name=Scenario63
+	Probability=0.0100
+	Leaf Node=Scenario63Node
+	Tree node sequence:
+		RootNode
+		Scenario63Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 1015.3941
+	Total scenario cost= 1940.0591
+
+	Name=Scenario64
+	Probability=0.0100
+	Leaf Node=Scenario64Node
+	Tree node sequence:
+		RootNode
+		Scenario64Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 1071.0506
+	Total scenario cost= 1995.7156
+
+	Name=Scenario65
+	Probability=0.0100
+	Leaf Node=Scenario65Node
+	Tree node sequence:
+		RootNode
+		Scenario65Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 1126.7072
+	Total scenario cost= 2051.3722
+
+	Name=Scenario66
+	Probability=0.0100
+	Leaf Node=Scenario66Node
+	Tree node sequence:
+		RootNode
+		Scenario66Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 1182.3638
+	Total scenario cost= 2107.0288
+
+	Name=Scenario67
+	Probability=0.0100
+	Leaf Node=Scenario67Node
+	Tree node sequence:
+		RootNode
+		Scenario67Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 1238.0203
+	Total scenario cost= 2162.6853
+
+	Name=Scenario68
+	Probability=0.0100
+	Leaf Node=Scenario68Node
+	Tree node sequence:
+		RootNode
+		Scenario68Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 1293.6769
+	Total scenario cost= 2218.3419
+
+	Name=Scenario69
+	Probability=0.0100
+	Leaf Node=Scenario69Node
+	Tree node sequence:
+		RootNode
+		Scenario69Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 1349.3335
+	Total scenario cost= 2273.9985
+
+	Name=Scenario7
+	Probability=0.0100
+	Leaf Node=Scenario7Node
+	Tree node sequence:
+		RootNode
+		Scenario7Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  302.0812
+	Total scenario cost= 1226.7462
+
+	Name=Scenario70
+	Probability=0.0100
+	Leaf Node=Scenario70Node
+	Tree node sequence:
+		RootNode
+		Scenario70Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 1404.9900
+	Total scenario cost= 2329.6550
+
+	Name=Scenario71
+	Probability=0.0100
+	Leaf Node=Scenario71Node
+	Tree node sequence:
+		RootNode
+		Scenario71Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 1460.6466
+	Total scenario cost= 2385.3116
+
+	Name=Scenario72
+	Probability=0.0100
+	Leaf Node=Scenario72Node
+	Tree node sequence:
+		RootNode
+		Scenario72Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 1516.3032
+	Total scenario cost= 2440.9682
+
+	Name=Scenario73
+	Probability=0.0100
+	Leaf Node=Scenario73Node
+	Tree node sequence:
+		RootNode
+		Scenario73Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 1571.9597
+	Total scenario cost= 2496.6247
+
+	Name=Scenario74
+	Probability=0.0100
+	Leaf Node=Scenario74Node
+	Tree node sequence:
+		RootNode
+		Scenario74Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 1627.6163
+	Total scenario cost= 2552.2813
+
+	Name=Scenario75
+	Probability=0.0100
+	Leaf Node=Scenario75Node
+	Tree node sequence:
+		RootNode
+		Scenario75Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 1683.2729
+	Total scenario cost= 2607.9379
+
+	Name=Scenario76
+	Probability=0.0100
+	Leaf Node=Scenario76Node
+	Tree node sequence:
+		RootNode
+		Scenario76Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 1738.9294
+	Total scenario cost= 2663.5944
+
+	Name=Scenario77
+	Probability=0.0100
+	Leaf Node=Scenario77Node
+	Tree node sequence:
+		RootNode
+		Scenario77Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 1794.5860
+	Total scenario cost= 2719.2510
+
+	Name=Scenario78
+	Probability=0.0100
+	Leaf Node=Scenario78Node
+	Tree node sequence:
+		RootNode
+		Scenario78Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 1850.2426
+	Total scenario cost= 2774.9076
+
+	Name=Scenario79
+	Probability=0.0100
+	Leaf Node=Scenario79Node
+	Tree node sequence:
+		RootNode
+		Scenario79Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 1905.8991
+	Total scenario cost= 2830.5641
+
+	Name=Scenario8
+	Probability=0.0100
+	Leaf Node=Scenario8Node
+	Tree node sequence:
+		RootNode
+		Scenario8Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  302.4853
+	Total scenario cost= 1227.1503
+
+	Name=Scenario80
+	Probability=0.0100
+	Leaf Node=Scenario80Node
+	Tree node sequence:
+		RootNode
+		Scenario80Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 1961.5557
+	Total scenario cost= 2886.2207
+
+	Name=Scenario81
+	Probability=0.0100
+	Leaf Node=Scenario81Node
+	Tree node sequence:
+		RootNode
+		Scenario81Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 2017.2123
+	Total scenario cost= 2941.8773
+
+	Name=Scenario82
+	Probability=0.0100
+	Leaf Node=Scenario82Node
+	Tree node sequence:
+		RootNode
+		Scenario82Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 2072.8688
+	Total scenario cost= 2997.5338
+
+	Name=Scenario83
+	Probability=0.0100
+	Leaf Node=Scenario83Node
+	Tree node sequence:
+		RootNode
+		Scenario83Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 2128.5254
+	Total scenario cost= 3053.1904
+
+	Name=Scenario84
+	Probability=0.0100
+	Leaf Node=Scenario84Node
+	Tree node sequence:
+		RootNode
+		Scenario84Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 2184.1819
+	Total scenario cost= 3108.8469
+
+	Name=Scenario85
+	Probability=0.0100
+	Leaf Node=Scenario85Node
+	Tree node sequence:
+		RootNode
+		Scenario85Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 2239.8385
+	Total scenario cost= 3164.5035
+
+	Name=Scenario86
+	Probability=0.0100
+	Leaf Node=Scenario86Node
+	Tree node sequence:
+		RootNode
+		Scenario86Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 2295.4951
+	Total scenario cost= 3220.1601
+
+	Name=Scenario87
+	Probability=0.0100
+	Leaf Node=Scenario87Node
+	Tree node sequence:
+		RootNode
+		Scenario87Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 2351.1516
+	Total scenario cost= 3275.8166
+
+	Name=Scenario88
+	Probability=0.0100
+	Leaf Node=Scenario88Node
+	Tree node sequence:
+		RootNode
+		Scenario88Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 2406.8082
+	Total scenario cost= 3331.4732
+
+	Name=Scenario89
+	Probability=0.0100
+	Leaf Node=Scenario89Node
+	Tree node sequence:
+		RootNode
+		Scenario89Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 2462.4648
+	Total scenario cost= 3387.1298
+
+	Name=Scenario9
+	Probability=0.0100
+	Leaf Node=Scenario9Node
+	Tree node sequence:
+		RootNode
+		Scenario9Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost=  302.8893
+	Total scenario cost= 1227.5543
+
+	Name=Scenario90
+	Probability=0.0100
+	Leaf Node=Scenario90Node
+	Tree node sequence:
+		RootNode
+		Scenario90Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 2518.1213
+	Total scenario cost= 3442.7863
+
+	Name=Scenario91
+	Probability=0.0100
+	Leaf Node=Scenario91Node
+	Tree node sequence:
+		RootNode
+		Scenario91Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 2573.7779
+	Total scenario cost= 3498.4429
+
+	Name=Scenario92
+	Probability=0.0100
+	Leaf Node=Scenario92Node
+	Tree node sequence:
+		RootNode
+		Scenario92Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 2629.4345
+	Total scenario cost= 3554.0995
+
+	Name=Scenario93
+	Probability=0.0100
+	Leaf Node=Scenario93Node
+	Tree node sequence:
+		RootNode
+		Scenario93Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 2685.0910
+	Total scenario cost= 3609.7560
+
+	Name=Scenario94
+	Probability=0.0100
+	Leaf Node=Scenario94Node
+	Tree node sequence:
+		RootNode
+		Scenario94Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 2740.7476
+	Total scenario cost= 3665.4126
+
+	Name=Scenario95
+	Probability=0.0100
+	Leaf Node=Scenario95Node
+	Tree node sequence:
+		RootNode
+		Scenario95Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 2796.4042
+	Total scenario cost= 3721.0692
+
+	Name=Scenario96
+	Probability=0.0100
+	Leaf Node=Scenario96Node
+	Tree node sequence:
+		RootNode
+		Scenario96Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 2852.0607
+	Total scenario cost= 3776.7257
+
+	Name=Scenario97
+	Probability=0.0100
+	Leaf Node=Scenario97Node
+	Tree node sequence:
+		RootNode
+		Scenario97Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 2907.7173
+	Total scenario cost= 3832.3823
+
+	Name=Scenario98
+	Probability=0.0100
+	Leaf Node=Scenario98Node
+	Tree node sequence:
+		RootNode
+		Scenario98Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 2963.3739
+	Total scenario cost= 3888.0389
+
+	Name=Scenario99
+	Probability=0.0100
+	Leaf Node=Scenario99Node
+	Tree node sequence:
+		RootNode
+		Scenario99Node
+	Stage=          FirstStage     Cost=  924.6650
+	Stage=         SecondStage     Cost= 3019.0304
+	Total scenario cost= 3943.6954
+
+----------------------------------------------------
+
+Total EF execution time=1.20 seconds
+
