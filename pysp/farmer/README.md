@@ -26,13 +26,13 @@ Table 1 summarizes these data and the planting costs for these crops.
 
 To help the farmer make up his mind, we can set up the following model. Let
 
-x1 = acres of land devoted to wheat,
-x2 = acres of land devoted to corn,
-x3 = acres of land devoted to sugar beets,
-w1 = tons of wheat sold,
-y1 = tons of wheat purchased,
-w2 = tons of corn sold,
-y2 = tons of corn purchased,
-w3 = tons of sugar beets sold at the favorable price,
+x1 = acres of land devoted to wheat,\
+x2 = acres of land devoted to corn,\
+x3 = acres of land devoted to sugar beets,\
+w1 = tons of wheat sold,\
+y1 = tons of wheat purchased,\
+w2 = tons of corn sold,\
+y2 = tons of corn purchased,\
+w3 = tons of sugar beets sold at the favorable price,\
 
 ![](images/Formula1.png)
