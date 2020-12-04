@@ -1,0 +1,3 @@
+runef -m models -i scenariodata --solver=gurobi --solve>results_runef.txt
+
+runph -m models -i nodedata --solver=gurobi --default-rho=0.98 >partCresults.txt

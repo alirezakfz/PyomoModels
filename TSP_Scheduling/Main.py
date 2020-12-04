@@ -10,10 +10,10 @@ from pyomo.opt import SolverFactory
 import numpy as np
 
 from CreateData import dataFile, create_scenario
-from scenarioFile import scenario_File
+from scenarioFile import scenario_File, write_scenario
 from RefrenceModel import createModel
 from chart import gant_chart
-
+from gen_scen_struct import scenario_structure
 
 """
 Defining the scenario parameters
@@ -21,11 +21,11 @@ Defining the scenario parameters
 
 slot=1   #Add more time slot for more accurate result
 
-number_of_EVs=10
+number_of_EVs=15
 
 number_of_Chargers=0  #took it from dataFile output later
 
-number_of_scenarios=4000
+number_of_scenarios=100
            
 number_of_timeslot=24*slot
 
@@ -92,7 +92,7 @@ scenario_File(number_of_EVs, number_of_Chargers,chargers_cost, number_of_timeslo
 #Solve a unique scenario
 SOLVER_NAME="gurobi"
 TIME_LIMIT=10800
-model=createModel(number_of_timeslot)
+model=createModel()
 solver=SolverFactory(SOLVER_NAME)
 
 if SOLVER_NAME == 'cplex':
@@ -112,4 +112,27 @@ print(results)
 gant_chart(instance)
 
 
+"""
+Create scenario files
+"""
 
+
+#First create scenatio structure file
+scenario_structure(number_of_scenarios)
+
+#create scenario files
+for i in range(number_of_scenarios):
+    
+    f_name="scenariodata\\Scenario"+str(i+1)+".dat"
+    
+    #Generate random scenario data
+    arrival, depart, distance, demand, charge_power,TFC, EV_samples = create_scenario(number_of_EVs,
+                                                        number_of_timeslot,
+                                                        Charger_Type,
+                                                        charger_cost,
+                                                        slot,
+                                                        installed_chargers)
+    
+    #write scenario into specified dat file
+    write_scenario(number_of_EVs, number_of_Chargers , chargers_cost, number_of_timeslot, arrival, depart, TFC, f_name)
+    

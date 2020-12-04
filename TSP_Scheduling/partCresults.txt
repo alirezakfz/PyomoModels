@@ -1,0 +1,8 @@
+WARNING: DEPRECATED: The 'StageCostVariable' scenario tree model parameter has
+    been renamed to 'StageCost'. Please update your scenario tree structure
+    model.
+Initializing PH
+
+Starting PH
+
+Initiating PH iteration=0

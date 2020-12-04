@@ -7,7 +7,7 @@ Created on Thu Dec  3 17:53:40 2020
 
 from pyomo.environ import *
 
-def createModel(number_of_timeslot):
+def createModel():
     
     bigM=100
     delay=0 #1
@@ -37,6 +37,7 @@ def createModel(number_of_timeslot):
     
     model.installed_cost = Param(model.M)
     
+    model.number_of_timeslot=Param()
     
     """
     Model Decision Variables
@@ -71,7 +72,7 @@ def createModel(number_of_timeslot):
     def one_job_rule(model,j):
         sumj=[]
         for i in model.M:
-            time=range(model.arrival[j], number_of_timeslot - model.TFC[j,i]+1) #model.TFC[i,j]+2
+            time=range(model.arrival[j], model.number_of_timeslot - model.TFC[j,i]+1) #model.TFC[i,j]+2
             sumj.append(sum(model.x[j,i,t] for t in time))
         return sum(sumj)==1
     model.one_job_con=Constraint(model.N, rule=one_job_rule)
@@ -108,7 +109,7 @@ def createModel(number_of_timeslot):
     def span_rule(model,j):
         sumj=[]
         for i in model.M:
-            time=range(0,number_of_timeslot-model.TFC[j,i]+1) #model.TFC[i,j]+2
+            time=range(0,model.number_of_timeslot-model.TFC[j,i]+1) #model.TFC[i,j]+2
             sumj.append(sum(model.x[j,i,t]*(t+model.TFC[j,i]) for t in time))
         return model.C[j]==sum(sumj)
     model.span_con=Constraint(model.N,rule=span_rule)
@@ -130,9 +131,9 @@ def createModel(number_of_timeslot):
     """
     version 8 constraints
     """
-    def performance_rule(model):
-        return sum(model.z[j] for j in model.N ) <= prf
-    model.performance_con=Constraint(rule=performance_rule)
+    # def performance_rule(model):
+    #     return sum(model.z[j] for j in model.N ) <= prf
+    # model.performance_con=Constraint(rule=performance_rule)
     
     def disjuctive1_rule(model,j):
 #        p=sum(model.d[j] for j in model.N)
