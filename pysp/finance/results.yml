@@ -1,0 +1,51 @@
+# ==========================================================
+# = Solver Results                                         =
+# ==========================================================
+# ----------------------------------------------------------
+#   Problem Information
+# ----------------------------------------------------------
+Problem: 
+- Name: unknown
+  Lower bound: 4743.938125
+  Upper bound: 4743.938125
+  Number of objectives: 1
+  Number of constraints: 9
+  Number of variables: 13
+  Number of nonzeros: 21
+  Sense: maximize
+# ----------------------------------------------------------
+#   Solver Information
+# ----------------------------------------------------------
+Solver: 
+- Status: ok
+  Termination condition: optimal
+  Statistics: 
+    Branch and bound: 
+      Number of bounded subproblems: 0
+      Number of created subproblems: 0
+  Error rc: 0
+  Time: 0.0207517147064209
+# ----------------------------------------------------------
+#   Solution Information
+# ----------------------------------------------------------
+Solution: 
+- number of solutions: 1
+  number of solutions displayed: 1
+- Gap: 0.0
+  Status: feasible
+  Message: None
+  Objective:
+    Total_Wealth_Objective:
+      Value: 4743.938125
+  Variable:
+    AmountInvested[STOCKS,1]:
+      Value: 55000
+    AmountInvested[STOCKS,2]:
+      Value: 63525
+    AmountInvested[STOCKS,3]:
+      Value: 73371.375
+    FinalWealth:
+      Value: 4743.938125
+    TargetSurplus:
+      Value: 4743.938125
+  Constraint: No values

@@ -1,0 +1,430 @@
+WARNING: Initializing ordered Set Times with a fundamentally unordered data
+    source (type: set).  This WILL potentially lead to nondeterministic
+    behavior in Pyomo
+WARNING: Initializing ordered Set Times with a fundamentally unordered data
+    source (type: set).  This WILL potentially lead to nondeterministic
+    behavior in Pyomo
+WARNING: Initializing ordered Set Times with a fundamentally unordered data
+    source (type: set).  This WILL potentially lead to nondeterministic
+    behavior in Pyomo
+WARNING: Initializing ordered Set Times with a fundamentally unordered data
+    source (type: set).  This WILL potentially lead to nondeterministic
+    behavior in Pyomo
+WARNING: Initializing ordered Set Times with a fundamentally unordered data
+    source (type: set).  This WILL potentially lead to nondeterministic
+    behavior in Pyomo
+WARNING: Initializing ordered Set Times with a fundamentally unordered data
+    source (type: set).  This WILL potentially lead to nondeterministic
+    behavior in Pyomo
+WARNING: Initializing ordered Set Times with a fundamentally unordered data
+    source (type: set).  This WILL potentially lead to nondeterministic
+    behavior in Pyomo
+WARNING: Initializing ordered Set Times with a fundamentally unordered data
+    source (type: set).  This WILL potentially lead to nondeterministic
+    behavior in Pyomo
+
+Initializing extensive form algorithm for stochastic programming problems.
+EF solve completed and solution status is optimal
+EF solve termination condition is optimal
+EF objective:  -1514.08464
+EF gap:            0.00000
+EF bound:      -1514.08464
+
+Extensive form solution:
+----------------------------------------------------
+Tree Nodes:
+
+	Name=BondBondBondNode
+	Stage=FourthStage
+	Parent=BondBondNode
+	Variables: 
+		FinalWealth=-48640.0
+		TargetDeficit=12160.0
+
+	Name=BondBondNode
+	Stage=ThirdStage
+	Parent=BondNode
+	Variables: 
+		AmountInvested[STOCKS,3]=64000.0
+
+	Name=BondBondStockNode
+	Stage=FourthStage
+	Parent=BondBondNode
+	Variables: 
+
+	Name=BondNode
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		AmountInvested[BONDS,2]=22368.028631076617
+		AmountInvested[STOCKS,2]=36743.21503131527
+
+	Name=BondStockBondNode
+	Stage=FourthStage
+	Parent=BondStockNode
+	Variables: 
+
+	Name=BondStockNode
+	Stage=ThirdStage
+	Parent=BondNode
+	Variables: 
+		AmountInvested[BONDS,3]=71428.57142857142
+
+	Name=BondStockStockNode
+	Stage=FourthStage
+	Parent=BondStockNode
+	Variables: 
+		FinalWealth=1428.5714285714057
+		TargetSurplus=1428.5714285714057
+
+	Name=RootNode
+	Stage=FirstStage
+	Parent=None
+	Variables: 
+		AmountInvested[BONDS,1]=13520.727706531265
+		AmountInvested[STOCKS,1]=41479.27229346873
+
+	Name=StockBondBondNode
+	Stage=FourthStage
+	Parent=StockBondNode
+	Variables: 
+
+	Name=StockBondNode
+	Stage=ThirdStage
+	Parent=StockNode
+	Variables: 
+		AmountInvested[BONDS,3]=71428.57142857142
+
+	Name=StockBondStockNode
+	Stage=FourthStage
+	Parent=StockBondNode
+	Variables: 
+		FinalWealth=1428.5714285714057
+		TargetSurplus=1428.5714285714057
+
+	Name=StockNode
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		AmountInvested[BONDS,2]=2168.1379858827063
+		AmountInvested[STOCKS,2]=65094.58196639885
+
+	Name=StockStockBondNode
+	Stage=FourthStage
+	Parent=StockStockNode
+	Variables: 
+		FinalWealth=8870.299047619148
+		TargetSurplus=8870.299047619148
+
+	Name=StockStockNode
+	Stage=ThirdStage
+	Parent=StockNode
+	Variables: 
+		AmountInvested[STOCKS,3]=83839.90476190485
+
+	Name=StockStockStockNode
+	Stage=FourthStage
+	Parent=StockStockNode
+	Variables: 
+		FinalWealth=24799.880952381063
+		TargetSurplus=24799.880952381063
+
+
+Extensive form costs:
+Scenario Tree Costs
+----------------------------------------------------
+Tree Nodes:
+
+	Name=BondBondBondNode
+	Stage=FourthStage
+	Parent=BondBondNode
+	Conditional probability=0.5000
+	Children:
+		None
+	Scenarios:
+		BondBondBondScenario
+	Expected cost of (sub)tree rooted at node=-48640.0000
+
+	Name=BondBondNode
+	Stage=ThirdStage
+	Parent=BondNode
+	Conditional probability=0.5000
+	Children:
+		BondBondBondNode
+		BondBondStockNode
+	Scenarios:
+		BondBondBondScenario
+		BondBondStockScenario
+	Expected cost of (sub)tree rooted at node=-24320.0000
+
+	Name=BondBondStockNode
+	Stage=FourthStage
+	Parent=BondBondNode
+	Conditional probability=0.5000
+	Children:
+		None
+	Scenarios:
+		BondBondStockScenario
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=BondNode
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.5000
+	Children:
+		BondBondNode
+		BondStockNode
+	Scenarios:
+		BondBondBondScenario
+		BondBondStockScenario
+		BondStockBondScenario
+		BondStockStockScenario
+	Expected cost of (sub)tree rooted at node=-11802.8571
+
+	Name=BondStockBondNode
+	Stage=FourthStage
+	Parent=BondStockNode
+	Conditional probability=0.5000
+	Children:
+		None
+	Scenarios:
+		BondStockBondScenario
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=BondStockNode
+	Stage=ThirdStage
+	Parent=BondNode
+	Conditional probability=0.5000
+	Children:
+		BondStockBondNode
+		BondStockStockNode
+	Scenarios:
+		BondStockBondScenario
+		BondStockStockScenario
+	Expected cost of (sub)tree rooted at node=  714.2857
+
+	Name=BondStockStockNode
+	Stage=FourthStage
+	Parent=BondStockNode
+	Conditional probability=0.5000
+	Children:
+		None
+	Scenarios:
+		BondStockStockScenario
+	Expected cost of (sub)tree rooted at node= 1428.5714
+
+	Name=RootNode
+	Stage=FirstStage
+	Parent=None
+	Conditional probability=1.0000
+	Children:
+		BondNode
+		StockNode
+	Scenarios:
+		BondBondBondScenario
+		BondBondStockScenario
+		BondStockBondScenario
+		BondStockStockScenario
+		StockBondBondScenario
+		StockBondStockScenario
+		StockStockBondScenario
+		StockStockStockScenario
+	Expected cost of (sub)tree rooted at node=-1514.0846
+
+	Name=StockBondBondNode
+	Stage=FourthStage
+	Parent=StockBondNode
+	Conditional probability=0.5000
+	Children:
+		None
+	Scenarios:
+		StockBondBondScenario
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=StockBondNode
+	Stage=ThirdStage
+	Parent=StockNode
+	Conditional probability=0.5000
+	Children:
+		StockBondBondNode
+		StockBondStockNode
+	Scenarios:
+		StockBondBondScenario
+		StockBondStockScenario
+	Expected cost of (sub)tree rooted at node=  714.2857
+
+	Name=StockBondStockNode
+	Stage=FourthStage
+	Parent=StockBondNode
+	Conditional probability=0.5000
+	Children:
+		None
+	Scenarios:
+		StockBondStockScenario
+	Expected cost of (sub)tree rooted at node= 1428.5714
+
+	Name=StockNode
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.5000
+	Children:
+		StockBondNode
+		StockStockNode
+	Scenarios:
+		StockBondBondScenario
+		StockBondStockScenario
+		StockStockBondScenario
+		StockStockStockScenario
+	Expected cost of (sub)tree rooted at node= 8774.6879
+
+	Name=StockStockBondNode
+	Stage=FourthStage
+	Parent=StockStockNode
+	Conditional probability=0.5000
+	Children:
+		None
+	Scenarios:
+		StockStockBondScenario
+	Expected cost of (sub)tree rooted at node= 8870.2990
+
+	Name=StockStockNode
+	Stage=ThirdStage
+	Parent=StockNode
+	Conditional probability=0.5000
+	Children:
+		StockStockBondNode
+		StockStockStockNode
+	Scenarios:
+		StockStockBondScenario
+		StockStockStockScenario
+	Expected cost of (sub)tree rooted at node=16835.0900
+
+	Name=StockStockStockNode
+	Stage=FourthStage
+	Parent=StockStockNode
+	Conditional probability=0.5000
+	Children:
+		None
+	Scenarios:
+		StockStockStockScenario
+	Expected cost of (sub)tree rooted at node=24799.8810
+
+----------------------------------------------------
+Scenarios:
+
+	Name=BondBondBondScenario
+	Probability=0.1250
+	Leaf Node=BondBondBondNode
+	Tree node sequence:
+		RootNode
+		BondNode
+		BondBondNode
+		BondBondBondNode
+	Stage=          FirstStage     Cost=    0.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Stage=          ThirdStage     Cost=    0.0000
+	Stage=         FourthStage     Cost=-48640.0000
+	Total scenario cost=-48640.0000
+
+	Name=BondBondStockScenario
+	Probability=0.1250
+	Leaf Node=BondBondStockNode
+	Tree node sequence:
+		RootNode
+		BondNode
+		BondBondNode
+		BondBondStockNode
+	Stage=          FirstStage     Cost=    0.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Stage=          ThirdStage     Cost=    0.0000
+	Stage=         FourthStage     Cost=    0.0000
+	Total scenario cost=    0.0000
+
+	Name=BondStockBondScenario
+	Probability=0.1250
+	Leaf Node=BondStockBondNode
+	Tree node sequence:
+		RootNode
+		BondNode
+		BondStockNode
+		BondStockBondNode
+	Stage=          FirstStage     Cost=    0.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Stage=          ThirdStage     Cost=    0.0000
+	Stage=         FourthStage     Cost=    0.0000
+	Total scenario cost=    0.0000
+
+	Name=BondStockStockScenario
+	Probability=0.1250
+	Leaf Node=BondStockStockNode
+	Tree node sequence:
+		RootNode
+		BondNode
+		BondStockNode
+		BondStockStockNode
+	Stage=          FirstStage     Cost=    0.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Stage=          ThirdStage     Cost=    0.0000
+	Stage=         FourthStage     Cost= 1428.5714
+	Total scenario cost= 1428.5714
+
+	Name=StockBondBondScenario
+	Probability=0.1250
+	Leaf Node=StockBondBondNode
+	Tree node sequence:
+		RootNode
+		StockNode
+		StockBondNode
+		StockBondBondNode
+	Stage=          FirstStage     Cost=    0.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Stage=          ThirdStage     Cost=    0.0000
+	Stage=         FourthStage     Cost=    0.0000
+	Total scenario cost=    0.0000
+
+	Name=StockBondStockScenario
+	Probability=0.1250
+	Leaf Node=StockBondStockNode
+	Tree node sequence:
+		RootNode
+		StockNode
+		StockBondNode
+		StockBondStockNode
+	Stage=          FirstStage     Cost=    0.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Stage=          ThirdStage     Cost=    0.0000
+	Stage=         FourthStage     Cost= 1428.5714
+	Total scenario cost= 1428.5714
+
+	Name=StockStockBondScenario
+	Probability=0.1250
+	Leaf Node=StockStockBondNode
+	Tree node sequence:
+		RootNode
+		StockNode
+		StockStockNode
+		StockStockBondNode
+	Stage=          FirstStage     Cost=    0.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Stage=          ThirdStage     Cost=    0.0000
+	Stage=         FourthStage     Cost= 8870.2990
+	Total scenario cost= 8870.2990
+
+	Name=StockStockStockScenario
+	Probability=0.1250
+	Leaf Node=StockStockStockNode
+	Tree node sequence:
+		RootNode
+		StockNode
+		StockStockNode
+		StockStockStockNode
+	Stage=          FirstStage     Cost=    0.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Stage=          ThirdStage     Cost=    0.0000
+	Stage=         FourthStage     Cost=24799.8810
+	Total scenario cost=24799.8810
+
+----------------------------------------------------
+
+Total EF execution time=0.50 seconds
+

@@ -1,0 +1,13 @@
+set Stages := FirstStage SecondStage ; 
+
+ set Nodes := RootNode
+	     Scenario1Node
+	     Scenario2Node
+	     Scenario3Node
+	     Scenario4Node
+	     Scenario5Node
+	     Scenario6Node
+	     Scenario7Node
+	     Scenario8Node
+	     Scenario9Node
+	     Scenario10Node
