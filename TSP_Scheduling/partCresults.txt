@@ -6,3 +6,3064 @@ Initializing PH
 Starting PH
 
 Initiating PH iteration=0
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         1.6000 - threshold reached=False
+Cumulative run-time=239.90 seconds
+
+Initiating PH iteration=1
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         1.6000 - threshold reached=False
+Cumulative run-time=390.11 seconds
+
+Initiating PH iteration=2
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         1.0000 - threshold reached=False
+Cumulative run-time=546.68 seconds
+
+Initiating PH iteration=3
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=698.43 seconds
+
+Initiating PH iteration=4
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=846.29 seconds
+
+Initiating PH iteration=5
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.4000 - threshold reached=False
+Cumulative run-time=1014.55 seconds
+
+Initiating PH iteration=6
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         1.0000 - threshold reached=False
+Cumulative run-time=1168.86 seconds
+
+Initiating PH iteration=7
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=1325.51 seconds
+
+Initiating PH iteration=8
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=1499.85 seconds
+
+Initiating PH iteration=9
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=1658.11 seconds
+
+Initiating PH iteration=10
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9998 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=1828.19 seconds
+
+Initiating PH iteration=11
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         1.0000 - threshold reached=False
+Cumulative run-time=6333.36 seconds
+
+Initiating PH iteration=12
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=6501.64 seconds
+
+Initiating PH iteration=13
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         1.2000 - threshold reached=False
+Cumulative run-time=6679.68 seconds
+
+Initiating PH iteration=14
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=6838.48 seconds
+
+Initiating PH iteration=15
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=7013.72 seconds
+
+Initiating PH iteration=16
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         1.0000 - threshold reached=False
+Cumulative run-time=7212.29 seconds
+
+Initiating PH iteration=17
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=7394.26 seconds
+
+Initiating PH iteration=18
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=7557.99 seconds
+
+Initiating PH iteration=19
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=7713.92 seconds
+
+Initiating PH iteration=20
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=7876.64 seconds
+
+Initiating PH iteration=21
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=8030.59 seconds
+
+Initiating PH iteration=22
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=8222.08 seconds
+
+Initiating PH iteration=23
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=8377.20 seconds
+
+Initiating PH iteration=24
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=8551.46 seconds
+
+Initiating PH iteration=25
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=8718.30 seconds
+
+Initiating PH iteration=26
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=8884.02 seconds
+
+Initiating PH iteration=27
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=9081.76 seconds
+
+Initiating PH iteration=28
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=9266.97 seconds
+
+Initiating PH iteration=29
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=9435.23 seconds
+
+Initiating PH iteration=30
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.4000 - threshold reached=False
+Cumulative run-time=9590.22 seconds
+
+Initiating PH iteration=31
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         1.4000 - threshold reached=False
+Cumulative run-time=9833.84 seconds
+
+Initiating PH iteration=32
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         1.0000 - threshold reached=False
+Cumulative run-time=10023.29 seconds
+
+Initiating PH iteration=33
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=10168.98 seconds
+
+Initiating PH iteration=34
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=10323.07 seconds
+
+Initiating PH iteration=35
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.4000 - threshold reached=False
+Cumulative run-time=10485.85 seconds
+
+Initiating PH iteration=36
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=10650.77 seconds
+
+Initiating PH iteration=37
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         1.0000 - threshold reached=False
+Cumulative run-time=10826.00 seconds
+
+Initiating PH iteration=38
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=10991.65 seconds
+
+Initiating PH iteration=39
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=11160.93 seconds
+
+Initiating PH iteration=40
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=11325.97 seconds
+
+Initiating PH iteration=41
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         1.0000 - threshold reached=False
+Cumulative run-time=11485.32 seconds
+
+Initiating PH iteration=42
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=11634.09 seconds
+
+Initiating PH iteration=43
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=11788.45 seconds
+
+Initiating PH iteration=44
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=12213.56 seconds
+
+Initiating PH iteration=45
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.4000 - threshold reached=False
+Cumulative run-time=12394.76 seconds
+
+Initiating PH iteration=46
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         1.2000 - threshold reached=False
+Cumulative run-time=12578.64 seconds
+
+Initiating PH iteration=47
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=12778.32 seconds
+
+Initiating PH iteration=48
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=12931.63 seconds
+
+Initiating PH iteration=49
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=13119.69 seconds
+
+Initiating PH iteration=50
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.4000 - threshold reached=False
+Cumulative run-time=13301.29 seconds
+
+Initiating PH iteration=51
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         1.2000 - threshold reached=False
+Cumulative run-time=13501.27 seconds
+
+Initiating PH iteration=52
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         1.0000 - threshold reached=False
+Cumulative run-time=13660.27 seconds
+
+Initiating PH iteration=53
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=13823.66 seconds
+
+Initiating PH iteration=54
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=13995.85 seconds
+
+Initiating PH iteration=55
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=14161.08 seconds
+
+Initiating PH iteration=56
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=14327.51 seconds
+
+Initiating PH iteration=57
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=14493.92 seconds
+
+Initiating PH iteration=58
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=14674.31 seconds
+
+Initiating PH iteration=59
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=14845.49 seconds
+
+Initiating PH iteration=60
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.4000 - threshold reached=False
+Cumulative run-time=15022.13 seconds
+
+Initiating PH iteration=61
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         1.2000 - threshold reached=False
+Cumulative run-time=15247.16 seconds
+
+Initiating PH iteration=62
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=15427.74 seconds
+
+Initiating PH iteration=63
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=15588.30 seconds
+
+Initiating PH iteration=64
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=15746.38 seconds
+
+Initiating PH iteration=65
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.4000 - threshold reached=False
+Cumulative run-time=15930.81 seconds
+
+Initiating PH iteration=66
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         1.2000 - threshold reached=False
+Cumulative run-time=16094.66 seconds
+
+Initiating PH iteration=67
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         1.2000 - threshold reached=False
+Cumulative run-time=16279.21 seconds
+
+Initiating PH iteration=68
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         1.0000 - threshold reached=False
+Cumulative run-time=16426.44 seconds
+
+Initiating PH iteration=69
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=16582.48 seconds
+
+Initiating PH iteration=70
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=16729.59 seconds
+
+Initiating PH iteration=71
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=16895.44 seconds
+
+Initiating PH iteration=72
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=17058.96 seconds
+
+Initiating PH iteration=73
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=17224.02 seconds
+
+Initiating PH iteration=74
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=17382.80 seconds
+
+Initiating PH iteration=75
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.4000 - threshold reached=False
+Cumulative run-time=17536.72 seconds
+
+Initiating PH iteration=76
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         1.2000 - threshold reached=False
+Cumulative run-time=17693.49 seconds
+
+Initiating PH iteration=77
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=17849.65 seconds
+
+Initiating PH iteration=78
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=18006.19 seconds
+
+Initiating PH iteration=79
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=69888.75 seconds
+
+Initiating PH iteration=80
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.4000 - threshold reached=False
+Cumulative run-time=70108.53 seconds
+
+Initiating PH iteration=81
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         1.2000 - threshold reached=False
+Cumulative run-time=70294.82 seconds
+
+Initiating PH iteration=82
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=70477.20 seconds
+
+Initiating PH iteration=83
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=70660.40 seconds
+
+Initiating PH iteration=84
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=70858.24 seconds
+
+Initiating PH iteration=85
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=71030.48 seconds
+
+Initiating PH iteration=86
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=71208.50 seconds
+
+Initiating PH iteration=87
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=71382.22 seconds
+
+Initiating PH iteration=88
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=71579.76 seconds
+
+Initiating PH iteration=89
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=71807.95 seconds
+
+Initiating PH iteration=90
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=72010.18 seconds
+
+Initiating PH iteration=91
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=72205.52 seconds
+
+Initiating PH iteration=92
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=72402.78 seconds
+
+Initiating PH iteration=93
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=72587.30 seconds
+
+Initiating PH iteration=94
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         1.0000 - threshold reached=False
+Cumulative run-time=72757.10 seconds
+
+Initiating PH iteration=95
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.4000 - threshold reached=False
+Cumulative run-time=72955.98 seconds
+
+Initiating PH iteration=96
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         1.2000 - threshold reached=False
+Cumulative run-time=73142.07 seconds
+
+Initiating PH iteration=97
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         1.0000 - threshold reached=False
+Cumulative run-time=73318.27 seconds
+
+Initiating PH iteration=98
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.8000 - threshold reached=False
+Cumulative run-time=73503.39 seconds
+
+Initiating PH iteration=99
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3385.0000 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=73669.75 seconds
+
+Initiating PH iteration=100
+Number of discrete variables fixed=0 (total=10)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=   3384.9999 Max-Min= 1200.00
+Converger=Normalized term diff value is         0.6000 - threshold reached=False
+Cumulative run-time=73849.41 seconds
+Halting PH - reached maximal iteration count=100
+
+Number of discrete variables fixed before final plugin calls=0 (total=10)
+Number of continuous variables fixed before final plugin calls=0 (total=0)
+PH complete
+
+Convergence history:
+Converger=Normalized term diff
+Iteration    Metric Value
+     0               1.6000
+     1               1.6000
+     2               1.0000
+     3               0.8000
+     4               0.8000
+     5               0.4000
+     6               1.0000
+     7               0.8000
+     8               0.6000
+     9               0.6000
+    10               0.6000
+    11               1.0000
+    12               0.6000
+    13               1.2000
+    14               0.6000
+    15               0.6000
+    16               1.0000
+    17               0.6000
+    18               0.8000
+    19               0.8000
+    20               0.8000
+    21               0.8000
+    22               0.8000
+    23               0.6000
+    24               0.6000
+    25               0.8000
+    26               0.6000
+    27               0.8000
+    28               0.8000
+    29               0.8000
+    30               0.4000
+    31               1.4000
+    32               1.0000
+    33               0.6000
+    34               0.8000
+    35               0.4000
+    36               0.6000
+    37               1.0000
+    38               0.6000
+    39               0.6000
+    40               0.6000
+    41               1.0000
+    42               0.8000
+    43               0.8000
+    44               0.6000
+    45               0.4000
+    46               1.2000
+    47               0.8000
+    48               0.8000
+    49               0.8000
+    50               0.4000
+    51               1.2000
+    52               1.0000
+    53               0.6000
+    54               0.6000
+    55               0.6000
+    56               0.8000
+    57               0.8000
+    58               0.8000
+    59               0.8000
+    60               0.4000
+    61               1.2000
+    62               0.8000
+    63               0.8000
+    64               0.8000
+    65               0.4000
+    66               1.2000
+    67               1.2000
+    68               1.0000
+    69               0.8000
+    70               0.6000
+    71               0.6000
+    72               0.8000
+    73               0.8000
+    74               0.8000
+    75               0.4000
+    76               1.2000
+    77               0.6000
+    78               0.6000
+    79               0.8000
+    80               0.4000
+    81               1.2000
+    82               0.8000
+    83               0.8000
+    84               0.6000
+    85               0.8000
+    86               0.8000
+    87               0.6000
+    88               0.8000
+    89               0.6000
+    90               0.6000
+    91               0.8000
+    92               0.8000
+    93               0.6000
+    94               1.0000
+    95               0.4000
+    96               1.2000
+    97               1.0000
+    98               0.8000
+    99               0.6000
+   100               0.6000
+
+
+Final number of discrete variables fixed=0 (total=10)
+Final number of continuous variables fixed=0 (total=0)
+
+Computing objective inner bound at xhat solution
+
+Computed objective upper bound=   3700.1500
+
+X-hat variable values:
+
+   Stage: FirstStage
+          (Scenarios: Scenario1  Scenario2  Scenario3  Scenario4  Scenario5  Scenario6  Scenario7  Scenario8  Scenario9  Scenario10  Scenario11  Scenario12  Scenario13  Scenario14  Scenario15  Scenario16  Scenario17  Scenario18  Scenario19  Scenario20  Scenario21  Scenario22  Scenario23  Scenario24  Scenario25  Scenario26  Scenario27  Scenario28  Scenario29  Scenario30  Scenario31  Scenario32  Scenario33  Scenario34  Scenario35  Scenario36  Scenario37  Scenario38  Scenario39  Scenario40  Scenario41  Scenario42  Scenario43  Scenario44  Scenario45  Scenario46  Scenario47  Scenario48  Scenario49  Scenario50  Scenario51  Scenario52  Scenario53  Scenario54  Scenario55  Scenario56  Scenario57  Scenario58  Scenario59  Scenario60  Scenario61  Scenario62  Scenario63  Scenario64  Scenario65  Scenario66  Scenario67  Scenario68  Scenario69  Scenario70  Scenario71  Scenario72  Scenario73  Scenario74  Scenario75  Scenario76  Scenario77  Scenario78  Scenario79  Scenario80  Scenario81  Scenario82  Scenario83  Scenario84  Scenario85  Scenario86  Scenario87  Scenario88  Scenario89  Scenario90  Scenario91  Scenario92  Scenario93  Scenario94  Scenario95  Scenario96  Scenario97  Scenario98  Scenario99  Scenario100  )
+      Variable: q
+         Index:  [7]	Values:        1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000
+
+         Index:  [9]	Values:        1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000      1.0000
+
+      Cost Variable: FirstStageCost
+         Tree Node: RootNode      (Scenarios:  Scenario1 Scenario2 Scenario3 Scenario4 Scenario5 Scenario6 Scenario7 Scenario8 Scenario9 Scenario10 Scenario11 Scenario12 Scenario13 Scenario14 Scenario15 Scenario16 Scenario17 Scenario18 Scenario19 Scenario20 Scenario21 Scenario22 Scenario23 Scenario24 Scenario25 Scenario26 Scenario27 Scenario28 Scenario29 Scenario30 Scenario31 Scenario32 Scenario33 Scenario34 Scenario35 Scenario36 Scenario37 Scenario38 Scenario39 Scenario40 Scenario41 Scenario42 Scenario43 Scenario44 Scenario45 Scenario46 Scenario47 Scenario48 Scenario49 Scenario50 Scenario51 Scenario52 Scenario53 Scenario54 Scenario55 Scenario56 Scenario57 Scenario58 Scenario59 Scenario60 Scenario61 Scenario62 Scenario63 Scenario64 Scenario65 Scenario66 Scenario67 Scenario68 Scenario69 Scenario70 Scenario71 Scenario72 Scenario73 Scenario74 Scenario75 Scenario76 Scenario77 Scenario78 Scenario79 Scenario80 Scenario81 Scenario82 Scenario83 Scenario84 Scenario85 Scenario86 Scenario87 Scenario88 Scenario89 Scenario90 Scenario91 Scenario92 Scenario93 Scenario94 Scenario95 Scenario96 Scenario97 Scenario98 Scenario99 Scenario100 )
+         Values:     3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000   3700.0000    Max-Min:        0.0000   Avg:     3700.0000
+
+X-hat costs:
+
+Scenario Tree Costs
+----------------------------------------------------
+Tree Nodes:
+
+	Name=RootNode
+	Stage=FirstStage
+	Parent=None
+	Conditional probability=1.0000
+	Children:
+		Scenario100Node
+		Scenario10Node
+		Scenario11Node
+		Scenario12Node
+		Scenario13Node
+		Scenario14Node
+		Scenario15Node
+		Scenario16Node
+		Scenario17Node
+		Scenario18Node
+		Scenario19Node
+		Scenario1Node
+		Scenario20Node
+		Scenario21Node
+		Scenario22Node
+		Scenario23Node
+		Scenario24Node
+		Scenario25Node
+		Scenario26Node
+		Scenario27Node
+		Scenario28Node
+		Scenario29Node
+		Scenario2Node
+		Scenario30Node
+		Scenario31Node
+		Scenario32Node
+		Scenario33Node
+		Scenario34Node
+		Scenario35Node
+		Scenario36Node
+		Scenario37Node
+		Scenario38Node
+		Scenario39Node
+		Scenario3Node
+		Scenario40Node
+		Scenario41Node
+		Scenario42Node
+		Scenario43Node
+		Scenario44Node
+		Scenario45Node
+		Scenario46Node
+		Scenario47Node
+		Scenario48Node
+		Scenario49Node
+		Scenario4Node
+		Scenario50Node
+		Scenario51Node
+		Scenario52Node
+		Scenario53Node
+		Scenario54Node
+		Scenario55Node
+		Scenario56Node
+		Scenario57Node
+		Scenario58Node
+		Scenario59Node
+		Scenario5Node
+		Scenario60Node
+		Scenario61Node
+		Scenario62Node
+		Scenario63Node
+		Scenario64Node
+		Scenario65Node
+		Scenario66Node
+		Scenario67Node
+		Scenario68Node
+		Scenario69Node
+		Scenario6Node
+		Scenario70Node
+		Scenario71Node
+		Scenario72Node
+		Scenario73Node
+		Scenario74Node
+		Scenario75Node
+		Scenario76Node
+		Scenario77Node
+		Scenario78Node
+		Scenario79Node
+		Scenario7Node
+		Scenario80Node
+		Scenario81Node
+		Scenario82Node
+		Scenario83Node
+		Scenario84Node
+		Scenario85Node
+		Scenario86Node
+		Scenario87Node
+		Scenario88Node
+		Scenario89Node
+		Scenario8Node
+		Scenario90Node
+		Scenario91Node
+		Scenario92Node
+		Scenario93Node
+		Scenario94Node
+		Scenario95Node
+		Scenario96Node
+		Scenario97Node
+		Scenario98Node
+		Scenario99Node
+		Scenario9Node
+	Scenarios:
+		Scenario1
+		Scenario10
+		Scenario100
+		Scenario11
+		Scenario12
+		Scenario13
+		Scenario14
+		Scenario15
+		Scenario16
+		Scenario17
+		Scenario18
+		Scenario19
+		Scenario2
+		Scenario20
+		Scenario21
+		Scenario22
+		Scenario23
+		Scenario24
+		Scenario25
+		Scenario26
+		Scenario27
+		Scenario28
+		Scenario29
+		Scenario3
+		Scenario30
+		Scenario31
+		Scenario32
+		Scenario33
+		Scenario34
+		Scenario35
+		Scenario36
+		Scenario37
+		Scenario38
+		Scenario39
+		Scenario4
+		Scenario40
+		Scenario41
+		Scenario42
+		Scenario43
+		Scenario44
+		Scenario45
+		Scenario46
+		Scenario47
+		Scenario48
+		Scenario49
+		Scenario5
+		Scenario50
+		Scenario51
+		Scenario52
+		Scenario53
+		Scenario54
+		Scenario55
+		Scenario56
+		Scenario57
+		Scenario58
+		Scenario59
+		Scenario6
+		Scenario60
+		Scenario61
+		Scenario62
+		Scenario63
+		Scenario64
+		Scenario65
+		Scenario66
+		Scenario67
+		Scenario68
+		Scenario69
+		Scenario7
+		Scenario70
+		Scenario71
+		Scenario72
+		Scenario73
+		Scenario74
+		Scenario75
+		Scenario76
+		Scenario77
+		Scenario78
+		Scenario79
+		Scenario8
+		Scenario80
+		Scenario81
+		Scenario82
+		Scenario83
+		Scenario84
+		Scenario85
+		Scenario86
+		Scenario87
+		Scenario88
+		Scenario89
+		Scenario9
+		Scenario90
+		Scenario91
+		Scenario92
+		Scenario93
+		Scenario94
+		Scenario95
+		Scenario96
+		Scenario97
+		Scenario98
+		Scenario99
+	Expected cost of (sub)tree rooted at node= 3700.1500
+
+	Name=Scenario100Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario100
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario10Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario10
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario11Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario11
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario12Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario12
+	Expected cost of (sub)tree rooted at node=    4.0000
+
+	Name=Scenario13Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario13
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario14Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario14
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario15Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario15
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario16Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario16
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario17Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario17
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario18Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario18
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario19Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario19
+	Expected cost of (sub)tree rooted at node=    1.0000
+
+	Name=Scenario1Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario1
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario20Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario20
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario21Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario21
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario22Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario22
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario23Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario23
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario24Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario24
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario25Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario25
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario26Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario26
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario27Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario27
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario28Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario28
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario29Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario29
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario2Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario2
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario30Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario30
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario31Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario31
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario32Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario32
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario33Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario33
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario34Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario34
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario35Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario35
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario36Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario36
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario37Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario37
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario38Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario38
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario39Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario39
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario3Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario3
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario40Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario40
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario41Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario41
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario42Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario42
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario43Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario43
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario44Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario44
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario45Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario45
+	Expected cost of (sub)tree rooted at node=    4.0000
+
+	Name=Scenario46Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario46
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario47Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario47
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario48Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario48
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario49Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario49
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario4Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario4
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario50Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario50
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario51Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario51
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario52Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario52
+	Expected cost of (sub)tree rooted at node=    1.0000
+
+	Name=Scenario53Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario53
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario54Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario54
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario55Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario55
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario56Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario56
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario57Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario57
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario58Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario58
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario59Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario59
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario5Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario5
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario60Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario60
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario61Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario61
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario62Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario62
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario63Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario63
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario64Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario64
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario65Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario65
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario66Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario66
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario67Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario67
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario68Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario68
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario69Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario69
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario6Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario6
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario70Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario70
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario71Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario71
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario72Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario72
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario73Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario73
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario74Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario74
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario75Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario75
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario76Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario76
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario77Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario77
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario78Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario78
+	Expected cost of (sub)tree rooted at node=    4.0000
+
+	Name=Scenario79Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario79
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario7Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario7
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario80Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario80
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario81Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario81
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario82Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario82
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario83Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario83
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario84Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario84
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario85Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario85
+	Expected cost of (sub)tree rooted at node=    1.0000
+
+	Name=Scenario86Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario86
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario87Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario87
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario88Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario88
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario89Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario89
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario8Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario8
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario90Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario90
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario91Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario91
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario92Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario92
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario93Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario93
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario94Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario94
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario95Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario95
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario96Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario96
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario97Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario97
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario98Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario98
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario99Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario99
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+	Name=Scenario9Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.0100
+	Children:
+		None
+	Scenarios:
+		Scenario9
+	Expected cost of (sub)tree rooted at node=    0.0000
+
+----------------------------------------------------
+Scenarios:
+
+	Name=Scenario1
+	Probability=0.0100
+	Leaf Node=Scenario1Node
+	Tree node sequence:
+		RootNode
+		Scenario1Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario10
+	Probability=0.0100
+	Leaf Node=Scenario10Node
+	Tree node sequence:
+		RootNode
+		Scenario10Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario100
+	Probability=0.0100
+	Leaf Node=Scenario100Node
+	Tree node sequence:
+		RootNode
+		Scenario100Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario11
+	Probability=0.0100
+	Leaf Node=Scenario11Node
+	Tree node sequence:
+		RootNode
+		Scenario11Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario12
+	Probability=0.0100
+	Leaf Node=Scenario12Node
+	Tree node sequence:
+		RootNode
+		Scenario12Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    4.0000
+	Total scenario cost= 3704.0000
+
+	Name=Scenario13
+	Probability=0.0100
+	Leaf Node=Scenario13Node
+	Tree node sequence:
+		RootNode
+		Scenario13Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario14
+	Probability=0.0100
+	Leaf Node=Scenario14Node
+	Tree node sequence:
+		RootNode
+		Scenario14Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario15
+	Probability=0.0100
+	Leaf Node=Scenario15Node
+	Tree node sequence:
+		RootNode
+		Scenario15Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario16
+	Probability=0.0100
+	Leaf Node=Scenario16Node
+	Tree node sequence:
+		RootNode
+		Scenario16Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario17
+	Probability=0.0100
+	Leaf Node=Scenario17Node
+	Tree node sequence:
+		RootNode
+		Scenario17Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario18
+	Probability=0.0100
+	Leaf Node=Scenario18Node
+	Tree node sequence:
+		RootNode
+		Scenario18Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario19
+	Probability=0.0100
+	Leaf Node=Scenario19Node
+	Tree node sequence:
+		RootNode
+		Scenario19Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    1.0000
+	Total scenario cost= 3701.0000
+
+	Name=Scenario2
+	Probability=0.0100
+	Leaf Node=Scenario2Node
+	Tree node sequence:
+		RootNode
+		Scenario2Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario20
+	Probability=0.0100
+	Leaf Node=Scenario20Node
+	Tree node sequence:
+		RootNode
+		Scenario20Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario21
+	Probability=0.0100
+	Leaf Node=Scenario21Node
+	Tree node sequence:
+		RootNode
+		Scenario21Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario22
+	Probability=0.0100
+	Leaf Node=Scenario22Node
+	Tree node sequence:
+		RootNode
+		Scenario22Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario23
+	Probability=0.0100
+	Leaf Node=Scenario23Node
+	Tree node sequence:
+		RootNode
+		Scenario23Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario24
+	Probability=0.0100
+	Leaf Node=Scenario24Node
+	Tree node sequence:
+		RootNode
+		Scenario24Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario25
+	Probability=0.0100
+	Leaf Node=Scenario25Node
+	Tree node sequence:
+		RootNode
+		Scenario25Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario26
+	Probability=0.0100
+	Leaf Node=Scenario26Node
+	Tree node sequence:
+		RootNode
+		Scenario26Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario27
+	Probability=0.0100
+	Leaf Node=Scenario27Node
+	Tree node sequence:
+		RootNode
+		Scenario27Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario28
+	Probability=0.0100
+	Leaf Node=Scenario28Node
+	Tree node sequence:
+		RootNode
+		Scenario28Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario29
+	Probability=0.0100
+	Leaf Node=Scenario29Node
+	Tree node sequence:
+		RootNode
+		Scenario29Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario3
+	Probability=0.0100
+	Leaf Node=Scenario3Node
+	Tree node sequence:
+		RootNode
+		Scenario3Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario30
+	Probability=0.0100
+	Leaf Node=Scenario30Node
+	Tree node sequence:
+		RootNode
+		Scenario30Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario31
+	Probability=0.0100
+	Leaf Node=Scenario31Node
+	Tree node sequence:
+		RootNode
+		Scenario31Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario32
+	Probability=0.0100
+	Leaf Node=Scenario32Node
+	Tree node sequence:
+		RootNode
+		Scenario32Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario33
+	Probability=0.0100
+	Leaf Node=Scenario33Node
+	Tree node sequence:
+		RootNode
+		Scenario33Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario34
+	Probability=0.0100
+	Leaf Node=Scenario34Node
+	Tree node sequence:
+		RootNode
+		Scenario34Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario35
+	Probability=0.0100
+	Leaf Node=Scenario35Node
+	Tree node sequence:
+		RootNode
+		Scenario35Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario36
+	Probability=0.0100
+	Leaf Node=Scenario36Node
+	Tree node sequence:
+		RootNode
+		Scenario36Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario37
+	Probability=0.0100
+	Leaf Node=Scenario37Node
+	Tree node sequence:
+		RootNode
+		Scenario37Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario38
+	Probability=0.0100
+	Leaf Node=Scenario38Node
+	Tree node sequence:
+		RootNode
+		Scenario38Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario39
+	Probability=0.0100
+	Leaf Node=Scenario39Node
+	Tree node sequence:
+		RootNode
+		Scenario39Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario4
+	Probability=0.0100
+	Leaf Node=Scenario4Node
+	Tree node sequence:
+		RootNode
+		Scenario4Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario40
+	Probability=0.0100
+	Leaf Node=Scenario40Node
+	Tree node sequence:
+		RootNode
+		Scenario40Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario41
+	Probability=0.0100
+	Leaf Node=Scenario41Node
+	Tree node sequence:
+		RootNode
+		Scenario41Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario42
+	Probability=0.0100
+	Leaf Node=Scenario42Node
+	Tree node sequence:
+		RootNode
+		Scenario42Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario43
+	Probability=0.0100
+	Leaf Node=Scenario43Node
+	Tree node sequence:
+		RootNode
+		Scenario43Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario44
+	Probability=0.0100
+	Leaf Node=Scenario44Node
+	Tree node sequence:
+		RootNode
+		Scenario44Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario45
+	Probability=0.0100
+	Leaf Node=Scenario45Node
+	Tree node sequence:
+		RootNode
+		Scenario45Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    4.0000
+	Total scenario cost= 3704.0000
+
+	Name=Scenario46
+	Probability=0.0100
+	Leaf Node=Scenario46Node
+	Tree node sequence:
+		RootNode
+		Scenario46Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario47
+	Probability=0.0100
+	Leaf Node=Scenario47Node
+	Tree node sequence:
+		RootNode
+		Scenario47Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario48
+	Probability=0.0100
+	Leaf Node=Scenario48Node
+	Tree node sequence:
+		RootNode
+		Scenario48Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario49
+	Probability=0.0100
+	Leaf Node=Scenario49Node
+	Tree node sequence:
+		RootNode
+		Scenario49Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario5
+	Probability=0.0100
+	Leaf Node=Scenario5Node
+	Tree node sequence:
+		RootNode
+		Scenario5Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario50
+	Probability=0.0100
+	Leaf Node=Scenario50Node
+	Tree node sequence:
+		RootNode
+		Scenario50Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario51
+	Probability=0.0100
+	Leaf Node=Scenario51Node
+	Tree node sequence:
+		RootNode
+		Scenario51Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario52
+	Probability=0.0100
+	Leaf Node=Scenario52Node
+	Tree node sequence:
+		RootNode
+		Scenario52Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    1.0000
+	Total scenario cost= 3701.0000
+
+	Name=Scenario53
+	Probability=0.0100
+	Leaf Node=Scenario53Node
+	Tree node sequence:
+		RootNode
+		Scenario53Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario54
+	Probability=0.0100
+	Leaf Node=Scenario54Node
+	Tree node sequence:
+		RootNode
+		Scenario54Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario55
+	Probability=0.0100
+	Leaf Node=Scenario55Node
+	Tree node sequence:
+		RootNode
+		Scenario55Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario56
+	Probability=0.0100
+	Leaf Node=Scenario56Node
+	Tree node sequence:
+		RootNode
+		Scenario56Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario57
+	Probability=0.0100
+	Leaf Node=Scenario57Node
+	Tree node sequence:
+		RootNode
+		Scenario57Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario58
+	Probability=0.0100
+	Leaf Node=Scenario58Node
+	Tree node sequence:
+		RootNode
+		Scenario58Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario59
+	Probability=0.0100
+	Leaf Node=Scenario59Node
+	Tree node sequence:
+		RootNode
+		Scenario59Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario6
+	Probability=0.0100
+	Leaf Node=Scenario6Node
+	Tree node sequence:
+		RootNode
+		Scenario6Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario60
+	Probability=0.0100
+	Leaf Node=Scenario60Node
+	Tree node sequence:
+		RootNode
+		Scenario60Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario61
+	Probability=0.0100
+	Leaf Node=Scenario61Node
+	Tree node sequence:
+		RootNode
+		Scenario61Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario62
+	Probability=0.0100
+	Leaf Node=Scenario62Node
+	Tree node sequence:
+		RootNode
+		Scenario62Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario63
+	Probability=0.0100
+	Leaf Node=Scenario63Node
+	Tree node sequence:
+		RootNode
+		Scenario63Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario64
+	Probability=0.0100
+	Leaf Node=Scenario64Node
+	Tree node sequence:
+		RootNode
+		Scenario64Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario65
+	Probability=0.0100
+	Leaf Node=Scenario65Node
+	Tree node sequence:
+		RootNode
+		Scenario65Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario66
+	Probability=0.0100
+	Leaf Node=Scenario66Node
+	Tree node sequence:
+		RootNode
+		Scenario66Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario67
+	Probability=0.0100
+	Leaf Node=Scenario67Node
+	Tree node sequence:
+		RootNode
+		Scenario67Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario68
+	Probability=0.0100
+	Leaf Node=Scenario68Node
+	Tree node sequence:
+		RootNode
+		Scenario68Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario69
+	Probability=0.0100
+	Leaf Node=Scenario69Node
+	Tree node sequence:
+		RootNode
+		Scenario69Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario7
+	Probability=0.0100
+	Leaf Node=Scenario7Node
+	Tree node sequence:
+		RootNode
+		Scenario7Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario70
+	Probability=0.0100
+	Leaf Node=Scenario70Node
+	Tree node sequence:
+		RootNode
+		Scenario70Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario71
+	Probability=0.0100
+	Leaf Node=Scenario71Node
+	Tree node sequence:
+		RootNode
+		Scenario71Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario72
+	Probability=0.0100
+	Leaf Node=Scenario72Node
+	Tree node sequence:
+		RootNode
+		Scenario72Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario73
+	Probability=0.0100
+	Leaf Node=Scenario73Node
+	Tree node sequence:
+		RootNode
+		Scenario73Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario74
+	Probability=0.0100
+	Leaf Node=Scenario74Node
+	Tree node sequence:
+		RootNode
+		Scenario74Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario75
+	Probability=0.0100
+	Leaf Node=Scenario75Node
+	Tree node sequence:
+		RootNode
+		Scenario75Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario76
+	Probability=0.0100
+	Leaf Node=Scenario76Node
+	Tree node sequence:
+		RootNode
+		Scenario76Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario77
+	Probability=0.0100
+	Leaf Node=Scenario77Node
+	Tree node sequence:
+		RootNode
+		Scenario77Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario78
+	Probability=0.0100
+	Leaf Node=Scenario78Node
+	Tree node sequence:
+		RootNode
+		Scenario78Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    4.0000
+	Total scenario cost= 3704.0000
+
+	Name=Scenario79
+	Probability=0.0100
+	Leaf Node=Scenario79Node
+	Tree node sequence:
+		RootNode
+		Scenario79Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario8
+	Probability=0.0100
+	Leaf Node=Scenario8Node
+	Tree node sequence:
+		RootNode
+		Scenario8Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario80
+	Probability=0.0100
+	Leaf Node=Scenario80Node
+	Tree node sequence:
+		RootNode
+		Scenario80Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario81
+	Probability=0.0100
+	Leaf Node=Scenario81Node
+	Tree node sequence:
+		RootNode
+		Scenario81Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario82
+	Probability=0.0100
+	Leaf Node=Scenario82Node
+	Tree node sequence:
+		RootNode
+		Scenario82Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario83
+	Probability=0.0100
+	Leaf Node=Scenario83Node
+	Tree node sequence:
+		RootNode
+		Scenario83Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario84
+	Probability=0.0100
+	Leaf Node=Scenario84Node
+	Tree node sequence:
+		RootNode
+		Scenario84Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario85
+	Probability=0.0100
+	Leaf Node=Scenario85Node
+	Tree node sequence:
+		RootNode
+		Scenario85Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    1.0000
+	Total scenario cost= 3701.0000
+
+	Name=Scenario86
+	Probability=0.0100
+	Leaf Node=Scenario86Node
+	Tree node sequence:
+		RootNode
+		Scenario86Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario87
+	Probability=0.0100
+	Leaf Node=Scenario87Node
+	Tree node sequence:
+		RootNode
+		Scenario87Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario88
+	Probability=0.0100
+	Leaf Node=Scenario88Node
+	Tree node sequence:
+		RootNode
+		Scenario88Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario89
+	Probability=0.0100
+	Leaf Node=Scenario89Node
+	Tree node sequence:
+		RootNode
+		Scenario89Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario9
+	Probability=0.0100
+	Leaf Node=Scenario9Node
+	Tree node sequence:
+		RootNode
+		Scenario9Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario90
+	Probability=0.0100
+	Leaf Node=Scenario90Node
+	Tree node sequence:
+		RootNode
+		Scenario90Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario91
+	Probability=0.0100
+	Leaf Node=Scenario91Node
+	Tree node sequence:
+		RootNode
+		Scenario91Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario92
+	Probability=0.0100
+	Leaf Node=Scenario92Node
+	Tree node sequence:
+		RootNode
+		Scenario92Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario93
+	Probability=0.0100
+	Leaf Node=Scenario93Node
+	Tree node sequence:
+		RootNode
+		Scenario93Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario94
+	Probability=0.0100
+	Leaf Node=Scenario94Node
+	Tree node sequence:
+		RootNode
+		Scenario94Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario95
+	Probability=0.0100
+	Leaf Node=Scenario95Node
+	Tree node sequence:
+		RootNode
+		Scenario95Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario96
+	Probability=0.0100
+	Leaf Node=Scenario96Node
+	Tree node sequence:
+		RootNode
+		Scenario96Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario97
+	Probability=0.0100
+	Leaf Node=Scenario97Node
+	Tree node sequence:
+		RootNode
+		Scenario97Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario98
+	Probability=0.0100
+	Leaf Node=Scenario98Node
+	Tree node sequence:
+		RootNode
+		Scenario98Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+	Name=Scenario99
+	Probability=0.0100
+	Leaf Node=Scenario99Node
+	Tree node sequence:
+		RootNode
+		Scenario99Node
+	Stage=          FirstStage     Cost= 3700.0000
+	Stage=         SecondStage     Cost=    0.0000
+	Total scenario cost= 3700.0000
+
+----------------------------------------------------
+
+
+Total PH execution time=73884.00 seconds
+
+
+Total execution time=73908.18 seconds
