@@ -27,9 +27,65 @@ def sample_distribution(min_val, max_val, mean, std):
     return scipy.stats.beta(alpha, beta, scale=scale, loc=location)
 
 
-def generate_sample(price, temp, samples):
+# def generate_sample(price, temp, samples=10):
     
-    f_name= "Day_ahead_prices.xlsx"
+    
+#     f_name= "November_2019.xlsx"
+#     sheet = "Statistics"  
+    
+#     data_df=pd.read_excel(f_name, sheet_name=sheet)
+    
+#     time = len(data_df.columns)
+    
+#     tempratures=np.zeros([samples,time-1])
+#     prices = np.zeros([samples,time-1])
+    
+#     # samples of tempratures around forecasted temp
+#     for i in range(1,time):
+#         # mean=data_df.iloc[0,i]
+#         mean = temp[i-1]
+#         # Select min and max around the forecasted temprature
+#         # to bound the samples around forecasted temprature
+        
+#         min_val=mean-mean * 0.2
+#         max_val=mean+mean * 0.2
+        
+#         # min_val=data_df.iloc[1,i]
+#         # max_val=data_df.iloc[2,i]
+        
+#         std=data_df.iloc[3,i]
+#         dist=sample_distribution(min_val, max_val, mean, std)
+#         # Samples around the current temp at time i
+#         tempratures[:,i-1]=dist.rvs(size=samples)
+        
+    
+#     # samples of prices around forecasted price
+#     f_name= "Day_ahead_prices.xlsx"
+#     sheet = "Statistics"
+    
+#     data_df=pd.read_excel(f_name, sheet_name=sheet)
+#     for i in range(1,time):
+#         mean=data_df.iloc[0,i]
+#         # mean = price[i-1]
+        
+#         min_val=data_df.iloc[1,i]
+#         # min_val=mean-mean * 0.2  
+        
+#         max_val=data_df.iloc[2,i]
+#         # max_val=mean+mean * 0.2
+        
+#         std=data_df.iloc[3,i]
+#         dist=sample_distribution(min_val, max_val, mean, std)
+#         
+#         prices[:,i-1]=dist.rvs(size=samples)
+    
+    
+#     return tempratures, prices
+
+
+def generate_temp(temp, f_name, samples=10):
+    
+    f_name= "November_2019.xlsx"
     sheet = "Statistics"  
     
     data_df=pd.read_excel(f_name, sheet_name=sheet)
@@ -37,16 +93,19 @@ def generate_sample(price, temp, samples):
     time = len(data_df.columns)
     
     tempratures=np.zeros([samples,time-1])
-    prices = np.zeros([samples,time-1])
     
     # samples of tempratures around forecasted temp
     for i in range(1,time):
-        mean=data_df.iloc[0,i]
+        # mean=data_df.iloc[0,i]
         mean = temp[i-1]
         # Select min and max around the forecasted temprature
         # to bound the samples around forecasted temprature
+        
         min_val=mean-mean * 0.2
         max_val=mean+mean * 0.2
+        
+        # min_val=data_df.iloc[1,i]
+        # max_val=data_df.iloc[2,i]
         
         std=data_df.iloc[3,i]
         dist=sample_distribution(min_val, max_val, mean, std)
@@ -54,27 +113,40 @@ def generate_sample(price, temp, samples):
         tempratures[:,i-1]=dist.rvs(size=samples)
         
     
-    # samples of prices around forecasted price
-    f_name= "November_2019.xlsx"
+    
+    return tempratures
+
+def generate_price(price, temp, samples=10):
+    
+    f_name= "Day_ahead_prices.xlsx"
     sheet = "Statistics"
     
     data_df=pd.read_excel(f_name, sheet_name=sheet)
     
+    time = len(data_df.columns)
+        
+    prices = np.zeros([samples,time-1])
+ 
+    
+    # samples of prices around forecasted price
+   
+    
+    data_df=pd.read_excel(f_name, sheet_name=sheet)
     for i in range(1,time):
-        mean=data_df.iloc[0,i]
+        # mean=data_df.iloc[0,i]
         mean = price[i-1]
-        min_val=data_df.iloc[1,i]
-        # min_val=mean-mean * 0.2    
-        max_val=data_df.iloc[2,i]
-        # max_val=mean+mean * 0.2
+        
+        # min_val=data_df.iloc[1,i]
+        min_val=mean-mean * 0.3  
+        
+        # max_val=data_df.iloc[2,i]
+        max_val=mean+mean * 0.3
+        
         std=data_df.iloc[3,i]
         dist=sample_distribution(min_val, max_val, mean, std)
         prices[:,i-1]=dist.rvs(size=samples)
     
     
-    return tempratures, prices
-
-
-    
+    return prices
     
     

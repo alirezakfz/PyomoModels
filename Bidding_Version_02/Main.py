@@ -21,7 +21,8 @@ from appliance_simulation import run_appliance_simulation, configure_appliances_
 from Lighting_simulation import lighting_load
 from make_dat_file import create_dat_files
 from EVs_simulation import electric_vehicles
-from save_result import results_to_csv
+# from save_result import results_to_csv
+from samples_gen import generate_temp, generate_price
 from gant_chart import gant_chart
 
 # usage profile of WM for hour1, hour2
@@ -259,7 +260,7 @@ def write_to_csv(loads, occupancy_profiles, scenario):
         temp=temp.tolist()
         writelist.append(temp)
         
-    f_name="ScenarioData/inflexible_profiles_"+str(scenario)+".csv"
+    f_name="prosumers_data/inflexible_profiles_"+str(scenario)+".csv"
     with open(f_name, "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerows(writelist)
@@ -273,7 +274,7 @@ def write_to_csv(loads, occupancy_profiles, scenario):
         temp=temp.tolist()
         writelist.append(temp)
     
-    f_name="ScenarioData/occupancy_profiles_"+str(scenario)+".csv"
+    f_name="prosumers_data/occupancy_profiles_"+str(scenario)+".csv"
     with open(f_name, "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerows(writelist)
@@ -363,8 +364,8 @@ def run_evs_flexible_loads(residents_list, number_of_EVs, scenario):
     
     
     # Writing Data frame info CSV file
-    f_name="ScenarioData/prosumers_profiles_"+str(scenario)+".csv"
-    df_info.to_csv("ScenarioData/prosumers_profiles.csv", index=False, header=True)
+    f_name="prosumers_data/prosumers_profiles_"+str(scenario)+".csv"
+    df_info.to_csv(f_name, index=False, header=True)
     
     
     
@@ -375,10 +376,19 @@ def run_evs_flexible_loads(residents_list, number_of_EVs, scenario):
 def main():
     
     # create profiles for each prosumers: lighting, ordinary appliances
-    number_of_prosumers=50
-    number_of_scenarios=20
+    number_of_prosumers=5
+    number_of_scenarios=2
+    
+    # Day Ahead price for NOV-15 2019
+    price=[70,69.99,67.99,68.54,66.1,74.41,74.43,70,68.89,65.93,59.19,59.19,65.22,66.07,70.41,75.15,84.4,78.19,74.48,69.24,69.32,69.31,68.07,70.06]
+    
+    # November 15 forecasted temprature
+    temp=[16.784803,16.094803,15.764802,14.774801,14.834802,14.184802,14.144801,15.314801,16.694803,19.734802,24.414803,25.384802,26.744802,27.144802,27.524803,27.694803,26.834803,26.594803,25.664803,22.594803,21.394802,20.164803,19.584803,20.334803]
     
     
+    temperatures = generate_temp(temp, number_of_scenarios)
+    
+    prices= generate_price(price, number_of_scenarios)
     
     for scenario in range(1,number_of_scenarios):
         
@@ -403,14 +413,13 @@ def main():
         
         #*******************************
         # Make dat file 
-        f_inflexible="ScenarioData/inflexible_profiles_"+str(scenario)+".csv"
-        f_occupancy= "ScenarioData/occupancy_profiles_"+str(scenario)+".csv"
-        f_prosumers= "ScenarioData/prosumers_profiles_"+str(scenario)+".csv"
-        temperature=0
-        price=0
-        create_dat_files(f_inflexible, f_occupancy, f_prosumers, temperature, price)
+        f_inflexible="prosumers_data/inflexible_profiles_"+str(scenario)+".csv"
+        f_occupancy= "prosumers_data/occupancy_profiles_"+str(scenario)+".csv"
+        f_prosumers= "prosumers_data/prosumers_profiles_"+str(scenario)+".csv"
+        
+        create_dat_files(f_inflexible, f_occupancy, f_prosumers, temperatures[scenario-1], prices[scenario-1], scenario)
     
-    
+   
     #gant_chart(num_bulbs, activity_profile)
     
     pass

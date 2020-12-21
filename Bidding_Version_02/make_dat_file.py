@@ -12,40 +12,40 @@ Get the name of files to create the .dat file for abstract model
 import pandas as pd
 import numpy as np
 
-def create_dat_files(f_inflexible, f_occupancy, f_prosumers, temperature, price):
+def create_dat_files(f_inflexible, f_occupancy, f_prosumers, temperature, price, scenario):
     
-    f_inflexible="ScenarioData/inflexible_profiles.csv"
-    f_occupancy="ScenarioData/occupancy_profiles.csv"
-    f_prosumers="ScenarioData/prosumers_profiles.csv"
+    # f_inflexible="ScenarioData/inflexible_profiles.csv"
+    # f_occupancy="ScenarioData/occupancy_profiles.csv"
+    # f_prosumers="ScenarioData/prosumers_profiles.csv"
     
     
-    # For one case it is NOV 15 of 2019
-    nov_15=[16.784803,16.094803,15.764802,\
-            14.774801,14.834802,14.184802,\
-                14.144801,15.314801,16.694803,\
-                    19.734802,24.414803,25.384802,26.744802,27.144802,\
-                        27.524803,27.694803,26.834803,26.594803,\
-                            25.664803,22.594803,21.394802,20.164803,\
-                                19.584803,20.334803]
+    # # For one case it is NOV 15 of 2019
+    # nov_15=[16.784803,16.094803,15.764802,\
+    #         14.774801,14.834802,14.184802,\
+    #             14.144801,15.314801,16.694803,\
+    #                 19.734802,24.414803,25.384802,26.744802,27.144802,\
+    #                     27.524803,27.694803,26.834803,26.594803,\
+    #                         25.664803,22.594803,21.394802,20.164803,\
+    #                             19.584803,20.334803]
     
-    price_Nov_15 =[70,69.99,67.99,68.54,66.1,74.41,74.43,70,68.89,\
-                   65.93,59.19,59.19,65.22,66.07,70.41,75.15,84.4,\
-                       78.19,74.48,69.24,69.32,69.31,68.07,70.06]
+    # price_Nov_15 =[70,69.99,67.99,68.54,66.1,74.41,74.43,70,68.89,\
+    #                65.93,59.19,59.19,65.22,66.07,70.41,75.15,84.4,\
+    #                    78.19,74.48,69.24,69.32,69.31,68.07,70.06]
     
     
     # Rotate the price for 16 to 40
-    array=np.array(price_Nov_15)
+    array=np.array(price)
     array = np.roll(array,-15)  
-    price_Nov_15 = array.tolist()
+    price = array.tolist()
         
     # Rotate the temprature from 16 to 24
-    array=np.array(nov_15)
+    array=np.array(temperature)
     array = np.roll(array,-15)
     temperature = array.tolist()
     
     array=[]
     
-    price =[round(x,2) for x in price_Nov_15]
+    price =[round(x,2) for x in price]
     
     inl_loads= pd.read_csv(f_inflexible)
     occ = pd.read_csv(f_occupancy)
@@ -54,7 +54,7 @@ def create_dat_files(f_inflexible, f_occupancy, f_prosumers, temperature, price)
     no_pr = len(inl_loads)
     
     # Name of the file to store data
-    f_target = "DATA/data.dat"
+    f_target = "scenariodata/Scenario"+str(scenario)+".dat"
     f= open(f_target,"w")
     
     
