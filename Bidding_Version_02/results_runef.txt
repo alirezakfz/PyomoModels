@@ -1,0 +1,287 @@
+WARNING: DEPRECATED: The 'StageCostVariable' scenario tree model parameter has
+    been renamed to 'StageCost'. Please update your scenario tree structure
+    model.
+
+Initializing extensive form algorithm for stochastic programming problems.
+EF solve completed and solution status is optimal
+EF solve termination condition is optimal
+EF objective: 747483.89208
+EF gap:            0.00000
+EF bound:     747483.89208
+
+Extensive form solution:
+----------------------------------------------------
+Tree Nodes:
+
+	Name=RootNode
+	Stage=FirstStage
+	Parent=None
+	Variables: 
+		E_DA[16]=300.158
+		E_DA[17]=563.148
+		E_DA[18]=764.2240000000003
+		E_DA[19]=829.0669999999996
+		E_DA[20]=817.8152
+		E_DA[21]=833.5696918718928
+		E_DA[22]=689.6419999999999
+		E_DA[23]=774.0467098495301
+		E_DA[24]=411.034
+		E_DA[25]=157.8109
+		E_DA[26]=160.01826282355606
+		E_DA[27]=253.47572634110793
+		E_DA[28]=202.910805006686
+		E_DA[29]=210.91027948938392
+		E_DA[30]=152.209
+		E_DA[31]=230.0757847640732
+		E_DA[32]=428.0520000000001
+		E_DA[33]=516.7116999999998
+		E_DA[34]=407.80400000000014
+		E_DA[35]=288.2259999999999
+		E_DA[36]=370.06899999999996
+		E_DA[37]=337.269
+		E_DA[38]=264.885
+		E_DA[39]=284.5059999999994
+
+	Name=Scenario1Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		I_NEG[18]=40.398999999999766
+		I_NEG[20]=119.3976083015377
+		I_NEG[25]=45.97744115845313
+		I_NEG[26]=26.29938834241865
+		I_NEG[33]=135.39630000000028
+		I_NEG[34]=19.399999999999864
+		I_NEG[36]=58.337000000000046
+		I_NEG[37]=8.02899999999994
+		I_NEG[38]=185.248
+		I_NEG[39]=77.91199999999935
+		I_POS[19]=96.09899999999965
+		I_POS[21]=87.71969187189245
+		I_POS[22]=17.184600000000085
+		I_POS[24]=32.004345569150885
+		I_POS[28]=98.31251931585678
+		I_POS[30]=25.16099999999989
+		I_POS[31]=59.18008476407319
+		I_POS[32]=63.09500000000004
+		I_POS[35]=5.665999999999996
+
+	Name=Scenario2Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		I_NEG[17]=85.97599999999989
+		I_NEG[22]=478.82702209207196
+		I_NEG[23]=19.75728827091069
+		I_NEG[25]=9.617099999999994
+		I_NEG[27]=27.927909369885526
+		I_NEG[35]=266.8790000000001
+		I_POS[16]=4.051139784946315
+		I_POS[18]=59.65210000000031
+		I_POS[20]=45.63692671985205
+		I_POS[21]=160.6583245169255
+		I_POS[26]=62.87089264854496
+		I_POS[32]=82.9865117525095
+		I_POS[37]=98.22600000000001
+
+	Name=Scenario3Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		I_NEG[16]=98.72300000000003
+		I_NEG[19]=30.672763440860535
+		I_NEG[21]=184.2488525350334
+		I_NEG[24]=183.5689118116853
+		I_NEG[30]=206.0237854533181
+		I_NEG[31]=23.339978676787013
+		I_NEG[32]=7.861000000000018
+		I_NEG[34]=26.307999999999936
+		I_NEG[35]=50.09899999999999
+		I_NEG[38]=271.06500000000005
+		I_NEG[39]=31.81700000000001
+		I_POS[17]=37.891000000000076
+		I_POS[18]=2.2210000000001173
+		I_POS[27]=129.88074700140857
+		I_POS[33]=25.31279052408661
+		I_POS[36]=23.625000000000114
+
+	Name=Scenario4Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		I_NEG[16]=15.864037807839054
+		I_NEG[17]=72.90099999999995
+		I_NEG[18]=147.77299999999997
+		I_NEG[19]=277.5285123135626
+		I_NEG[20]=54.029799999999796
+		I_NEG[21]=7.739729332870862
+		I_NEG[22]=41.30033338596365
+		I_NEG[23]=53.62886610941189
+		I_NEG[27]=4.73996699835385
+		I_NEG[28]=36.60490478050929
+		I_NEG[30]=41.75249184419292
+		I_NEG[31]=8.89433663724489
+		I_NEG[32]=71.66200000000003
+		I_NEG[33]=33.84481612903255
+		I_NEG[37]=296.98699999999985
+		I_POS[25]=80.15899999999999
+		I_POS[34]=31.284000000000106
+		I_POS[35]=0.8860000000000241
+		I_POS[36]=11.74199999999996
+		I_POS[38]=15.085999999999986
+		I_POS[39]=13.092000000000553
+
+	Name=Scenario5Node
+	Stage=SecondStage
+	Parent=RootNode
+	Variables: 
+		I_NEG[26]=66.80947749186583
+		I_NEG[29]=32.99086382141097
+		I_NEG[36]=54.60900000000004
+		I_POS[16]=24.58400000000131
+		I_POS[17]=67.6210000000001
+		I_POS[19]=211.77599999999973
+		I_POS[20]=93.74818604102619
+		I_POS[22]=14.796540790600261
+		I_POS[23]=157.45552820990156
+		I_POS[24]=92.1237541784966
+		I_POS[25]=111.09529999999997
+		I_POS[27]=5.686565592184053
+		I_POS[30]=63.41656231432181
+		I_POS[33]=0.6962634628383738
+		I_POS[34]=36.42700000000008
+		I_POS[37]=44.05600000000004
+		I_POS[38]=12.913999999999987
+		I_POS[39]=91.24499999999988
+
+
+Extensive form costs:
+Scenario Tree Costs
+----------------------------------------------------
+Tree Nodes:
+
+	Name=RootNode
+	Stage=FirstStage
+	Parent=None
+	Conditional probability=1.0000
+	Children:
+		Scenario1Node
+		Scenario2Node
+		Scenario3Node
+		Scenario4Node
+		Scenario5Node
+	Scenarios:
+		Scenario1
+		Scenario2
+		Scenario3
+		Scenario4
+		Scenario5
+	Expected cost of (sub)tree rooted at node=747483.8921
+
+	Name=Scenario1Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.2000
+	Children:
+		None
+	Scenarios:
+		Scenario1
+	Expected cost of (sub)tree rooted at node=16237.2761
+
+	Name=Scenario2Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.2000
+	Children:
+		None
+	Scenarios:
+		Scenario2
+	Expected cost of (sub)tree rooted at node=13112.8885
+
+	Name=Scenario3Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.2000
+	Children:
+		None
+	Scenarios:
+		Scenario3
+	Expected cost of (sub)tree rooted at node=53706.7504
+
+	Name=Scenario4Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.2000
+	Children:
+		None
+	Scenarios:
+		Scenario4
+	Expected cost of (sub)tree rooted at node=71503.2357
+
+	Name=Scenario5Node
+	Stage=SecondStage
+	Parent=RootNode
+	Conditional probability=0.2000
+	Children:
+		None
+	Scenarios:
+		Scenario5
+	Expected cost of (sub)tree rooted at node=-62991.0390
+
+----------------------------------------------------
+Scenarios:
+
+	Name=Scenario1
+	Probability=0.2000
+	Leaf Node=Scenario1Node
+	Tree node sequence:
+		RootNode
+		Scenario1Node
+	Stage=          FirstStage     Cost=729170.0697
+	Stage=         SecondStage     Cost=16237.2761
+	Total scenario cost=745407.3458
+
+	Name=Scenario2
+	Probability=0.2000
+	Leaf Node=Scenario2Node
+	Tree node sequence:
+		RootNode
+		Scenario2Node
+	Stage=          FirstStage     Cost=698973.3312
+	Stage=         SecondStage     Cost=13112.8885
+	Total scenario cost=712086.2197
+
+	Name=Scenario3
+	Probability=0.2000
+	Leaf Node=Scenario3Node
+	Tree node sequence:
+		RootNode
+		Scenario3Node
+	Stage=          FirstStage     Cost=733346.7551
+	Stage=         SecondStage     Cost=53706.7504
+	Total scenario cost=787053.5055
+
+	Name=Scenario4
+	Probability=0.2000
+	Leaf Node=Scenario4Node
+	Tree node sequence:
+		RootNode
+		Scenario4Node
+	Stage=          FirstStage     Cost=758229.7574
+	Stage=         SecondStage     Cost=71503.2357
+	Total scenario cost=829732.9931
+
+	Name=Scenario5
+	Probability=0.2000
+	Leaf Node=Scenario5Node
+	Tree node sequence:
+		RootNode
+		Scenario5Node
+	Stage=          FirstStage     Cost=720199.4063
+	Stage=         SecondStage     Cost=-62991.0390
+	Total scenario cost=657208.3674
+
+----------------------------------------------------
+
+Total EF execution time=2.68 seconds
+

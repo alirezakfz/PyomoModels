@@ -25,6 +25,8 @@ from EVs_simulation import electric_vehicles
 from samples_gen import generate_temp, generate_price
 from gant_chart import gant_chart
 
+from create_scen_struct import scenario_structure
+
 # usage profile of WM for hour1, hour2
 # Dataset location 
 # https://ari.vt.edu/research-data.html
@@ -260,7 +262,7 @@ def write_to_csv(loads, occupancy_profiles, scenario):
         temp=temp.tolist()
         writelist.append(temp)
         
-    f_name="prosumers_data/inflexible_profiles_"+str(scenario)+".csv"
+    f_name="prosumers_data/inflexible_profiles_scen_"+str(scenario)+".csv"
     with open(f_name, "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerows(writelist)
@@ -274,7 +276,7 @@ def write_to_csv(loads, occupancy_profiles, scenario):
         temp=temp.tolist()
         writelist.append(temp)
     
-    f_name="prosumers_data/occupancy_profiles_"+str(scenario)+".csv"
+    f_name="prosumers_data/occupancy_profiles_scen_"+str(scenario)+".csv"
     with open(f_name, "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerows(writelist)
@@ -364,7 +366,7 @@ def run_evs_flexible_loads(residents_list, number_of_EVs, scenario):
     
     
     # Writing Data frame info CSV file
-    f_name="prosumers_data/prosumers_profiles_"+str(scenario)+".csv"
+    f_name="prosumers_data/prosumers_profiles_scen_"+str(scenario)+".csv"
     df_info.to_csv(f_name, index=False, header=True)
     
     
@@ -376,8 +378,8 @@ def run_evs_flexible_loads(residents_list, number_of_EVs, scenario):
 def main():
     
     # create profiles for each prosumers: lighting, ordinary appliances
-    number_of_prosumers=5
-    number_of_scenarios=2
+    number_of_prosumers=20
+    number_of_scenarios=5
     
     # Day Ahead price for NOV-15 2019
     price=[70,69.99,67.99,68.54,66.1,74.41,74.43,70,68.89,65.93,59.19,59.19,65.22,66.07,70.41,75.15,84.4,78.19,74.48,69.24,69.32,69.31,68.07,70.06]
@@ -390,7 +392,7 @@ def main():
     
     prices= generate_price(price, number_of_scenarios)
     
-    for scenario in range(1,number_of_scenarios):
+    for scenario in range(1,number_of_scenarios+1):
         
         summary_loads, residents_list, occupancy_activity =prosumers_load_profile(number_of_prosumers)
         
@@ -413,15 +415,15 @@ def main():
         
         #*******************************
         # Make dat file 
-        f_inflexible="prosumers_data/inflexible_profiles_"+str(scenario)+".csv"
-        f_occupancy= "prosumers_data/occupancy_profiles_"+str(scenario)+".csv"
-        f_prosumers= "prosumers_data/prosumers_profiles_"+str(scenario)+".csv"
+        f_inflexible="prosumers_data/inflexible_profiles_scen_"+str(scenario)+".csv"
+        f_occupancy= "prosumers_data/occupancy_profiles_scen_"+str(scenario)+".csv"
+        f_prosumers= "prosumers_data/prosumers_profiles_scen_"+str(scenario)+".csv"
         
         create_dat_files(f_inflexible, f_occupancy, f_prosumers, temperatures[scenario-1], prices[scenario-1], scenario)
     
    
     #gant_chart(num_bulbs, activity_profile)
-    
+    scenario_structure(number_of_scenarios)
     pass
 
 if __name__ == "__main__":
