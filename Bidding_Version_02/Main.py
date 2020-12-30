@@ -378,7 +378,7 @@ def run_evs_flexible_loads(residents_list, number_of_EVs, scenario):
 def main():
     
     # create profiles for each prosumers: lighting, ordinary appliances
-    number_of_prosumers=20
+    number_of_prosumers=1000
     number_of_scenarios=5
     
     # Day Ahead price for NOV-15 2019
