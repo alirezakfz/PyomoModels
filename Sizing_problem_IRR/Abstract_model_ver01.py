@@ -140,6 +140,22 @@ model.chargers_load_con = Constraint(model.T, rule=chargers_load_rule)
 
 
 
+#*************************************************************
+# Solve the model 
+from save_result import results_to_csv
+
+
+SOLVER_NAME="gurobi"
+solver=SolverFactory(SOLVER_NAME)
+data = DataPortal(model=model)
+data.load(filename="data.dat")
+instance = model.create_instance(data)
+results = solver.solve(instance)
+results_to_csv(instance)
+
+
+
+
 
 
 
