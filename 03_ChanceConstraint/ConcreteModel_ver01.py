@@ -18,7 +18,7 @@ def createModel(number_of_EVs=5,
                 depart=[18,19,18,19,20], 
                 TFC=[[1,1],[1,1],[1,1],[1,1],[1,1]],
                 demand=[10,12,14,16,12],
-                max_rate=[8,8,24,24,50]):
+                charge_power=[8,8,24,24,50]):
 
 
     """
@@ -42,14 +42,14 @@ def createModel(number_of_EVs=5,
  
     
     def POWER_init(model,i,j):
-        return min(max_rate[i], installed_chargers[j])
+        return charge_power[i-1,j-1]
     model.POWER = Param(model.N, model.M, rule= POWER_init )
     
     
     #EV deparure time
-    def depart_init(model,j):
+    def depart_init(model,i):
         return int(depart[i-1])
-    model.depart=Param(model.M, initialize=depart_init, default=number_of_timeslot)
+    model.depart=Param(model.N, initialize=depart_init, default=number_of_timeslot)
     
     """
     Model Decision Variables
@@ -85,7 +85,7 @@ def createModel(number_of_EVs=5,
     """
     # Constraint (2): Whether EV i assigned to charger j
     def charger_rule(model, i):
-        return sum(model.q[i,j] for j in model.M) == 1
+        return sum(model.y[i,j] for j in model.M) == 1
     model.charger_con = Constraint(model.N, rule=charger_rule)
     
     # Constraint (3): Just use installed chargers
@@ -127,20 +127,21 @@ def createModel(number_of_EVs=5,
     """
     version 8 constraints
     """
-    def performance_rule(model):
+    def performance_rule(model,i):
         return sum(model.z[i] for i in model.N ) <= prf
-    model.performance_con=Constraint( rule=performance_rule)
+    model.performance_con=Constraint(model.N, rule=performance_rule)
     
-    def disjuctive1_rule(model,j):
+    def disjuctive1_rule(model,i):
 #        p=sum(model.d[j] for j in model.N)
         return model.x[i] - model.depart[i] + (1-model.z[i])*bigM >= 0
     model.disjuctive1_con=Constraint(model.N, rule=disjuctive1_rule)
     
-    def disjuctive2_rule(model,j):
+    def disjuctive2_rule(model,i):
 #        p=sum(model.s[i,t]*t for t in model.T)
         return model.x[i] - model.depart[i] - delay*model.z[i] <= 0   #model.z[i,k]*bigM
     model.disjuctive2_con=Constraint(model.N, rule=disjuctive2_rule)
     
+   
     
     return model
     

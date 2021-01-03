@@ -53,7 +53,7 @@ def gant_chart(model):
     plt.ylabel('Electric Vehicles in scenario')
     plt.yticks(range(len(model.N)))
     # 
-    plt.xticks(range(25))
+    plt.xticks(range(len(model.T)+1))
     plt.grid()
     xlim = plt.xlim()
     

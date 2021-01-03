@@ -52,7 +52,7 @@ model.z   =  Var(model.N,model.M,within=Binary,initialize=0)
 model.SOC =   Var(model.N, model.T, within=NonNegativeReals, initialize=0)
 
 #Variable for loaded energy at time t
-model.E_EV = Var(model.N, model.T, within=NonNegativeReals, initialize=0)
+model.E_EV = Var(model.N, model.T, within=NonNegativeIntegers, initialize=0)
 
 # Variable for sum of the loads from the grid in each time slot
 model.E_load = Var(model.T, within=NonNegativeReals, initialize=0)
@@ -61,7 +61,7 @@ model.E_load = Var(model.T, within=NonNegativeReals, initialize=0)
 model.SELL   = Var(model.T, within=NonNegativeReals, initialize=0) 
 
 # Variable to store number of concurrent charging EVs
-model.concurrent = Var(model.M, model.T, within=NonNegativeIntegers, initialize=0)
+# model.concurrent = Var(model.M, model.T, within=NonNegativeIntegers, initialize=0)
 
 
 
@@ -76,29 +76,30 @@ model.obj=Objective(rule=obj_rule, sense=minimize)
 """
 Model Constraints
 """
+# Each EV must be connected to one charger
+def one_charger_rule(model, i):
+    return sum(model.z[i,j] for j in model.M) == 1
+model.one_charger_con = Constraint(model.N, rule=one_charger_rule )
+
+
+# Each EV can only charge at one charger at each time slot
+def one_time_rule(model, i, j, t):
+    return model.u[i,j,t] <= model.z[i,j]
+model.one_time_con = Constraint(model.N, model.M, model.T, rule=one_time_rule)
+
 
 # At each time slot number of using chargers must be at most q[j]
 def chargers_charge_rule(model, j, t):
     return sum(model.u[i,j,t] for i in model.N ) <= model.q[j]
 model.EVS_charge_con=Constraint(model.M, model.T, rule=chargers_charge_rule)
 
-# During charging period (horizon) number of EVs connected to chargers of type j must be at most q[j] 
-def EVs_charge_rule(model, i, t):
-    return model.concurrent[j,t] == sum(model.u[i,j,t] for i in model.N)
-model.EVs_charge_con = Constraint(model.M, model.T, rule=EVs_charge_rule)
+# # During charging period (horizon) number of EVs connected to chargers of type j must be at most q[j] 
+# def EVs_charge_rule(model, i, t):
+#     return model.concurrent[j,t] == sum(model.u[i,j,t] for i in model.N)
+# model.EVs_charge_con = Constraint(model.M, model.T, rule=EVs_charge_rule)
 
 # Number of concurrent EVs charge at each time must be less than 
 
-    
-# Each EV must be connected to one charger
-def one_charger_rule(model, i):
-    return sum(model.z[i,j] for j in model.M) == 1
-model.one_charger_con = Constraint(model.N, rule=one_charger_rule )
-
-# Each EV can only charge at one charger at each time slot
-def one_time_rule(model, i, j, t):
-    return model.u[i,j,t] <= model.z[i,j]
-model.one_time_con = Constraint(model.N, model.M, model.T, rule=one_time_rule)
 
 # Control variable is zero before arrival time
 def arrival_rule(model, i,j,t):
@@ -108,15 +109,17 @@ def arrival_rule(model, i,j,t):
         return Constraint.Skip
 model.arrival_con = Constraint(model.N, model.M, model.T, rule=arrival_rule)
 
-# # EVs load electricity from grid during time t
-# def load_rule(model,i , t):
-#     if t >= model.arrival[i] and t < model.depart[i] :
-#         return model.E_EV[i,t] == sum(model.u[i,j,t]*model.power[j] for j in model.M)
-#     else:
-#         return Constraint.Skip
-# model.load_con = Constraint(model.N,model.M, rule=load_rule)
 
 
+"""
+version 02 rules
+"""
+def load_lower_limit_rule(model, i, t):
+    if t >= model.arrival[i] and t< model.depart[i]:
+        return model.E_EV[i,t] == sum(model.power[j]*model.u[i,j,t] for j in model.M) #model.z[i,j]*
+    else:
+        return Constraint.Skip
+model.load_lower_limit_con = Constraint(model.N, model.T, rule=load_lower_limit_rule)
 
 #*********** The SOC part *********
 
@@ -158,17 +161,18 @@ def chargers_load_rule(model, t):
     return model.E_load[t] <= sum(model.q[j]*model.power[j] for j in model.M)
 model.chargers_load_con = Constraint(model.T, rule=chargers_load_rule)
 
-"""
-version 02 rules
-"""
-def load_lower_limit_rule(model, i, t):
-    if t >= model.arrival[i] and t< model.depart[i]:
-        return model.E_EV[i,t] == sum(model.z[i,j]*model.power[j]*model.u[i,j,t] for j in model.M)
-    else:
-        return Constraint.Skip
-model.load_lower_limit_con = Constraint(model.N, model.T, rule=load_lower_limit_rule)
 
-
+"""
+FCS Rules
+"""
+# #each job can start only at exactly one particular time on exactly one machine.
+# def one_job_rule(model,i):
+#     sumj=[]
+#     for j in model.M:
+#         time=range(model.arrival[i], model.depart[i]) #model.TFC[i,j]+2
+#         sumj.append(sum(model.u[i,j,t] for t in time))
+#     return sum(sumj)==1
+# model.one_job_con=Constraint(model.N, rule=one_job_rule)
 
 #*************************************************************
 # Solve the model 
@@ -179,13 +183,14 @@ from chart import gant_chart
 import random
 
 
-number_of_EVs=10
+number_of_EVs=200
 number_of_timeslot=24
-Charger_Type=[3,7]
-cost=[1000, 2500]
-price=[random.randint(1,number_of_timeslot) for x in range(number_of_timeslot)]
+Charger_Type=[4,8,19]
+cost=[ 1000, 1500, 2200]
+
 scenario=1
 slot=1
+price=[random.randint(1,number_of_timeslot) for x in range(number_of_timeslot*slot)]
 
 # Random EVs cases
 arrival_time, depart_time, distance , charge_power, EV_samples, demand, soc = electric_vehicles(number_of_EVs, 
@@ -196,14 +201,26 @@ arrival_time, depart_time, distance , charge_power, EV_samples, demand, soc = el
 
 
 # Create test case 
-create_dat_files(number_of_EVs, len(Charger_Type), number_of_timeslot,
-                 arrival_time, depart_time, Charger_Type, demand, soc,
+chargers_powers = [x/slot for x in Charger_Type]
+create_dat_files(number_of_EVs, len(Charger_Type), number_of_timeslot*slot,
+                 arrival_time, depart_time, chargers_powers, demand, soc,
                  price, cost, scenario)
 
 
 SOLVER_NAME="gurobi"
+TIME_LIMIT= 2000
+
+
 
 solver=SolverFactory(SOLVER_NAME)
+
+if SOLVER_NAME == 'cplex':
+    solver.options['timelimit'] = TIME_LIMIT
+elif SOLVER_NAME == 'glpk':         
+    solver.options['tmlim'] = TIME_LIMIT
+elif SOLVER_NAME == 'gurobi':           
+    solver.options['TimeLimit'] = TIME_LIMIT
+
 data = DataPortal(model=model)
 data.load(filename="scenariodata/Scenario"+str(scenario)+".dat")
 
@@ -215,19 +232,19 @@ results = solver.solve(instance)
 gant_chart(instance)
 
 
-for i in instance.N:
-    print(value(instance.z[i,1]),"  ",value(instance.z[i,2]))
+# for i in instance.N:
+#     print(value(instance.z[i,1]),"  ",value(instance.z[i,2]))
 
-for t in instance.T:
-    print(value(t)," ",value(instance.u[1,2,t]))
+# for t in instance.T:
+#     print(value(t)," ",value(instance.u[1,2,t]))
 
 
-for t in instance.T:
-    print(value(instance.SOC[1,t]))
+# for t in instance.T:
+#     print(value(instance.SOC[1,t]))
 
 for j in instance.M:
     print(value(instance.q[j]))
 
 
-for t in instance.T:
-    print(value(t)," ",value(instance.E_EV[1,t]))
+# for t in instance.T:
+#     print(value(t)," ",value(instance.E_EV[1,t]))

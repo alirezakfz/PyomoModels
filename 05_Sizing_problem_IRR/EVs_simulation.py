@@ -103,7 +103,7 @@ def electric_vehicles(number_of_EVs=10,
         
         charge_rate=EV_types[ev]["charge_rate"]
         # Randomly select charge rate between 3 and 7
-        charge_rate = random.choice(Charger_Type)
+        # charge_rate = random.choice(Charger_Type)
         
         while check:
             dist= x_dist.rvs() #[0]

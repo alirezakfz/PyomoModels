@@ -106,7 +106,7 @@ def dataFile(number_of_EVs,
         charge_rate=EV_types[ev]["charge_rate"]
         
         while check:
-            dist= x_dist.rvs()[0] #[0]
+            dist= x_dist.rvs() #[0]
             dist=round(dist,3)
             
             if dist > EV_types[ev]["max_distance"]:
@@ -118,10 +118,10 @@ def dataFile(number_of_EVs,
             
             dem_time=math.ceil(dem/charge_rate)
             
-            arrive=x_arrival.rvs()[0]#[0]
+            arrive=x_arrival.rvs()#[0]
             arrive=round(arrive)
             
-            depart=max(arrive+dem_time,x_depart.rvs()[0]*slot)#[0]
+            depart=max(arrive+dem_time,x_depart.rvs()*slot)#[0]
             depart=round(depart)
             
             #Check if there is consistency between generated data
@@ -200,6 +200,8 @@ def dataFile(number_of_EVs,
     for i in range(ev_no):
         for j in range(len(installed_chargers)):
             TFC[i,j]=math.ceil(demand[i]/charge_power[i,j])
+    
+    
     
     return arrival_time, depart_time, distance, demand, charge_power,installed_chargers,\
              installed_cost,TFC, EV_samples
