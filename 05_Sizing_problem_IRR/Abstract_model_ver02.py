@@ -183,7 +183,7 @@ from chart import gant_chart
 import random
 
 
-number_of_EVs=200
+number_of_EVs=100
 number_of_timeslot=24
 Charger_Type=[4,8,19]
 cost=[ 1000, 1500, 2200]
@@ -208,7 +208,7 @@ create_dat_files(number_of_EVs, len(Charger_Type), number_of_timeslot*slot,
 
 
 SOLVER_NAME="gurobi"
-TIME_LIMIT= 2000
+TIME_LIMIT= 1000
 
 
 

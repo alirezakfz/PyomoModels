@@ -99,6 +99,7 @@ def dataFile(number_of_EVs,
     #count=0
     
     min_charge=min(Charger_Type)
+    soc=[]
    
     #For each EV generate data that is consistent to use
     for ev in EV_samples:
@@ -111,9 +112,11 @@ def dataFile(number_of_EVs,
             
             if dist > EV_types[ev]["max_distance"]:
                 dem=round(EV_types[ev]["capacity"])
+                temp_soc= 0
                 # demand.append(round(EV_types[ev]["capacity"]))
             else:                
                 dem=round(1.0*dist * EV_types[ev]["energy_consumption"])
+                temp_soc = EV_types[ev]["capacity"] - dem
                 # demand.append(round(1.0*distance[count]*EV_types[ev]["energy_consumption"]))
             
             dem_time=math.ceil(dem/charge_rate)
@@ -131,6 +134,7 @@ def dataFile(number_of_EVs,
         arrival_time.append(arrive)
         depart_time.append(depart)
         demand.append(dem)
+        soc.append(temp_soc)
         check=True    
         #count+=1                
                 
@@ -204,5 +208,5 @@ def dataFile(number_of_EVs,
     
     
     return arrival_time, depart_time, distance, demand, charge_power,installed_chargers,\
-             installed_cost,TFC, EV_samples
+             installed_cost,TFC, EV_samples, soc
     

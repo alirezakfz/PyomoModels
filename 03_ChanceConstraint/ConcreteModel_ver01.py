@@ -18,7 +18,9 @@ def createModel(number_of_EVs=5,
                 depart=[18,19,18,19,20], 
                 TFC=[[1,1],[1,1],[1,1],[1,1],[1,1]],
                 demand=[10,12,14,16,12],
-                charge_power=[8,8,24,24,50]):
+                charge_power=[8,8,24,24,50],
+                soc=[0,1,2,3,0,2],
+                price=[10,11,12,13,14,15]):
 
 
     """
@@ -29,9 +31,9 @@ def createModel(number_of_EVs=5,
     model.M=RangeSet(number_of_Chargers)
     model.T=RangeSet(0,number_of_timeslot)
     
-    bigM=10
-    delay=0 #1
-    prf=0 #round(0.2 * number_of_EVs)
+    bigM=2*number_of_timeslot
+    delay=1 #1
+    prf=round(0.2 * number_of_EVs)
     
       
     #randomly choose arrival time between 1 to half of the Horizon
@@ -70,14 +72,14 @@ def createModel(number_of_EVs=5,
     model.z = Var (model.N, within=Binary, initialize=0)
     
     # Variable to store completion time of the EV i charging
-    model.x = Var (model.N, within=NonNegativeIntegers, initialize=0)
+    # model.x = Var (model.N, within=NonNegativeIntegers, initialize=0)
     
     
     """
     model objective
     """
     #Objective to minimize the cost for chrging evs
-    model.obj=Objective(expr=sum(model.q[i]*installed_cost[i-1] for i in model.M), sense=minimize)
+    model.obj=Objective(expr=sum(model.q[i]*installed_cost[i-1] for i in model.M) + 0.1*sum(sum(model.p[i,j,t]*price[t-1] for i in model.N for j in model.M) for t in model.T) , sense=minimize)
     
     
     """
@@ -113,7 +115,7 @@ def createModel(number_of_EVs=5,
     
     # Constraint (7): Completion time rule
     def completion_rule(model, i, t):
-        time=range(1,t+1)
+        time=range(1,t) # t+1
         return sum(model.p[i,j,tt] for j in model.M for tt in time) >= model.c[i,t]*demand[i-1]
     model.completion_con = Constraint(model.N, model.T, rule=completion_rule)
     
@@ -132,16 +134,15 @@ def createModel(number_of_EVs=5,
     model.performance_con=Constraint(model.N, rule=performance_rule)
     
     def disjuctive1_rule(model,i):
-#        p=sum(model.d[j] for j in model.N)
-        return model.x[i] - model.depart[i] + (1-model.z[i])*bigM >= 0
+        temp=sum(model.c[i,t]*t for t in model.T)
+        return temp - model.depart[i] + (1-model.z[i])*bigM >= 0
     model.disjuctive1_con=Constraint(model.N, rule=disjuctive1_rule)
     
     def disjuctive2_rule(model,i):
-#        p=sum(model.s[i,t]*t for t in model.T)
-        return model.x[i] - model.depart[i] - delay*model.z[i] <= 0   #model.z[i,k]*bigM
+        temp=sum(model.c[i,t]*t for t in model.T)
+        return temp - model.depart[i] - delay*model.z[i] <= 0   #model.z[i,k]*bigM
     model.disjuctive2_con=Constraint(model.N, rule=disjuctive2_rule)
     
-   
     
     return model
     

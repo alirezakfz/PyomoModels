@@ -12,7 +12,10 @@ from pyomo.opt import SolverFactory
 
 
 from ConcreteModel_ver01 import createModel
+# from ConcreteModel_ver02 import createModel
 from CreateData import dataFile
+from SaveResult import save_model
+from chart import gant_chart
 
 """
 Defining the scenario parameters
@@ -20,7 +23,7 @@ Defining the scenario parameters
 
 slot=1   #Add more time slot for more accurate result
 
-number_of_EVs=15
+number_of_EVs=10
 
 number_of_Chargers=0  #took it from dataFile output later
 
@@ -56,11 +59,13 @@ TIME_LIMIT=10800
 
 #create a scenario data
 arrival, depart, distance, demand, charge_power,installed_chargers,\
-         installed_cost,TFC, EV_samples = dataFile(number_of_EVs,
+         installed_cost,TFC, EV_samples, soc = dataFile(number_of_EVs,
                                                    number_of_timeslot,
                                                    Charger_Type,
                                                    charger_cost,
                                                    slot)
+
+electicity_price = [70,69.99,67.99,68.54,66.1,74.41,74.43,70,68.89,65.93,59.19,59.19,65.22,66.07,70.41,75.15,84.4,78.19,74.48,69.24,69.32,69.31,68.07,70.06]
 
 """
 Calling the model creator function based on generated data
@@ -68,8 +73,7 @@ Calling the model creator function based on generated data
 number_of_Chargers=len(installed_chargers)
 #create pyomo model
 model=createModel(number_of_EVs, number_of_Chargers, number_of_timeslot,
-                  installed_chargers, installed_cost, arrival,depart, TFC, demand, charge_power)
-
+                  installed_chargers, installed_cost, arrival,depart, TFC, demand, charge_power, soc, electicity_price)
 
   
 """
@@ -86,4 +90,8 @@ elif SOLVER_NAME == 'gurobi':
 
 results = solver.solve(model)
 
-print("Execution time is:", time.time()- start_time)
+ex_time=time.time()- start_time
+print("Execution time is:",ex_time)
+
+save_model(model, installed_chargers, demand,EV_samples,arrival, depart)
+gant_chart(model)
