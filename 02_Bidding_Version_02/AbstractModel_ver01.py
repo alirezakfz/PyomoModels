@@ -324,14 +324,14 @@ model.SL_binary_zero_con =Constraint(model.N, model.T, rule=SL_binary_zero_rule)
 
 #*************************************************************
 # Solve the model 
-from save_result import results_to_csv
+# from save_result import results_to_csv
 
 
 SOLVER_NAME="gurobi"
 solver=SolverFactory(SOLVER_NAME)
 data = DataPortal(model=model)
-data.load(filename="DATA/data.dat")
+data.load(filename="scenariodata/Scenario1.dat")
 instance = model.create_instance(data)
 results = solver.solve(instance)
-results_to_csv(instance)
+# results_to_csv(instance)
 
