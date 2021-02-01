@@ -125,7 +125,11 @@ Calling the model creator function based on generated data
 start_time = time.time()
 
 
+<<<<<<< Updated upstream
 for scenario in range(620,number_of_scenarios+1): #number_of_scenarios+1
+=======
+for scenario in range(628,number_of_scenarios+1): #number_of_scenarios+1
+>>>>>>> Stashed changes
     
     arrival.clear()
     depart.clear()
