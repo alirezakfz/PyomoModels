@@ -125,7 +125,7 @@ Calling the model creator function based on generated data
 start_time = time.time()
 
 
-for scenario in range(601,number_of_scenarios+1): #number_of_scenarios+1
+for scenario in range(620,number_of_scenarios+1): #number_of_scenarios+1
     
     arrival.clear()
     depart.clear()
@@ -348,13 +348,16 @@ for scenario in range(601,number_of_scenarios+1): #number_of_scenarios+1
     model_data.append(row)
     
     
-    
+    check=save_model(model_data,list_row,model_file, data_file)
+    model_data.clear()
+    list_row.clear()
+	
     if scenario % 10 ==0:
         # progress="solved Scenarios: "+str(scenario) +"\n"
         # save_progress(progress)
-        check=save_model(model_data,list_row,model_file, data_file)
-        model_data.clear()
-        list_row.clear()
+        # check=save_model(model_data,list_row,model_file, data_file)
+        # model_data.clear()
+        # list_row.clear()
         progress="Saved Scenarios: "+str(scenario) + "  Number of EVs: "+ str(number_of_EVs) +"\n"
         save_progress(progress)
     #     print("solved scenarios: ",scenario)
