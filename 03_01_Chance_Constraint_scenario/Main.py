@@ -43,11 +43,11 @@ Defining the scenario parameters
 
 slot=1   #Add more time slot for more accurate result
 
-number_of_EVs=75
+number_of_EVs=85
 
 number_of_Chargers=0  #took it from dataFile output later
 
-number_of_scenarios=4000
+number_of_scenarios=3399
            
 number_of_timeslot=24*slot
 
@@ -125,7 +125,7 @@ Calling the model creator function based on generated data
 start_time = time.time()
 
 
-for scenario in range(2841,number_of_scenarios+1): #number_of_scenarios+1
+for scenario in range(3221,number_of_scenarios+1): #number_of_scenarios+1
     
     arrival.clear()
     depart.clear()

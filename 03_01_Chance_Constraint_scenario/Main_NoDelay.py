@@ -5,23 +5,38 @@ Created on Wed Jan  6 18:40:17 2021
 @author: alire
 """
 
+# import time
+# import numpy as np
+# from pyomo.environ import *
+# from pyomo.opt import SolverFactory
+
+
+# from AbstractModel_FreeDelay import createModel
+
+# from CreateData import dataFile
+
+# from save_data_oneslot import save_scenario
+# from save_data_oneslot import save_model
+# from save_data_oneslot import csv_files
+# from save_data_oneslot import save_progress
+# from save_data_oneslot import create_scenario_dat
+
+
 import time
 import numpy as np
 from pyomo.environ import *
 from pyomo.opt import SolverFactory
 
 
-from AbstractModel_FreeDelay import createModel
+from AbstractModel import createModel
 
 from CreateData import dataFile
 
-from save_data_oneslot import save_scenario
-from save_data_oneslot import save_model
-from save_data_oneslot import csv_files
-from save_data_oneslot import save_progress
-from save_data_oneslot import create_scenario_dat
-
-
+from save_data import save_scenario
+from save_data import save_model
+from save_data import csv_files
+from save_data import save_progress
+from save_data import create_scenario_dat
 
 # ##Timer
 # _start_time = time.time()
@@ -43,11 +58,11 @@ Defining the scenario parameters
 
 slot=1   #Add more time slot for more accurate result
 
-number_of_EVs=55
+number_of_EVs=85
 
 number_of_Chargers=0  #took it from dataFile output later
 
-number_of_scenarios=3000
+number_of_scenarios=3355
            
 number_of_timeslot=24*slot
 
@@ -85,7 +100,7 @@ row.append('Time')
 
 
 
-scenario_model="CC_FreeDelay"
+scenario_model="CC_NoDelay"
 SOLVER_NAME="gurobi"
 TIME_LIMIT=7200
 
@@ -125,11 +140,7 @@ Calling the model creator function based on generated data
 start_time = time.time()
 
 
-
-
-for scenario in range(2001,number_of_scenarios+1): #number_of_scenarios+1
-
-
+for scenario in range(3221,number_of_scenarios+1): #number_of_scenarios+1
     
     arrival.clear()
     depart.clear()
