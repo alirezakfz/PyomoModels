@@ -191,9 +191,9 @@ c_d_o = {'DAS':random_price(time,12,20),
 #           2:random_price(time,1,2)}
 
 # Price bid for buying power of competing DA  i in time t
-c_d_b = {'DAS':random_price(time,12,110),
-         1:random_price(time,12,110),
-         2:random_price(time,12,110)}
+c_d_b = {'DAS':random_price(time,70,110),
+         1:random_price(time,70,110),
+         2:random_price(time,70,110)}
 
 # c_d_b = {'DAS':random_price(time,1,2),
 #           1:random_price(time,1,2),
@@ -621,18 +621,17 @@ model.generator_dual_price_con=Constraint(model.G, model.T, rule=generator_dual_
 #**********************************************
 #             Feasibility problem
 
+# Constrint (C.2) competitor suuply to grid offer
+def competitor_offer_dual_rule(model, i, t):
+    bus=dic_CDA_Bus[i]
+    return c_d_o[i][t-16]-model.Lambda[bus,t] - model.w_do_low[i,t] + model.w_do_up[i,t] ==0  #c_d_o[i][t-16]
+model.competitor_offer_dual_con = Constraint(model.NCDA, model.T, rule=competitor_offer_dual_rule)
 
-# # Constrint (C.2) competitor suuply to grid offer
-# def competitor_offer_dual_rule(model, i, t):
-#     bus=dic_CDA_Bus[i]
-#     return c_d_o[i][t-16]-model.Lambda[bus,t] - model.w_do_low[i,t] + model.w_do_up[i,t] ==0 
-# model.competitor_offer_dual_con = Constraint(model.NCDA, model.T, rule=competitor_offer_dual_rule)
-
-# # Constraint (C.3) competitors demand bid
-# def competitor_demand_dual_rule(model, i, t):
-#     bus=dic_CDA_Bus[i]
-#     return -c_d_b[i][t-16] - model.Lambda[bus,t] - model.w_do_low[i,t] + model.w_do_up[i,t] == 0
-# model.competitor_demand_dual_con = Constraint(model.NCDA, model.T, rule=competitor_demand_dual_rule)
+# Constraint (C.3) competitors demand bid
+def competitor_demand_dual_rule(model, i, t):
+    bus=dic_CDA_Bus[i]
+    return  -c_d_b[i][t-16] + model.Lambda[bus,t] - model.w_db_low[i,t] + model.w_db_up[i,t] == 0 # -c_d_b[i][t-16]
+model.competitor_demand_dual_con = Constraint(model.NCDA, model.T, rule=competitor_demand_dual_rule)
 
 #////////////////////////////////////////////
 #********************************************
@@ -818,11 +817,15 @@ model.obj = Objective(rule=social_welfare_optimization_rule, sense=minimize)
 """
 Solve the model
 """
-
-
+# with open('DA_Bilevel.txt', 'w') as f:
+#     f.write("Description of the Bilevel model for strategic day ahead aggregator:\n")
+#     model.display(ostream=f)
 
 SOLVER_NAME="gurobi"  #'cplex'
 
 solver=SolverFactory(SOLVER_NAME)
+
+# results = solver.solve(model, keepfiles=True, tee=True,  logfile = "name.csv")
+
 results = solver.solve(model)
-print(results)
+# print(results)
