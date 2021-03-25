@@ -621,17 +621,17 @@ model.generator_dual_price_con=Constraint(model.G, model.T, rule=generator_dual_
 #**********************************************
 #             Feasibility problem
 
-# Constrint (C.2) competitor suuply to grid offer
-def competitor_offer_dual_rule(model, i, t):
-    bus=dic_CDA_Bus[i]
-    return c_d_o[i][t-16]-model.Lambda[bus,t] - model.w_do_low[i,t] + model.w_do_up[i,t] ==0  #c_d_o[i][t-16]
-model.competitor_offer_dual_con = Constraint(model.NCDA, model.T, rule=competitor_offer_dual_rule)
+# # Constrint (C.2) competitor suuply to grid offer
+# def competitor_offer_dual_rule(model, i, t):
+#     bus=dic_CDA_Bus[i]
+#     return c_d_o[i][t-16]-model.Lambda[bus,t] - model.w_do_low[i,t] + model.w_do_up[i,t] ==0  #c_d_o[i][t-16]
+# model.competitor_offer_dual_con = Constraint(model.NCDA, model.T, rule=competitor_offer_dual_rule)
 
-# Constraint (C.3) competitors demand bid
-def competitor_demand_dual_rule(model, i, t):
-    bus=dic_CDA_Bus[i]
-    return  -c_d_b[i][t-16] + model.Lambda[bus,t] - model.w_db_low[i,t] + model.w_db_up[i,t] == 0 # -c_d_b[i][t-16]
-model.competitor_demand_dual_con = Constraint(model.NCDA, model.T, rule=competitor_demand_dual_rule)
+# # Constraint (C.3) competitors demand bid
+# def competitor_demand_dual_rule(model, i, t):
+#     bus=dic_CDA_Bus[i]
+#     return  -c_d_b[i][t-16] + model.Lambda[bus,t] - model.w_db_low[i,t] + model.w_db_up[i,t] == 0 # -c_d_b[i][t-16]
+# model.competitor_demand_dual_con = Constraint(model.NCDA, model.T, rule=competitor_demand_dual_rule)
 
 #////////////////////////////////////////////
 #********************************************
@@ -829,3 +829,4 @@ solver=SolverFactory(SOLVER_NAME)
 
 results = solver.solve(model)
 # print(results)
+results.write()
