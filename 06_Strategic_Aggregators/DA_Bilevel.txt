@@ -1,0 +1,3285 @@
+Description of the Bilevel model for strategic day ahead aggregator:
+Model bilevel
+
+  Variables:
+    E_DA_L : Size=10, Index=T
+        Key : Lower : Value : Upper : Fixed : Stale : Domain
+         16 :     0 :     0 :  None : False : False : NonNegativeReals
+         17 :     0 :     0 :  None : False : False : NonNegativeReals
+         18 :     0 :     0 :  None : False : False : NonNegativeReals
+         19 :     0 :     0 :  None : False : False : NonNegativeReals
+         20 :     0 :     0 :  None : False : False : NonNegativeReals
+         21 :     0 :     0 :  None : False : False : NonNegativeReals
+         22 :     0 :     0 :  None : False : False : NonNegativeReals
+         23 :     0 :     0 :  None : False : False : NonNegativeReals
+         24 :     0 :     0 :  None : False : False : NonNegativeReals
+         25 :     0 :     0 :  None : False : False : NonNegativeReals
+    E_DA_G : Size=10, Index=T
+        Key : Lower : Value : Upper : Fixed : Stale : Domain
+         16 :     0 :     0 :  None : False : False : NonNegativeReals
+         17 :     0 :     0 :  None : False : False : NonNegativeReals
+         18 :     0 :     0 :  None : False : False : NonNegativeReals
+         19 :     0 :     0 :  None : False : False : NonNegativeReals
+         20 :     0 :     0 :  None : False : False : NonNegativeReals
+         21 :     0 :     0 :  None : False : False : NonNegativeReals
+         22 :     0 :     0 :  None : False : False : NonNegativeReals
+         23 :     0 :     0 :  None : False : False : NonNegativeReals
+         24 :     0 :     0 :  None : False : False : NonNegativeReals
+         25 :     0 :     0 :  None : False : False : NonNegativeReals
+    DA_demand : Size=10, Index=T
+        Key : Lower : Value : Upper : Fixed : Stale : Domain
+         16 :     0 :     0 :  None : False : False : NonNegativeReals
+         17 :     0 :     0 :  None : False : False : NonNegativeReals
+         18 :     0 :     0 :  None : False : False : NonNegativeReals
+         19 :     0 :     0 :  None : False : False : NonNegativeReals
+         20 :     0 :     0 :  None : False : False : NonNegativeReals
+         21 :     0 :     0 :  None : False : False : NonNegativeReals
+         22 :     0 :     0 :  None : False : False : NonNegativeReals
+         23 :     0 :     0 :  None : False : False : NonNegativeReals
+         24 :     0 :     0 :  None : False : False : NonNegativeReals
+         25 :     0 :     0 :  None : False : False : NonNegativeReals
+    DA_supply : Size=10, Index=T
+        Key : Lower : Value : Upper : Fixed : Stale : Domain
+         16 :     0 :     0 :  None : False : False : NonNegativeReals
+         17 :     0 :     0 :  None : False : False : NonNegativeReals
+         18 :     0 :     0 :  None : False : False : NonNegativeReals
+         19 :     0 :     0 :  None : False : False : NonNegativeReals
+         20 :     0 :     0 :  None : False : False : NonNegativeReals
+         21 :     0 :     0 :  None : False : False : NonNegativeReals
+         22 :     0 :     0 :  None : False : False : NonNegativeReals
+         23 :     0 :     0 :  None : False : False : NonNegativeReals
+         24 :     0 :     0 :  None : False : False : NonNegativeReals
+         25 :     0 :     0 :  None : False : False : NonNegativeReals
+    u_DA : Size=10, Index=T
+        Key : Lower : Value : Upper : Fixed : Stale : Domain
+         16 :     0 :     0 :     1 : False : False : Binary
+         17 :     0 :     0 :     1 : False : False : Binary
+         18 :     0 :     0 :     1 : False : False : Binary
+         19 :     0 :     0 :     1 : False : False : Binary
+         20 :     0 :     0 :     1 : False : False : Binary
+         21 :     0 :     0 :     1 : False : False : Binary
+         22 :     0 :     0 :     1 : False : False : Binary
+         23 :     0 :     0 :     1 : False : False : Binary
+         24 :     0 :     0 :     1 : False : False : Binary
+         25 :     0 :     0 :     1 : False : False : Binary
+    E_EV_CH : Size=100, Index=E_EV_CH_index
+        Key      : Lower : Value : Upper : Fixed : Stale : Domain
+         (1, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+    E_EV_DIS : Size=100, Index=E_EV_DIS_index
+        Key      : Lower : Value : Upper : Fixed : Stale : Domain
+         (1, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+    SOC : Size=100, Index=SOC_index
+        Key      : Lower : Value : Upper : Fixed : Stale : Domain
+         (1, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+    u_EV : Size=100, Index=u_EV_index
+        Key      : Lower : Value : Upper : Fixed : Stale : Domain
+         (1, 16) :     0 :     0 :     1 : False : False : Binary
+         (1, 17) :     0 :     0 :     1 : False : False : Binary
+         (1, 18) :     0 :     0 :     1 : False : False : Binary
+         (1, 19) :     0 :     0 :     1 : False : False : Binary
+         (1, 20) :     0 :     0 :     1 : False : False : Binary
+         (1, 21) :     0 :     0 :     1 : False : False : Binary
+         (1, 22) :     0 :     0 :     1 : False : False : Binary
+         (1, 23) :     0 :     0 :     1 : False : False : Binary
+         (1, 24) :     0 :     0 :     1 : False : False : Binary
+         (1, 25) :     0 :     0 :     1 : False : False : Binary
+         (2, 16) :     0 :     0 :     1 : False : False : Binary
+         (2, 17) :     0 :     0 :     1 : False : False : Binary
+         (2, 18) :     0 :     0 :     1 : False : False : Binary
+         (2, 19) :     0 :     0 :     1 : False : False : Binary
+         (2, 20) :     0 :     0 :     1 : False : False : Binary
+         (2, 21) :     0 :     0 :     1 : False : False : Binary
+         (2, 22) :     0 :     0 :     1 : False : False : Binary
+         (2, 23) :     0 :     0 :     1 : False : False : Binary
+         (2, 24) :     0 :     0 :     1 : False : False : Binary
+         (2, 25) :     0 :     0 :     1 : False : False : Binary
+         (3, 16) :     0 :     0 :     1 : False : False : Binary
+         (3, 17) :     0 :     0 :     1 : False : False : Binary
+         (3, 18) :     0 :     0 :     1 : False : False : Binary
+         (3, 19) :     0 :     0 :     1 : False : False : Binary
+         (3, 20) :     0 :     0 :     1 : False : False : Binary
+         (3, 21) :     0 :     0 :     1 : False : False : Binary
+         (3, 22) :     0 :     0 :     1 : False : False : Binary
+         (3, 23) :     0 :     0 :     1 : False : False : Binary
+         (3, 24) :     0 :     0 :     1 : False : False : Binary
+         (3, 25) :     0 :     0 :     1 : False : False : Binary
+         (4, 16) :     0 :     0 :     1 : False : False : Binary
+         (4, 17) :     0 :     0 :     1 : False : False : Binary
+         (4, 18) :     0 :     0 :     1 : False : False : Binary
+         (4, 19) :     0 :     0 :     1 : False : False : Binary
+         (4, 20) :     0 :     0 :     1 : False : False : Binary
+         (4, 21) :     0 :     0 :     1 : False : False : Binary
+         (4, 22) :     0 :     0 :     1 : False : False : Binary
+         (4, 23) :     0 :     0 :     1 : False : False : Binary
+         (4, 24) :     0 :     0 :     1 : False : False : Binary
+         (4, 25) :     0 :     0 :     1 : False : False : Binary
+         (5, 16) :     0 :     0 :     1 : False : False : Binary
+         (5, 17) :     0 :     0 :     1 : False : False : Binary
+         (5, 18) :     0 :     0 :     1 : False : False : Binary
+         (5, 19) :     0 :     0 :     1 : False : False : Binary
+         (5, 20) :     0 :     0 :     1 : False : False : Binary
+         (5, 21) :     0 :     0 :     1 : False : False : Binary
+         (5, 22) :     0 :     0 :     1 : False : False : Binary
+         (5, 23) :     0 :     0 :     1 : False : False : Binary
+         (5, 24) :     0 :     0 :     1 : False : False : Binary
+         (5, 25) :     0 :     0 :     1 : False : False : Binary
+         (6, 16) :     0 :     0 :     1 : False : False : Binary
+         (6, 17) :     0 :     0 :     1 : False : False : Binary
+         (6, 18) :     0 :     0 :     1 : False : False : Binary
+         (6, 19) :     0 :     0 :     1 : False : False : Binary
+         (6, 20) :     0 :     0 :     1 : False : False : Binary
+         (6, 21) :     0 :     0 :     1 : False : False : Binary
+         (6, 22) :     0 :     0 :     1 : False : False : Binary
+         (6, 23) :     0 :     0 :     1 : False : False : Binary
+         (6, 24) :     0 :     0 :     1 : False : False : Binary
+         (6, 25) :     0 :     0 :     1 : False : False : Binary
+         (7, 16) :     0 :     0 :     1 : False : False : Binary
+         (7, 17) :     0 :     0 :     1 : False : False : Binary
+         (7, 18) :     0 :     0 :     1 : False : False : Binary
+         (7, 19) :     0 :     0 :     1 : False : False : Binary
+         (7, 20) :     0 :     0 :     1 : False : False : Binary
+         (7, 21) :     0 :     0 :     1 : False : False : Binary
+         (7, 22) :     0 :     0 :     1 : False : False : Binary
+         (7, 23) :     0 :     0 :     1 : False : False : Binary
+         (7, 24) :     0 :     0 :     1 : False : False : Binary
+         (7, 25) :     0 :     0 :     1 : False : False : Binary
+         (8, 16) :     0 :     0 :     1 : False : False : Binary
+         (8, 17) :     0 :     0 :     1 : False : False : Binary
+         (8, 18) :     0 :     0 :     1 : False : False : Binary
+         (8, 19) :     0 :     0 :     1 : False : False : Binary
+         (8, 20) :     0 :     0 :     1 : False : False : Binary
+         (8, 21) :     0 :     0 :     1 : False : False : Binary
+         (8, 22) :     0 :     0 :     1 : False : False : Binary
+         (8, 23) :     0 :     0 :     1 : False : False : Binary
+         (8, 24) :     0 :     0 :     1 : False : False : Binary
+         (8, 25) :     0 :     0 :     1 : False : False : Binary
+         (9, 16) :     0 :     0 :     1 : False : False : Binary
+         (9, 17) :     0 :     0 :     1 : False : False : Binary
+         (9, 18) :     0 :     0 :     1 : False : False : Binary
+         (9, 19) :     0 :     0 :     1 : False : False : Binary
+         (9, 20) :     0 :     0 :     1 : False : False : Binary
+         (9, 21) :     0 :     0 :     1 : False : False : Binary
+         (9, 22) :     0 :     0 :     1 : False : False : Binary
+         (9, 23) :     0 :     0 :     1 : False : False : Binary
+         (9, 24) :     0 :     0 :     1 : False : False : Binary
+         (9, 25) :     0 :     0 :     1 : False : False : Binary
+        (10, 16) :     0 :     0 :     1 : False : False : Binary
+        (10, 17) :     0 :     0 :     1 : False : False : Binary
+        (10, 18) :     0 :     0 :     1 : False : False : Binary
+        (10, 19) :     0 :     0 :     1 : False : False : Binary
+        (10, 20) :     0 :     0 :     1 : False : False : Binary
+        (10, 21) :     0 :     0 :     1 : False : False : Binary
+        (10, 22) :     0 :     0 :     1 : False : False : Binary
+        (10, 23) :     0 :     0 :     1 : False : False : Binary
+        (10, 24) :     0 :     0 :     1 : False : False : Binary
+        (10, 25) :     0 :     0 :     1 : False : False : Binary
+    POWER_TCL : Size=100, Index=POWER_TCL_index
+        Key      : Lower : Value : Upper : Fixed : Stale : Domain
+         (1, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+    TCL_TEMP : Size=100, Index=TCL_TEMP_index
+        Key      : Lower : Value : Upper : Fixed : Stale : Domain
+         (1, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+    POWER_SL : Size=100, Index=POWER_SL_index
+        Key      : Lower : Value : Upper : Fixed : Stale : Domain
+         (1, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (1, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (2, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (3, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (4, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (5, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (6, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (7, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (8, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+         (9, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (10, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+    u_SL : Size=100, Index=u_SL_index
+        Key      : Lower : Value : Upper : Fixed : Stale : Domain
+         (1, 16) :     0 :     0 :     1 : False : False : Binary
+         (1, 17) :     0 :     0 :     1 : False : False : Binary
+         (1, 18) :     0 :     0 :     1 : False : False : Binary
+         (1, 19) :     0 :     0 :     1 : False : False : Binary
+         (1, 20) :     0 :     0 :     1 : False : False : Binary
+         (1, 21) :     0 :     0 :     1 : False : False : Binary
+         (1, 22) :     0 :     0 :     1 : False : False : Binary
+         (1, 23) :     0 :     0 :     1 : False : False : Binary
+         (1, 24) :     0 :     0 :     1 : False : False : Binary
+         (1, 25) :     0 :     0 :     1 : False : False : Binary
+         (2, 16) :     0 :     0 :     1 : False : False : Binary
+         (2, 17) :     0 :     0 :     1 : False : False : Binary
+         (2, 18) :     0 :     0 :     1 : False : False : Binary
+         (2, 19) :     0 :     0 :     1 : False : False : Binary
+         (2, 20) :     0 :     0 :     1 : False : False : Binary
+         (2, 21) :     0 :     0 :     1 : False : False : Binary
+         (2, 22) :     0 :     0 :     1 : False : False : Binary
+         (2, 23) :     0 :     0 :     1 : False : False : Binary
+         (2, 24) :     0 :     0 :     1 : False : False : Binary
+         (2, 25) :     0 :     0 :     1 : False : False : Binary
+         (3, 16) :     0 :     0 :     1 : False : False : Binary
+         (3, 17) :     0 :     0 :     1 : False : False : Binary
+         (3, 18) :     0 :     0 :     1 : False : False : Binary
+         (3, 19) :     0 :     0 :     1 : False : False : Binary
+         (3, 20) :     0 :     0 :     1 : False : False : Binary
+         (3, 21) :     0 :     0 :     1 : False : False : Binary
+         (3, 22) :     0 :     0 :     1 : False : False : Binary
+         (3, 23) :     0 :     0 :     1 : False : False : Binary
+         (3, 24) :     0 :     0 :     1 : False : False : Binary
+         (3, 25) :     0 :     0 :     1 : False : False : Binary
+         (4, 16) :     0 :     0 :     1 : False : False : Binary
+         (4, 17) :     0 :     0 :     1 : False : False : Binary
+         (4, 18) :     0 :     0 :     1 : False : False : Binary
+         (4, 19) :     0 :     0 :     1 : False : False : Binary
+         (4, 20) :     0 :     0 :     1 : False : False : Binary
+         (4, 21) :     0 :     0 :     1 : False : False : Binary
+         (4, 22) :     0 :     0 :     1 : False : False : Binary
+         (4, 23) :     0 :     0 :     1 : False : False : Binary
+         (4, 24) :     0 :     0 :     1 : False : False : Binary
+         (4, 25) :     0 :     0 :     1 : False : False : Binary
+         (5, 16) :     0 :     0 :     1 : False : False : Binary
+         (5, 17) :     0 :     0 :     1 : False : False : Binary
+         (5, 18) :     0 :     0 :     1 : False : False : Binary
+         (5, 19) :     0 :     0 :     1 : False : False : Binary
+         (5, 20) :     0 :     0 :     1 : False : False : Binary
+         (5, 21) :     0 :     0 :     1 : False : False : Binary
+         (5, 22) :     0 :     0 :     1 : False : False : Binary
+         (5, 23) :     0 :     0 :     1 : False : False : Binary
+         (5, 24) :     0 :     0 :     1 : False : False : Binary
+         (5, 25) :     0 :     0 :     1 : False : False : Binary
+         (6, 16) :     0 :     0 :     1 : False : False : Binary
+         (6, 17) :     0 :     0 :     1 : False : False : Binary
+         (6, 18) :     0 :     0 :     1 : False : False : Binary
+         (6, 19) :     0 :     0 :     1 : False : False : Binary
+         (6, 20) :     0 :     0 :     1 : False : False : Binary
+         (6, 21) :     0 :     0 :     1 : False : False : Binary
+         (6, 22) :     0 :     0 :     1 : False : False : Binary
+         (6, 23) :     0 :     0 :     1 : False : False : Binary
+         (6, 24) :     0 :     0 :     1 : False : False : Binary
+         (6, 25) :     0 :     0 :     1 : False : False : Binary
+         (7, 16) :     0 :     0 :     1 : False : False : Binary
+         (7, 17) :     0 :     0 :     1 : False : False : Binary
+         (7, 18) :     0 :     0 :     1 : False : False : Binary
+         (7, 19) :     0 :     0 :     1 : False : False : Binary
+         (7, 20) :     0 :     0 :     1 : False : False : Binary
+         (7, 21) :     0 :     0 :     1 : False : False : Binary
+         (7, 22) :     0 :     0 :     1 : False : False : Binary
+         (7, 23) :     0 :     0 :     1 : False : False : Binary
+         (7, 24) :     0 :     0 :     1 : False : False : Binary
+         (7, 25) :     0 :     0 :     1 : False : False : Binary
+         (8, 16) :     0 :     0 :     1 : False : False : Binary
+         (8, 17) :     0 :     0 :     1 : False : False : Binary
+         (8, 18) :     0 :     0 :     1 : False : False : Binary
+         (8, 19) :     0 :     0 :     1 : False : False : Binary
+         (8, 20) :     0 :     0 :     1 : False : False : Binary
+         (8, 21) :     0 :     0 :     1 : False : False : Binary
+         (8, 22) :     0 :     0 :     1 : False : False : Binary
+         (8, 23) :     0 :     0 :     1 : False : False : Binary
+         (8, 24) :     0 :     0 :     1 : False : False : Binary
+         (8, 25) :     0 :     0 :     1 : False : False : Binary
+         (9, 16) :     0 :     0 :     1 : False : False : Binary
+         (9, 17) :     0 :     0 :     1 : False : False : Binary
+         (9, 18) :     0 :     0 :     1 : False : False : Binary
+         (9, 19) :     0 :     0 :     1 : False : False : Binary
+         (9, 20) :     0 :     0 :     1 : False : False : Binary
+         (9, 21) :     0 :     0 :     1 : False : False : Binary
+         (9, 22) :     0 :     0 :     1 : False : False : Binary
+         (9, 23) :     0 :     0 :     1 : False : False : Binary
+         (9, 24) :     0 :     0 :     1 : False : False : Binary
+         (9, 25) :     0 :     0 :     1 : False : False : Binary
+        (10, 16) :     0 :     0 :     1 : False : False : Binary
+        (10, 17) :     0 :     0 :     1 : False : False : Binary
+        (10, 18) :     0 :     0 :     1 : False : False : Binary
+        (10, 19) :     0 :     0 :     1 : False : False : Binary
+        (10, 20) :     0 :     0 :     1 : False : False : Binary
+        (10, 21) :     0 :     0 :     1 : False : False : Binary
+        (10, 22) :     0 :     0 :     1 : False : False : Binary
+        (10, 23) :     0 :     0 :     1 : False : False : Binary
+        (10, 24) :     0 :     0 :     1 : False : False : Binary
+        (10, 25) :     0 :     0 :     1 : False : False : Binary
+    g : Size=30, Index=g_index
+        Key     : Lower : Value : Upper : Fixed : Stale : Domain
+        (1, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+    d_o : Size=20, Index=d_o_index
+        Key     : Lower : Value : Upper : Fixed : Stale : Domain
+        (1, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+    d_b : Size=20, Index=d_b_index
+        Key     : Lower : Value : Upper : Fixed : Stale : Domain
+        (1, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+    teta : Size=30, Index=teta_index
+        Key     : Lower : Value : Upper : Fixed : Stale : Domain
+        (1, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+    Lambda : Size=30, Index=Lambda_index
+        Key     : Lower : Value : Upper : Fixed : Stale : Domain
+        (1, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+    w_g_low : Size=30, Index=w_g_low_index
+        Key     : Lower : Value : Upper : Fixed : Stale : Domain
+        (1, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+    w_g_up : Size=30, Index=w_g_up_index
+        Key     : Lower : Value : Upper : Fixed : Stale : Domain
+        (1, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+    w_do_low : Size=20, Index=w_do_low_index
+        Key     : Lower : Value : Upper : Fixed : Stale : Domain
+        (1, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+    w_do_up : Size=20, Index=w_do_up_index
+        Key     : Lower : Value : Upper : Fixed : Stale : Domain
+        (1, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+    w_db_low : Size=20, Index=w_db_low_index
+        Key     : Lower : Value : Upper : Fixed : Stale : Domain
+        (1, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+    w_db_up : Size=20, Index=w_db_up_index
+        Key     : Lower : Value : Upper : Fixed : Stale : Domain
+        (1, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+    w_DAo_low : Size=10, Index=T
+        Key : Lower : Value : Upper : Fixed : Stale : Domain
+         16 :     0 :     0 :  None : False : False : NonNegativeReals
+         17 :     0 :     0 :  None : False : False : NonNegativeReals
+         18 :     0 :     0 :  None : False : False : NonNegativeReals
+         19 :     0 :     0 :  None : False : False : NonNegativeReals
+         20 :     0 :     0 :  None : False : False : NonNegativeReals
+         21 :     0 :     0 :  None : False : False : NonNegativeReals
+         22 :     0 :     0 :  None : False : False : NonNegativeReals
+         23 :     0 :     0 :  None : False : False : NonNegativeReals
+         24 :     0 :     0 :  None : False : False : NonNegativeReals
+         25 :     0 :     0 :  None : False : False : NonNegativeReals
+    w_DAo_up : Size=10, Index=T
+        Key : Lower : Value : Upper : Fixed : Stale : Domain
+         16 :     0 :     0 :  None : False : False : NonNegativeReals
+         17 :     0 :     0 :  None : False : False : NonNegativeReals
+         18 :     0 :     0 :  None : False : False : NonNegativeReals
+         19 :     0 :     0 :  None : False : False : NonNegativeReals
+         20 :     0 :     0 :  None : False : False : NonNegativeReals
+         21 :     0 :     0 :  None : False : False : NonNegativeReals
+         22 :     0 :     0 :  None : False : False : NonNegativeReals
+         23 :     0 :     0 :  None : False : False : NonNegativeReals
+         24 :     0 :     0 :  None : False : False : NonNegativeReals
+         25 :     0 :     0 :  None : False : False : NonNegativeReals
+    w_DAb_low : Size=10, Index=T
+        Key : Lower : Value : Upper : Fixed : Stale : Domain
+         16 :     0 :     0 :  None : False : False : NonNegativeReals
+         17 :     0 :     0 :  None : False : False : NonNegativeReals
+         18 :     0 :     0 :  None : False : False : NonNegativeReals
+         19 :     0 :     0 :  None : False : False : NonNegativeReals
+         20 :     0 :     0 :  None : False : False : NonNegativeReals
+         21 :     0 :     0 :  None : False : False : NonNegativeReals
+         22 :     0 :     0 :  None : False : False : NonNegativeReals
+         23 :     0 :     0 :  None : False : False : NonNegativeReals
+         24 :     0 :     0 :  None : False : False : NonNegativeReals
+         25 :     0 :     0 :  None : False : False : NonNegativeReals
+    w_DAb_up : Size=10, Index=T
+        Key : Lower : Value : Upper : Fixed : Stale : Domain
+         16 :     0 :     0 :  None : False : False : NonNegativeReals
+         17 :     0 :     0 :  None : False : False : NonNegativeReals
+         18 :     0 :     0 :  None : False : False : NonNegativeReals
+         19 :     0 :     0 :  None : False : False : NonNegativeReals
+         20 :     0 :     0 :  None : False : False : NonNegativeReals
+         21 :     0 :     0 :  None : False : False : NonNegativeReals
+         22 :     0 :     0 :  None : False : False : NonNegativeReals
+         23 :     0 :     0 :  None : False : False : NonNegativeReals
+         24 :     0 :     0 :  None : False : False : NonNegativeReals
+         25 :     0 :     0 :  None : False : False : NonNegativeReals
+    w_line_low : Size=30, Index=w_line_low_index
+        Key     : Lower : Value : Upper : Fixed : Stale : Domain
+        (1, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+    w_line_up : Size=30, Index=w_line_up_index
+        Key     : Lower : Value : Upper : Fixed : Stale : Domain
+        (1, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (1, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (2, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 16) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 17) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 18) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 19) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 20) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 21) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 22) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 23) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 24) :     0 :     0 :  None : False : False : NonNegativeReals
+        (3, 25) :     0 :     0 :  None : False : False : NonNegativeReals
+    u_g_low : Size=30, Index=u_g_low_index
+        Key     : Lower : Value : Upper : Fixed : Stale : Domain
+        (1, 16) :     0 :     0 :     1 : False : False : Binary
+        (1, 17) :     0 :     0 :     1 : False : False : Binary
+        (1, 18) :     0 :     0 :     1 : False : False : Binary
+        (1, 19) :     0 :     0 :     1 : False : False : Binary
+        (1, 20) :     0 :     0 :     1 : False : False : Binary
+        (1, 21) :     0 :     0 :     1 : False : False : Binary
+        (1, 22) :     0 :     0 :     1 : False : False : Binary
+        (1, 23) :     0 :     0 :     1 : False : False : Binary
+        (1, 24) :     0 :     0 :     1 : False : False : Binary
+        (1, 25) :     0 :     0 :     1 : False : False : Binary
+        (2, 16) :     0 :     0 :     1 : False : False : Binary
+        (2, 17) :     0 :     0 :     1 : False : False : Binary
+        (2, 18) :     0 :     0 :     1 : False : False : Binary
+        (2, 19) :     0 :     0 :     1 : False : False : Binary
+        (2, 20) :     0 :     0 :     1 : False : False : Binary
+        (2, 21) :     0 :     0 :     1 : False : False : Binary
+        (2, 22) :     0 :     0 :     1 : False : False : Binary
+        (2, 23) :     0 :     0 :     1 : False : False : Binary
+        (2, 24) :     0 :     0 :     1 : False : False : Binary
+        (2, 25) :     0 :     0 :     1 : False : False : Binary
+        (3, 16) :     0 :     0 :     1 : False : False : Binary
+        (3, 17) :     0 :     0 :     1 : False : False : Binary
+        (3, 18) :     0 :     0 :     1 : False : False : Binary
+        (3, 19) :     0 :     0 :     1 : False : False : Binary
+        (3, 20) :     0 :     0 :     1 : False : False : Binary
+        (3, 21) :     0 :     0 :     1 : False : False : Binary
+        (3, 22) :     0 :     0 :     1 : False : False : Binary
+        (3, 23) :     0 :     0 :     1 : False : False : Binary
+        (3, 24) :     0 :     0 :     1 : False : False : Binary
+        (3, 25) :     0 :     0 :     1 : False : False : Binary
+    u_g_up : Size=30, Index=u_g_up_index
+        Key     : Lower : Value : Upper : Fixed : Stale : Domain
+        (1, 16) :     0 :     0 :     1 : False : False : Binary
+        (1, 17) :     0 :     0 :     1 : False : False : Binary
+        (1, 18) :     0 :     0 :     1 : False : False : Binary
+        (1, 19) :     0 :     0 :     1 : False : False : Binary
+        (1, 20) :     0 :     0 :     1 : False : False : Binary
+        (1, 21) :     0 :     0 :     1 : False : False : Binary
+        (1, 22) :     0 :     0 :     1 : False : False : Binary
+        (1, 23) :     0 :     0 :     1 : False : False : Binary
+        (1, 24) :     0 :     0 :     1 : False : False : Binary
+        (1, 25) :     0 :     0 :     1 : False : False : Binary
+        (2, 16) :     0 :     0 :     1 : False : False : Binary
+        (2, 17) :     0 :     0 :     1 : False : False : Binary
+        (2, 18) :     0 :     0 :     1 : False : False : Binary
+        (2, 19) :     0 :     0 :     1 : False : False : Binary
+        (2, 20) :     0 :     0 :     1 : False : False : Binary
+        (2, 21) :     0 :     0 :     1 : False : False : Binary
+        (2, 22) :     0 :     0 :     1 : False : False : Binary
+        (2, 23) :     0 :     0 :     1 : False : False : Binary
+        (2, 24) :     0 :     0 :     1 : False : False : Binary
+        (2, 25) :     0 :     0 :     1 : False : False : Binary
+        (3, 16) :     0 :     0 :     1 : False : False : Binary
+        (3, 17) :     0 :     0 :     1 : False : False : Binary
+        (3, 18) :     0 :     0 :     1 : False : False : Binary
+        (3, 19) :     0 :     0 :     1 : False : False : Binary
+        (3, 20) :     0 :     0 :     1 : False : False : Binary
+        (3, 21) :     0 :     0 :     1 : False : False : Binary
+        (3, 22) :     0 :     0 :     1 : False : False : Binary
+        (3, 23) :     0 :     0 :     1 : False : False : Binary
+        (3, 24) :     0 :     0 :     1 : False : False : Binary
+        (3, 25) :     0 :     0 :     1 : False : False : Binary
+    u_do_low : Size=20, Index=u_do_low_index
+        Key     : Lower : Value : Upper : Fixed : Stale : Domain
+        (1, 16) :     0 :     0 :     1 : False : False : Binary
+        (1, 17) :     0 :     0 :     1 : False : False : Binary
+        (1, 18) :     0 :     0 :     1 : False : False : Binary
+        (1, 19) :     0 :     0 :     1 : False : False : Binary
+        (1, 20) :     0 :     0 :     1 : False : False : Binary
+        (1, 21) :     0 :     0 :     1 : False : False : Binary
+        (1, 22) :     0 :     0 :     1 : False : False : Binary
+        (1, 23) :     0 :     0 :     1 : False : False : Binary
+        (1, 24) :     0 :     0 :     1 : False : False : Binary
+        (1, 25) :     0 :     0 :     1 : False : False : Binary
+        (2, 16) :     0 :     0 :     1 : False : False : Binary
+        (2, 17) :     0 :     0 :     1 : False : False : Binary
+        (2, 18) :     0 :     0 :     1 : False : False : Binary
+        (2, 19) :     0 :     0 :     1 : False : False : Binary
+        (2, 20) :     0 :     0 :     1 : False : False : Binary
+        (2, 21) :     0 :     0 :     1 : False : False : Binary
+        (2, 22) :     0 :     0 :     1 : False : False : Binary
+        (2, 23) :     0 :     0 :     1 : False : False : Binary
+        (2, 24) :     0 :     0 :     1 : False : False : Binary
+        (2, 25) :     0 :     0 :     1 : False : False : Binary
+    u_do_up : Size=20, Index=u_do_up_index
+        Key     : Lower : Value : Upper : Fixed : Stale : Domain
+        (1, 16) :     0 :     0 :     1 : False : False : Binary
+        (1, 17) :     0 :     0 :     1 : False : False : Binary
+        (1, 18) :     0 :     0 :     1 : False : False : Binary
+        (1, 19) :     0 :     0 :     1 : False : False : Binary
+        (1, 20) :     0 :     0 :     1 : False : False : Binary
+        (1, 21) :     0 :     0 :     1 : False : False : Binary
+        (1, 22) :     0 :     0 :     1 : False : False : Binary
+        (1, 23) :     0 :     0 :     1 : False : False : Binary
+        (1, 24) :     0 :     0 :     1 : False : False : Binary
+        (1, 25) :     0 :     0 :     1 : False : False : Binary
+        (2, 16) :     0 :     0 :     1 : False : False : Binary
+        (2, 17) :     0 :     0 :     1 : False : False : Binary
+        (2, 18) :     0 :     0 :     1 : False : False : Binary
+        (2, 19) :     0 :     0 :     1 : False : False : Binary
+        (2, 20) :     0 :     0 :     1 : False : False : Binary
+        (2, 21) :     0 :     0 :     1 : False : False : Binary
+        (2, 22) :     0 :     0 :     1 : False : False : Binary
+        (2, 23) :     0 :     0 :     1 : False : False : Binary
+        (2, 24) :     0 :     0 :     1 : False : False : Binary
+        (2, 25) :     0 :     0 :     1 : False : False : Binary
+    u_db_low : Size=20, Index=u_db_low_index
+        Key     : Lower : Value : Upper : Fixed : Stale : Domain
+        (1, 16) :     0 :     0 :     1 : False : False : Binary
+        (1, 17) :     0 :     0 :     1 : False : False : Binary
+        (1, 18) :     0 :     0 :     1 : False : False : Binary
+        (1, 19) :     0 :     0 :     1 : False : False : Binary
+        (1, 20) :     0 :     0 :     1 : False : False : Binary
+        (1, 21) :     0 :     0 :     1 : False : False : Binary
+        (1, 22) :     0 :     0 :     1 : False : False : Binary
+        (1, 23) :     0 :     0 :     1 : False : False : Binary
+        (1, 24) :     0 :     0 :     1 : False : False : Binary
+        (1, 25) :     0 :     0 :     1 : False : False : Binary
+        (2, 16) :     0 :     0 :     1 : False : False : Binary
+        (2, 17) :     0 :     0 :     1 : False : False : Binary
+        (2, 18) :     0 :     0 :     1 : False : False : Binary
+        (2, 19) :     0 :     0 :     1 : False : False : Binary
+        (2, 20) :     0 :     0 :     1 : False : False : Binary
+        (2, 21) :     0 :     0 :     1 : False : False : Binary
+        (2, 22) :     0 :     0 :     1 : False : False : Binary
+        (2, 23) :     0 :     0 :     1 : False : False : Binary
+        (2, 24) :     0 :     0 :     1 : False : False : Binary
+        (2, 25) :     0 :     0 :     1 : False : False : Binary
+    u_db_up : Size=20, Index=u_db_up_index
+        Key     : Lower : Value : Upper : Fixed : Stale : Domain
+        (1, 16) :     0 :     0 :     1 : False : False : Binary
+        (1, 17) :     0 :     0 :     1 : False : False : Binary
+        (1, 18) :     0 :     0 :     1 : False : False : Binary
+        (1, 19) :     0 :     0 :     1 : False : False : Binary
+        (1, 20) :     0 :     0 :     1 : False : False : Binary
+        (1, 21) :     0 :     0 :     1 : False : False : Binary
+        (1, 22) :     0 :     0 :     1 : False : False : Binary
+        (1, 23) :     0 :     0 :     1 : False : False : Binary
+        (1, 24) :     0 :     0 :     1 : False : False : Binary
+        (1, 25) :     0 :     0 :     1 : False : False : Binary
+        (2, 16) :     0 :     0 :     1 : False : False : Binary
+        (2, 17) :     0 :     0 :     1 : False : False : Binary
+        (2, 18) :     0 :     0 :     1 : False : False : Binary
+        (2, 19) :     0 :     0 :     1 : False : False : Binary
+        (2, 20) :     0 :     0 :     1 : False : False : Binary
+        (2, 21) :     0 :     0 :     1 : False : False : Binary
+        (2, 22) :     0 :     0 :     1 : False : False : Binary
+        (2, 23) :     0 :     0 :     1 : False : False : Binary
+        (2, 24) :     0 :     0 :     1 : False : False : Binary
+        (2, 25) :     0 :     0 :     1 : False : False : Binary
+    u_DAs_o_low : Size=10, Index=T
+        Key : Lower : Value : Upper : Fixed : Stale : Domain
+         16 :     0 :     0 :     1 : False : False : Binary
+         17 :     0 :     0 :     1 : False : False : Binary
+         18 :     0 :     0 :     1 : False : False : Binary
+         19 :     0 :     0 :     1 : False : False : Binary
+         20 :     0 :     0 :     1 : False : False : Binary
+         21 :     0 :     0 :     1 : False : False : Binary
+         22 :     0 :     0 :     1 : False : False : Binary
+         23 :     0 :     0 :     1 : False : False : Binary
+         24 :     0 :     0 :     1 : False : False : Binary
+         25 :     0 :     0 :     1 : False : False : Binary
+    u_DAs_o_up : Size=10, Index=T
+        Key : Lower : Value : Upper : Fixed : Stale : Domain
+         16 :     0 :     0 :     1 : False : False : Binary
+         17 :     0 :     0 :     1 : False : False : Binary
+         18 :     0 :     0 :     1 : False : False : Binary
+         19 :     0 :     0 :     1 : False : False : Binary
+         20 :     0 :     0 :     1 : False : False : Binary
+         21 :     0 :     0 :     1 : False : False : Binary
+         22 :     0 :     0 :     1 : False : False : Binary
+         23 :     0 :     0 :     1 : False : False : Binary
+         24 :     0 :     0 :     1 : False : False : Binary
+         25 :     0 :     0 :     1 : False : False : Binary
+    u_DAs_b_low : Size=10, Index=T
+        Key : Lower : Value : Upper : Fixed : Stale : Domain
+         16 :     0 :     0 :     1 : False : False : Binary
+         17 :     0 :     0 :     1 : False : False : Binary
+         18 :     0 :     0 :     1 : False : False : Binary
+         19 :     0 :     0 :     1 : False : False : Binary
+         20 :     0 :     0 :     1 : False : False : Binary
+         21 :     0 :     0 :     1 : False : False : Binary
+         22 :     0 :     0 :     1 : False : False : Binary
+         23 :     0 :     0 :     1 : False : False : Binary
+         24 :     0 :     0 :     1 : False : False : Binary
+         25 :     0 :     0 :     1 : False : False : Binary
+    u_DAs_b_up : Size=10, Index=T
+        Key : Lower : Value : Upper : Fixed : Stale : Domain
+         16 :     0 :     0 :     1 : False : False : Binary
+         17 :     0 :     0 :     1 : False : False : Binary
+         18 :     0 :     0 :     1 : False : False : Binary
+         19 :     0 :     0 :     1 : False : False : Binary
+         20 :     0 :     0 :     1 : False : False : Binary
+         21 :     0 :     0 :     1 : False : False : Binary
+         22 :     0 :     0 :     1 : False : False : Binary
+         23 :     0 :     0 :     1 : False : False : Binary
+         24 :     0 :     0 :     1 : False : False : Binary
+         25 :     0 :     0 :     1 : False : False : Binary
+    u_line_low : Size=30, Index=u_line_low_index
+        Key     : Lower : Value : Upper : Fixed : Stale : Domain
+        (1, 16) :     0 :     0 :     1 : False : False : Binary
+        (1, 17) :     0 :     0 :     1 : False : False : Binary
+        (1, 18) :     0 :     0 :     1 : False : False : Binary
+        (1, 19) :     0 :     0 :     1 : False : False : Binary
+        (1, 20) :     0 :     0 :     1 : False : False : Binary
+        (1, 21) :     0 :     0 :     1 : False : False : Binary
+        (1, 22) :     0 :     0 :     1 : False : False : Binary
+        (1, 23) :     0 :     0 :     1 : False : False : Binary
+        (1, 24) :     0 :     0 :     1 : False : False : Binary
+        (1, 25) :     0 :     0 :     1 : False : False : Binary
+        (2, 16) :     0 :     0 :     1 : False : False : Binary
+        (2, 17) :     0 :     0 :     1 : False : False : Binary
+        (2, 18) :     0 :     0 :     1 : False : False : Binary
+        (2, 19) :     0 :     0 :     1 : False : False : Binary
+        (2, 20) :     0 :     0 :     1 : False : False : Binary
+        (2, 21) :     0 :     0 :     1 : False : False : Binary
+        (2, 22) :     0 :     0 :     1 : False : False : Binary
+        (2, 23) :     0 :     0 :     1 : False : False : Binary
+        (2, 24) :     0 :     0 :     1 : False : False : Binary
+        (2, 25) :     0 :     0 :     1 : False : False : Binary
+        (3, 16) :     0 :     0 :     1 : False : False : Binary
+        (3, 17) :     0 :     0 :     1 : False : False : Binary
+        (3, 18) :     0 :     0 :     1 : False : False : Binary
+        (3, 19) :     0 :     0 :     1 : False : False : Binary
+        (3, 20) :     0 :     0 :     1 : False : False : Binary
+        (3, 21) :     0 :     0 :     1 : False : False : Binary
+        (3, 22) :     0 :     0 :     1 : False : False : Binary
+        (3, 23) :     0 :     0 :     1 : False : False : Binary
+        (3, 24) :     0 :     0 :     1 : False : False : Binary
+        (3, 25) :     0 :     0 :     1 : False : False : Binary
+    u_line_up : Size=30, Index=u_line_up_index
+        Key     : Lower : Value : Upper : Fixed : Stale : Domain
+        (1, 16) :     0 :     0 :     1 : False : False : Binary
+        (1, 17) :     0 :     0 :     1 : False : False : Binary
+        (1, 18) :     0 :     0 :     1 : False : False : Binary
+        (1, 19) :     0 :     0 :     1 : False : False : Binary
+        (1, 20) :     0 :     0 :     1 : False : False : Binary
+        (1, 21) :     0 :     0 :     1 : False : False : Binary
+        (1, 22) :     0 :     0 :     1 : False : False : Binary
+        (1, 23) :     0 :     0 :     1 : False : False : Binary
+        (1, 24) :     0 :     0 :     1 : False : False : Binary
+        (1, 25) :     0 :     0 :     1 : False : False : Binary
+        (2, 16) :     0 :     0 :     1 : False : False : Binary
+        (2, 17) :     0 :     0 :     1 : False : False : Binary
+        (2, 18) :     0 :     0 :     1 : False : False : Binary
+        (2, 19) :     0 :     0 :     1 : False : False : Binary
+        (2, 20) :     0 :     0 :     1 : False : False : Binary
+        (2, 21) :     0 :     0 :     1 : False : False : Binary
+        (2, 22) :     0 :     0 :     1 : False : False : Binary
+        (2, 23) :     0 :     0 :     1 : False : False : Binary
+        (2, 24) :     0 :     0 :     1 : False : False : Binary
+        (2, 25) :     0 :     0 :     1 : False : False : Binary
+        (3, 16) :     0 :     0 :     1 : False : False : Binary
+        (3, 17) :     0 :     0 :     1 : False : False : Binary
+        (3, 18) :     0 :     0 :     1 : False : False : Binary
+        (3, 19) :     0 :     0 :     1 : False : False : Binary
+        (3, 20) :     0 :     0 :     1 : False : False : Binary
+        (3, 21) :     0 :     0 :     1 : False : False : Binary
+        (3, 22) :     0 :     0 :     1 : False : False : Binary
+        (3, 23) :     0 :     0 :     1 : False : False : Binary
+        (3, 24) :     0 :     0 :     1 : False : False : Binary
+        (3, 25) :     0 :     0 :     1 : False : False : Binary
+
+  Objectives:
+    obj : Size=1, Index=None, Active=True
+        Key  : Active : Value
+        None :   True :   0.0
+
+  Constraints:
+    ev_charging_con : Size=100
+        Key      : Lower : Body : Upper
+         (1, 16) :  None :  0.0 :   0.0
+         (1, 17) :  None :  0.0 :   0.0
+         (1, 18) :  None :  0.0 :   0.0
+         (1, 19) :  None :  0.0 :   0.0
+         (1, 20) :  None :  0.0 :   0.0
+         (1, 21) :  None :  0.0 :   0.0
+         (1, 22) :  None :  0.0 :   0.0
+         (1, 23) :  None :  0.0 :   0.0
+         (1, 24) :  None :  0.0 :   0.0
+         (1, 25) :   0.0 :    0 :   0.0
+         (2, 16) :  None :  0.0 :   0.0
+         (2, 17) :  None :  0.0 :   0.0
+         (2, 18) :  None :  0.0 :   0.0
+         (2, 19) :  None :  0.0 :   0.0
+         (2, 20) :  None :  0.0 :   0.0
+         (2, 21) :  None :  0.0 :   0.0
+         (2, 22) :  None :  0.0 :   0.0
+         (2, 23) :  None :  0.0 :   0.0
+         (2, 24) :  None :  0.0 :   0.0
+         (2, 25) :   0.0 :    0 :   0.0
+         (3, 16) :  None :  0.0 :   0.0
+         (3, 17) :  None :  0.0 :   0.0
+         (3, 18) :  None :  0.0 :   0.0
+         (3, 19) :  None :  0.0 :   0.0
+         (3, 20) :  None :  0.0 :   0.0
+         (3, 21) :  None :  0.0 :   0.0
+         (3, 22) :  None :  0.0 :   0.0
+         (3, 23) :  None :  0.0 :   0.0
+         (3, 24) :  None :  0.0 :   0.0
+         (3, 25) :   0.0 :    0 :   0.0
+         (4, 16) :  None :  0.0 :   0.0
+         (4, 17) :  None :  0.0 :   0.0
+         (4, 18) :  None :  0.0 :   0.0
+         (4, 19) :  None :  0.0 :   0.0
+         (4, 20) :  None :  0.0 :   0.0
+         (4, 21) :  None :  0.0 :   0.0
+         (4, 22) :  None :  0.0 :   0.0
+         (4, 23) :  None :  0.0 :   0.0
+         (4, 24) :  None :  0.0 :   0.0
+         (4, 25) :   0.0 :    0 :   0.0
+         (5, 16) :  None :  0.0 :   0.0
+         (5, 17) :  None :  0.0 :   0.0
+         (5, 18) :  None :  0.0 :   0.0
+         (5, 19) :  None :  0.0 :   0.0
+         (5, 20) :  None :  0.0 :   0.0
+         (5, 21) :  None :  0.0 :   0.0
+         (5, 22) :  None :  0.0 :   0.0
+         (5, 23) :  None :  0.0 :   0.0
+         (5, 24) :  None :  0.0 :   0.0
+         (5, 25) :   0.0 :    0 :   0.0
+         (6, 16) :  None :  0.0 :   0.0
+         (6, 17) :  None :  0.0 :   0.0
+         (6, 18) :  None :  0.0 :   0.0
+         (6, 19) :  None :  0.0 :   0.0
+         (6, 20) :  None :  0.0 :   0.0
+         (6, 21) :  None :  0.0 :   0.0
+         (6, 22) :  None :  0.0 :   0.0
+         (6, 23) :  None :  0.0 :   0.0
+         (6, 24) :  None :  0.0 :   0.0
+         (6, 25) :   0.0 :    0 :   0.0
+         (7, 16) :  None :  0.0 :   0.0
+         (7, 17) :  None :  0.0 :   0.0
+         (7, 18) :  None :  0.0 :   0.0
+         (7, 19) :  None :  0.0 :   0.0
+         (7, 20) :  None :  0.0 :   0.0
+         (7, 21) :  None :  0.0 :   0.0
+         (7, 22) :  None :  0.0 :   0.0
+         (7, 23) :  None :  0.0 :   0.0
+         (7, 24) :  None :  0.0 :   0.0
+         (7, 25) :   0.0 :    0 :   0.0
+         (8, 16) :  None :  0.0 :   0.0
+         (8, 17) :  None :  0.0 :   0.0
+         (8, 18) :  None :  0.0 :   0.0
+         (8, 19) :  None :  0.0 :   0.0
+         (8, 20) :  None :  0.0 :   0.0
+         (8, 21) :  None :  0.0 :   0.0
+         (8, 22) :  None :  0.0 :   0.0
+         (8, 23) :  None :  0.0 :   0.0
+         (8, 24) :  None :  0.0 :   0.0
+         (8, 25) :   0.0 :    0 :   0.0
+         (9, 16) :  None :  0.0 :   0.0
+         (9, 17) :  None :  0.0 :   0.0
+         (9, 18) :  None :  0.0 :   0.0
+         (9, 19) :  None :  0.0 :   0.0
+         (9, 20) :  None :  0.0 :   0.0
+         (9, 21) :  None :  0.0 :   0.0
+         (9, 22) :  None :  0.0 :   0.0
+         (9, 23) :  None :  0.0 :   0.0
+         (9, 24) :  None :  0.0 :   0.0
+         (9, 25) :   0.0 :    0 :   0.0
+        (10, 16) :  None :  0.0 :   0.0
+        (10, 17) :  None :  0.0 :   0.0
+        (10, 18) :  None :  0.0 :   0.0
+        (10, 19) :  None :  0.0 :   0.0
+        (10, 20) :  None :  0.0 :   0.0
+        (10, 21) :  None :  0.0 :   0.0
+        (10, 22) :  None :  0.0 :   0.0
+        (10, 23) :  None :  0.0 :   0.0
+        (10, 24) :  None :  0.0 :   0.0
+        (10, 25) :   0.0 :    0 :   0.0
+    ev_discharging_con : Size=100
+        Key      : Lower : Body   : Upper
+         (1, 16) :  None : -140.0 :   0.0
+         (1, 17) :  None : -140.0 :   0.0
+         (1, 18) :  None : -140.0 :   0.0
+         (1, 19) :  None : -140.0 :   0.0
+         (1, 20) :  None : -140.0 :   0.0
+         (1, 21) :  None : -140.0 :   0.0
+         (1, 22) :  None : -140.0 :   0.0
+         (1, 23) :  None : -140.0 :   0.0
+         (1, 24) :  None : -140.0 :   0.0
+         (1, 25) :   0.0 :      0 :   0.0
+         (2, 16) :  None :  -60.0 :   0.0
+         (2, 17) :  None :  -60.0 :   0.0
+         (2, 18) :  None :  -60.0 :   0.0
+         (2, 19) :  None :  -60.0 :   0.0
+         (2, 20) :  None :  -60.0 :   0.0
+         (2, 21) :  None :  -60.0 :   0.0
+         (2, 22) :  None :  -60.0 :   0.0
+         (2, 23) :  None :  -60.0 :   0.0
+         (2, 24) :  None :  -60.0 :   0.0
+         (2, 25) :   0.0 :      0 :   0.0
+         (3, 16) :  None : -140.0 :   0.0
+         (3, 17) :  None : -140.0 :   0.0
+         (3, 18) :  None : -140.0 :   0.0
+         (3, 19) :  None : -140.0 :   0.0
+         (3, 20) :  None : -140.0 :   0.0
+         (3, 21) :  None : -140.0 :   0.0
+         (3, 22) :  None : -140.0 :   0.0
+         (3, 23) :  None : -140.0 :   0.0
+         (3, 24) :  None : -140.0 :   0.0
+         (3, 25) :   0.0 :      0 :   0.0
+         (4, 16) :  None : -140.0 :   0.0
+         (4, 17) :  None : -140.0 :   0.0
+         (4, 18) :  None : -140.0 :   0.0
+         (4, 19) :  None : -140.0 :   0.0
+         (4, 20) :  None : -140.0 :   0.0
+         (4, 21) :  None : -140.0 :   0.0
+         (4, 22) :  None : -140.0 :   0.0
+         (4, 23) :  None : -140.0 :   0.0
+         (4, 24) :  None : -140.0 :   0.0
+         (4, 25) :   0.0 :      0 :   0.0
+         (5, 16) :  None :  -60.0 :   0.0
+         (5, 17) :  None :  -60.0 :   0.0
+         (5, 18) :  None :  -60.0 :   0.0
+         (5, 19) :  None :  -60.0 :   0.0
+         (5, 20) :  None :  -60.0 :   0.0
+         (5, 21) :  None :  -60.0 :   0.0
+         (5, 22) :  None :  -60.0 :   0.0
+         (5, 23) :  None :  -60.0 :   0.0
+         (5, 24) :  None :  -60.0 :   0.0
+         (5, 25) :   0.0 :      0 :   0.0
+         (6, 16) :  None :  -60.0 :   0.0
+         (6, 17) :  None :  -60.0 :   0.0
+         (6, 18) :  None :  -60.0 :   0.0
+         (6, 19) :  None :  -60.0 :   0.0
+         (6, 20) :  None :  -60.0 :   0.0
+         (6, 21) :  None :  -60.0 :   0.0
+         (6, 22) :  None :  -60.0 :   0.0
+         (6, 23) :  None :  -60.0 :   0.0
+         (6, 24) :  None :  -60.0 :   0.0
+         (6, 25) :   0.0 :      0 :   0.0
+         (7, 16) :  None :  -60.0 :   0.0
+         (7, 17) :  None :  -60.0 :   0.0
+         (7, 18) :  None :  -60.0 :   0.0
+         (7, 19) :  None :  -60.0 :   0.0
+         (7, 20) :  None :  -60.0 :   0.0
+         (7, 21) :  None :  -60.0 :   0.0
+         (7, 22) :  None :  -60.0 :   0.0
+         (7, 23) :  None :  -60.0 :   0.0
+         (7, 24) :  None :  -60.0 :   0.0
+         (7, 25) :   0.0 :      0 :   0.0
+         (8, 16) :  None : -140.0 :   0.0
+         (8, 17) :  None : -140.0 :   0.0
+         (8, 18) :  None : -140.0 :   0.0
+         (8, 19) :  None : -140.0 :   0.0
+         (8, 20) :  None : -140.0 :   0.0
+         (8, 21) :  None : -140.0 :   0.0
+         (8, 22) :  None : -140.0 :   0.0
+         (8, 23) :  None : -140.0 :   0.0
+         (8, 24) :  None : -140.0 :   0.0
+         (8, 25) :   0.0 :      0 :   0.0
+         (9, 16) :  None :  -60.0 :   0.0
+         (9, 17) :  None :  -60.0 :   0.0
+         (9, 18) :  None :  -60.0 :   0.0
+         (9, 19) :  None :  -60.0 :   0.0
+         (9, 20) :  None :  -60.0 :   0.0
+         (9, 21) :  None :  -60.0 :   0.0
+         (9, 22) :  None :  -60.0 :   0.0
+         (9, 23) :  None :  -60.0 :   0.0
+         (9, 24) :  None :  -60.0 :   0.0
+         (9, 25) :   0.0 :      0 :   0.0
+        (10, 16) :  None :  -60.0 :   0.0
+        (10, 17) :  None :  -60.0 :   0.0
+        (10, 18) :  None :  -60.0 :   0.0
+        (10, 19) :  None :  -60.0 :   0.0
+        (10, 20) :  None :  -60.0 :   0.0
+        (10, 21) :  None :  -60.0 :   0.0
+        (10, 22) :  None :  -60.0 :   0.0
+        (10, 23) :  None :  -60.0 :   0.0
+        (10, 24) :  None :  -60.0 :   0.0
+        (10, 25) :   0.0 :      0 :   0.0
+    ev_soc_con : Size=90
+        Key      : Lower : Body : Upper
+         (1, 16) :   0.0 :  0.0 :   0.0
+         (1, 17) :   0.0 :  0.0 :   0.0
+         (1, 18) :   0.0 :  0.0 :   0.0
+         (1, 19) :   0.0 :  0.0 :   0.0
+         (1, 20) :   0.0 :  0.0 :   0.0
+         (1, 21) :   0.0 :  0.0 :   0.0
+         (1, 22) :   0.0 :  0.0 :   0.0
+         (1, 23) :   0.0 :  0.0 :   0.0
+         (1, 24) :   0.0 :  0.0 :   0.0
+         (2, 16) :   0.0 :  0.0 :   0.0
+         (2, 17) :   0.0 :  0.0 :   0.0
+         (2, 18) :   0.0 :  0.0 :   0.0
+         (2, 19) :   0.0 :  0.0 :   0.0
+         (2, 20) :   0.0 :  0.0 :   0.0
+         (2, 21) :   0.0 :  0.0 :   0.0
+         (2, 22) :   0.0 :  0.0 :   0.0
+         (2, 23) :   0.0 :  0.0 :   0.0
+         (2, 24) :   0.0 :  0.0 :   0.0
+         (3, 16) :   0.0 :  0.0 :   0.0
+         (3, 17) :   0.0 :  0.0 :   0.0
+         (3, 18) :   0.0 :  0.0 :   0.0
+         (3, 19) :   0.0 :  0.0 :   0.0
+         (3, 20) :   0.0 :  0.0 :   0.0
+         (3, 21) :   0.0 :  0.0 :   0.0
+         (3, 22) :   0.0 :  0.0 :   0.0
+         (3, 23) :   0.0 :  0.0 :   0.0
+         (3, 24) :   0.0 :  0.0 :   0.0
+         (4, 16) :   0.0 :  0.0 :   0.0
+         (4, 17) :   0.0 :  0.0 :   0.0
+         (4, 18) :   0.0 :  0.0 :   0.0
+         (4, 19) :   0.0 :  0.0 :   0.0
+         (4, 20) :   0.0 :  0.0 :   0.0
+         (4, 21) :   0.0 :  0.0 :   0.0
+         (4, 22) :   0.0 :  0.0 :   0.0
+         (4, 23) :   0.0 :  0.0 :   0.0
+         (4, 24) :   0.0 :  0.0 :   0.0
+         (5, 16) :   0.0 :  0.0 :   0.0
+         (5, 17) :   0.0 :  0.0 :   0.0
+         (5, 18) :   0.0 :  0.0 :   0.0
+         (5, 19) :   0.0 :  0.0 :   0.0
+         (5, 20) :   0.0 :  0.0 :   0.0
+         (5, 21) :   0.0 :  0.0 :   0.0
+         (5, 22) :   0.0 :  0.0 :   0.0
+         (5, 23) :   0.0 :  0.0 :   0.0
+         (5, 24) :   0.0 :  0.0 :   0.0
+         (6, 16) :   0.0 :  0.0 :   0.0
+         (6, 17) :   0.0 :  0.0 :   0.0
+         (6, 18) :   0.0 :  0.0 :   0.0
+         (6, 19) :   0.0 :  0.0 :   0.0
+         (6, 20) :   0.0 :  0.0 :   0.0
+         (6, 21) :   0.0 :  0.0 :   0.0
+         (6, 22) :   0.0 :  0.0 :   0.0
+         (6, 23) :   0.0 :  0.0 :   0.0
+         (6, 24) :   0.0 :  0.0 :   0.0
+         (7, 16) :   0.0 :  0.0 :   0.0
+         (7, 17) :   0.0 :  0.0 :   0.0
+         (7, 18) :   0.0 :  0.0 :   0.0
+         (7, 19) :   0.0 :  0.0 :   0.0
+         (7, 20) :   0.0 :  0.0 :   0.0
+         (7, 21) :   0.0 :  0.0 :   0.0
+         (7, 22) :   0.0 :  0.0 :   0.0
+         (7, 23) :   0.0 :  0.0 :   0.0
+         (7, 24) :   0.0 :  0.0 :   0.0
+         (8, 16) :   0.0 :  0.0 :   0.0
+         (8, 17) :   0.0 :  0.0 :   0.0
+         (8, 18) :   0.0 :  0.0 :   0.0
+         (8, 19) :   0.0 :  0.0 :   0.0
+         (8, 20) :   0.0 :  0.0 :   0.0
+         (8, 21) :   0.0 :  0.0 :   0.0
+         (8, 22) :   0.0 :  0.0 :   0.0
+         (8, 23) :   0.0 :  0.0 :   0.0
+         (8, 24) :   0.0 :  0.0 :   0.0
+         (9, 16) :   0.0 :  0.0 :   0.0
+         (9, 17) :   0.0 :  0.0 :   0.0
+         (9, 18) :   0.0 :  0.0 :   0.0
+         (9, 19) :   0.0 :  0.0 :   0.0
+         (9, 20) :   0.0 :  0.0 :   0.0
+         (9, 21) :   0.0 :  0.0 :   0.0
+         (9, 22) :   0.0 :  0.0 :   0.0
+         (9, 23) :   0.0 :  0.0 :   0.0
+         (9, 24) :   0.0 :  0.0 :   0.0
+        (10, 16) :   0.0 :  0.0 :   0.0
+        (10, 17) :   0.0 :  0.0 :   0.0
+        (10, 18) :   0.0 :  0.0 :   0.0
+        (10, 19) :   0.0 :  0.0 :   0.0
+        (10, 20) :   0.0 :  0.0 :   0.0
+        (10, 21) :   0.0 :  0.0 :   0.0
+        (10, 22) :   0.0 :  0.0 :   0.0
+        (10, 23) :   0.0 :  0.0 :   0.0
+        (10, 24) :   0.0 :  0.0 :   0.0
+    EV_arrival_soc_con : Size=10
+        Key : Lower : Body : Upper
+          1 :  10.0 :    0 :  10.0
+          2 :   9.0 :    0 :   9.0
+          3 :  52.5 :    0 :  52.5
+          4 :  12.0 :    0 :  12.0
+          5 :  18.0 :    0 :  18.0
+          6 :  40.5 :    0 :  40.5
+          7 :  12.0 :    0 :  12.0
+          8 :  18.0 :    0 :  18.0
+          9 :  40.5 :    0 :  40.5
+         10 :  40.5 :    0 :  40.5
+    ev_soc_low_con : Size=100
+        Key      : Lower : Body : Upper
+         (1, 16) :   4.0 :    0 :  None
+         (1, 17) :   4.0 :    0 :  None
+         (1, 18) :   4.0 :    0 :  None
+         (1, 19) :   4.0 :    0 :  None
+         (1, 20) :   4.0 :    0 :  None
+         (1, 21) :   4.0 :    0 :  None
+         (1, 22) :   4.0 :    0 :  None
+         (1, 23) :   4.0 :    0 :  None
+         (1, 24) :   4.0 :    0 :  None
+         (1, 25) :   4.0 :    0 :  None
+         (2, 16) :   4.0 :    0 :  None
+         (2, 17) :   4.0 :    0 :  None
+         (2, 18) :   4.0 :    0 :  None
+         (2, 19) :   4.0 :    0 :  None
+         (2, 20) :   4.0 :    0 :  None
+         (2, 21) :   4.0 :    0 :  None
+         (2, 22) :   4.0 :    0 :  None
+         (2, 23) :   4.0 :    0 :  None
+         (2, 24) :   4.0 :    0 :  None
+         (2, 25) :   4.0 :    0 :  None
+         (3, 16) :  17.5 :    0 :  None
+         (3, 17) :  17.5 :    0 :  None
+         (3, 18) :  17.5 :    0 :  None
+         (3, 19) :  17.5 :    0 :  None
+         (3, 20) :  17.5 :    0 :  None
+         (3, 21) :  17.5 :    0 :  None
+         (3, 22) :  17.5 :    0 :  None
+         (3, 23) :  17.5 :    0 :  None
+         (3, 24) :  17.5 :    0 :  None
+         (3, 25) :  17.5 :    0 :  None
+         (4, 16) :   4.0 :    0 :  None
+         (4, 17) :   4.0 :    0 :  None
+         (4, 18) :   4.0 :    0 :  None
+         (4, 19) :   4.0 :    0 :  None
+         (4, 20) :   4.0 :    0 :  None
+         (4, 21) :   4.0 :    0 :  None
+         (4, 22) :   4.0 :    0 :  None
+         (4, 23) :   4.0 :    0 :  None
+         (4, 24) :   4.0 :    0 :  None
+         (4, 25) :   4.0 :    0 :  None
+         (5, 16) :   6.0 :    0 :  None
+         (5, 17) :   6.0 :    0 :  None
+         (5, 18) :   6.0 :    0 :  None
+         (5, 19) :   6.0 :    0 :  None
+         (5, 20) :   6.0 :    0 :  None
+         (5, 21) :   6.0 :    0 :  None
+         (5, 22) :   6.0 :    0 :  None
+         (5, 23) :   6.0 :    0 :  None
+         (5, 24) :   6.0 :    0 :  None
+         (5, 25) :   6.0 :    0 :  None
+         (6, 16) :  13.5 :    0 :  None
+         (6, 17) :  13.5 :    0 :  None
+         (6, 18) :  13.5 :    0 :  None
+         (6, 19) :  13.5 :    0 :  None
+         (6, 20) :  13.5 :    0 :  None
+         (6, 21) :  13.5 :    0 :  None
+         (6, 22) :  13.5 :    0 :  None
+         (6, 23) :  13.5 :    0 :  None
+         (6, 24) :  13.5 :    0 :  None
+         (6, 25) :  13.5 :    0 :  None
+         (7, 16) :   4.0 :    0 :  None
+         (7, 17) :   4.0 :    0 :  None
+         (7, 18) :   4.0 :    0 :  None
+         (7, 19) :   4.0 :    0 :  None
+         (7, 20) :   4.0 :    0 :  None
+         (7, 21) :   4.0 :    0 :  None
+         (7, 22) :   4.0 :    0 :  None
+         (7, 23) :   4.0 :    0 :  None
+         (7, 24) :   4.0 :    0 :  None
+         (7, 25) :   4.0 :    0 :  None
+         (8, 16) :   6.0 :    0 :  None
+         (8, 17) :   6.0 :    0 :  None
+         (8, 18) :   6.0 :    0 :  None
+         (8, 19) :   6.0 :    0 :  None
+         (8, 20) :   6.0 :    0 :  None
+         (8, 21) :   6.0 :    0 :  None
+         (8, 22) :   6.0 :    0 :  None
+         (8, 23) :   6.0 :    0 :  None
+         (8, 24) :   6.0 :    0 :  None
+         (8, 25) :   6.0 :    0 :  None
+         (9, 16) :  13.5 :    0 :  None
+         (9, 17) :  13.5 :    0 :  None
+         (9, 18) :  13.5 :    0 :  None
+         (9, 19) :  13.5 :    0 :  None
+         (9, 20) :  13.5 :    0 :  None
+         (9, 21) :  13.5 :    0 :  None
+         (9, 22) :  13.5 :    0 :  None
+         (9, 23) :  13.5 :    0 :  None
+         (9, 24) :  13.5 :    0 :  None
+         (9, 25) :  13.5 :    0 :  None
+        (10, 16) :  13.5 :    0 :  None
+        (10, 17) :  13.5 :    0 :  None
+        (10, 18) :  13.5 :    0 :  None
+        (10, 19) :  13.5 :    0 :  None
+        (10, 20) :  13.5 :    0 :  None
+        (10, 21) :  13.5 :    0 :  None
+        (10, 22) :  13.5 :    0 :  None
+        (10, 23) :  13.5 :    0 :  None
+        (10, 24) :  13.5 :    0 :  None
+        (10, 25) :  13.5 :    0 :  None
+    ev_soc_low2_con : Size=100
+        Key      : Lower : Body : Upper
+         (1, 16) :  None :    0 :  15.2
+         (1, 17) :  None :    0 :  15.2
+         (1, 18) :  None :    0 :  15.2
+         (1, 19) :  None :    0 :  15.2
+         (1, 20) :  None :    0 :  15.2
+         (1, 21) :  None :    0 :  15.2
+         (1, 22) :  None :    0 :  15.2
+         (1, 23) :  None :    0 :  15.2
+         (1, 24) :  None :    0 :  15.2
+         (1, 25) :  None :    0 :  15.2
+         (2, 16) :  None :    0 :  15.2
+         (2, 17) :  None :    0 :  15.2
+         (2, 18) :  None :    0 :  15.2
+         (2, 19) :  None :    0 :  15.2
+         (2, 20) :  None :    0 :  15.2
+         (2, 21) :  None :    0 :  15.2
+         (2, 22) :  None :    0 :  15.2
+         (2, 23) :  None :    0 :  15.2
+         (2, 24) :  None :    0 :  15.2
+         (2, 25) :  None :    0 :  15.2
+         (3, 16) :  None :    0 :  66.5
+         (3, 17) :  None :    0 :  66.5
+         (3, 18) :  None :    0 :  66.5
+         (3, 19) :  None :    0 :  66.5
+         (3, 20) :  None :    0 :  66.5
+         (3, 21) :  None :    0 :  66.5
+         (3, 22) :  None :    0 :  66.5
+         (3, 23) :  None :    0 :  66.5
+         (3, 24) :  None :    0 :  66.5
+         (3, 25) :  None :    0 :  66.5
+         (4, 16) :  None :    0 :  15.2
+         (4, 17) :  None :    0 :  15.2
+         (4, 18) :  None :    0 :  15.2
+         (4, 19) :  None :    0 :  15.2
+         (4, 20) :  None :    0 :  15.2
+         (4, 21) :  None :    0 :  15.2
+         (4, 22) :  None :    0 :  15.2
+         (4, 23) :  None :    0 :  15.2
+         (4, 24) :  None :    0 :  15.2
+         (4, 25) :  None :    0 :  15.2
+         (5, 16) :  None :    0 :  22.8
+         (5, 17) :  None :    0 :  22.8
+         (5, 18) :  None :    0 :  22.8
+         (5, 19) :  None :    0 :  22.8
+         (5, 20) :  None :    0 :  22.8
+         (5, 21) :  None :    0 :  22.8
+         (5, 22) :  None :    0 :  22.8
+         (5, 23) :  None :    0 :  22.8
+         (5, 24) :  None :    0 :  22.8
+         (5, 25) :  None :    0 :  22.8
+         (6, 16) :  None :    0 :  51.3
+         (6, 17) :  None :    0 :  51.3
+         (6, 18) :  None :    0 :  51.3
+         (6, 19) :  None :    0 :  51.3
+         (6, 20) :  None :    0 :  51.3
+         (6, 21) :  None :    0 :  51.3
+         (6, 22) :  None :    0 :  51.3
+         (6, 23) :  None :    0 :  51.3
+         (6, 24) :  None :    0 :  51.3
+         (6, 25) :  None :    0 :  51.3
+         (7, 16) :  None :    0 :  15.2
+         (7, 17) :  None :    0 :  15.2
+         (7, 18) :  None :    0 :  15.2
+         (7, 19) :  None :    0 :  15.2
+         (7, 20) :  None :    0 :  15.2
+         (7, 21) :  None :    0 :  15.2
+         (7, 22) :  None :    0 :  15.2
+         (7, 23) :  None :    0 :  15.2
+         (7, 24) :  None :    0 :  15.2
+         (7, 25) :  None :    0 :  15.2
+         (8, 16) :  None :    0 :  22.8
+         (8, 17) :  None :    0 :  22.8
+         (8, 18) :  None :    0 :  22.8
+         (8, 19) :  None :    0 :  22.8
+         (8, 20) :  None :    0 :  22.8
+         (8, 21) :  None :    0 :  22.8
+         (8, 22) :  None :    0 :  22.8
+         (8, 23) :  None :    0 :  22.8
+         (8, 24) :  None :    0 :  22.8
+         (8, 25) :  None :    0 :  22.8
+         (9, 16) :  None :    0 :  51.3
+         (9, 17) :  None :    0 :  51.3
+         (9, 18) :  None :    0 :  51.3
+         (9, 19) :  None :    0 :  51.3
+         (9, 20) :  None :    0 :  51.3
+         (9, 21) :  None :    0 :  51.3
+         (9, 22) :  None :    0 :  51.3
+         (9, 23) :  None :    0 :  51.3
+         (9, 24) :  None :    0 :  51.3
+         (9, 25) :  None :    0 :  51.3
+        (10, 16) :  None :    0 :  51.3
+        (10, 17) :  None :    0 :  51.3
+        (10, 18) :  None :    0 :  51.3
+        (10, 19) :  None :    0 :  51.3
+        (10, 20) :  None :    0 :  51.3
+        (10, 21) :  None :    0 :  51.3
+        (10, 22) :  None :    0 :  51.3
+        (10, 23) :  None :    0 :  51.3
+        (10, 24) :  None :    0 :  51.3
+        (10, 25) :  None :    0 :  51.3
+    ev_target_con : Size=10
+        Key : Lower : Body : Upper
+          1 :  15.2 :    0 :  15.2
+          2 :  15.2 :    0 :  15.2
+          3 :  66.5 :    0 :  66.5
+          4 :  15.2 :    0 :  15.2
+          5 :  22.8 :    0 :  22.8
+          6 :  51.3 :    0 :  51.3
+          7 :  15.2 :    0 :  15.2
+          8 :  22.8 :    0 :  22.8
+          9 :  51.3 :    0 :  51.3
+         10 :  51.3 :    0 :  51.3
+    TCL_power_limit_con : Size=100
+        Key      : Lower : Body : Upper
+         (1, 16) :  None :    0 :  0.95
+         (1, 17) :  None :    0 :  0.95
+         (1, 18) :  None :    0 :  0.95
+         (1, 19) :  None :    0 :  0.95
+         (1, 20) :  None :    0 :  0.95
+         (1, 21) :  None :    0 :  0.95
+         (1, 22) :  None :    0 :  0.95
+         (1, 23) :  None :    0 :  0.95
+         (1, 24) :  None :    0 :  0.95
+         (1, 25) :  None :    0 :  0.95
+         (2, 16) :  None :    0 :  1.16
+         (2, 17) :  None :    0 :  1.16
+         (2, 18) :  None :    0 :  1.16
+         (2, 19) :  None :    0 :  1.16
+         (2, 20) :  None :    0 :  1.16
+         (2, 21) :  None :    0 :  1.16
+         (2, 22) :  None :    0 :  1.16
+         (2, 23) :  None :    0 :  1.16
+         (2, 24) :  None :    0 :  1.16
+         (2, 25) :  None :    0 :  1.16
+         (3, 16) :  None :    0 :  0.98
+         (3, 17) :  None :    0 :  0.98
+         (3, 18) :  None :    0 :  0.98
+         (3, 19) :  None :    0 :  0.98
+         (3, 20) :  None :    0 :  0.98
+         (3, 21) :  None :    0 :  0.98
+         (3, 22) :  None :    0 :  0.98
+         (3, 23) :  None :    0 :  0.98
+         (3, 24) :  None :    0 :  0.98
+         (3, 25) :  None :    0 :  0.98
+         (4, 16) :  None :    0 :  1.14
+         (4, 17) :  None :    0 :  1.14
+         (4, 18) :  None :    0 :  1.14
+         (4, 19) :  None :    0 :  1.14
+         (4, 20) :  None :    0 :  1.14
+         (4, 21) :  None :    0 :  1.14
+         (4, 22) :  None :    0 :  1.14
+         (4, 23) :  None :    0 :  1.14
+         (4, 24) :  None :    0 :  1.14
+         (4, 25) :  None :    0 :  1.14
+         (5, 16) :  None :    0 :  0.92
+         (5, 17) :  None :    0 :  0.92
+         (5, 18) :  None :    0 :  0.92
+         (5, 19) :  None :    0 :  0.92
+         (5, 20) :  None :    0 :  0.92
+         (5, 21) :  None :    0 :  0.92
+         (5, 22) :  None :    0 :  0.92
+         (5, 23) :  None :    0 :  0.92
+         (5, 24) :  None :    0 :  0.92
+         (5, 25) :  None :    0 :  0.92
+         (6, 16) :  None :    0 :  1.22
+         (6, 17) :  None :    0 :  1.22
+         (6, 18) :  None :    0 :  1.22
+         (6, 19) :  None :    0 :  1.22
+         (6, 20) :  None :    0 :  1.22
+         (6, 21) :  None :    0 :  1.22
+         (6, 22) :  None :    0 :  1.22
+         (6, 23) :  None :    0 :  1.22
+         (6, 24) :  None :    0 :  1.22
+         (6, 25) :  None :    0 :  1.22
+         (7, 16) :  None :    0 :  1.04
+         (7, 17) :  None :    0 :  1.04
+         (7, 18) :  None :    0 :  1.04
+         (7, 19) :  None :    0 :  1.04
+         (7, 20) :  None :    0 :  1.04
+         (7, 21) :  None :    0 :  1.04
+         (7, 22) :  None :    0 :  1.04
+         (7, 23) :  None :    0 :  1.04
+         (7, 24) :  None :    0 :  1.04
+         (7, 25) :  None :    0 :  1.04
+         (8, 16) :  None :    0 :  1.14
+         (8, 17) :  None :    0 :  1.14
+         (8, 18) :  None :    0 :  1.14
+         (8, 19) :  None :    0 :  1.14
+         (8, 20) :  None :    0 :  1.14
+         (8, 21) :  None :    0 :  1.14
+         (8, 22) :  None :    0 :  1.14
+         (8, 23) :  None :    0 :  1.14
+         (8, 24) :  None :    0 :  1.14
+         (8, 25) :  None :    0 :  1.14
+         (9, 16) :  None :    0 :  1.23
+         (9, 17) :  None :    0 :  1.23
+         (9, 18) :  None :    0 :  1.23
+         (9, 19) :  None :    0 :  1.23
+         (9, 20) :  None :    0 :  1.23
+         (9, 21) :  None :    0 :  1.23
+         (9, 22) :  None :    0 :  1.23
+         (9, 23) :  None :    0 :  1.23
+         (9, 24) :  None :    0 :  1.23
+         (9, 25) :  None :    0 :  1.23
+        (10, 16) :  None :    0 :  1.06
+        (10, 17) :  None :    0 :  1.06
+        (10, 18) :  None :    0 :  1.06
+        (10, 19) :  None :    0 :  1.06
+        (10, 20) :  None :    0 :  1.06
+        (10, 21) :  None :    0 :  1.06
+        (10, 22) :  None :    0 :  1.06
+        (10, 23) :  None :    0 :  1.06
+        (10, 24) :  None :    0 :  1.06
+        (10, 25) :  None :    0 :  1.06
+    TCL_room_temp_con : Size=90
+        Key      : Lower : Body                 : Upper
+         (1, 16) :   0.0 : -0.20334803000000018 :   0.0
+         (1, 17) :   0.0 : -0.16784803000000015 :   0.0
+         (1, 18) :   0.0 : -0.16094803000000013 :   0.0
+         (1, 19) :   0.0 : -0.15764802000000014 :   0.0
+         (1, 20) :   0.0 : -0.14774801000000012 :   0.0
+         (1, 21) :   0.0 : -0.14834802000000014 :   0.0
+         (1, 22) :   0.0 : -0.14184802000000013 :   0.0
+         (1, 23) :   0.0 : -0.14144801000000012 :   0.0
+         (1, 24) :   0.0 : -0.15314801000000014 :   0.0
+         (2, 16) :   0.0 :  -0.8133921200000007 :   0.0
+         (2, 17) :   0.0 :  -0.6713921200000006 :   0.0
+         (2, 18) :   0.0 :  -0.6437921200000005 :   0.0
+         (2, 19) :   0.0 :  -0.6305920800000006 :   0.0
+         (2, 20) :   0.0 :  -0.5909920400000005 :   0.0
+         (2, 21) :   0.0 :  -0.5933920800000005 :   0.0
+         (2, 22) :   0.0 :  -0.5673920800000005 :   0.0
+         (2, 23) :   0.0 :  -0.5657920400000005 :   0.0
+         (2, 24) :   0.0 :  -0.6125920400000006 :   0.0
+         (3, 16) :   0.0 :  -0.6710484989999984 :   0.0
+         (3, 17) :   0.0 :  -0.5538984989999987 :   0.0
+         (3, 18) :   0.0 :  -0.5311284989999987 :   0.0
+         (3, 19) :   0.0 :  -0.5202384659999987 :   0.0
+         (3, 20) :   0.0 :  -0.4875684329999988 :   0.0
+         (3, 21) :   0.0 :  -0.4895484659999988 :   0.0
+         (3, 22) :   0.0 :  -0.4680984659999988 :   0.0
+         (3, 23) :   0.0 :  -0.4667784329999988 :   0.0
+         (3, 24) :   0.0 :  -0.5053884329999987 :   0.0
+         (4, 16) :   0.0 : -0.42703086299999815 :   0.0
+         (4, 17) :   0.0 :  -0.3524808629999985 :   0.0
+         (4, 18) :   0.0 :  -0.3379908629999985 :   0.0
+         (4, 19) :   0.0 :  -0.3310608419999985 :   0.0
+         (4, 20) :   0.0 : -0.31027082099999864 :   0.0
+         (4, 21) :   0.0 : -0.31153084199999864 :   0.0
+         (4, 22) :   0.0 :  -0.2978808419999987 :   0.0
+         (4, 23) :   0.0 :  -0.2970408209999987 :   0.0
+         (4, 24) :   0.0 : -0.32161082099999855 :   0.0
+         (5, 16) :   0.0 :  -0.5693744840000006 :   0.0
+         (5, 17) :   0.0 :  -0.4699744840000004 :   0.0
+         (5, 18) :   0.0 : -0.45065448400000035 :   0.0
+         (5, 19) :   0.0 :  -0.4414144560000004 :   0.0
+         (5, 20) :   0.0 :  -0.4136944280000004 :   0.0
+         (5, 21) :   0.0 :  -0.4153744560000004 :   0.0
+         (5, 22) :   0.0 : -0.39717445600000034 :   0.0
+         (5, 23) :   0.0 : -0.39605442800000035 :   0.0
+         (5, 24) :   0.0 : -0.42881442800000036 :   0.0
+         (6, 16) :   0.0 : -0.32535684799999803 :   0.0
+         (6, 17) :   0.0 :  -0.2685568479999984 :   0.0
+         (6, 18) :   0.0 :  -0.2575168479999984 :   0.0
+         (6, 19) :   0.0 : -0.25223683199999847 :   0.0
+         (6, 20) :   0.0 : -0.23639681599999857 :   0.0
+         (6, 21) :   0.0 : -0.23735683199999857 :   0.0
+         (6, 22) :   0.0 :  -0.2269568319999986 :   0.0
+         (6, 23) :   0.0 : -0.22631681599999862 :   0.0
+         (6, 24) :   0.0 :  -0.2450368159999985 :   0.0
+         (7, 16) :   0.0 :  -0.3456916510000003 :   0.0
+         (7, 17) :   0.0 : -0.28534165100000025 :   0.0
+         (7, 18) :   0.0 : -0.27361165100000023 :   0.0
+         (7, 19) :   0.0 :  -0.2680016340000002 :   0.0
+         (7, 20) :   0.0 : -0.25117161700000024 :   0.0
+         (7, 21) :   0.0 :  -0.2521916340000002 :   0.0
+         (7, 22) :   0.0 : -0.24114163400000022 :   0.0
+         (7, 23) :   0.0 :  -0.2404616170000002 :   0.0
+         (7, 24) :   0.0 :  -0.2603516170000002 :   0.0
+         (8, 16) :   0.0 :  -0.8743965289999985 :   0.0
+         (8, 17) :   0.0 :  -0.7217465289999988 :   0.0
+         (8, 18) :   0.0 :  -0.6920765289999988 :   0.0
+         (8, 19) :   0.0 :  -0.6778864859999988 :   0.0
+         (8, 20) :   0.0 :  -0.6353164429999989 :   0.0
+         (8, 21) :   0.0 :  -0.6378964859999989 :   0.0
+         (8, 22) :   0.0 :  -0.6099464859999989 :   0.0
+         (8, 23) :   0.0 :   -0.608226442999999 :   0.0
+         (8, 24) :   0.0 :  -0.6585364429999988 :   0.0
+         (9, 16) :   0.0 : -0.20334803000000018 :   0.0
+         (9, 17) :   0.0 : -0.16784803000000015 :   0.0
+         (9, 18) :   0.0 : -0.16094803000000013 :   0.0
+         (9, 19) :   0.0 : -0.15764802000000014 :   0.0
+         (9, 20) :   0.0 : -0.14774801000000012 :   0.0
+         (9, 21) :   0.0 : -0.14834802000000014 :   0.0
+         (9, 22) :   0.0 : -0.14184802000000013 :   0.0
+         (9, 23) :   0.0 : -0.14144801000000012 :   0.0
+         (9, 24) :   0.0 : -0.15314801000000014 :   0.0
+        (10, 16) :   0.0 : -0.22368283299999794 :   0.0
+        (10, 17) :   0.0 :  -0.1846328329999983 :   0.0
+        (10, 18) :   0.0 : -0.17704283299999835 :   0.0
+        (10, 19) :   0.0 :  -0.1734128219999984 :   0.0
+        (10, 20) :   0.0 : -0.16252281099999852 :   0.0
+        (10, 21) :   0.0 :  -0.1631828219999985 :   0.0
+        (10, 22) :   0.0 : -0.15603282199999854 :   0.0
+        (10, 23) :   0.0 : -0.15559281099999855 :   0.0
+        (10, 24) :   0.0 : -0.16846281099999844 :   0.0
+    TCL_low_preference_con : Size=90
+        Key      : Lower : Body : Upper
+         (1, 16) :  20.0 :    0 :  None
+         (1, 17) :  20.0 :    0 :  None
+         (1, 18) :  20.0 :    0 :  None
+         (1, 19) :  20.0 :    0 :  None
+         (1, 20) :  20.0 :    0 :  None
+         (1, 21) :  20.0 :    0 :  None
+         (1, 22) :  20.0 :    0 :  None
+         (1, 23) :  20.0 :    0 :  None
+         (1, 24) :  20.0 :    0 :  None
+         (2, 16) :  19.0 :    0 :  None
+         (2, 17) :  19.0 :    0 :  None
+         (2, 18) :  19.0 :    0 :  None
+         (2, 19) :  19.0 :    0 :  None
+         (2, 20) :  19.0 :    0 :  None
+         (2, 21) :  19.0 :    0 :  None
+         (2, 22) :  19.0 :    0 :  None
+         (2, 23) :  19.0 :    0 :  None
+         (2, 24) :  19.0 :    0 :  None
+         (3, 16) :  21.0 :    0 :  None
+         (3, 17) :  21.0 :    0 :  None
+         (3, 18) :  21.0 :    0 :  None
+         (3, 19) :  21.0 :    0 :  None
+         (3, 20) :  21.0 :    0 :  None
+         (3, 21) :  21.0 :    0 :  None
+         (3, 22) :  21.0 :    0 :  None
+         (3, 23) :  21.0 :    0 :  None
+         (3, 24) :  21.0 :    0 :  None
+         (4, 16) :  21.0 :    0 :  None
+         (4, 17) :  21.0 :    0 :  None
+         (4, 18) :  21.0 :    0 :  None
+         (4, 19) :  21.0 :    0 :  None
+         (4, 20) :  21.0 :    0 :  None
+         (4, 21) :  21.0 :    0 :  None
+         (4, 22) :  21.0 :    0 :  None
+         (4, 23) :  21.0 :    0 :  None
+         (4, 24) :  21.0 :    0 :  None
+         (5, 16) :  21.0 :    0 :  None
+         (5, 17) :  21.0 :    0 :  None
+         (5, 18) :  21.0 :    0 :  None
+         (5, 19) :  21.0 :    0 :  None
+         (5, 20) :  21.0 :    0 :  None
+         (5, 21) :  21.0 :    0 :  None
+         (5, 22) :  21.0 :    0 :  None
+         (5, 23) :  21.0 :    0 :  None
+         (5, 24) :  21.0 :    0 :  None
+         (6, 16) :  20.0 :    0 :  None
+         (6, 17) :  20.0 :    0 :  None
+         (6, 18) :  20.0 :    0 :  None
+         (6, 19) :  20.0 :    0 :  None
+         (6, 20) :  20.0 :    0 :  None
+         (6, 21) :  20.0 :    0 :  None
+         (6, 22) :  20.0 :    0 :  None
+         (6, 23) :  20.0 :    0 :  None
+         (6, 24) :  20.0 :    0 :  None
+         (7, 16) :  19.0 :    0 :  None
+         (7, 17) :  19.0 :    0 :  None
+         (7, 18) :  19.0 :    0 :  None
+         (7, 19) :  19.0 :    0 :  None
+         (7, 20) :  19.0 :    0 :  None
+         (7, 21) :  19.0 :    0 :  None
+         (7, 22) :  19.0 :    0 :  None
+         (7, 23) :  19.0 :    0 :  None
+         (7, 24) :  19.0 :    0 :  None
+         (8, 16) :  20.0 :    0 :  None
+         (8, 17) :  20.0 :    0 :  None
+         (8, 18) :  20.0 :    0 :  None
+         (8, 19) :  20.0 :    0 :  None
+         (8, 20) :  20.0 :    0 :  None
+         (8, 21) :  20.0 :    0 :  None
+         (8, 22) :  20.0 :    0 :  None
+         (8, 23) :  20.0 :    0 :  None
+         (8, 24) :  20.0 :    0 :  None
+         (9, 16) :  19.0 :    0 :  None
+         (9, 17) :  19.0 :    0 :  None
+         (9, 18) :  19.0 :    0 :  None
+         (9, 19) :  19.0 :    0 :  None
+         (9, 20) :  19.0 :    0 :  None
+         (9, 21) :  19.0 :    0 :  None
+         (9, 22) :  19.0 :    0 :  None
+         (9, 23) :  19.0 :    0 :  None
+         (9, 24) :  19.0 :    0 :  None
+        (10, 16) :  19.0 :    0 :  None
+        (10, 17) :  19.0 :    0 :  None
+        (10, 18) :  19.0 :    0 :  None
+        (10, 19) :  19.0 :    0 :  None
+        (10, 20) :  19.0 :    0 :  None
+        (10, 21) :  19.0 :    0 :  None
+        (10, 22) :  19.0 :    0 :  None
+        (10, 23) :  19.0 :    0 :  None
+        (10, 24) :  19.0 :    0 :  None
+    TCL_set_start_temp_con : Size=10
+        Key : Lower : Body : Upper
+          1 :  20.0 :    0 :  20.0
+          2 :  19.0 :    0 :  19.0
+          3 :  21.0 :    0 :  21.0
+          4 :  21.0 :    0 :  21.0
+          5 :  21.0 :    0 :  21.0
+          6 :  20.0 :    0 :  20.0
+          7 :  19.0 :    0 :  19.0
+          8 :  20.0 :    0 :  20.0
+          9 :  19.0 :    0 :  19.0
+         10 :  19.0 :    0 :  19.0
+    SL_power_load_con : Size=90
+        Key      : Lower : Body : Upper
+         (1, 16) :   0.0 :  0.0 :   0.0
+         (1, 17) :   0.0 :  0.0 :   0.0
+         (1, 18) :   0.0 :  0.0 :   0.0
+         (1, 19) :   0.0 :  0.0 :   0.0
+         (1, 20) :   0.0 :  0.0 :   0.0
+         (1, 21) :   0.0 :  0.0 :   0.0
+         (1, 22) :   0.0 :  0.0 :   0.0
+         (1, 23) :   0.0 :  0.0 :   0.0
+         (1, 24) :   0.0 :  0.0 :   0.0
+         (2, 16) :   0.0 :  0.0 :   0.0
+         (2, 17) :   0.0 :  0.0 :   0.0
+         (2, 18) :   0.0 :  0.0 :   0.0
+         (2, 19) :   0.0 :  0.0 :   0.0
+         (2, 20) :   0.0 :  0.0 :   0.0
+         (2, 21) :   0.0 :  0.0 :   0.0
+         (2, 22) :   0.0 :  0.0 :   0.0
+         (2, 23) :   0.0 :  0.0 :   0.0
+         (2, 24) :   0.0 :  0.0 :   0.0
+         (3, 16) :   0.0 :  0.0 :   0.0
+         (3, 17) :   0.0 :  0.0 :   0.0
+         (3, 18) :   0.0 :  0.0 :   0.0
+         (3, 19) :   0.0 :  0.0 :   0.0
+         (3, 20) :   0.0 :  0.0 :   0.0
+         (3, 21) :   0.0 :  0.0 :   0.0
+         (3, 22) :   0.0 :  0.0 :   0.0
+         (3, 23) :   0.0 :  0.0 :   0.0
+         (3, 24) :   0.0 :  0.0 :   0.0
+         (4, 16) :   0.0 :  0.0 :   0.0
+         (4, 17) :   0.0 :  0.0 :   0.0
+         (4, 18) :   0.0 :  0.0 :   0.0
+         (4, 19) :   0.0 :  0.0 :   0.0
+         (4, 20) :   0.0 :  0.0 :   0.0
+         (4, 21) :   0.0 :  0.0 :   0.0
+         (4, 22) :   0.0 :  0.0 :   0.0
+         (4, 23) :   0.0 :  0.0 :   0.0
+         (4, 24) :   0.0 :  0.0 :   0.0
+         (5, 16) :   0.0 :  0.0 :   0.0
+         (5, 17) :   0.0 :  0.0 :   0.0
+         (5, 18) :   0.0 :  0.0 :   0.0
+         (5, 19) :   0.0 :  0.0 :   0.0
+         (5, 20) :   0.0 :  0.0 :   0.0
+         (5, 21) :   0.0 :  0.0 :   0.0
+         (5, 22) :   0.0 :  0.0 :   0.0
+         (5, 23) :   0.0 :  0.0 :   0.0
+         (5, 24) :   0.0 :  0.0 :   0.0
+         (6, 16) :   0.0 :  0.0 :   0.0
+         (6, 17) :   0.0 :  0.0 :   0.0
+         (6, 18) :   0.0 :  0.0 :   0.0
+         (6, 19) :   0.0 :  0.0 :   0.0
+         (6, 20) :   0.0 :  0.0 :   0.0
+         (6, 21) :   0.0 :  0.0 :   0.0
+         (6, 22) :   0.0 :  0.0 :   0.0
+         (6, 23) :   0.0 :  0.0 :   0.0
+         (6, 24) :   0.0 :  0.0 :   0.0
+         (7, 16) :   0.0 :  0.0 :   0.0
+         (7, 17) :   0.0 :  0.0 :   0.0
+         (7, 18) :   0.0 :  0.0 :   0.0
+         (7, 19) :   0.0 :  0.0 :   0.0
+         (7, 20) :   0.0 :  0.0 :   0.0
+         (7, 21) :   0.0 :  0.0 :   0.0
+         (7, 22) :   0.0 :  0.0 :   0.0
+         (7, 23) :   0.0 :  0.0 :   0.0
+         (7, 24) :   0.0 :  0.0 :   0.0
+         (8, 16) :   0.0 :  0.0 :   0.0
+         (8, 17) :   0.0 :  0.0 :   0.0
+         (8, 18) :   0.0 :  0.0 :   0.0
+         (8, 19) :   0.0 :  0.0 :   0.0
+         (8, 20) :   0.0 :  0.0 :   0.0
+         (8, 21) :   0.0 :  0.0 :   0.0
+         (8, 22) :   0.0 :  0.0 :   0.0
+         (8, 23) :   0.0 :  0.0 :   0.0
+         (8, 24) :   0.0 :  0.0 :   0.0
+         (9, 16) :   0.0 :  0.0 :   0.0
+         (9, 17) :   0.0 :  0.0 :   0.0
+         (9, 18) :   0.0 :  0.0 :   0.0
+         (9, 19) :   0.0 :  0.0 :   0.0
+         (9, 20) :   0.0 :  0.0 :   0.0
+         (9, 21) :   0.0 :  0.0 :   0.0
+         (9, 22) :   0.0 :  0.0 :   0.0
+         (9, 23) :   0.0 :  0.0 :   0.0
+         (9, 24) :   0.0 :  0.0 :   0.0
+        (10, 16) :   0.0 :  0.0 :   0.0
+        (10, 17) :   0.0 :  0.0 :   0.0
+        (10, 18) :   0.0 :  0.0 :   0.0
+        (10, 19) :   0.0 :  0.0 :   0.0
+        (10, 20) :   0.0 :  0.0 :   0.0
+        (10, 21) :   0.0 :  0.0 :   0.0
+        (10, 22) :   0.0 :  0.0 :   0.0
+        (10, 23) :   0.0 :  0.0 :   0.0
+        (10, 24) :   0.0 :  0.0 :   0.0
+    SL_binary_con : Size=10
+        Key : Lower : Body : Upper
+          1 :   1.0 :    0 :   1.0
+          2 :   1.0 :    0 :   1.0
+          3 :   1.0 :    0 :   1.0
+          4 :   1.0 :    0 :   1.0
+          5 :   1.0 :    0 :   1.0
+          6 :   1.0 :    0 :   1.0
+          7 :   1.0 :    0 :   1.0
+          8 :   1.0 :    0 :   1.0
+          9 :   1.0 :    0 :   1.0
+         10 :   1.0 :    0 :   1.0
+    DA_power_balance_con : Size=10
+        Key : Lower : Body                 : Upper
+         16 :   0.0 : -0.18828899999999998 :   0.0
+         17 :   0.0 : -0.27348300000000003 :   0.0
+         18 :   0.0 : -0.33363299999999996 :   0.0
+         19 :   0.0 :  -0.3660999999999999 :   0.0
+         20 :   0.0 :            -0.354809 :   0.0
+         21 :   0.0 :            -0.342205 :   0.0
+         22 :   0.0 :            -0.396812 :   0.0
+         23 :   0.0 : -0.35390000000000005 :   0.0
+         24 :   0.0 : -0.22550499999999998 :   0.0
+         25 :   0.0 : -0.10038000000000001 :   0.0
+    DA_demand_con : Size=10
+        Key : Lower : Body : Upper
+         16 :  None :    0 :   0.0
+         17 :  None :    0 :   0.0
+         18 :  None :    0 :   0.0
+         19 :  None :    0 :   0.0
+         20 :  None :    0 :   0.0
+         21 :  None :    0 :   0.0
+         22 :  None :    0 :   0.0
+         23 :  None :    0 :   0.0
+         24 :  None :    0 :   0.0
+         25 :  None :    0 :   0.0
+    DA_supply_con : Size=10
+        Key : Lower : Body    : Upper
+         16 :  None : -100000 :   0.0
+         17 :  None : -100000 :   0.0
+         18 :  None : -100000 :   0.0
+         19 :  None : -100000 :   0.0
+         20 :  None : -100000 :   0.0
+         21 :  None : -100000 :   0.0
+         22 :  None : -100000 :   0.0
+         23 :  None : -100000 :   0.0
+         24 :  None : -100000 :   0.0
+         25 :  None : -100000 :   0.0
+    network_power_balance_con : Size=30
+        Key     : Lower : Body : Upper
+        (1, 16) :   0.0 :  0.0 :   0.0
+        (1, 17) :   0.0 :  0.0 :   0.0
+        (1, 18) :   0.0 :  0.0 :   0.0
+        (1, 19) :   0.0 :  0.0 :   0.0
+        (1, 20) :   0.0 :  0.0 :   0.0
+        (1, 21) :   0.0 :  0.0 :   0.0
+        (1, 22) :   0.0 :  0.0 :   0.0
+        (1, 23) :   0.0 :  0.0 :   0.0
+        (1, 24) :   0.0 :  0.0 :   0.0
+        (1, 25) :   0.0 :  0.0 :   0.0
+        (2, 16) :   0.0 :  0.0 :   0.0
+        (2, 17) :   0.0 :  0.0 :   0.0
+        (2, 18) :   0.0 :  0.0 :   0.0
+        (2, 19) :   0.0 :  0.0 :   0.0
+        (2, 20) :   0.0 :  0.0 :   0.0
+        (2, 21) :   0.0 :  0.0 :   0.0
+        (2, 22) :   0.0 :  0.0 :   0.0
+        (2, 23) :   0.0 :  0.0 :   0.0
+        (2, 24) :   0.0 :  0.0 :   0.0
+        (2, 25) :   0.0 :  0.0 :   0.0
+        (3, 16) :   0.0 :  0.0 :   0.0
+        (3, 17) :   0.0 :  0.0 :   0.0
+        (3, 18) :   0.0 :  0.0 :   0.0
+        (3, 19) :   0.0 :  0.0 :   0.0
+        (3, 20) :   0.0 :  0.0 :   0.0
+        (3, 21) :   0.0 :  0.0 :   0.0
+        (3, 22) :   0.0 :  0.0 :   0.0
+        (3, 23) :   0.0 :  0.0 :   0.0
+        (3, 24) :   0.0 :  0.0 :   0.0
+        (3, 25) :   0.0 :  0.0 :   0.0
+    line_flow_lower_bound_con : Size=30
+        Key     : Lower : Body : Upper
+        (1, 16) :  None :  0.0 :  50.0
+        (1, 17) :  None :  0.0 :  50.0
+        (1, 18) :  None :  0.0 :  50.0
+        (1, 19) :  None :  0.0 :  50.0
+        (1, 20) :  None :  0.0 :  50.0
+        (1, 21) :  None :  0.0 :  50.0
+        (1, 22) :  None :  0.0 :  50.0
+        (1, 23) :  None :  0.0 :  50.0
+        (1, 24) :  None :  0.0 :  50.0
+        (1, 25) :  None :  0.0 :  50.0
+        (2, 16) :  None :  0.0 :  50.0
+        (2, 17) :  None :  0.0 :  50.0
+        (2, 18) :  None :  0.0 :  50.0
+        (2, 19) :  None :  0.0 :  50.0
+        (2, 20) :  None :  0.0 :  50.0
+        (2, 21) :  None :  0.0 :  50.0
+        (2, 22) :  None :  0.0 :  50.0
+        (2, 23) :  None :  0.0 :  50.0
+        (2, 24) :  None :  0.0 :  50.0
+        (2, 25) :  None :  0.0 :  50.0
+        (3, 16) :  None :  0.0 :  50.0
+        (3, 17) :  None :  0.0 :  50.0
+        (3, 18) :  None :  0.0 :  50.0
+        (3, 19) :  None :  0.0 :  50.0
+        (3, 20) :  None :  0.0 :  50.0
+        (3, 21) :  None :  0.0 :  50.0
+        (3, 22) :  None :  0.0 :  50.0
+        (3, 23) :  None :  0.0 :  50.0
+        (3, 24) :  None :  0.0 :  50.0
+        (3, 25) :  None :  0.0 :  50.0
+    line_flow_upper_bound_con : Size=30
+        Key     : Lower : Body : Upper
+        (1, 16) :  None :  0.0 :  50.0
+        (1, 17) :  None :  0.0 :  50.0
+        (1, 18) :  None :  0.0 :  50.0
+        (1, 19) :  None :  0.0 :  50.0
+        (1, 20) :  None :  0.0 :  50.0
+        (1, 21) :  None :  0.0 :  50.0
+        (1, 22) :  None :  0.0 :  50.0
+        (1, 23) :  None :  0.0 :  50.0
+        (1, 24) :  None :  0.0 :  50.0
+        (1, 25) :  None :  0.0 :  50.0
+        (2, 16) :  None :  0.0 :  50.0
+        (2, 17) :  None :  0.0 :  50.0
+        (2, 18) :  None :  0.0 :  50.0
+        (2, 19) :  None :  0.0 :  50.0
+        (2, 20) :  None :  0.0 :  50.0
+        (2, 21) :  None :  0.0 :  50.0
+        (2, 22) :  None :  0.0 :  50.0
+        (2, 23) :  None :  0.0 :  50.0
+        (2, 24) :  None :  0.0 :  50.0
+        (2, 25) :  None :  0.0 :  50.0
+        (3, 16) :  None :  0.0 :  50.0
+        (3, 17) :  None :  0.0 :  50.0
+        (3, 18) :  None :  0.0 :  50.0
+        (3, 19) :  None :  0.0 :  50.0
+        (3, 20) :  None :  0.0 :  50.0
+        (3, 21) :  None :  0.0 :  50.0
+        (3, 22) :  None :  0.0 :  50.0
+        (3, 23) :  None :  0.0 :  50.0
+        (3, 24) :  None :  0.0 :  50.0
+        (3, 25) :  None :  0.0 :  50.0
+    generator_dual_price_con : Size=30
+        Key     : Lower : Body : Upper
+        (1, 16) :   0.0 :   16 :   0.0
+        (1, 17) :   0.0 :   16 :   0.0
+        (1, 18) :   0.0 :   16 :   0.0
+        (1, 19) :   0.0 :   16 :   0.0
+        (1, 20) :   0.0 :   16 :   0.0
+        (1, 21) :   0.0 :   16 :   0.0
+        (1, 22) :   0.0 :   16 :   0.0
+        (1, 23) :   0.0 :   16 :   0.0
+        (1, 24) :   0.0 :   16 :   0.0
+        (1, 25) :   0.0 :   16 :   0.0
+        (2, 16) :   0.0 :   19 :   0.0
+        (2, 17) :   0.0 :   19 :   0.0
+        (2, 18) :   0.0 :   19 :   0.0
+        (2, 19) :   0.0 :   19 :   0.0
+        (2, 20) :   0.0 :   19 :   0.0
+        (2, 21) :   0.0 :   19 :   0.0
+        (2, 22) :   0.0 :   19 :   0.0
+        (2, 23) :   0.0 :   19 :   0.0
+        (2, 24) :   0.0 :   19 :   0.0
+        (2, 25) :   0.0 :   19 :   0.0
+        (3, 16) :   0.0 :   25 :   0.0
+        (3, 17) :   0.0 :   25 :   0.0
+        (3, 18) :   0.0 :   25 :   0.0
+        (3, 19) :   0.0 :   25 :   0.0
+        (3, 20) :   0.0 :   25 :   0.0
+        (3, 21) :   0.0 :   25 :   0.0
+        (3, 22) :   0.0 :   25 :   0.0
+        (3, 23) :   0.0 :   25 :   0.0
+        (3, 24) :   0.0 :   25 :   0.0
+        (3, 25) :   0.0 :   25 :   0.0
+    competitor_offer_dual_con : Size=20
+        Key     : Lower : Body : Upper
+        (1, 16) :   0.0 :   13 :   0.0
+        (1, 17) :   0.0 :   19 :   0.0
+        (1, 18) :   0.0 :   18 :   0.0
+        (1, 19) :   0.0 :   19 :   0.0
+        (1, 20) :   0.0 :   18 :   0.0
+        (1, 21) :   0.0 :   18 :   0.0
+        (1, 22) :   0.0 :   20 :   0.0
+        (1, 23) :   0.0 :   12 :   0.0
+        (1, 24) :   0.0 :   16 :   0.0
+        (1, 25) :   0.0 :   12 :   0.0
+        (2, 16) :   0.0 :   12 :   0.0
+        (2, 17) :   0.0 :   15 :   0.0
+        (2, 18) :   0.0 :   15 :   0.0
+        (2, 19) :   0.0 :   13 :   0.0
+        (2, 20) :   0.0 :   17 :   0.0
+        (2, 21) :   0.0 :   15 :   0.0
+        (2, 22) :   0.0 :   14 :   0.0
+        (2, 23) :   0.0 :   13 :   0.0
+        (2, 24) :   0.0 :   13 :   0.0
+        (2, 25) :   0.0 :   14 :   0.0
+    competitor_demand_dual_con : Size=20
+        Key     : Lower : Body : Upper
+        (1, 16) :   0.0 :  -79 :   0.0
+        (1, 17) :   0.0 :  -93 :   0.0
+        (1, 18) :   0.0 : -107 :   0.0
+        (1, 19) :   0.0 :  -80 :   0.0
+        (1, 20) :   0.0 :  -75 :   0.0
+        (1, 21) :   0.0 : -101 :   0.0
+        (1, 22) :   0.0 :  -87 :   0.0
+        (1, 23) :   0.0 :  -84 :   0.0
+        (1, 24) :   0.0 :  -83 :   0.0
+        (1, 25) :   0.0 :  -87 :   0.0
+        (2, 16) :   0.0 : -109 :   0.0
+        (2, 17) :   0.0 :  -71 :   0.0
+        (2, 18) :   0.0 : -109 :   0.0
+        (2, 19) :   0.0 :  -71 :   0.0
+        (2, 20) :   0.0 :  -85 :   0.0
+        (2, 21) :   0.0 :  -79 :   0.0
+        (2, 22) :   0.0 : -109 :   0.0
+        (2, 23) :   0.0 : -103 :   0.0
+        (2, 24) :   0.0 : -103 :   0.0
+        (2, 25) :   0.0 :  -98 :   0.0
+    strategic_offer_dual_con : Size=10
+        Key : Lower : Body : Upper
+         16 :   0.0 :   13 :   0.0
+         17 :   0.0 :   15 :   0.0
+         18 :   0.0 :   15 :   0.0
+         19 :   0.0 :   16 :   0.0
+         20 :   0.0 :   16 :   0.0
+         21 :   0.0 :   18 :   0.0
+         22 :   0.0 :   17 :   0.0
+         23 :   0.0 :   12 :   0.0
+         24 :   0.0 :   20 :   0.0
+         25 :   0.0 :   14 :   0.0
+    strategic_demand_dual_con : Size=10
+        Key : Lower : Body : Upper
+         16 :   0.0 : -105 :   0.0
+         17 :   0.0 :  -87 :   0.0
+         18 :   0.0 :  -83 :   0.0
+         19 :   0.0 : -105 :   0.0
+         20 :   0.0 :  -91 :   0.0
+         21 :   0.0 :  -76 :   0.0
+         22 :   0.0 :  -83 :   0.0
+         23 :   0.0 : -110 :   0.0
+         24 :   0.0 :  -73 :   0.0
+         25 :   0.0 :  -80 :   0.0
+    transmission_line_dual_con : Size=30
+        Key     : Lower : Body : Upper
+        (1, 16) :   0.0 :  0.0 :   0.0
+        (1, 17) :   0.0 :  0.0 :   0.0
+        (1, 18) :   0.0 :  0.0 :   0.0
+        (1, 19) :   0.0 :  0.0 :   0.0
+        (1, 20) :   0.0 :  0.0 :   0.0
+        (1, 21) :   0.0 :  0.0 :   0.0
+        (1, 22) :   0.0 :  0.0 :   0.0
+        (1, 23) :   0.0 :  0.0 :   0.0
+        (1, 24) :   0.0 :  0.0 :   0.0
+        (1, 25) :   0.0 :  0.0 :   0.0
+        (2, 16) :   0.0 :  0.0 :   0.0
+        (2, 17) :   0.0 :  0.0 :   0.0
+        (2, 18) :   0.0 :  0.0 :   0.0
+        (2, 19) :   0.0 :  0.0 :   0.0
+        (2, 20) :   0.0 :  0.0 :   0.0
+        (2, 21) :   0.0 :  0.0 :   0.0
+        (2, 22) :   0.0 :  0.0 :   0.0
+        (2, 23) :   0.0 :  0.0 :   0.0
+        (2, 24) :   0.0 :  0.0 :   0.0
+        (2, 25) :   0.0 :  0.0 :   0.0
+        (3, 16) :   0.0 :  0.0 :   0.0
+        (3, 17) :   0.0 :  0.0 :   0.0
+        (3, 18) :   0.0 :  0.0 :   0.0
+        (3, 19) :   0.0 :  0.0 :   0.0
+        (3, 20) :   0.0 :  0.0 :   0.0
+        (3, 21) :   0.0 :  0.0 :   0.0
+        (3, 22) :   0.0 :  0.0 :   0.0
+        (3, 23) :   0.0 :  0.0 :   0.0
+        (3, 24) :   0.0 :  0.0 :   0.0
+        (3, 25) :   0.0 :  0.0 :   0.0
+    KKT_gen_low_con : Size=30
+        Key     : Lower : Body : Upper
+        (1, 16) :  None :    0 :   0.0
+        (1, 17) :  None :    0 :   0.0
+        (1, 18) :  None :    0 :   0.0
+        (1, 19) :  None :    0 :   0.0
+        (1, 20) :  None :    0 :   0.0
+        (1, 21) :  None :    0 :   0.0
+        (1, 22) :  None :    0 :   0.0
+        (1, 23) :  None :    0 :   0.0
+        (1, 24) :  None :    0 :   0.0
+        (1, 25) :  None :    0 :   0.0
+        (2, 16) :  None :    0 :   0.0
+        (2, 17) :  None :    0 :   0.0
+        (2, 18) :  None :    0 :   0.0
+        (2, 19) :  None :    0 :   0.0
+        (2, 20) :  None :    0 :   0.0
+        (2, 21) :  None :    0 :   0.0
+        (2, 22) :  None :    0 :   0.0
+        (2, 23) :  None :    0 :   0.0
+        (2, 24) :  None :    0 :   0.0
+        (2, 25) :  None :    0 :   0.0
+        (3, 16) :  None :    0 :   0.0
+        (3, 17) :  None :    0 :   0.0
+        (3, 18) :  None :    0 :   0.0
+        (3, 19) :  None :    0 :   0.0
+        (3, 20) :  None :    0 :   0.0
+        (3, 21) :  None :    0 :   0.0
+        (3, 22) :  None :    0 :   0.0
+        (3, 23) :  None :    0 :   0.0
+        (3, 24) :  None :    0 :   0.0
+        (3, 25) :  None :    0 :   0.0
+    KKT_gen_low_2_con : Size=30
+        Key     : Lower : Body    : Upper
+        (1, 16) :  None : -100000 :   0.0
+        (1, 17) :  None : -100000 :   0.0
+        (1, 18) :  None : -100000 :   0.0
+        (1, 19) :  None : -100000 :   0.0
+        (1, 20) :  None : -100000 :   0.0
+        (1, 21) :  None : -100000 :   0.0
+        (1, 22) :  None : -100000 :   0.0
+        (1, 23) :  None : -100000 :   0.0
+        (1, 24) :  None : -100000 :   0.0
+        (1, 25) :  None : -100000 :   0.0
+        (2, 16) :  None : -100000 :   0.0
+        (2, 17) :  None : -100000 :   0.0
+        (2, 18) :  None : -100000 :   0.0
+        (2, 19) :  None : -100000 :   0.0
+        (2, 20) :  None : -100000 :   0.0
+        (2, 21) :  None : -100000 :   0.0
+        (2, 22) :  None : -100000 :   0.0
+        (2, 23) :  None : -100000 :   0.0
+        (2, 24) :  None : -100000 :   0.0
+        (2, 25) :  None : -100000 :   0.0
+        (3, 16) :  None : -100000 :   0.0
+        (3, 17) :  None : -100000 :   0.0
+        (3, 18) :  None : -100000 :   0.0
+        (3, 19) :  None : -100000 :   0.0
+        (3, 20) :  None : -100000 :   0.0
+        (3, 21) :  None : -100000 :   0.0
+        (3, 22) :  None : -100000 :   0.0
+        (3, 23) :  None : -100000 :   0.0
+        (3, 24) :  None : -100000 :   0.0
+        (3, 25) :  None : -100000 :   0.0
+    KKT_gen_up_rule : Size=30
+        Key     : Lower : Body : Upper
+        (1, 16) :  None : 10.0 :   0.0
+        (1, 17) :  None : 11.0 :   0.0
+        (1, 18) :  None : 10.0 :   0.0
+        (1, 19) :  None : 11.0 :   0.0
+        (1, 20) :  None : 12.0 :   0.0
+        (1, 21) :  None : 11.0 :   0.0
+        (1, 22) :  None : 12.0 :   0.0
+        (1, 23) :  None : 10.0 :   0.0
+        (1, 24) :  None : 12.0 :   0.0
+        (1, 25) :  None : 10.0 :   0.0
+        (2, 16) :  None :  8.0 :   0.0
+        (2, 17) :  None : 10.0 :   0.0
+        (2, 18) :  None :  9.0 :   0.0
+        (2, 19) :  None :  5.0 :   0.0
+        (2, 20) :  None : 10.0 :   0.0
+        (2, 21) :  None :  8.0 :   0.0
+        (2, 22) :  None :  5.0 :   0.0
+        (2, 23) :  None : 10.0 :   0.0
+        (2, 24) :  None :  8.0 :   0.0
+        (2, 25) :  None :  7.0 :   0.0
+        (3, 16) :  None : 20.0 :   0.0
+        (3, 17) :  None : 20.0 :   0.0
+        (3, 18) :  None : 16.0 :   0.0
+        (3, 19) :  None : 15.0 :   0.0
+        (3, 20) :  None : 18.0 :   0.0
+        (3, 21) :  None : 15.0 :   0.0
+        (3, 22) :  None : 17.0 :   0.0
+        (3, 23) :  None : 16.0 :   0.0
+        (3, 24) :  None : 17.0 :   0.0
+        (3, 25) :  None : 16.0 :   0.0
+    KKT_gen_up_2_con : Size=30
+        Key     : Lower : Body    : Upper
+        (1, 16) :  None : -100000 :   0.0
+        (1, 17) :  None : -100000 :   0.0
+        (1, 18) :  None : -100000 :   0.0
+        (1, 19) :  None : -100000 :   0.0
+        (1, 20) :  None : -100000 :   0.0
+        (1, 21) :  None : -100000 :   0.0
+        (1, 22) :  None : -100000 :   0.0
+        (1, 23) :  None : -100000 :   0.0
+        (1, 24) :  None : -100000 :   0.0
+        (1, 25) :  None : -100000 :   0.0
+        (2, 16) :  None : -100000 :   0.0
+        (2, 17) :  None : -100000 :   0.0
+        (2, 18) :  None : -100000 :   0.0
+        (2, 19) :  None : -100000 :   0.0
+        (2, 20) :  None : -100000 :   0.0
+        (2, 21) :  None : -100000 :   0.0
+        (2, 22) :  None : -100000 :   0.0
+        (2, 23) :  None : -100000 :   0.0
+        (2, 24) :  None : -100000 :   0.0
+        (2, 25) :  None : -100000 :   0.0
+        (3, 16) :  None : -100000 :   0.0
+        (3, 17) :  None : -100000 :   0.0
+        (3, 18) :  None : -100000 :   0.0
+        (3, 19) :  None : -100000 :   0.0
+        (3, 20) :  None : -100000 :   0.0
+        (3, 21) :  None : -100000 :   0.0
+        (3, 22) :  None : -100000 :   0.0
+        (3, 23) :  None : -100000 :   0.0
+        (3, 24) :  None : -100000 :   0.0
+        (3, 25) :  None : -100000 :   0.0
+    KKT_DAs_supply_offer_low_con : Size=20
+        Key     : Lower : Body : Upper
+        (1, 16) :  None :    0 :   0.0
+        (1, 17) :  None :    0 :   0.0
+        (1, 18) :  None :    0 :   0.0
+        (1, 19) :  None :    0 :   0.0
+        (1, 20) :  None :    0 :   0.0
+        (1, 21) :  None :    0 :   0.0
+        (1, 22) :  None :    0 :   0.0
+        (1, 23) :  None :    0 :   0.0
+        (1, 24) :  None :    0 :   0.0
+        (1, 25) :  None :    0 :   0.0
+        (2, 16) :  None :    0 :   0.0
+        (2, 17) :  None :    0 :   0.0
+        (2, 18) :  None :    0 :   0.0
+        (2, 19) :  None :    0 :   0.0
+        (2, 20) :  None :    0 :   0.0
+        (2, 21) :  None :    0 :   0.0
+        (2, 22) :  None :    0 :   0.0
+        (2, 23) :  None :    0 :   0.0
+        (2, 24) :  None :    0 :   0.0
+        (2, 25) :  None :    0 :   0.0
+    KKT_DAs_supply_offer_low_2_con : Size=20
+        Key     : Lower : Body    : Upper
+        (1, 16) :  None : -100000 :   0.0
+        (1, 17) :  None : -100000 :   0.0
+        (1, 18) :  None : -100000 :   0.0
+        (1, 19) :  None : -100000 :   0.0
+        (1, 20) :  None : -100000 :   0.0
+        (1, 21) :  None : -100000 :   0.0
+        (1, 22) :  None : -100000 :   0.0
+        (1, 23) :  None : -100000 :   0.0
+        (1, 24) :  None : -100000 :   0.0
+        (1, 25) :  None : -100000 :   0.0
+        (2, 16) :  None : -100000 :   0.0
+        (2, 17) :  None : -100000 :   0.0
+        (2, 18) :  None : -100000 :   0.0
+        (2, 19) :  None : -100000 :   0.0
+        (2, 20) :  None : -100000 :   0.0
+        (2, 21) :  None : -100000 :   0.0
+        (2, 22) :  None : -100000 :   0.0
+        (2, 23) :  None : -100000 :   0.0
+        (2, 24) :  None : -100000 :   0.0
+        (2, 25) :  None : -100000 :   0.0
+    KKT_DAs_supply_offer_up_con : Size=20
+        Key     : Lower : Body  : Upper
+        (1, 16) :  None :     0 :   0.0
+        (1, 17) :  None : 0.353 :   0.0
+        (1, 18) :  None :     0 :   0.0
+        (1, 19) :  None :     0 :   0.0
+        (1, 20) :  None :     0 :   0.0
+        (1, 21) :  None :     0 :   0.0
+        (1, 22) :  None :     0 :   0.0
+        (1, 23) :  None :     0 :   0.0
+        (1, 24) :  None :     0 :   0.0
+        (1, 25) :  None :     0 :   0.0
+        (2, 16) :  None :     0 :   0.0
+        (2, 17) :  None : 0.834 :   0.0
+        (2, 18) :  None :     0 :   0.0
+        (2, 19) :  None :     0 :   0.0
+        (2, 20) :  None :     0 :   0.0
+        (2, 21) :  None :     0 :   0.0
+        (2, 22) :  None : 0.314 :   0.0
+        (2, 23) :  None : 0.854 :   0.0
+        (2, 24) :  None :     0 :   0.0
+        (2, 25) :  None :     0 :   0.0
+    KKT_DAs_supply_offer_up_2_con : Size=20
+        Key     : Lower : Body    : Upper
+        (1, 16) :  None : -100000 :   0.0
+        (1, 17) :  None : -100000 :   0.0
+        (1, 18) :  None : -100000 :   0.0
+        (1, 19) :  None : -100000 :   0.0
+        (1, 20) :  None : -100000 :   0.0
+        (1, 21) :  None : -100000 :   0.0
+        (1, 22) :  None : -100000 :   0.0
+        (1, 23) :  None : -100000 :   0.0
+        (1, 24) :  None : -100000 :   0.0
+        (1, 25) :  None : -100000 :   0.0
+        (2, 16) :  None : -100000 :   0.0
+        (2, 17) :  None : -100000 :   0.0
+        (2, 18) :  None : -100000 :   0.0
+        (2, 19) :  None : -100000 :   0.0
+        (2, 20) :  None : -100000 :   0.0
+        (2, 21) :  None : -100000 :   0.0
+        (2, 22) :  None : -100000 :   0.0
+        (2, 23) :  None : -100000 :   0.0
+        (2, 24) :  None : -100000 :   0.0
+        (2, 25) :  None : -100000 :   0.0
+    KKT_DAs_demand_bid_low_con : Size=20
+        Key     : Lower : Body : Upper
+        (1, 16) :  None :    0 :   0.0
+        (1, 17) :  None :    0 :   0.0
+        (1, 18) :  None :    0 :   0.0
+        (1, 19) :  None :    0 :   0.0
+        (1, 20) :  None :    0 :   0.0
+        (1, 21) :  None :    0 :   0.0
+        (1, 22) :  None :    0 :   0.0
+        (1, 23) :  None :    0 :   0.0
+        (1, 24) :  None :    0 :   0.0
+        (1, 25) :  None :    0 :   0.0
+        (2, 16) :  None :    0 :   0.0
+        (2, 17) :  None :    0 :   0.0
+        (2, 18) :  None :    0 :   0.0
+        (2, 19) :  None :    0 :   0.0
+        (2, 20) :  None :    0 :   0.0
+        (2, 21) :  None :    0 :   0.0
+        (2, 22) :  None :    0 :   0.0
+        (2, 23) :  None :    0 :   0.0
+        (2, 24) :  None :    0 :   0.0
+        (2, 25) :  None :    0 :   0.0
+    KKT_DAs_demand_bid_low_2_con : Size=20
+        Key     : Lower : Body    : Upper
+        (1, 16) :  None : -100000 :   0.0
+        (1, 17) :  None : -100000 :   0.0
+        (1, 18) :  None : -100000 :   0.0
+        (1, 19) :  None : -100000 :   0.0
+        (1, 20) :  None : -100000 :   0.0
+        (1, 21) :  None : -100000 :   0.0
+        (1, 22) :  None : -100000 :   0.0
+        (1, 23) :  None : -100000 :   0.0
+        (1, 24) :  None : -100000 :   0.0
+        (1, 25) :  None : -100000 :   0.0
+        (2, 16) :  None : -100000 :   0.0
+        (2, 17) :  None : -100000 :   0.0
+        (2, 18) :  None : -100000 :   0.0
+        (2, 19) :  None : -100000 :   0.0
+        (2, 20) :  None : -100000 :   0.0
+        (2, 21) :  None : -100000 :   0.0
+        (2, 22) :  None : -100000 :   0.0
+        (2, 23) :  None : -100000 :   0.0
+        (2, 24) :  None : -100000 :   0.0
+        (2, 25) :  None : -100000 :   0.0
+    KKT_DAs_demand_bid_up_con : Size=20
+        Key     : Lower : Body  : Upper
+        (1, 16) :  None :  0.67 :   0.0
+        (1, 17) :  None :     0 :   0.0
+        (1, 18) :  None : 0.535 :   0.0
+        (1, 19) :  None :  0.13 :   0.0
+        (1, 20) :  None : 0.364 :   0.0
+        (1, 21) :  None : 0.203 :   0.0
+        (1, 22) :  None : 0.228 :   0.0
+        (1, 23) :  None : 0.041 :   0.0
+        (1, 24) :  None : 0.487 :   0.0
+        (1, 25) :  None : 0.714 :   0.0
+        (2, 16) :  None : 0.888 :   0.0
+        (2, 17) :  None :     0 :   0.0
+        (2, 18) :  None : 0.811 :   0.0
+        (2, 19) :  None : 0.983 :   0.0
+        (2, 20) :  None : 0.699 :   0.0
+        (2, 21) :  None :  0.16 :   0.0
+        (2, 22) :  None :     0 :   0.0
+        (2, 23) :  None :     0 :   0.0
+        (2, 24) :  None :  0.78 :   0.0
+        (2, 25) :  None : 0.194 :   0.0
+    KKT_DAs_demand_bid_up_2_con : Size=20
+        Key     : Lower : Body    : Upper
+        (1, 16) :  None : -100000 :   0.0
+        (1, 17) :  None : -100000 :   0.0
+        (1, 18) :  None : -100000 :   0.0
+        (1, 19) :  None : -100000 :   0.0
+        (1, 20) :  None : -100000 :   0.0
+        (1, 21) :  None : -100000 :   0.0
+        (1, 22) :  None : -100000 :   0.0
+        (1, 23) :  None : -100000 :   0.0
+        (1, 24) :  None : -100000 :   0.0
+        (1, 25) :  None : -100000 :   0.0
+        (2, 16) :  None : -100000 :   0.0
+        (2, 17) :  None : -100000 :   0.0
+        (2, 18) :  None : -100000 :   0.0
+        (2, 19) :  None : -100000 :   0.0
+        (2, 20) :  None : -100000 :   0.0
+        (2, 21) :  None : -100000 :   0.0
+        (2, 22) :  None : -100000 :   0.0
+        (2, 23) :  None : -100000 :   0.0
+        (2, 24) :  None : -100000 :   0.0
+        (2, 25) :  None : -100000 :   0.0
+    KKT_strategic_DA_bid_low_con : Size=10
+        Key : Lower : Body : Upper
+         16 :  None :    0 :   0.0
+         17 :  None :    0 :   0.0
+         18 :  None :    0 :   0.0
+         19 :  None :    0 :   0.0
+         20 :  None :    0 :   0.0
+         21 :  None :    0 :   0.0
+         22 :  None :    0 :   0.0
+         23 :  None :    0 :   0.0
+         24 :  None :    0 :   0.0
+         25 :  None :    0 :   0.0
+    KKT_strategic_DA_bid_low_2_con : Size=10
+        Key : Lower : Body    : Upper
+         16 :  None : -100000 :   0.0
+         17 :  None : -100000 :   0.0
+         18 :  None : -100000 :   0.0
+         19 :  None : -100000 :   0.0
+         20 :  None : -100000 :   0.0
+         21 :  None : -100000 :   0.0
+         22 :  None : -100000 :   0.0
+         23 :  None : -100000 :   0.0
+         24 :  None : -100000 :   0.0
+         25 :  None : -100000 :   0.0
+    KKT_stKrategic_DA_bid_up_con : Size=10
+        Key : Lower : Body : Upper
+         16 :  None :    0 :   0.0
+         17 :  None :    0 :   0.0
+         18 :  None :    0 :   0.0
+         19 :  None :    0 :   0.0
+         20 :  None :    0 :   0.0
+         21 :  None :    0 :   0.0
+         22 :  None :    0 :   0.0
+         23 :  None :    0 :   0.0
+         24 :  None :    0 :   0.0
+         25 :  None :    0 :   0.0
+    KKT_strategic_DA_bid_up_2_con : Size=10
+        Key : Lower : Body    : Upper
+         16 :  None : -100000 :   0.0
+         17 :  None : -100000 :   0.0
+         18 :  None : -100000 :   0.0
+         19 :  None : -100000 :   0.0
+         20 :  None : -100000 :   0.0
+         21 :  None : -100000 :   0.0
+         22 :  None : -100000 :   0.0
+         23 :  None : -100000 :   0.0
+         24 :  None : -100000 :   0.0
+         25 :  None : -100000 :   0.0
+    KKT_strategic_demand_low_con : Size=10
+        Key : Lower : Body : Upper
+         16 :  None :    0 :   0.0
+         17 :  None :    0 :   0.0
+         18 :  None :    0 :   0.0
+         19 :  None :    0 :   0.0
+         20 :  None :    0 :   0.0
+         21 :  None :    0 :   0.0
+         22 :  None :    0 :   0.0
+         23 :  None :    0 :   0.0
+         24 :  None :    0 :   0.0
+         25 :  None :    0 :   0.0
+    KKT_strategic_demand_low_2_con : Size=10
+        Key : Lower : Body    : Upper
+         16 :  None : -100000 :   0.0
+         17 :  None : -100000 :   0.0
+         18 :  None : -100000 :   0.0
+         19 :  None : -100000 :   0.0
+         20 :  None : -100000 :   0.0
+         21 :  None : -100000 :   0.0
+         22 :  None : -100000 :   0.0
+         23 :  None : -100000 :   0.0
+         24 :  None : -100000 :   0.0
+         25 :  None : -100000 :   0.0
+    KKT_strategic_demand_up_con : Size=10
+        Key : Lower : Body : Upper
+         16 :  None :    0 :   0.0
+         17 :  None :    0 :   0.0
+         18 :  None :    0 :   0.0
+         19 :  None :    0 :   0.0
+         20 :  None :    0 :   0.0
+         21 :  None :    0 :   0.0
+         22 :  None :    0 :   0.0
+         23 :  None :    0 :   0.0
+         24 :  None :    0 :   0.0
+         25 :  None :    0 :   0.0
+    KKT_strategiv_demand_up_2_con : Size=10
+        Key : Lower : Body    : Upper
+         16 :  None : -100000 :   0.0
+         17 :  None : -100000 :   0.0
+         18 :  None : -100000 :   0.0
+         19 :  None : -100000 :   0.0
+         20 :  None : -100000 :   0.0
+         21 :  None : -100000 :   0.0
+         22 :  None : -100000 :   0.0
+         23 :  None : -100000 :   0.0
+         24 :  None : -100000 :   0.0
+         25 :  None : -100000 :   0.0
+    KKT_transmission_low_con : Size=30
+        Key     : Lower : Body : Upper
+        (1, 16) :  None : 50.0 :   0.0
+        (1, 17) :  None : 50.0 :   0.0
+        (1, 18) :  None : 50.0 :   0.0
+        (1, 19) :  None : 50.0 :   0.0
+        (1, 20) :  None : 50.0 :   0.0
+        (1, 21) :  None : 50.0 :   0.0
+        (1, 22) :  None : 50.0 :   0.0
+        (1, 23) :  None : 50.0 :   0.0
+        (1, 24) :  None : 50.0 :   0.0
+        (1, 25) :  None : 50.0 :   0.0
+        (2, 16) :  None : 50.0 :   0.0
+        (2, 17) :  None : 50.0 :   0.0
+        (2, 18) :  None : 50.0 :   0.0
+        (2, 19) :  None : 50.0 :   0.0
+        (2, 20) :  None : 50.0 :   0.0
+        (2, 21) :  None : 50.0 :   0.0
+        (2, 22) :  None : 50.0 :   0.0
+        (2, 23) :  None : 50.0 :   0.0
+        (2, 24) :  None : 50.0 :   0.0
+        (2, 25) :  None : 50.0 :   0.0
+        (3, 16) :  None : 50.0 :   0.0
+        (3, 17) :  None : 50.0 :   0.0
+        (3, 18) :  None : 50.0 :   0.0
+        (3, 19) :  None : 50.0 :   0.0
+        (3, 20) :  None : 50.0 :   0.0
+        (3, 21) :  None : 50.0 :   0.0
+        (3, 22) :  None : 50.0 :   0.0
+        (3, 23) :  None : 50.0 :   0.0
+        (3, 24) :  None : 50.0 :   0.0
+        (3, 25) :  None : 50.0 :   0.0
+    KKT_transmission_low_2_con : Size=30
+        Key     : Lower : Body    : Upper
+        (1, 16) :  None : -100000 :   0.0
+        (1, 17) :  None : -100000 :   0.0
+        (1, 18) :  None : -100000 :   0.0
+        (1, 19) :  None : -100000 :   0.0
+        (1, 20) :  None : -100000 :   0.0
+        (1, 21) :  None : -100000 :   0.0
+        (1, 22) :  None : -100000 :   0.0
+        (1, 23) :  None : -100000 :   0.0
+        (1, 24) :  None : -100000 :   0.0
+        (1, 25) :  None : -100000 :   0.0
+        (2, 16) :  None : -100000 :   0.0
+        (2, 17) :  None : -100000 :   0.0
+        (2, 18) :  None : -100000 :   0.0
+        (2, 19) :  None : -100000 :   0.0
+        (2, 20) :  None : -100000 :   0.0
+        (2, 21) :  None : -100000 :   0.0
+        (2, 22) :  None : -100000 :   0.0
+        (2, 23) :  None : -100000 :   0.0
+        (2, 24) :  None : -100000 :   0.0
+        (2, 25) :  None : -100000 :   0.0
+        (3, 16) :  None : -100000 :   0.0
+        (3, 17) :  None : -100000 :   0.0
+        (3, 18) :  None : -100000 :   0.0
+        (3, 19) :  None : -100000 :   0.0
+        (3, 20) :  None : -100000 :   0.0
+        (3, 21) :  None : -100000 :   0.0
+        (3, 22) :  None : -100000 :   0.0
+        (3, 23) :  None : -100000 :   0.0
+        (3, 24) :  None : -100000 :   0.0
+        (3, 25) :  None : -100000 :   0.0
+    KKT_transmission_up_con : Size=30
+        Key     : Lower : Body : Upper
+        (1, 16) :  None : 50.0 :   0.0
+        (1, 17) :  None : 50.0 :   0.0
+        (1, 18) :  None : 50.0 :   0.0
+        (1, 19) :  None : 50.0 :   0.0
+        (1, 20) :  None : 50.0 :   0.0
+        (1, 21) :  None : 50.0 :   0.0
+        (1, 22) :  None : 50.0 :   0.0
+        (1, 23) :  None : 50.0 :   0.0
+        (1, 24) :  None : 50.0 :   0.0
+        (1, 25) :  None : 50.0 :   0.0
+        (2, 16) :  None : 50.0 :   0.0
+        (2, 17) :  None : 50.0 :   0.0
+        (2, 18) :  None : 50.0 :   0.0
+        (2, 19) :  None : 50.0 :   0.0
+        (2, 20) :  None : 50.0 :   0.0
+        (2, 21) :  None : 50.0 :   0.0
+        (2, 22) :  None : 50.0 :   0.0
+        (2, 23) :  None : 50.0 :   0.0
+        (2, 24) :  None : 50.0 :   0.0
+        (2, 25) :  None : 50.0 :   0.0
+        (3, 16) :  None : 50.0 :   0.0
+        (3, 17) :  None : 50.0 :   0.0
+        (3, 18) :  None : 50.0 :   0.0
+        (3, 19) :  None : 50.0 :   0.0
+        (3, 20) :  None : 50.0 :   0.0
+        (3, 21) :  None : 50.0 :   0.0
+        (3, 22) :  None : 50.0 :   0.0
+        (3, 23) :  None : 50.0 :   0.0
+        (3, 24) :  None : 50.0 :   0.0
+        (3, 25) :  None : 50.0 :   0.0
+    KKT_transmission_up_2_con : Size=30
+        Key     : Lower : Body    : Upper
+        (1, 16) :  None : -100000 :   0.0
+        (1, 17) :  None : -100000 :   0.0
+        (1, 18) :  None : -100000 :   0.0
+        (1, 19) :  None : -100000 :   0.0
+        (1, 20) :  None : -100000 :   0.0
+        (1, 21) :  None : -100000 :   0.0
+        (1, 22) :  None : -100000 :   0.0
+        (1, 23) :  None : -100000 :   0.0
+        (1, 24) :  None : -100000 :   0.0
+        (1, 25) :  None : -100000 :   0.0
+        (2, 16) :  None : -100000 :   0.0
+        (2, 17) :  None : -100000 :   0.0
+        (2, 18) :  None : -100000 :   0.0
+        (2, 19) :  None : -100000 :   0.0
+        (2, 20) :  None : -100000 :   0.0
+        (2, 21) :  None : -100000 :   0.0
+        (2, 22) :  None : -100000 :   0.0
+        (2, 23) :  None : -100000 :   0.0
+        (2, 24) :  None : -100000 :   0.0
+        (2, 25) :  None : -100000 :   0.0
+        (3, 16) :  None : -100000 :   0.0
+        (3, 17) :  None : -100000 :   0.0
+        (3, 18) :  None : -100000 :   0.0
+        (3, 19) :  None : -100000 :   0.0
+        (3, 20) :  None : -100000 :   0.0
+        (3, 21) :  None : -100000 :   0.0
+        (3, 22) :  None : -100000 :   0.0
+        (3, 23) :  None : -100000 :   0.0
+        (3, 24) :  None : -100000 :   0.0
+        (3, 25) :  None : -100000 :   0.0
+    set_ref_angel_con : Size=10
+        Key : Lower : Body : Upper
+         16 :   0.0 :    0 :   0.0
+         17 :   0.0 :    0 :   0.0
+         18 :   0.0 :    0 :   0.0
+         19 :   0.0 :    0 :   0.0
+         20 :   0.0 :    0 :   0.0
+         21 :   0.0 :    0 :   0.0
+         22 :   0.0 :    0 :   0.0
+         23 :   0.0 :    0 :   0.0
+         24 :   0.0 :    0 :   0.0
+         25 :   0.0 :    0 :   0.0
