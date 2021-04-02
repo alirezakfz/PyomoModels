@@ -206,9 +206,9 @@ c_d_o = {'DAS':random_price(time,12,20),
 #           2:random_price(time,1,2)}
 
 # Price bid for buying power of competing DA  i in time t
-c_d_b = {'DAS':random_price(time,70,110),
-         1:random_price(time,70,110),
-         2:random_price(time,70,110)}
+c_d_b = {'DAS':random_price(time,10,16),
+         1:random_price(time,10,16),
+         2:random_price(time,10,16)}
 
 # c_d_b = {'DAS':random_price(time,1,2),
 #           1:random_price(time,1,2),
@@ -695,10 +695,11 @@ model.generator_dual_price_con=Constraint(model.G, model.T, rule=generator_dual_
 #**********************************************
 #             Feasibility problem
 
+
 # Constrint (C.2) competitor suuply to grid offer
 def competitor_offer_dual_rule(model, i, t):
     bus=dic_CDA_Bus[i]
-    return c_d_o[i][t-16]-model.Lambda[bus,t] - model.w_do_low[i,t] + model.w_do_up[i,t] ==0  #c_d_o[i][t-16]
+    return c_d_o[i][t-16]-model.Lambda[bus,t] - model.w_do_low[i,t] + model.w_do_up[i,t]  ==0  #c_d_o[i][t-16]
 model.competitor_offer_dual_con = Constraint(model.NCDA, model.T, rule=competitor_offer_dual_rule)
 
 # Constraint (C.3) competitors demand bid
@@ -710,11 +711,15 @@ model.competitor_demand_dual_con = Constraint(model.NCDA, model.T, rule=competit
 #////////////////////////////////////////////
 #********************************************
 
+model.c2_1 = Var( model.T, within=NonNegativeReals, initialize=0)
+model.c2_2 = Var( model.T,  within=NonNegativeReals, initialize=0)
+
+#+ model.c2_1[t] - model.c2_2[t]
 
 # Constraint (c.4) Strategic Aggregator supply into grid offer
 def strategic_offer_dual_rule(model,t):
     bus=dic_CDA_Bus['DAS']
-    return c_DA_o[t-16]-model.Lambda[bus,t]-model.w_DAo_low[t] + model.w_DAo_up[t] == 0
+    return c_DA_o[t-16]-model.Lambda[bus,t]-model.w_DAo_low[t] + model.w_DAo_up[t] + model.c2_1[t] - model.c2_2[t] == 0
 model.strategic_offer_dual_con= Constraint(model.T, rule=strategic_offer_dual_rule)
 
 # Constraint (C.5) Strategic aggregator demand bid from grid
@@ -856,12 +861,12 @@ model.KKT_transmission_low_2_con = Constraint(model.LINES, model.T, rule=KKT_tra
 
 # KKT Transmission line Constraint (D.23)
 def KKT_transmission_up_rule(model, i, t):
-   return sum(-Yline[i-1,j-1]* model.teta[j,t] for j in model.BUS) + FMAX[i-1] <= model.u_line_up[i,t] * bigM
+    return sum(-Yline[i-1,j-1]* model.teta[j,t] for j in model.BUS) + FMAX[i-1] <= model.u_line_up[i,t] * bigM
 model.KKT_transmission_up_con = Constraint(model.LINES, model.T, rule=KKT_transmission_up_rule)
 
 # KKT Transmission line Constraint (D.24)
 def KKT_transmission_up_2_rule(model, i, t):
-   return model.w_line_up[i,t] <= (1-model.u_line_up[i,t]) * bigM
+    return model.w_line_up[i,t] <= (1-model.u_line_up[i,t]) * bigM
 model.KKT_transmission_up_2_con = Constraint(model.LINES, model.T, rule=KKT_transmission_up_2_rule)
 
 
@@ -884,6 +889,17 @@ Objective Functioon
 # model.obj = Objective(rule=social_welfare_optimization_rule, sense=minimize)
 
 
+# def social_welfare_optimization_rule(model):
+#     return sum(sum(c_g[i][t-16]*model.g[i,t] for i in model.G) +\
+#                 sum(c_d_o[i][t-16]*model.d_o[i,t] for i in model.NCDA ) +\
+#                     sum(c_d_b[i][t-16]*model.d_b[i,t] for i in model.NCDA) +\
+#                         sum(model.w_g_up[i,t] * g_s[i][t-16] for i in model.G) +\
+#                             sum(model.w_do_up[i,t]* F_d_o[i][t-16] for i in model.NCDA) +\
+#                                 sum(model.w_db_up[i,t]*F_d_b[i][t-16] for i in model.NCDA) +\
+#                                     sum(FMAX[i-1]*model.w_line_low[i,t] for i in model.LINES) +\
+#                                         sum(FMAX[i-1]*model.w_line_up[i,t] for i in model.LINES)  for t in model.T )
+# model.obj = Objective(rule=social_welfare_optimization_rule, sense=minimize)
+
 def social_welfare_optimization_rule(model):
     return sum(sum(c_g[i][t-16]*model.g[i,t] for i in model.G) +\
                 sum(c_d_o[i][t-16]*model.d_o[i,t] for i in model.NCDA ) +\
@@ -892,7 +908,9 @@ def social_welfare_optimization_rule(model):
                             sum(model.w_do_up[i,t]* F_d_o[i][t-16] for i in model.NCDA) +\
                                 sum(model.w_db_up[i,t]*F_d_b[i][t-16] for i in model.NCDA) +\
                                     sum(FMAX[i-1]*model.w_line_low[i,t] for i in model.LINES) +\
-                                        sum(FMAX[i-1]*model.w_line_up[i,t] for i in model.LINES) for t in model.T )
+                                        sum(FMAX[i-1]*model.w_line_up[i,t] for i in model.LINES) +\
+                                            1000*model.c2_1[t] +\
+                                                1000*model.c2_2[t] for t in model.T )
 model.obj = Objective(rule=social_welfare_optimization_rule, sense=minimize)
 
 
@@ -926,4 +944,16 @@ for t in model.T:
     
 print(OBJ)
 
-model_to_csv(model)
+# model_to_csv(model)
+
+print("Value for model.c2_1")
+# for i in model.NCDA:
+for t in model.T:
+    print(value(model.c2_1[t])," ", end="")
+print()
+    
+print("Value for model.c2_2")
+# for i in model.NCDA:
+for t in model.T:
+    print(value(model.c2_2[t])," ", end="")
+print()
