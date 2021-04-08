@@ -49,6 +49,8 @@ from Model_to_CSV import model_to_csv
 
 from pyomo.environ import *
 from pyomo.opt import SolverFactory
+from pyomo.util.infeasible import log_infeasible_constraints
+
 
 
 #Setting the random seed
@@ -137,10 +139,10 @@ def random_offer(NO_CDA, time):
         for t in range(0,time):
             if random.random() >= pivot:
                 temp_offer.append(0)
-                temp_bid.append(round(random.random()/MVA, 3))  # Mega Watt
+                temp_bid.append(round(random.randint(1,4)/MVA, 3))  # Mega Watt
             else:
                 temp_bid.append(0)
-                temp_offer.append(round(random.random()/MVA,3)) # Mega Watt
+                temp_offer.append(round(random.randint(1,4)/MVA,3)) # Mega Watt
         offer_dict[competitor]=temp_offer
         bid_dict[competitor]=temp_bid
     
@@ -197,18 +199,18 @@ c_g[4]=[100 for x in range(0,time)]
 
 
 #Price bid for supplying power of competing DA  i in time t
-c_d_o = {'DAS':random_price(time,12,20),
-         1:random_price(time,12,20),
-         2:random_price(time,12,20)}
+c_d_o = {'DAS':random_price(time,20,30),
+         1:random_price(time,20,30),
+         2:random_price(time,20,30)}
 
 # c_d_o = {'DAS':random_price(time,1,2),
 #           1:random_price(time,1,2),
 #           2:random_price(time,1,2)}
 
 # Price bid for buying power of competing DA  i in time t
-c_d_b = {'DAS':random_price(time,10,16),
-         1:random_price(time,10,16),
-         2:random_price(time,10,16)}
+c_d_b = {'DAS':random_price(time,20,30),
+         1:random_price(time,20,30),
+         2:random_price(time,20,30)}
 
 # c_d_b = {'DAS':random_price(time,1,2),
 #           1:random_price(time,1,2),
@@ -662,24 +664,24 @@ def network_power_balance_rule(model, i, t):
     
     sumB = sum(B[i-1,j-1]*model.teta[j,t] for j in model.BUS)
     
-    return sum1+sum2+sum3+sumB + model.b2_1[i,t] - model.b2_2[i,t] == 0
+    return sum1+sum2+sum3+sumB  == 0  #+ model.b2_1[i,t] - model.b2_2[i,t]
 model.network_power_balance_con = Constraint(model.BUS, model.T, rule=network_power_balance_rule)    
 
 
-# Constraint (b.8), Line Flow Bounds (b.8)  ******************
-def line_flow_lower_bound_rule(model, i, t):
-    return sum(-Yline[i-1,j-1]*model.teta[j,t] for j in model.BUS if i!=j) - model.b8_1[i,t] <= FMAX[i-1]
-model.line_flow_lower_bound_con = Constraint(model.LINES, model.T, rule=line_flow_lower_bound_rule)
+# # Constraint (b.8), Line Flow Bounds (b.8)  ******************
+# def line_flow_lower_bound_rule(model, i, t):
+#     return sum(-Yline[i-1,j-1]*model.teta[j,t] for j in model.BUS) - model.b8_1[i,t] <= FMAX[i-1]
+# model.line_flow_lower_bound_con = Constraint(model.LINES, model.T, rule=line_flow_lower_bound_rule)
 
-# Constraint (b.8.2) line Flows Bounds, Upper bound ***********
-def line_flow_upper_bound_rule(model, i, t):
-    return sum(Yline[i-1,j-1]*model.teta[j,t] for j in model.BUS if i!=j) - model.b8_2[i,t] <= FMAX[i-1]
-model.line_flow_upper_bound_con = Constraint(model.LINES, model.T, rule=line_flow_upper_bound_rule)
+# # Constraint (b.8.2) line Flows Bounds, Upper bound ***********
+# def line_flow_upper_bound_rule(model, i, t):
+#     return sum(Yline[i-1,j-1]*model.teta[j,t] for j in model.BUS) - model.b8_2[i,t] <= FMAX[i-1]
+# model.line_flow_upper_bound_con = Constraint(model.LINES, model.T, rule=line_flow_upper_bound_rule)
 
 # Constraint (C.1) generators dual price
 def generator_dual_price_rule(model, i, t):
     bus=dic_G_Bus[i]        
-    return c_g[i][t-16]-model.Lambda[bus,t] - model.w_g_low[i,t]+model.w_g_up[i,t] + model.c1_1[i,t] - model.c1_2[i,t] ==0
+    return c_g[i][t-16]-model.Lambda[bus,t] - model.w_g_low[i,t]+model.w_g_up[i,t]  ==0  #+ model.c1_1[i,t] - model.c1_2[i,t]
 model.generator_dual_price_con=Constraint(model.G, model.T, rule=generator_dual_price_rule)
 
 
@@ -840,6 +842,7 @@ model.KKT_strategiv_demand_up_2_con =Constraint(model.T, rule=KKT_strategiv_dema
 
 # KKT Transmission line Constraint (D.21)
 def KKT_transmission_low_rule (model, i, t):
+    #Yline[i-1, j-1]
     return sum(Yline[i-1, j-1]*model.teta[j,t] for j in model.BUS ) + FMAX[i-1] <=   model.u_line_low[i,t] * bigM
 model.KKT_transmission_low_con = Constraint (model.LINES, model.T, rule=KKT_transmission_low_rule)
 
@@ -859,11 +862,11 @@ def KKT_transmission_up_2_rule(model, i, t):
 model.KKT_transmission_up_2_con = Constraint(model.LINES, model.T, rule=KKT_transmission_up_2_rule)
 
 
-## ***************************************
-#  refrense angel set
-def set_ref_angel_rule(model, t):
-    return model.teta[ref_angel,t]==0
-model.set_ref_angel_con = Constraint(model.T, rule=set_ref_angel_rule)
+# ## ***************************************
+# #  refrense angel set
+# def set_ref_angel_rule(model, t):
+#     return model.teta[ref_angel,t]==0
+# model.set_ref_angel_con = Constraint(model.T, rule=set_ref_angel_rule)
 
 """
 Objective Functioon
@@ -878,17 +881,6 @@ Objective Functioon
 # model.obj = Objective(rule=social_welfare_optimization_rule, sense=minimize)
 
 
-# def social_welfare_optimization_rule(model):
-#     return sum(sum(c_g[i][t-16]*model.g[i,t] for i in model.G) +\
-#                 sum(c_d_o[i][t-16]*model.d_o[i,t] for i in model.NCDA ) +\
-#                     sum(c_d_b[i][t-16]*model.d_b[i,t] for i in model.NCDA) +\
-#                         sum(model.w_g_up[i,t] * g_s[i][t-16] for i in model.G) +\
-#                             sum(model.w_do_up[i,t]* F_d_o[i][t-16] for i in model.NCDA) +\
-#                                 sum(model.w_db_up[i,t]*F_d_b[i][t-16] for i in model.NCDA) +\
-#                                     sum(FMAX[i-1]*model.w_line_low[i,t] for i in model.LINES) +\
-#                                         sum(FMAX[i-1]*model.w_line_up[i,t] for i in model.LINES)  for t in model.T )
-# model.obj = Objective(rule=social_welfare_optimization_rule, sense=minimize)
-
 def social_welfare_optimization_rule(model):
     return sum(sum(c_g[i][t-16]*model.g[i,t] for i in model.G) +\
                 sum(c_d_o[i][t-16]*model.d_o[i,t] for i in model.NCDA ) +\
@@ -897,11 +889,22 @@ def social_welfare_optimization_rule(model):
                             sum(model.w_do_up[i,t]* F_d_o[i][t-16] for i in model.NCDA) +\
                                 sum(model.w_db_up[i,t]*F_d_b[i][t-16] for i in model.NCDA) +\
                                     sum(FMAX[i-1]*model.w_line_low[i,t] for i in model.LINES) +\
-                                        sum(FMAX[i-1]*model.w_line_up[i,t] for i in model.LINES) +\
-                                            sum(model.b2_1[i,t]+model.b2_2[i,t] for i in model.BUS)*1000 +\
-                                                sum(model.b8_1[i,t]+model.b8_2[i,t] for i in model.LINES)*1000 +\
-                                                    sum(model.c1_1[i,t] + model.c1_2[i,t] for i in model.G)*1000 for t in model.T )
+                                        sum(FMAX[i-1]*model.w_line_up[i,t] for i in model.LINES)  for t in model.T )
 model.obj = Objective(rule=social_welfare_optimization_rule, sense=minimize)
+
+# def social_welfare_optimization_rule(model):
+#     return sum(sum(c_g[i][t-16]*model.g[i,t] for i in model.G) +\
+#                 sum(c_d_o[i][t-16]*model.d_o[i,t] for i in model.NCDA ) +\
+#                     sum(c_d_b[i][t-16]*model.d_b[i,t] for i in model.NCDA) +\
+#                         sum(model.w_g_up[i,t] * g_s[i][t-16] for i in model.G) +\
+#                             sum(model.w_do_up[i,t]* F_d_o[i][t-16] for i in model.NCDA) +\
+#                                 sum(model.w_db_up[i,t]*F_d_b[i][t-16] for i in model.NCDA) +\
+#                                     sum(FMAX[i-1]*model.w_line_low[i,t] for i in model.LINES) +\
+#                                         sum(FMAX[i-1]*model.w_line_up[i,t] for i in model.LINES) +\
+#                                             sum(model.b2_1[i,t]+model.b2_2[i,t] for i in model.BUS)*1000 +\
+#                                                 sum(model.b8_1[i,t]+model.b8_2[i,t] for i in model.LINES)*1000 +\
+#                                                     sum(model.c1_1[i,t] + model.c1_2[i,t] for i in model.G)*1000 for t in model.T )
+# model.obj = Objective(rule=social_welfare_optimization_rule, sense=minimize)
 
 
 """
@@ -911,11 +914,17 @@ Solve the model
 #     f.write("Description of the Bilevel model for strategic day ahead aggregator:\n")
 #     model.display(ostream=f)
 
+# with open('DA_Bilevel_pprint.txt', 'w') as f:
+#     f.write("Description of the Bilevel model for strategic day ahead aggregator:\n")
+#     model.pprint(ostream=f)
+
 SOLVER_NAME="gurobi"  #'cplex'
 
 solver=SolverFactory(SOLVER_NAME)
 
+# log_infeasible_constraints(model)
 # results = solver.solve(model, keepfiles=True, tee=True,  logfile = "name.csv")
+
 
 results = solver.solve(model)
 print(results)
@@ -936,38 +945,38 @@ print(OBJ)
 
 # model_to_csv(model)
 
-print("\nModel B2_1:")
-for i in model.BUS:
-    for t in model.T:
-        print(value(model.b2_1[i,t]), " ", end="")
-    print()
+# print("\nModel B2_1:")
+# for i in model.BUS:
+#     for t in model.T:
+#         print(value(model.b2_1[i,t]), " ", end="")
+#     print()
 
-print("\nModel B2_2:")
-for i in model.BUS:
-    for t in model.T:
-        print(value(model.b2_2[i,t]), " ", end="")
-    print()
+# print("\nModel B2_2:")
+# for i in model.BUS:
+#     for t in model.T:
+#         print(value(model.b2_2[i,t]), " ", end="")
+#     print()
 
-print("\nModel B8_1:")
-for i in model.LINES:
-    for t in model.T:
-        print(value(model.b8_1[i,t]), " ", end="")
-    print()
+# print("\nModel B8_1:")
+# for i in model.LINES:
+#     for t in model.T:
+#         print(value(model.b8_1[i,t]), " ", end="")
+#     print()
 
-print("\nModel B8_2:")
-for i in model.LINES:
-    for t in model.T:
-        print(value(model.b8_2[i,t]), " ", end="")
-    print()
+# print("\nModel B8_2:")
+# for i in model.LINES:
+#     for t in model.T:
+#         print(value(model.b8_2[i,t]), " ", end="")
+#     print()
 
-print("\nModel C1_1:")
-for i in model.G:
-    for t in model.T:
-        print(value(model.c1_1[i,t]), " ", end="")
-    print()
+# print("\nModel C1_1:")
+# for i in model.G:
+#     for t in model.T:
+#         print(value(model.c1_1[i,t]), " ", end="")
+#     print()
 
-print("\nModel C1_2:")
-for i in model.G:
-    for t in model.T:
-        print(value(model.c1_2[i,t]), " ", end="")
-    print()
+# print("\nModel C1_2:")
+# for i in model.G:
+#     for t in model.T:
+#         print(value(model.c1_2[i,t]), " ", end="")
+#     print()

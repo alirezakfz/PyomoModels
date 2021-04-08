@@ -14,9 +14,21 @@ def model_to_csv(model):
 
     
     row=['DAs_load', 'DAs_generation', 'DAs_demand_bid','DAs_supply_offer',\
-         'EVs_Charge', 'EVs_Discharge', 'TCL_Power', 'SL_Power',\
-             'Gen1','Gen2','Gen3','CDA1_suply','CDA2_supply', 'CDA1_demand', 'CDA2_demand',\
-                 'Bus1_price','Bus2_price','Bus3_price']
+         'EVs_Charge', 'EVs_Discharge', 'TCL_Power', 'SL_Power']
+    
+    for g in model.G:
+        row.append('Gen'+str(value(g)))
+    
+    for cda in model.NCDA:
+        row.append('CDA'+str(value(cda))+'_supply')
+    
+    for cda in model.NCDA:
+        row.append('CDA'+str(value(cda))+'_demand')
+    
+    for b in model.BUS:
+        row.append('Bus'+str(value(b))+'_price')
+    
+             
     list_row=[]
     list_row.append(row)
     
@@ -29,11 +41,11 @@ def model_to_csv(model):
         row.append(value(model.DA_demand[t]))
         row.append(value(model.DA_supply[t]))
         
-        row.append(sum(value(model.E_EV_CH[i,t]) for i in model.N))
-        row.append(sum(value(model.E_EV_DIS[i,t]) for i in model.N))
+        row.append(sum(value(model.E_EV_CH[i,t]) for i in model.N)/1000)
+        row.append(sum(value(model.E_EV_DIS[i,t]) for i in model.N)/1000)
         
-        row.append(sum(value(model.POWER_TCL[i,t]) for i in model.N))
-        row.append(sum(value(model.POWER_SL[i,t]) for i in model.N))
+        row.append(sum(value(model.POWER_TCL[i,t]) for i in model.N)/1000)
+        row.append(sum(value(model.POWER_SL[i,t]) for i in model.N)/1000)
         
         for g in model.G:
             row.append(value(model.g[g,t]))

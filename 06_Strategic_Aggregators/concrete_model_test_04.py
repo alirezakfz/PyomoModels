@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 """
+Created on Tue Apr  6 11:52:42 2021
+
+@author: alire
+"""
+
+# -*- coding: utf-8 -*-
+"""
 Created on Tue Mar 30 19:47:48 2021
 
 @author: alire
@@ -197,18 +204,18 @@ c_g[4]=[100 for x in range(0,time)]
 
 
 #Price bid for supplying power of competing DA  i in time t
-c_d_o = {'DAS':random_price(time,12,20),
-         1:random_price(time,12,20),
-         2:random_price(time,12,20)}
+c_d_o = {'DAS':random_price(time,20,30),
+         1:random_price(time,20,30),
+         2:random_price(time,20,30)}
 
 # c_d_o = {'DAS':random_price(time,1,2),
 #           1:random_price(time,1,2),
 #           2:random_price(time,1,2)}
 
 # Price bid for buying power of competing DA  i in time t
-c_d_b = {'DAS':random_price(time,10,16),
-         1:random_price(time,10,16),
-         2:random_price(time,10,16)}
+c_d_b = {'DAS':random_price(time,20,30),
+         1:random_price(time,20,30),
+         2:random_price(time,20,30)}
 
 # c_d_b = {'DAS':random_price(time,1,2),
 #           1:random_price(time,1,2),
@@ -301,6 +308,7 @@ Defining Parameters
 bigM =10000.0
 bigF = 10000.0
 NO_prosumers = len(IN_loads)
+
 
 """
 Upper level Variables
@@ -465,13 +473,17 @@ model.u_DAs_b_up = Var(model.T,  within= Binary, initialize=0)
 model.u_line_low = Var(model.LINES, model.T, within= Binary, initialize=0)
 model.u_line_up = Var(model.LINES, model.T, within= Binary, initialize=0)
 
-# """
-# PU power
-# """
-# model.EV_PU  = Var(model.T, within=NonNegativeReals, initialize=0)
-# model.TCL_PU = Var(model.T, within=NonNegativeReals, initialize=0)
-# model.SL_PU  = Var(model.T, within=NonNegativeReals, initialize=0)
+"""
+PU power
+"""
+model.b2_1 = Var(model.BUS, model.T, within=NonNegativeReals, initialize=0)
+model.b2_2 = Var(model.BUS, model.T, within=NonNegativeReals, initialize=0)
 
+model.b8_1 = Var(model.LINES, model.T, within=NonNegativeReals, initialize=0)
+model.b8_2 = Var(model.LINES, model.T, within=NonNegativeReals, initialize=0)
+
+model.c1_1 = Var(model.G, model.T, within=NonNegativeReals, initialize=0)
+model.c1_2 = Var(model.G, model.T, within=NonNegativeReals, initialize=0)
 """
 Upper Level constraints
 """
@@ -605,20 +617,7 @@ def SL_binary_zero_rule(model,i ,t):
         return Constraint.Skip
 model.SL_binary_zero_con =Constraint(model.N, model.T, rule=SL_binary_zero_rule)
 
-#********************************************************
-#                Custom PU Rules
-#********************************************************
-# def EV_power_PU_rule(model,t):
-#     return model.EV_PU[t] == sum((model.E_EV_CH[i,t]-model.E_EV_DIS[i,t])*PU_DA for i in model.N)
-# model.EV_power_PU_con= Constraint(model.T, rule=EV_power_PU_rule)
 
-# def TCL_power_PU_rule(model,t):
-#     return model.TCL_PU[t] == sum(model.POWER_TCL[i,t]*PU_DA for i in model.N)
-# model.TCL_power_PU_con = Constraint(model.T, rule=TCL_power_PU_rule)
-
-# def SL_power_PU_rule(model, t):
-#     return model.SL_PU[t] == sum(model.POWER_SL[i,t]*PU_DA for i in model.N)
-# model.SL_power_PU_con = Constraint(model.T, rule=SL_power_PU_rule)
 
 #********************************************************
 #             DA Demand and Supply Constraints
@@ -671,24 +670,24 @@ def network_power_balance_rule(model, i, t):
     
     sumB = sum(B[i-1,j-1]*model.teta[j,t] for j in model.BUS)
     
-    return sum1+sum2+sum3+sumB == 0
+    return sum1+sum2+sum3+sumB  == 0  #+ model.b2_1[i,t] - model.b2_2[i,t]
 model.network_power_balance_con = Constraint(model.BUS, model.T, rule=network_power_balance_rule)    
 
 
-# # Constraint (b.8), Line Flow Bounds (b.8)
+# # Constraint (b.8), Line Flow Bounds (b.8)  ******************
 # def line_flow_lower_bound_rule(model, i, t):
-#     return sum(-Yline[i-1,j-1]*model.teta[j,t] for j in model.BUS) <= FMAX[i-1]
+#     return sum(-Yline[i-1,j-1]*model.teta[j,t] for j in model.BUS) - model.b8_1[i,t] <= FMAX[i-1]
 # model.line_flow_lower_bound_con = Constraint(model.LINES, model.T, rule=line_flow_lower_bound_rule)
 
-# # Constraint (b.8.2) line Flows Bounds, Upper bound
+# # Constraint (b.8.2) line Flows Bounds, Upper bound ***********
 # def line_flow_upper_bound_rule(model, i, t):
-#     return sum(Yline[i-1,j-1]*model.teta[j,t] for j in model.BUS) <= FMAX[i-1]
+#     return sum(Yline[i-1,j-1]*model.teta[j,t] for j in model.BUS) - model.b8_2[i,t] <= FMAX[i-1]
 # model.line_flow_upper_bound_con = Constraint(model.LINES, model.T, rule=line_flow_upper_bound_rule)
 
 # Constraint (C.1) generators dual price
 def generator_dual_price_rule(model, i, t):
     bus=dic_G_Bus[i]        
-    return c_g[i][t-16]-model.Lambda[bus,t] - model.w_g_low[i,t]+model.w_g_up[i,t]==0
+    return c_g[i][t-16]-model.Lambda[bus,t] - model.w_g_low[i,t]+model.w_g_up[i,t]  ==0  #+ model.c1_1[i,t] - model.c1_2[i,t]
 model.generator_dual_price_con=Constraint(model.G, model.T, rule=generator_dual_price_rule)
 
 
@@ -711,15 +710,13 @@ model.competitor_demand_dual_con = Constraint(model.NCDA, model.T, rule=competit
 #////////////////////////////////////////////
 #********************************************
 
-model.c2_1 = Var( model.T, within=NonNegativeReals, initialize=0)
-model.c2_2 = Var( model.T,  within=NonNegativeReals, initialize=0)
 
 #+ model.c2_1[t] - model.c2_2[t]
 
 # Constraint (c.4) Strategic Aggregator supply into grid offer
 def strategic_offer_dual_rule(model,t):
     bus=dic_CDA_Bus['DAS']
-    return c_DA_o[t-16]-model.Lambda[bus,t]-model.w_DAo_low[t] + model.w_DAo_up[t] + model.c2_1[t] - model.c2_2[t] == 0
+    return c_DA_o[t-16]-model.Lambda[bus,t]-model.w_DAo_low[t] + model.w_DAo_up[t]  == 0
 model.strategic_offer_dual_con= Constraint(model.T, rule=strategic_offer_dual_rule)
 
 # Constraint (C.5) Strategic aggregator demand bid from grid
@@ -728,16 +725,16 @@ def strategic_demand_dual_rule(model, t):
     return -c_DA_b[t-16]+model.Lambda[bus,t]-model.w_DAb_low[t] + model.w_DAb_up[t] == 0
 model.strategic_demand_dual_con = Constraint(model.T, rule=strategic_demand_dual_rule)
 
-# Constraint (C.6) Transmission Line constraint
+# Constraint (C.6) Transmission Line constraint   
 def transmission_line_dual_rule(model, i ,t):
     B_T=B.transpose()
     # sum1= sum(B_T[i-1,j-1]*(model.Lambda[i,t]-model.Lambda[j,t]) for j in model.BUS if i != j)
-    sum1= sum(B_T[i-1,j-1]*model.Lambda[j,t] for j in model.BUS)
+    sum1= sum(B_T[i-1,j-1]*model.Lambda[j,t] for j in model.BUS )
     
     Yline_T = Yline.transpose()
-    sum2= sum(Yline_T[i-1,j-1]*model.w_line_low[j,t] for j in model.LINES)
+    sum2= sum(Yline_T[i-1,j-1]*model.w_line_low[j,t] for j in model.LINES )
     
-    sum3= sum(Yline_T[i-1, j-1]*model.w_line_up[j,t] for j in model.LINES)
+    sum3= sum(Yline_T[i-1, j-1]*model.w_line_up[j,t] for j in model.LINES )
     
     return sum1-sum2+sum3==0
 model.transmission_line_dual_con = Constraint(model.BUS, model.T, rule=transmission_line_dual_rule)
@@ -851,6 +848,7 @@ model.KKT_strategiv_demand_up_2_con =Constraint(model.T, rule=KKT_strategiv_dema
 
 # KKT Transmission line Constraint (D.21)
 def KKT_transmission_low_rule (model, i, t):
+    #Yline[i-1, j-1]
     return sum(Yline[i-1, j-1]*model.teta[j,t] for j in model.BUS ) + FMAX[i-1] <=   model.u_line_low[i,t] * bigM
 model.KKT_transmission_low_con = Constraint (model.LINES, model.T, rule=KKT_transmission_low_rule)
 
@@ -889,17 +887,6 @@ Objective Functioon
 # model.obj = Objective(rule=social_welfare_optimization_rule, sense=minimize)
 
 
-# def social_welfare_optimization_rule(model):
-#     return sum(sum(c_g[i][t-16]*model.g[i,t] for i in model.G) +\
-#                 sum(c_d_o[i][t-16]*model.d_o[i,t] for i in model.NCDA ) +\
-#                     sum(c_d_b[i][t-16]*model.d_b[i,t] for i in model.NCDA) +\
-#                         sum(model.w_g_up[i,t] * g_s[i][t-16] for i in model.G) +\
-#                             sum(model.w_do_up[i,t]* F_d_o[i][t-16] for i in model.NCDA) +\
-#                                 sum(model.w_db_up[i,t]*F_d_b[i][t-16] for i in model.NCDA) +\
-#                                     sum(FMAX[i-1]*model.w_line_low[i,t] for i in model.LINES) +\
-#                                         sum(FMAX[i-1]*model.w_line_up[i,t] for i in model.LINES)  for t in model.T )
-# model.obj = Objective(rule=social_welfare_optimization_rule, sense=minimize)
-
 def social_welfare_optimization_rule(model):
     return sum(sum(c_g[i][t-16]*model.g[i,t] for i in model.G) +\
                 sum(c_d_o[i][t-16]*model.d_o[i,t] for i in model.NCDA ) +\
@@ -908,10 +895,22 @@ def social_welfare_optimization_rule(model):
                             sum(model.w_do_up[i,t]* F_d_o[i][t-16] for i in model.NCDA) +\
                                 sum(model.w_db_up[i,t]*F_d_b[i][t-16] for i in model.NCDA) +\
                                     sum(FMAX[i-1]*model.w_line_low[i,t] for i in model.LINES) +\
-                                        sum(FMAX[i-1]*model.w_line_up[i,t] for i in model.LINES) +\
-                                            1000*model.c2_1[t] +\
-                                                1000*model.c2_2[t] for t in model.T )
+                                        sum(FMAX[i-1]*model.w_line_up[i,t] for i in model.LINES)  for t in model.T )
 model.obj = Objective(rule=social_welfare_optimization_rule, sense=minimize)
+
+# def social_welfare_optimization_rule(model):
+#     return sum(sum(c_g[i][t-16]*model.g[i,t] for i in model.G) +\
+#                 sum(c_d_o[i][t-16]*model.d_o[i,t] for i in model.NCDA ) +\
+#                     sum(c_d_b[i][t-16]*model.d_b[i,t] for i in model.NCDA) +\
+#                         sum(model.w_g_up[i,t] * g_s[i][t-16] for i in model.G) +\
+#                             sum(model.w_do_up[i,t]* F_d_o[i][t-16] for i in model.NCDA) +\
+#                                 sum(model.w_db_up[i,t]*F_d_b[i][t-16] for i in model.NCDA) +\
+#                                     sum(FMAX[i-1]*model.w_line_low[i,t] for i in model.LINES) +\
+#                                         sum(FMAX[i-1]*model.w_line_up[i,t] for i in model.LINES) +\
+#                                             sum(model.b2_1[i,t]+model.b2_2[i,t] for i in model.BUS)*1000 +\
+#                                                 sum(model.b8_1[i,t]+model.b8_2[i,t] for i in model.LINES)*1000 +\
+#                                                     sum(model.c1_1[i,t] + model.c1_2[i,t] for i in model.G)*1000 for t in model.T )
+# model.obj = Objective(rule=social_welfare_optimization_rule, sense=minimize)
 
 
 """
@@ -921,11 +920,17 @@ Solve the model
 #     f.write("Description of the Bilevel model for strategic day ahead aggregator:\n")
 #     model.display(ostream=f)
 
+# with open('DA_Bilevel_pprint.txt', 'w') as f:
+#     f.write("Description of the Bilevel model for strategic day ahead aggregator:\n")
+#     model.pprint(ostream=f)
+
 SOLVER_NAME="gurobi"  #'cplex'
 
 solver=SolverFactory(SOLVER_NAME)
 
+# log_infeasible_constraints(model)
 # results = solver.solve(model, keepfiles=True, tee=True,  logfile = "name.csv")
+
 
 results = solver.solve(model)
 print(results)
@@ -946,14 +951,62 @@ print(OBJ)
 
 # model_to_csv(model)
 
-print("Value for model.c2_1")
-# for i in model.NCDA:
-for t in model.T:
-    print(value(model.c2_1[t])," ", end="")
-print()
+# Checking Constraint b.2 for powwer balance
+# for i in model.BUS:
+#     for t in model.T:
+#         sum1=0
+#         if i in dic_G.keys():
+#             sum1=sum(-value(model.g[x,t]) for x in dic_G[i])
+        
+#         sum3=0
+#         sum2=0
+#         if i in dic_Bus_CDA.keys() :
+#             if i == DABus:
+#                 sum2= -value(model.E_DA_G[t])
+#                 sum3= value(model.E_DA_L[t])
+#             else:
+#                 x=dic_Bus_CDA[i]
+#                 sum3 = value(model.d_b[x,t])   # if x != 'DAs'
+#                 sum2 = -value(model.d_o[x,t]) 
+        
+#         sumB = sum(B[i-1,j-1]*value(model.teta[j,t]) for j in model.BUS)
+#         print(round(sum1+sum2+sum3+sumB,3), "," ,end="")
+#     print()
     
-print("Value for model.c2_2")
-# for i in model.NCDA:
-for t in model.T:
-    print(value(model.c2_2[t])," ", end="")
-print()
+
+
+# print("\nModel B2_1:")
+# for i in model.BUS:
+#     for t in model.T:
+#         print(value(model.b2_1[i,t]), " ", end="")
+#     print()
+
+# print("\nModel B2_2:")
+# for i in model.BUS:
+#     for t in model.T:
+#         print(value(model.b2_2[i,t]), " ", end="")
+#     print()
+
+# print("\nModel B8_1:")
+# for i in model.LINES:
+#     for t in model.T:
+#         print(value(model.b8_1[i,t]), " ", end="")
+#     print()
+
+# print("\nModel B8_2:")
+# for i in model.LINES:
+#     for t in model.T:
+#         print(value(model.b8_2[i,t]), " ", end="")
+#     print()
+
+# print("\nModel C1_1:")
+# for i in model.G:
+#     for t in model.T:
+#         print(value(model.c1_1[i,t]), " ", end="")
+#     print()
+
+# print("\nModel C1_2:")
+# for i in model.G:
+#     for t in model.T:
+#         print(value(model.c1_2[i,t]), " ", end="")
+#     print()
