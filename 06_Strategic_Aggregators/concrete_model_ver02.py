@@ -918,7 +918,7 @@ for t in model.T:
     
 print(OBJ)
 
-model_to_csv(model)
+model_to_csv(model,IN_loads.sum(0))
 
 # Checking Constraint b.2 for powwer balance
 for i in model.BUS:

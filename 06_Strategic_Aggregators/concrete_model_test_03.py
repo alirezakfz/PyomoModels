@@ -943,7 +943,8 @@ for t in model.T:
     
 print(OBJ)
 
-# model_to_csv(model)
+# model_to_csv(model,IN_loads.sum(0))
+
 
 # print("\nModel B2_1:")
 # for i in model.BUS:
