@@ -859,7 +859,7 @@ Objective Functioon
 def social_welfare_optimization_rule(model):
     return sum(sum(c_g[i][t-16]*model.g[i,t] for i in model.G) +\
                 sum(c_d_o[i][t-16]*model.d_o[i,t] for i in model.NCDA ) +\
-                    sum(c_d_b[i][t-16]*model.d_b[i,t] for i in model.NCDA) +\
+                    sum(c_d_b[i][t-16]*model.d_b[i,t]*100 for i in model.NCDA) +\
                         sum(model.w_g_up[i,t] * g_s[i][t-16] for i in model.G) +\
                             sum(model.w_do_up[i,t]* F_d_o[i][t-16] for i in model.NCDA) +\
                                 sum(model.w_db_up[i,t]*F_d_b[i][t-16] for i in model.NCDA) +\
@@ -920,27 +920,32 @@ print(OBJ)
 
 model_to_csv(model,IN_loads.sum(0))
 
-# Checking Constraint b.2 for powwer balance
-for i in model.BUS:
-    for t in model.T:
-        sum1=0
-        if i in dic_G.keys():
-            sum1=sum(-value(model.g[x,t]) for x in dic_G[i])
+# Check Validity of 
+from Model_Constraints import check_constraints
+check_constraints(model, Yline, B,dic_G, dic_Bus_CDA, DABus, c_g, dic_G_Bus, dic_CDA_Bus, c_d_o, c_d_b, c_DA_o, c_DA_b, bigM, bigF, g_s, F_d_o, F_d_b, FMAX )
+
+
+# # Checking Constraint b.2 for powwer balance
+# for i in model.BUS:
+#     for t in model.T:
+#         sum1=0
+#         if i in dic_G.keys():
+#             sum1=sum(-value(model.g[x,t]) for x in dic_G[i])
         
-        sum3=0
-        sum2=0
-        if i in dic_Bus_CDA.keys() :
-            if i == DABus:
-                sum2= -value(model.E_DA_G[t])
-                sum3= value(model.E_DA_L[t])
-            else:
-                x=dic_Bus_CDA[i]
-                sum3 = value(model.d_b[x,t])   # if x != 'DAs'
-                sum2 = -value(model.d_o[x,t]) 
+#         sum3=0
+#         sum2=0
+#         if i in dic_Bus_CDA.keys() :
+#             if i == DABus:
+#                 sum2= -value(model.E_DA_G[t])
+#                 sum3= value(model.E_DA_L[t])
+#             else:
+#                 x=dic_Bus_CDA[i]
+#                 sum3 = value(model.d_b[x,t])   # if x != 'DAs'
+#                 sum2 = -value(model.d_o[x,t]) 
         
-        sumB = sum(B[i-1,j-1]*value(model.teta[j,t]) for j in model.BUS)
-        print(round(sum1+sum2+sum3+sumB,3), "," ,end="")
-    print()
+#         sumB = sum(B[i-1,j-1]*value(model.teta[j,t]) for j in model.BUS)
+#         print(round(sum1+sum2+sum3+sumB,3), "," ,end="")
+#     print()
     
 
 

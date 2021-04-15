@@ -59,7 +59,7 @@ from pyomo.opt import SolverFactory
 
 
 #Setting the random seed
-random.seed(1000)
+random.seed(10)
 
 
 
@@ -305,8 +305,8 @@ model = ConcreteModel(name='bilevel')
 """
 Defining Parameters
 """
-bigM =10000.0
-bigF = 10000.0
+bigM =100.0
+bigF = 100.0
 NO_prosumers = len(IN_loads)
 
 
@@ -476,14 +476,14 @@ model.u_line_up = Var(model.LINES, model.T, within= Binary, initialize=0)
 """
 PU power
 """
-model.b2_1 = Var(model.BUS, model.T, within=NonNegativeReals, initialize=0)
-model.b2_2 = Var(model.BUS, model.T, within=NonNegativeReals, initialize=0)
+# model.b2_1 = Var(model.BUS, model.T, within=NonNegativeReals, initialize=0)
+# model.b2_2 = Var(model.BUS, model.T, within=NonNegativeReals, initialize=0)
 
-model.b8_1 = Var(model.LINES, model.T, within=NonNegativeReals, initialize=0)
-model.b8_2 = Var(model.LINES, model.T, within=NonNegativeReals, initialize=0)
+# model.b8_1 = Var(model.LINES, model.T, within=NonNegativeReals, initialize=0)
+# model.b8_2 = Var(model.LINES, model.T, within=NonNegativeReals, initialize=0)
 
-model.c1_1 = Var(model.G, model.T, within=NonNegativeReals, initialize=0)
-model.c1_2 = Var(model.G, model.T, within=NonNegativeReals, initialize=0)
+# model.c1_1 = Var(model.G, model.T, within=NonNegativeReals, initialize=0)
+# model.c1_2 = Var(model.G, model.T, within=NonNegativeReals, initialize=0)
 """
 Upper Level constraints
 """
@@ -869,7 +869,7 @@ model.KKT_transmission_up_2_con = Constraint(model.LINES, model.T, rule=KKT_tran
 
 
 # ## ***************************************
-# #  refrense angel set
+#  refrense angel set
 # def set_ref_angel_rule(model, t):
 #     return model.teta[ref_angel,t]==0
 # model.set_ref_angel_con = Constraint(model.T, rule=set_ref_angel_rule)
@@ -950,6 +950,11 @@ for t in model.T:
 print(OBJ)
 
 model_to_csv(model,IN_loads.sum(0))
+
+# Check Validity of 
+from Model_Constraints import check_constraints
+check_constraints(model, Yline, B,dic_G, dic_Bus_CDA, DABus, c_g, dic_G_Bus, dic_CDA_Bus, c_d_o, c_d_b, c_DA_o, c_DA_b, bigM, bigF, g_s, F_d_o, F_d_b, FMAX )
+
 
 # Checking Constraint b.2 for powwer balance
 # for i in model.BUS:
