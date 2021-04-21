@@ -727,6 +727,11 @@ def KKT_gen_up_rule (model, i, t):
     return  g_s[i][t-16] - model.g[i,t] <= model.u_g_up[i,t]*bigM
 model.KKT_gen_up_rule = Constraint (model.G, model.T, rule= KKT_gen_up_rule)
 
+#KKT Constraint(D.3.2)
+def KKT_gen_up_2_rule (model, i, t):
+    return  g_s[i][t-16] - model.g[i,t] >= 0
+model.KKT_gen_up_2_rule = Constraint (model.G, model.T, rule= KKT_gen_up_2_rule)
+
 # KKT Constraint (D.4)
 def KKT_gen_up_2_rule (model, i, t):
     return model.w_g_up[i,t] <= (1-model.u_g_up[i,t]) * bigM
@@ -746,6 +751,12 @@ model.KKT_DAs_supply_offer_low_2_con = Constraint(model.NCDA, model.T, rule=KKT_
 def KKT_DAs_supply_offer_up_rule (model, i, t):
     return F_d_o[i][t-16] - model.d_o[i,t] <= model.u_do_up[i,t] * bigM
 model.KKT_DAs_supply_offer_up_con = Constraint(model.NCDA, model.T, rule=KKT_DAs_supply_offer_up_rule )
+
+# KKT Constraint (D.7.2)
+def KKT_DAs_supply_offer_up_3_rule (model, i, t):
+    return F_d_o[i][t-16] - model.d_o[i,t] >= 0
+model.KKT_DAs_supply_offer_up_3_con = Constraint(model.NCDA, model.T, rule=KKT_DAs_supply_offer_up_3_rule )
+
 
 # KKT Constraint (D.8)
 def KKT_DAs_supply_offer_up_2_rule(model, i, t):
@@ -768,6 +779,11 @@ def KKT_DAs_demand_bid_up_rule (model, i, t):
     return F_d_b[i][t-16] - model.d_b[i,t] <= model.u_db_up[i,t] * bigM
 model.KKT_DAs_demand_bid_up_con = Constraint(model.NCDA, model.T, rule=KKT_DAs_demand_bid_up_rule)
 
+#KKT Constraint (D.11.2)
+def KKT_DAs_demand_bid_up_3_rule (model, i, t):
+    return F_d_b[i][t-16] - model.d_b[i,t] >= 0
+model.KKT_DAs_demand_bid_up_3_con = Constraint(model.NCDA, model.T, rule=KKT_DAs_demand_bid_up_3_rule)
+
 # KKT Constraint (D.12)
 def KKT_DAs_demand_bid_up_2_rule (model, i , t):
     return model.w_db_up[i,t] <= (1-model.u_db_up[i,t]) * bigM
@@ -789,6 +805,12 @@ def KKT_stKrategic_DA_bid_up_rule (model,t):
     return model.DA_supply[t] - model.E_DA_G[t] <= model.u_DAs_o_up[t] * bigM
 model.KKT_stKrategic_DA_bid_up_con = Constraint (model.T, rule=KKT_stKrategic_DA_bid_up_rule)
 
+
+# KKT Constraint (D.15.2)
+def KKT_stKrategic_DA_bid_up_3_rule (model,t):
+    return model.DA_supply[t] - model.E_DA_G[t] >= 0
+model.KKT_stKrategic_DA_bid_up_3_con = Constraint (model.T, rule=KKT_stKrategic_DA_bid_up_3_rule)
+
 # KKT Constraint (D.16)
 def KKT_strategic_DA_bid_up_2_rule (model,t):
     return model.w_DAo_up[t] <=  (1-model.u_DAs_o_up[t]) * bigM
@@ -809,6 +831,11 @@ def KKT_strategic_demand_up_rule (model,t):
     return model.DA_demand[t] - model.E_DA_L[t] <= model.u_DAs_b_up[t] * bigM
 model.KKT_strategic_demand_up_con = Constraint(model.T, rule=KKT_strategic_demand_up_rule)
 
+# KKT Constraint (D.19.2)
+def KKT_strategic_demand_up_3_rule (model,t):
+    return model.DA_demand[t] - model.E_DA_L[t] >= 0
+model.KKT_strategic_demand_up_3_con = Constraint(model.T, rule=KKT_strategic_demand_up_3_rule)
+
 # KKT Constraint (D.20)
 def KKT_strategiv_demand_up_2_rule (model,t):
     return model.w_DAb_up[t] <=  (1-model.u_DAs_b_up[t]) * bigM
@@ -821,6 +848,12 @@ def KKT_transmission_low_rule (model, i, t):
     return sum(Yline[i-1, j-1]*model.teta[j,t] for j in model.BUS ) + FMAX[i-1] <=   model.u_line_low[i,t] * bigM
 model.KKT_transmission_low_con = Constraint (model.LINES, model.T, rule=KKT_transmission_low_rule)
 
+# KKT Transmission line Constraint (D.21.2)
+def KKT_transmission_low_3_rule (model, i, t):
+    #Yline[i-1, j-1]
+    return sum(Yline[i-1, j-1]*model.teta[j,t] for j in model.BUS ) + FMAX[i-1] >= 0
+model.KKT_transmission_low_3_con = Constraint (model.LINES, model.T, rule=KKT_transmission_low_3_rule)
+
 # KKT Transmission line Constraint (D.22)
 def KKT_transmission_low_2_rule (model, i, t):
     return model.w_line_low[i,t] <= (1-model.u_line_low[i,t]) * bigM
@@ -831,6 +864,12 @@ def KKT_transmission_up_rule(model, i, t):
     return sum(-Yline[i-1,j-1]* model.teta[j,t] for j in model.BUS) + FMAX[i-1] <= model.u_line_up[i,t] * bigM
 model.KKT_transmission_up_con = Constraint(model.LINES, model.T, rule=KKT_transmission_up_rule)
 
+# KKT Transmission line Constraint (D.23.2)
+def KKT_transmission_up_3_rule(model, i, t):
+    return sum(-Yline[i-1,j-1]* model.teta[j,t] for j in model.BUS) + FMAX[i-1] >= 0
+model.KKT_transmission_up_3_con = Constraint(model.LINES, model.T, rule=KKT_transmission_up_3_rule)
+
+
 # KKT Transmission line Constraint (D.24)
 def KKT_transmission_up_2_rule(model, i, t):
     return model.w_line_up[i,t] <= (1-model.u_line_up[i,t]) * bigM
@@ -838,7 +877,7 @@ model.KKT_transmission_up_2_con = Constraint(model.LINES, model.T, rule=KKT_tran
 
 
 ## ***************************************
-# #  refrense angel set
+#  refrense angel set
 # def set_ref_angel_rule(model, t):
 #     return model.teta[ref_angel,t]==0
 # model.set_ref_angel_con = Constraint(model.T, rule=set_ref_angel_rule)
@@ -918,36 +957,38 @@ for t in model.T:
     
 print(OBJ)
 
+
+#Save model data and dual variable into CSV file
 model_to_csv(model,IN_loads.sum(0))
 
-# Check Validity of 
+# Check Validity of  constraints by importing following file and checking their situations
 from Model_Constraints import check_constraints
 check_constraints(model, Yline, B,dic_G, dic_Bus_CDA, DABus, c_g, dic_G_Bus, dic_CDA_Bus, c_d_o, c_d_b, c_DA_o, c_DA_b, bigM, bigF, g_s, F_d_o, F_d_b, FMAX )
 
+"""
+check strong duality
+"""
+check =True
 
-# # Checking Constraint b.2 for powwer balance
-# for i in model.BUS:
-#     for t in model.T:
-#         sum1=0
-#         if i in dic_G.keys():
-#             sum1=sum(-value(model.g[x,t]) for x in dic_G[i])
-        
-#         sum3=0
-#         sum2=0
-#         if i in dic_Bus_CDA.keys() :
-#             if i == DABus:
-#                 sum2= -value(model.E_DA_G[t])
-#                 sum3= value(model.E_DA_L[t])
-#             else:
-#                 x=dic_Bus_CDA[i]
-#                 sum3 = value(model.d_b[x,t])   # if x != 'DAs'
-#                 sum2 = -value(model.d_o[x,t]) 
-        
-#         sumB = sum(B[i-1,j-1]*value(model.teta[j,t]) for j in model.BUS)
-#         print(round(sum1+sum2+sum3+sumB,3), "," ,end="")
-#     print()
+print("\n************************\nChecking if strong duality holds")
+print("Left_Hand_Side    Right_Hand_Side\n")
+for t in model.T:
+    sum1=sum(c_g[i][t-16]*value(model.g[i,t]) for i in model.G)+\
+        sum(c_d_o[i][t-16]* value(model.d_o[i,t]) for i in model.NCDA) -\
+            sum(c_d_b[i][t-16]* value(model.d_b[i,t]) for i in model.NCDA) +\
+                c_d_o['DAS'][t-16]* value(model.E_DA_G[t]) -\
+                    c_d_b['DAS'][t-16] * value(model.E_DA_L[t])
     
+    sum2=sum(value(model.w_g_up[i,t])*value(model.g[i,t]) for i in model.G)+\
+        sum( value(model.w_do_up[i,t]) * value(model.d_o[i,t]) for i in model.NCDA) +\
+            sum( value(model.w_db_up[i,t]) * value(model.d_b[i,t]) for i in model.NCDA) +\
+                value(model.w_DAo_up[t]) * value(model.DA_supply[t]) +\
+                    value(model.w_DAb_up[t]) * value(model.DA_demand[t]) +\
+                        sum(value(model.w_line_low[i,t])*FMAX[i-1] for i in model.LINES) +\
+                            sum(value(model.w_line_up[i,t])*FMAX[i-1] for i in model.LINES)
+    print(sum1," ",sum2," ",round(sum1,4)==-round(sum2,4))
 
+    
 
 # print("\nModel B2_1:")
 # for i in model.BUS:
