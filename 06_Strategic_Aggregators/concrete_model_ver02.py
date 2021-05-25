@@ -958,12 +958,12 @@ for t in model.T:
 print(OBJ)
 
 
-#Save model data and dual variable into CSV file
-model_to_csv(model,IN_loads.sum(0))
+# #Save model data and dual variable into CSV file
+# model_to_csv(model,IN_loads.sum(0))
 
-# Check Validity of  constraints by importing following file and checking their situations
-from Model_Constraints import check_constraints
-check_constraints(model, Yline, B,dic_G, dic_Bus_CDA, DABus, c_g, dic_G_Bus, dic_CDA_Bus, c_d_o, c_d_b, c_DA_o, c_DA_b, bigM, bigF, g_s, F_d_o, F_d_b, FMAX )
+# # Check Validity of  constraints by importing following file and checking their situations
+# from Model_Constraints import check_constraints
+# check_constraints(model, Yline, B,dic_G, dic_Bus_CDA, DABus, c_g, dic_G_Bus, dic_CDA_Bus, c_d_o, c_d_b, c_DA_o, c_DA_b, bigM, bigF, g_s, F_d_o, F_d_b, FMAX )
 
 """
 check strong duality
