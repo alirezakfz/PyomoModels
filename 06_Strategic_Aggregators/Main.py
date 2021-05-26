@@ -10,12 +10,39 @@ import pandas as pd
 import numpy as np
 import collections
 from samples_gen import generate_price, generate_temp
-
+from MPEC_Concrete_Model_ver01 import mpec_model
 from pyomo.environ import *
 from pyomo.opt import SolverFactory
 
 
+def solved_model_bids(model):
+    new_d_o=[]
+    new_d_b=[]
+    for t in model.T:
+        new_d_b.append(value(model.E_DA_L[t]))
+        new_d_o.append(value(model.E_DA_G[t]))
+    return new_d_o, new_d_b
 
+
+
+def compare_lists(old, new):
+    check=True
+    for i in range(len(old)):
+        if abs(old[i]-new[i]) > 0.1:
+            return False
+    return check
+        
+
+def check_bids(old, new):
+    check=False
+    for key in old.keys():
+        if compare_lists(old[key], new[key]):
+            check=True
+        else:
+            return False
+    return check
+            
+      
 def dictionar_bus(GenBus, CDABus, DABus):
     """
     This function creates dictionary mapping BUS and DAs on that bus
@@ -33,13 +60,13 @@ def dictionar_bus(GenBus, CDABus, DABus):
     
     dic_CDA_Bus=dict()
     dic_Bus_CDA = dict()
-    for i in range(len(CDABus)):
-        dic_CDA_Bus[i+1]=CDABus[i]
-        dic_Bus_CDA[CDABus[i]] = i+1
+    for i in range(len(CDABus[DABus-1])):
+        dic_CDA_Bus[i+1]=CDABus[DABus-1][i]
+        dic_Bus_CDA[CDABus[DABus-1][i]] = i+1
     
     dic_CDA_Bus['DAS']=DABus     # Strategic Aggregator
     dic_Bus_CDA[DABus] = 'DAS'   # Strategic Aggregator
-    return dic_CDA_Bus, dic_Bus_CDA
+    return dic_CDA_Bus, dic_Bus_CDA, dic_G, dic_G_Bus
 
 
 def load_data(file_index):
@@ -48,15 +75,10 @@ def load_data(file_index):
     return df1 , df2
 
 
-
-
-
-
-
-
-gen_capacity =[50,50,50]
+gen_capacity =[6,8,9]
 
 # Time Horizon
+time=24
 H = range(16,time+16)    
 MVA = 1  # Power Base
 PU_DA = 1/(1000*MVA)
@@ -74,26 +96,26 @@ ng = 3    # Number of Generators
 ncda = 2  # Number of competing 
 
 GenBus = [1,1,3]  # Vector with Generation Buses
-CDABus = [2, 3]      # Vector with competing DAs Buses
+CDABus = [[2, 3], [1,3], [1,2]]      # Vector with competing DAs Buses
 DABus = 1           # DA Bus
 
 FMAX = [50, 50, 50] # Vector with Capacities of Network Lines in pu
 FMAX = [i/MVA for i in FMAX]
 
 
-# Matrix (nb x ng) indicating the network location of generators
-GenLoc = np.zeros((nb,ng))
-for gg in range(0, ng):
-    GenLoc[GenBus[gg]-1,gg] = 1
+# # Matrix (nb x ng) indicating the network location of generators
+# GenLoc = np.zeros((nb,ng))
+# for gg in range(0, ng):
+#     GenLoc[GenBus[gg]-1,gg] = 1
 
-# Matrix (nb x ncda) indicating the network location of competing DAs
-CDALoc = np.zeros((nb,ncda))
-for dd in range(0,ncda):
-    CDALoc[CDABus[dd]-1,dd] = 1
+# # Matrix (nb x ncda) indicating the network location of competing DAs
+# CDALoc = np.zeros((nb,ncda))
+# for dd in range(0,ncda):
+#     CDALoc[CDABus[dd]-1,dd] = 1
     
-#Vector (nb x 1) indicating the network location of the DA
-DALoc = np.zeros((nb,1))
-DALoc[DABus-1] = 1
+# #Vector (nb x 1) indicating the network location of the DA
+# DALoc = np.zeros((nb,1))
+# DALoc[DABus-1] = 1
 
 
 #1) Bus Admittance Matrix Construction
@@ -117,12 +139,45 @@ for kk in range(0,nl):
 Yline = (LineFlows.conj().transpose()*LinesSusc).conj().transpose()
 
 
-# RAndom Supply and bid offer of competing DA i in time t
+# # RAndom Supply and bid offer of competing DA i in time t
+# def random_offer(NO_CDA, time):
+#     pivot=0.10
+#     offer_dict=dict()
+#     bid_dict=dict()
+#     for competitor in range(1,NO_CDA+1):
+#         temp_offer=[]
+#         temp_bid=[]
+#         for t in range(0,time):
+#             if random.random() >= pivot:
+#                 temp_offer.append(0)
+#                 temp_bid.append(round(random.random()/MVA, 3))  # Mega Watt
+#             else:
+#                 temp_bid.append(0)
+#                 temp_offer.append(round(random.random()/MVA,3)) # Mega Watt
+#         offer_dict[competitor]=temp_offer
+#         bid_dict[competitor]=temp_bid
+    
+#     return offer_dict, bid_dict
+
+# # Supply offer of competing DA i in time t
+# # Demand bid of competing DA i in time t
+# offers_bid=[]
+# demand_bid=[]
+
+# # offers_bid, demand_bid = random_offer(ncda+1, time)
+# for competitor in range(ncda+1):
+#     F_d_o , F_d_b = random_offer(ncda, time)
+#     offers_bid.append(F_d_o)
+#     demand_bid.append(F_d_b)
+
+
+offers_bid=[]
+demand_bid=[]
 def random_offer(NO_CDA, time):
     pivot=0.10
     offer_dict=dict()
     bid_dict=dict()
-    for competitor in range(1,NO_CDA+1):
+    for competitor in range(1,NO_CDA+2):
         temp_offer=[]
         temp_bid=[]
         for t in range(0,time):
@@ -137,10 +192,32 @@ def random_offer(NO_CDA, time):
     
     return offer_dict, bid_dict
 
-# Supply offer of competing DA i in time t
-# Demand bid of competing DA i in time t
-F_d_o , F_d_b = random_offer(ncda, time)
+offers_bid , demand_bid = random_offer(ncda, time)
 
+def select_bid(j, offers_bid, demand_bid):
+    counter= 1
+    count=1
+    
+    d_o=dict()
+    d_b=dict()
+    for i in range(len(offers_bid)):
+        if counter != j:
+            print(i)
+            d_o[count] = offers_bid[i+1]
+            d_b[count] = demand_bid[i+1]
+            counter += 1
+            count+=1
+        else:
+            counter +=1
+    
+    # if j == 1:
+    #     for i in range(1,len(offers_bid)):
+    #         d_o[counter] = offers_bid[i+1]
+    #         d_b[counter] = demand_bid[i+1]
+    #         counter += 1       
+       
+    return d_o, d_b
+        
 
 """
 Supply and demand Random
@@ -173,18 +250,18 @@ c_g[4]=[100 for x in range(0,time)]
 
 
 #Price bid for supplying power of competing DA  i in time t
-c_d_o = {'DAS':random_price(time,12,20),
-         1:random_price(time,12,20),
-         2:random_price(time,12,20)}
+c_d_o = [{'DAS':random_price(time,1,16), 1:random_price(time,1,16), 2:random_price(time,1,16)},
+         {'DAS':random_price(time,1,16), 1:random_price(time,1,16), 2:random_price(time,1,16)},
+          {'DAS':random_price(time,1,16), 1:random_price(time,1,16), 2:random_price(time,1,16)}]
 
 # c_d_o = {'DAS':random_price(time,1,2),
 #           1:random_price(time,1,2),
 #           2:random_price(time,1,2)}
 
 # Price bid for buying power of competing DA  i in time t
-c_d_b = {'DAS':random_price(time,70,110),
-         1:random_price(time,70,110),
-         2:random_price(time,70,110)}
+c_d_b = [{'DAS':random_price(time,70,110),1:random_price(time,70,110), 2:random_price(time,70,110)},
+         {'DAS':random_price(time,70,110),1:random_price(time,70,110), 2:random_price(time,70,110)},
+         {'DAS':random_price(time,70,110),1:random_price(time,70,110), 2:random_price(time,70,110)}]
 
 # c_d_b = {'DAS':random_price(time,1,2),
 #           1:random_price(time,1,2),
@@ -192,10 +269,10 @@ c_d_b = {'DAS':random_price(time,70,110),
 
 
 # Price bid for supplying power of strategic DA in time t
-c_DA_o = c_d_o['DAS'] # random_price(time)
+c_DA_o = c_d_o[DABus-1]['DAS'] # random_price(time)
 
 # Price bid for buying power of strategic DA in time t
-c_DA_b = c_d_b['DAS'] # random_price(time)
+c_DA_b = c_d_b[DABus-1]['DAS'] # random_price(time)
 
 # Supply offer of generator i in time t
 g_s = { 1:random_generation(time,10, 12),
@@ -208,10 +285,12 @@ g_s = { 1:random_generation(time,10, 12),
 outside_temp=[16.784803,16.094803,15.764802,14.774801,14.834802,14.184802,14.144801,15.314801,16.694803,19.734802,24.414803,25.384802,26.744802,27.144802,27.524803,27.694803,26.834803,26.594803,25.664803,22.594803,21.394802,20.164803,19.584803,20.334803]
 
 
-for n in range(100):
-    for j in range(1,ncda+1):
+for n in range(1):
+    for j in range(1,ncda+2):
+        new_offers=dict()
+        new_bids=dict()
         
-        IN_loads, profiles = load_data(j)
+        IN_loads, profiles = load_data(str(j))
         
         # EVs properties 
         arrival = profiles['Arrival']
@@ -240,14 +319,48 @@ for n in range(100):
         TCL_temp_low = profiles['TCL_temp_low']
         TCL_temp_up  = profiles['TCL_temp_up']
 
+        # Creating dictionary mapping current DA as strategic in MPEC model
+        dic_CDA_Bus, dic_Bus_CDA, dic_G, dic_G_Bus = dictionar_bus(GenBus, CDABus, j)
 
-
-
-
-mpec_model(ng, nb, nl, ncda,
-               arrival, depart, charge_power,EV_soc_arrive,EV_soc_low, EV_soc_up, 
-               TCL_Max, TCL_TEMP, TCL_R, TCL_Beta, TCL_temp_low, outside_temp, 
-               SL_low, SL_up, SL_cycle, SL_loads,
-               dic_G, dic_Bus_CDA, DABus, B, Y_line, dic_G_Bus, 
-               c_g, c_d_o, c_d_b, 
-               dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX)
+        DABus=j
+        F_d_o, F_d_b = select_bid(j, offers_bid, demand_bid)
+        
+        #F_d_b = demand_bid[j-1]
+        
+        # Price bid for supplying power of strategic DA in time t
+        c_DA_o = c_d_o[DABus-1]['DAS'] # random_price(time)
+        
+        # Price bid for buying power of strategic DA in time t
+        c_DA_b = c_d_b[DABus-1]['DAS'] # random_price(time)
+        
+        model = mpec_model(ng, nb, nl, ncda,IN_loads, gen_capacity, 
+                       arrival, depart, charge_power,EV_soc_arrive,EV_soc_low, EV_soc_up, 
+                       TCL_Max, TCL_R, TCL_Beta, TCL_temp_low, outside_temp, 
+                       SL_low, SL_up, SL_cycle, SL_loads,
+                       dic_G, dic_Bus_CDA, DABus, B, Yline, dic_G_Bus, 
+                       c_g, c_d_o[j-1], c_d_b[j-1], 
+                       dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX,
+                       c_DA_o, c_DA_b)
+       
+        SOLVER_NAME="gurobi"  #'cplex'
+        solver=SolverFactory(SOLVER_NAME)
+        results = solver.solve(model)
+        #print(results)
+        
+        new_d_o, new_d_b = solved_model_bids(model)
+        
+        new_offers[j]=new_d_o
+        new_bids[j]= new_d_b
+    # Finishing Step 3
+    # Step 4 check if epsilon difference exist
+    check=False
+    if check-bids(offers_bid,new_offers) and check-bids(demand_bid,new_bids):
+        check=True
+        print("solution found")
+        break
+    
+    # Step 6
+    offers_bid = new_offers
+    demand_bid = new_bids
+    
+        

@@ -35,13 +35,14 @@ from pyomo.environ import *
 from pyomo.opt import SolverFactory
 
 
-def mpec_model(ng, nb, nl, ncda,
+def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
                arrival, depart, charge_power,EV_soc_arrive,EV_soc_low, EV_soc_up, 
-               TCL_Max, TCL_TEMP, TCL_R, TCL_Beta, TCL_temp_low, outside_temp, 
+               TCL_Max, TCL_R, TCL_Beta, TCL_temp_low, outside_temp, 
                SL_low, SL_up, SL_cycle, SL_loads,
-               dic_G, dic_Bus_CDA, DABus, B, Y_line, dic_G_Bus, 
+               dic_G, dic_Bus_CDA, DABus, B, Yline, dic_G_Bus, 
                c_g, c_d_o, c_d_b, 
-               dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX):
+               dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX,
+               c_DA_o, c_DA_b):
     
     time=24
     ref_angel=1
@@ -61,6 +62,9 @@ def mpec_model(ng, nb, nl, ncda,
     bigF = 10000.0
     NO_prosumers = len(IN_loads)
 
+    
+    # defining the model
+    model = ConcreteModel(name='bilevel')
 
     """
     Upper level Variables
@@ -649,3 +653,6 @@ def mpec_model(ng, nb, nl, ncda,
                                         sum(FMAX[i-1]*model.w_line_low[i,t] for i in model.LINES) +\
                                             sum(FMAX[i-1]*model.w_line_up[i,t] for i in model.LINES)  for t in model.T )
     model.obj = Objective(rule=social_welfare_optimization_rule, sense=minimize)
+    
+    
+    return model
