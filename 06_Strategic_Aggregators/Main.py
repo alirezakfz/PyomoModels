@@ -15,12 +15,16 @@ from pyomo.environ import *
 from pyomo.opt import SolverFactory
 
 
+#Setting the random seed
+random.seed(1000)
+
+
 def solved_model_bids(model):
     new_d_o=[]
     new_d_b=[]
     for t in model.T:
-        new_d_b.append(value(model.E_DA_L[t]))
-        new_d_o.append(value(model.E_DA_G[t]))
+        new_d_b.append(round(value(model.E_DA_L[t]),3))
+        new_d_o.append(round(value(model.E_DA_G[t]),3))
     return new_d_o, new_d_b
 
 
@@ -202,7 +206,7 @@ def select_bid(j, offers_bid, demand_bid):
     d_b=dict()
     for i in range(len(offers_bid)):
         if counter != j:
-            print(i)
+            # print(i)
             d_o[count] = offers_bid[i+1]
             d_b[count] = demand_bid[i+1]
             counter += 1
@@ -284,12 +288,18 @@ g_s = { 1:random_generation(time,10, 12),
 # 2019 November 15 forecasted temprature
 outside_temp=[16.784803,16.094803,15.764802,14.774801,14.834802,14.184802,14.144801,15.314801,16.694803,19.734802,24.414803,25.384802,26.744802,27.144802,27.524803,27.694803,26.834803,26.594803,25.664803,22.594803,21.394802,20.164803,19.584803,20.334803]
 
+# save the feasible round for the DA
+feasible_bid=dict()
+feasible_offer=dict()
 
-for n in range(1):
+
+for n in range(6):
+    print('round:',n)
+    new_offers=dict()
+    new_bids=dict()
     for j in range(1,ncda+2):
-        new_offers=dict()
-        new_bids=dict()
         
+        print('Solve MPEC model for DA:',j)
         IN_loads, profiles = load_data(str(j))
         
         # EVs properties 
@@ -346,15 +356,19 @@ for n in range(1):
         solver=SolverFactory(SOLVER_NAME)
         results = solver.solve(model)
         #print(results)
-        
-        new_d_o, new_d_b = solved_model_bids(model)
-        
+        if (results.solver.status == SolverStatus.ok) and (results.solver.termination_condition == TerminationCondition.optimal):
+            new_d_o, new_d_b = solved_model_bids(model)
+        else:
+            new_d_o = offers_bid[j]
+            new_d_b = demand_bid[j]
+            
         new_offers[j]=new_d_o
         new_bids[j]= new_d_b
     # Finishing Step 3
+    
     # Step 4 check if epsilon difference exist
     check=False
-    if check-bids(offers_bid,new_offers) and check-bids(demand_bid,new_bids):
+    if check_bids(offers_bid,new_offers) and check_bids(demand_bid,new_bids):
         check=True
         print("solution found")
         break
