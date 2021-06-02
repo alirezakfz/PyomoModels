@@ -39,7 +39,7 @@ from samples_gen import generate_price, generate_temp
 
 from pyomo.environ import *
 from pyomo.opt import SolverFactory
-
+from Model_to_CSV import model_to_csv
 
 #Setting the random seed
 random.seed(1000)
@@ -229,6 +229,29 @@ Day ahead aggregator data for prosumers.
 
 IN_loads = pd.read_csv('inflexible_profiles_scen_1.csv').round(3)/1000
 profiles = pd.read_csv('prosumers_profiles_scen_1.csv')
+
+# Adding solar power to randomly selected houses.
+def solar_power_generator(index_len):
+    return [random.random() for i in range(index_len)]
+    
+    
+    
+
+def random_solar_power(in_loads, j):
+    random.seed(j)
+    length = len(in_loads)
+    # Select 20 percent of households containt solar power
+    random_index = [random.randrange(1, length, 1) for i in range(int(length/3))]
+    
+    selected_time = ['16','17','18','19','30','31','32','33','34','35','36','37','38','39']
+    
+    for i in range(len(selected_time)):
+        random_power = solar_power_generator(len(random_index))
+        in_loads.loc[random_index,selected_time[i]]= in_loads.loc[random_index,selected_time[i]]-random_power
+        
+    return in_loads
+
+IN_loads = random_solar_power(IN_loads, 1)
 
 # EVs properties 
 arrival = profiles['Arrival']
@@ -917,7 +940,7 @@ for t in model.T:
     
 print(OBJ)
 
-# model_to_csv(model,IN_loads.sum(0))
+model_to_csv(model,IN_loads.sum(0))
 
 
 # Checking Constraint b.2 for powwer balance

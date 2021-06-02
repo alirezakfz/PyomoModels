@@ -1,28 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue May 25 14:49:36 2021
+Created on Mon May 31 16:17:08 2021
 
-@author: alire
-"""
-
-
-"""
-% 6-Bus Network from EPSR paper
-% Line No. | From Bus | To Bus | Susceptance (p.u.) | Capacity (MW)
-%    1     |     1    |    2   |       100       |     50
-%    1     |     3    |    4   |       125       |     50
-%    2     |     3    |    3   |       150       |     50
-
-
-% Generation Unit | Bus No | Capacity MW |  Production Cost ($/MWh)
-%         1       |    1   |    20       |        16
-%         2       |    2   |    10       |        19
-%         3       |    6   |    25       |        25
-
-
-%  Competing DA | Bus No. 
-%       1       |    3    
-%       2       |    4    
+@author: Alireza
 """
 
 import random
@@ -45,6 +25,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
                dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX,
                c_DA_o, c_DA_b):
     
+    
     time=24
     ref_angel=1
     
@@ -62,11 +43,10 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     bigM =10000.0
     bigF = 10000.0
     NO_prosumers = len(IN_loads)
-
     
     # defining the model
     model = ConcreteModel(name='bilevel')
-
+    
     """
     Upper level Variables
     """
@@ -78,14 +58,10 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     
     # Energy bid as load from the grid
-    def DA_demand_bounds(model, t):
-        return(0, max(FMAX))   
-    model.E_DA_L = Var(model.T, within=NonNegativeReals, initialize=0, bounds = DA_demand_bounds)
+    model.E_DA_L = Var(model.T, within=NonNegativeReals, initialize=0)
     
     # Energy bid as inject into grid
-    def DA_offer_bounds(model, t):
-        return(0, max(FMAX))   
-    model.E_DA_G = Var(model.T, within=NonNegativeReals, initialize=0, bounds = DA_offer_bounds)
+    model.E_DA_G = Var(model.T, within=NonNegativeReals, initialize=0)
     
     # Energy bid demand by DA
     model.DA_demand = Var(model.T,within=NonNegativeReals, initialize=0)
@@ -519,6 +495,11 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
         return  g_s[i][t-16] - model.g[i,t] <= model.u_g_up[i,t]*bigM
     model.KKT_gen_up_rule = Constraint (model.G, model.T, rule= KKT_gen_up_rule)
     
+    #KKT Constraint(D.3.2)
+    def KKT_gen_up_2_rule (model, i, t):
+        return  g_s[i][t-16] - model.g[i,t] >= 0
+    model.KKT_gen_up_2_rule = Constraint (model.G, model.T, rule= KKT_gen_up_2_rule)
+    
     # KKT Constraint (D.4)
     def KKT_gen_up_2_rule (model, i, t):
         return model.w_g_up[i,t] <= (1-model.u_g_up[i,t]) * bigM
@@ -538,6 +519,12 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     def KKT_DAs_supply_offer_up_rule (model, i, t):
         return F_d_o[i][t-16] - model.d_o[i,t] <= model.u_do_up[i,t] * bigM
     model.KKT_DAs_supply_offer_up_con = Constraint(model.NCDA, model.T, rule=KKT_DAs_supply_offer_up_rule )
+    
+    # KKT Constraint (D.7.2)
+    def KKT_DAs_supply_offer_up_3_rule (model, i, t):
+        return F_d_o[i][t-16] - model.d_o[i,t] >= 0
+    model.KKT_DAs_supply_offer_up_3_con = Constraint(model.NCDA, model.T, rule=KKT_DAs_supply_offer_up_3_rule )
+    
     
     # KKT Constraint (D.8)
     def KKT_DAs_supply_offer_up_2_rule(model, i, t):
@@ -560,6 +547,11 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
         return F_d_b[i][t-16] - model.d_b[i,t] <= model.u_db_up[i,t] * bigM
     model.KKT_DAs_demand_bid_up_con = Constraint(model.NCDA, model.T, rule=KKT_DAs_demand_bid_up_rule)
     
+    #KKT Constraint (D.11.2)
+    def KKT_DAs_demand_bid_up_3_rule (model, i, t):
+        return F_d_b[i][t-16] - model.d_b[i,t] >= 0
+    model.KKT_DAs_demand_bid_up_3_con = Constraint(model.NCDA, model.T, rule=KKT_DAs_demand_bid_up_3_rule)
+    
     # KKT Constraint (D.12)
     def KKT_DAs_demand_bid_up_2_rule (model, i , t):
         return model.w_db_up[i,t] <= (1-model.u_db_up[i,t]) * bigM
@@ -581,6 +573,12 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
         return model.DA_supply[t] - model.E_DA_G[t] <= model.u_DAs_o_up[t] * bigM
     model.KKT_stKrategic_DA_bid_up_con = Constraint (model.T, rule=KKT_stKrategic_DA_bid_up_rule)
     
+    
+    # KKT Constraint (D.15.2)
+    def KKT_stKrategic_DA_bid_up_3_rule (model,t):
+        return model.DA_supply[t] - model.E_DA_G[t] >= 0
+    model.KKT_stKrategic_DA_bid_up_3_con = Constraint (model.T, rule=KKT_stKrategic_DA_bid_up_3_rule)
+    
     # KKT Constraint (D.16)
     def KKT_strategic_DA_bid_up_2_rule (model,t):
         return model.w_DAo_up[t] <=  (1-model.u_DAs_o_up[t]) * bigM
@@ -601,6 +599,11 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
         return model.DA_demand[t] - model.E_DA_L[t] <= model.u_DAs_b_up[t] * bigM
     model.KKT_strategic_demand_up_con = Constraint(model.T, rule=KKT_strategic_demand_up_rule)
     
+    # KKT Constraint (D.19.2)
+    def KKT_strategic_demand_up_3_rule (model,t):
+        return model.DA_demand[t] - model.E_DA_L[t] >= 0
+    model.KKT_strategic_demand_up_3_con = Constraint(model.T, rule=KKT_strategic_demand_up_3_rule)
+    
     # KKT Constraint (D.20)
     def KKT_strategiv_demand_up_2_rule (model,t):
         return model.w_DAb_up[t] <=  (1-model.u_DAs_b_up[t]) * bigM
@@ -613,6 +616,12 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
         return sum(Yline[i-1, j-1]*model.teta[j,t] for j in model.BUS ) + FMAX[i-1] <=   model.u_line_low[i,t] * bigM
     model.KKT_transmission_low_con = Constraint (model.LINES, model.T, rule=KKT_transmission_low_rule)
     
+    # KKT Transmission line Constraint (D.21.2)
+    def KKT_transmission_low_3_rule (model, i, t):
+        #Yline[i-1, j-1]
+        return sum(Yline[i-1, j-1]*model.teta[j,t] for j in model.BUS ) + FMAX[i-1] >= 0
+    model.KKT_transmission_low_3_con = Constraint (model.LINES, model.T, rule=KKT_transmission_low_3_rule)
+    
     # KKT Transmission line Constraint (D.22)
     def KKT_transmission_low_2_rule (model, i, t):
         return model.w_line_low[i,t] <= (1-model.u_line_low[i,t]) * bigM
@@ -623,14 +632,20 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
         return sum(-Yline[i-1,j-1]* model.teta[j,t] for j in model.BUS) + FMAX[i-1] <= model.u_line_up[i,t] * bigM
     model.KKT_transmission_up_con = Constraint(model.LINES, model.T, rule=KKT_transmission_up_rule)
     
+    # KKT Transmission line Constraint (D.23.2)
+    def KKT_transmission_up_3_rule(model, i, t):
+        return sum(-Yline[i-1,j-1]* model.teta[j,t] for j in model.BUS) + FMAX[i-1] >= 0
+    model.KKT_transmission_up_3_con = Constraint(model.LINES, model.T, rule=KKT_transmission_up_3_rule)
+    
+    
     # KKT Transmission line Constraint (D.24)
     def KKT_transmission_up_2_rule(model, i, t):
         return model.w_line_up[i,t] <= (1-model.u_line_up[i,t]) * bigM
     model.KKT_transmission_up_2_con = Constraint(model.LINES, model.T, rule=KKT_transmission_up_2_rule)
     
     
-    # ## ***************************************
-    # #  refrense angel set
+    ## ***************************************
+    #  refrense angel set
     # def set_ref_angel_rule(model, t):
     #     return model.teta[ref_angel,t]==0
     # model.set_ref_angel_con = Constraint(model.T, rule=set_ref_angel_rule)
@@ -651,13 +666,12 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     def social_welfare_optimization_rule(model):
         return sum(sum(c_g[i][t-16]*model.g[i,t] for i in model.G) +\
                     sum(c_d_o[i][t-16]*model.d_o[i,t] for i in model.NCDA ) +\
-                        sum(c_d_b[i][t-16]*model.d_b[i,t] for i in model.NCDA) +\
+                        sum(c_d_b[i][t-16]*model.d_b[i,t]*100 for i in model.NCDA) +\
                             sum(model.w_g_up[i,t] * g_s[i][t-16] for i in model.G) +\
                                 sum(model.w_do_up[i,t]* F_d_o[i][t-16] for i in model.NCDA) +\
                                     sum(model.w_db_up[i,t]*F_d_b[i][t-16] for i in model.NCDA) +\
                                         sum(FMAX[i-1]*model.w_line_low[i,t] for i in model.LINES) +\
                                             sum(FMAX[i-1]*model.w_line_up[i,t] for i in model.LINES)  for t in model.T )
     model.obj = Objective(rule=social_welfare_optimization_rule, sense=minimize)
-    
     
     return model

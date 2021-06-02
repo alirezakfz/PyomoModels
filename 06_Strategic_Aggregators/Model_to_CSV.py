@@ -67,7 +67,7 @@ def model_to_csv(model, IN_loads):
             
         list_row.append(row)
     
-    model_file='Model_data_'+timestr+'.csv'
+    model_file='Model_CSV/Model_data_'+timestr+'.csv'
     with open(model_file, 'w', newline='') as file:
         csv_writer = writer(file)
         for rw in list_row:
@@ -126,7 +126,7 @@ def model_to_csv(model, IN_loads):
         list_row.append(row)
         
     
-    dual_file='Model_dual_variables_'+timestr+'.csv'
+    dual_file='Model_CSV/Model_dual_variables_'+timestr+'.csv'
     with open(dual_file, 'w', newline='') as file:
         csv_writer = writer(file)
         for rw in list_row:
