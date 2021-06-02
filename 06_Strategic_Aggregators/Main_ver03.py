@@ -78,10 +78,10 @@ def dictionar_bus(GenBus, CDABus, DABus):
 def load_data(file_index):
     df1 = pd.read_csv('prosumers_data/inflexible_profiles_scen_'+file_index+'.csv').round(3)/1000
     # Just selecting some prosumers like 500 or 600 or 1000
-    df1 = df1[:600]
+    df1 = df1[:1000]
     # print(df1.shape)
     df2 = pd.read_csv('prosumers_data/prosumers_profiles_scen_'+file_index+'.csv')
-    df2 = df2[:600]
+    df2 = df2[:1000]
     return df1 , df2
 
 
@@ -182,7 +182,7 @@ def select_bid(j, offers_bid, demand_bid):
     d_b=dict()
     for i in range(len(offers_bid)):
         if counter != j:
-            print(i)
+            # print(i)
             d_o[count] = offers_bid[i+1]
             d_b[count] = demand_bid[i+1]
             counter += 1
@@ -264,7 +264,7 @@ feasible_offer = dict()
 
 # Adding solar power to randomly selected houses.
 def solar_power_generator(index_len):
-    return [random.random()*0.05 for i in range(index_len)]
+    return [random.random()*0.08 for i in range(index_len)]
     
     
     
@@ -357,7 +357,7 @@ for n in range(3):
         solver_time=time.time()-solver_time
         
         if (results.solver.status == SolverStatus.ok) and (results.solver.termination_condition == TerminationCondition.optimal):
-            print('Model solved optimal DA:',j,'   Time taken:', solver_time)
+            print('Model solved and is optimal for DA:',j,'   Time taken:', solver_time)
             # model_to_csv(model,IN_loads.sum(0))
             new_d_o, new_d_b = solved_model_bids(model)
             feasible_bid[j] =  new_d_b
@@ -380,7 +380,7 @@ for n in range(3):
         print("solution found in iteration:",n)
         break
     else:
-        print('no EPEC, round:',n,'\n******************')
+        print('\nno EPEC, End of round:',n,'\n******************')
         
     # Step 6
     
