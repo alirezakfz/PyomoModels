@@ -78,10 +78,10 @@ def dictionar_bus(GenBus, CDABus, DABus):
 def load_data(file_index):
     df1 = pd.read_csv('prosumers_data/inflexible_profiles_scen_'+file_index+'.csv').round(3)/1000
     # Just selecting some prosumers like 500 or 600 or 1000
-    df1 = df1[:1000]
+    df1 = df1[:500]
     # print(df1.shape)
     df2 = pd.read_csv('prosumers_data/prosumers_profiles_scen_'+file_index+'.csv')
-    df2 = df2[:1000]
+    df2 = df2[:500]
     return df1 , df2
 
 
@@ -264,7 +264,7 @@ feasible_offer = dict()
 
 # Adding solar power to randomly selected houses.
 def solar_power_generator(index_len):
-    return [random.random()*0.08 for i in range(index_len)]
+    return [random.random()*0.07 for i in range(index_len)]
     
     
     
@@ -285,7 +285,7 @@ def random_solar_power(in_loads, j):
 
 
 
-for n in range(3):
+for n in range(200):
     new_offers=dict()
     new_bids=dict()
     for j in range(1,ncda+2):
@@ -392,9 +392,9 @@ for n in range(3):
 if check:
     print('Solution is found:')
     print("Offers differences:")
-    print(pd.DataFrame.from_dict(offers_bid) - pd.DataFrame.from_dict(new_offers))
+    print(pd.DataFrame.from_dict(offers_bid) - pd.DataFrame.from_dict(feasible_offer))
     print("Bid Differences:")
-    print(pd.DataFrame.from_dict(demand_bid) - pd.DataFrame.from_dict(new_bids))
+    print(pd.DataFrame.from_dict(demand_bid) - pd.DataFrame.from_dict(feasible_bid))
 else:
     print('No EPEC is found')
     print(pd.DataFrame.from_dict(offers_bid))
