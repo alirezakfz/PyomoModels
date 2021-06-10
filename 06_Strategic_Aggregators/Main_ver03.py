@@ -284,8 +284,10 @@ def random_solar_power(in_loads, j):
     return in_loads
 
 
+check=False
+no_iteration = 3
 
-for n in range(200):
+for n in range(no_iteration):
     new_offers=dict()
     new_bids=dict()
     for j in range(1,ncda+2):
@@ -374,7 +376,7 @@ for n in range(200):
         # Finishing Step 3
     # Step 4 check if epsilon difference exist
         
-    check=False
+    # check=False
     if check_bids(offers_bid,new_offers) and check_bids(demand_bid,new_bids):
         check=True
         print("solution found in iteration:",n)
@@ -384,21 +386,26 @@ for n in range(200):
         
     # Step 6
     
-    if not check:
+    if (not check) and (n < no_iteration-1):
         offers_bid = new_offers
         demand_bid = new_bids
     
 
 if check:
     print('Solution is found:')
+    print(pd.DataFrame.from_dict(offers_bid))
+    print(pd.DataFrame.from_dict(demand_bid))
+    # print("Offers differences:")
+    # print(pd.DataFrame.from_dict(offers_bid) - pd.DataFrame.from_dict(feasible_offer))
+    # print("Bid Differences:")
+    # print(pd.DataFrame.from_dict(demand_bid) - pd.DataFrame.from_dict(feasible_bid))
+else:
+    print('No EPEC is found')
     print("Offers differences:")
     print(pd.DataFrame.from_dict(offers_bid) - pd.DataFrame.from_dict(feasible_offer))
     print("Bid Differences:")
     print(pd.DataFrame.from_dict(demand_bid) - pd.DataFrame.from_dict(feasible_bid))
-else:
-    print('No EPEC is found')
-    print(pd.DataFrame.from_dict(offers_bid))
-    print(pd.DataFrame.from_dict(demand_bid))
+    
 
 # """
 # check strong duality
