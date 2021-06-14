@@ -78,14 +78,16 @@ def dictionar_bus(GenBus, CDABus, DABus):
 def load_data(file_index):
     df1 = pd.read_csv('prosumers_data/inflexible_profiles_scen_'+file_index+'.csv').round(3)/1000
     # Just selecting some prosumers like 500 or 600 or 1000
-    df1 = df1[:500]
+    df1 = df1[:100]
     # print(df1.shape)
     df2 = pd.read_csv('prosumers_data/prosumers_profiles_scen_'+file_index+'.csv')
-    df2 = df2[:500]
+    df2 = df2[:100]
     return df1 , df2
 
 
 gen_capacity =[50, 50, 50]
+gen_capacity =[1000, 1000, 1000]
+
 random.seed(42)
 
 # Time Horizon
@@ -110,7 +112,8 @@ GenBus = [1,1,3]  # Vector with Generation Buses
 CDABus = [[2, 3], [1,3], [1,2]]      # Vector with competing DAs Buses
 DABus = 1           # DA Bus
 
-FMAX = [50, 50, 50] # Vector with Capacities of Network Lines in pu
+FMAX = [50, 50, 50]
+FMAX = [500, 500, 500] # Vector with Capacities of Network Lines in pu
 FMAX = [i/MVA for i in FMAX]
 
 
@@ -264,7 +267,7 @@ feasible_offer = dict()
 
 # Adding solar power to randomly selected houses.
 def solar_power_generator(index_len):
-    return [random.random()*0.07 for i in range(index_len)]
+    return [random.random()*0.2 for i in range(index_len)]
     
     
     
@@ -285,11 +288,12 @@ def random_solar_power(in_loads, j):
 
 
 check=False
-no_iteration = 3
+no_iteration = 4
 
 for n in range(no_iteration):
     new_offers=dict()
     new_bids=dict()
+    infeasibility_counter=0
     for j in range(1,ncda+2):
         
         
@@ -365,6 +369,7 @@ for n in range(no_iteration):
             feasible_bid[j] =  new_d_b
             feasible_offer[j] = new_d_o
         else:
+            infeasibility_counter+=1
             new_d_o = feasible_offer[j]
             new_d_b = feasible_bid[j]
         
@@ -377,7 +382,7 @@ for n in range(no_iteration):
     # Step 4 check if epsilon difference exist
         
     # check=False
-    if check_bids(offers_bid,new_offers) and check_bids(demand_bid,new_bids):
+    if check_bids(offers_bid,new_offers) and check_bids(demand_bid,new_bids) and (infeasibility_counter < ncda+1):
         check=True
         print("solution found in iteration:",n)
         break

@@ -40,8 +40,8 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     """
     Defining Parameters
     """
-    bigM =10000.0
-    bigF = 10000.0
+    bigM =1000.0
+    bigF = 1000.0
     NO_prosumers = len(IN_loads)
     
     # defining the model
@@ -135,12 +135,12 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     # DAs competitor supply offer
     def supply_offer_bounds(model, i, t):
         return (0, F_d_o[i][t-16])
-    model.d_o = Var(model.NCDA, model.T, within=NonNegativeReals, initialize=0, bounds=supply_offer_bounds)
+    model.d_o = Var(model.NCDA, model.T, within=NonNegativeReals, initialize=0, bounds=supply_offer_bounds)  # , bounds=supply_offer_bounds
     
     # DAs competitor demand 
     def demand_bid_bouds(model, i, t):
         return (0, F_d_b[i][t-16])
-    model.d_b = Var(model.NCDA, model.T, within=NonNegativeReals, initialize=0, bounds=demand_bid_bouds)
+    model.d_b = Var(model.NCDA, model.T, within=NonNegativeReals, initialize=0, bounds=demand_bid_bouds) #, bounds=demand_bid_bouds
     
     # voltage phase angle
     model.teta = Var(model.BUS, model.T, within=NonNegativeReals, initialize=0)
@@ -493,12 +493,12 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     #KKT Constraint (D.3)
     def KKT_gen_up_rule (model, i, t):
         return  g_s[i][t-16] - model.g[i,t] <= model.u_g_up[i,t]*bigM
-    model.KKT_gen_up_rule = Constraint (model.G, model.T, rule= KKT_gen_up_rule)
+    model.KKT_gen_up_con = Constraint (model.G, model.T, rule= KKT_gen_up_rule)
     
     #KKT Constraint(D.3.2)
-    def KKT_gen_up_2_rule (model, i, t):
+    def KKT_gen_up_3_2_rule (model, i, t):
         return  g_s[i][t-16] - model.g[i,t] >= 0
-    model.KKT_gen_up_2_rule = Constraint (model.G, model.T, rule= KKT_gen_up_2_rule)
+    model.KKT_gen_up_3_2_con = Constraint (model.G, model.T, rule= KKT_gen_up_3_2_rule)
     
     # KKT Constraint (D.4)
     def KKT_gen_up_2_rule (model, i, t):
