@@ -17,13 +17,15 @@ from pyomo.environ import *
 from pyomo.opt import SolverFactory
 
 from Model_to_CSV import model_to_csv
-
+from Model_Constraints import check_constraints
 
 
 def solved_model_bids(model):
     new_d_o=[]
     new_d_b=[]
     for t in model.T:
+        # new_d_b.append(value(model.E_DA_L[t]))
+        # new_d_o.append(value(model.E_DA_G[t]))
         new_d_b.append(round(value(model.E_DA_L[t]),6))
         new_d_o.append(round(value(model.E_DA_G[t]),6))
     return new_d_o, new_d_b
@@ -76,7 +78,7 @@ def dictionar_bus(GenBus, CDABus, DABus):
 
 
 def load_data(file_index):
-    df1 = pd.read_csv('prosumers_data/inflexible_profiles_scen_'+file_index+'.csv').round(3)/1000
+    df1 = pd.read_csv('prosumers_data/inflexible_profiles_scen_'+file_index+'.csv').round(3)/10000
     # Just selecting some prosumers like 500 or 600 or 1000
     df1 = df1[:100]
     # print(df1.shape)
@@ -86,7 +88,7 @@ def load_data(file_index):
 
 
 gen_capacity =[50, 50, 50]
-gen_capacity =[1000, 1000, 1000]
+# gen_capacity =[50000, 50000, 50000]
 
 random.seed(42)
 
@@ -105,6 +107,7 @@ ToBus = [2,3,3]   # Vector with network lines' "receiving buses"
 
 LinesSusc = [100,125,150]  #Vector with per unit susceptance of the network 
 
+
 ng = 3    # Number of Generators
 ncda = 2  # Number of competing 
 
@@ -113,7 +116,7 @@ CDABus = [[2, 3], [1,3], [1,2]]      # Vector with competing DAs Buses
 DABus = 1           # DA Bus
 
 FMAX = [50, 50, 50]
-FMAX = [500, 500, 500] # Vector with Capacities of Network Lines in pu
+# FMAX = [50000, 50000, 50000] # Vector with Capacities of Network Lines in pu
 FMAX = [i/MVA for i in FMAX]
 
 
@@ -166,9 +169,11 @@ def random_offer(NO_CDA, horizon):
         for t in range(0,horizon):
             if random.random() >= pivot:
                 temp_offer.append(0)
+                # temp_bid.append(random.randint(1, 4))
                 temp_bid.append(round(random.random()/MVA, 3))  # Mega Watt
             else:
                 temp_bid.append(0)
+                # temp_offer.append(random.randint(1, 4))
                 temp_offer.append(round(random.random()/MVA,3)) # Mega Watt
         offer_dict[competitor]=temp_offer
         bid_dict[competitor]=temp_bid
@@ -186,14 +191,22 @@ def select_bid(j, offers_bid, demand_bid):
     for i in range(len(offers_bid)):
         if counter != j:
             # print(i)
-            d_o[count] = offers_bid[i+1]
-            d_b[count] = demand_bid[i+1]
+            temp_offer = offers_bid[i+1]
+            temp_bid   = demand_bid[i+1]
+            # for l in range(len(temp_offer)):
+            #     if temp_offer[l] == 0 and temp_bid[l]==0 :
+            #         temp_bid[l]= 0.11
+            
+            d_o[count] = temp_offer
+            d_b[count] = temp_bid
+            # d_o[count] = offers_bid[i+1]
+            # d_b[count] = demand_bid[i+1]
             counter += 1
             count+=1
         else:
             counter +=1
     
-       
+    # print(pd.concat([pd.DataFrame(d_o), pd.DataFrame(d_b)], axis=1)) 
     return d_o, d_b
         
 
@@ -267,7 +280,7 @@ feasible_offer = dict()
 
 # Adding solar power to randomly selected houses.
 def solar_power_generator(index_len):
-    return [random.random()*0.2 for i in range(index_len)]
+    return [random.random()*0.5 for i in range(index_len)]
     
     
     
@@ -288,19 +301,23 @@ def random_solar_power(in_loads, j):
 
 
 check=False
-no_iteration = 4
+no_iteration = 3
+
+infeasibility_counter_DA =[0,0,0]
 
 for n in range(no_iteration):
     new_offers=dict()
     new_bids=dict()
     infeasibility_counter=0
+    
     for j in range(1,ncda+2):
         
         
         IN_loads, profiles = load_data(str(j))
         
         # Adding random solar power
-        IN_loads = random_solar_power(IN_loads, j)
+        # if j == 1:
+        # IN_loads = random_solar_power(IN_loads, j)
         
         # EVs properties 
         arrival = profiles['Arrival']
@@ -333,6 +350,7 @@ for n in range(no_iteration):
         dic_CDA_Bus, dic_Bus_CDA, dic_G, dic_G_Bus = dictionar_bus(GenBus, CDABus, j)
 
         DABus=j
+        # offers_bid , demand_bid = random_offer(ncda, horizon)
         F_d_o, F_d_b = select_bid(j, offers_bid, demand_bid)
         
         #F_d_b = demand_bid[j-1]
@@ -358,6 +376,11 @@ for n in range(no_iteration):
         SOLVER_NAME="gurobi"  #'cplex'
         solver=SolverFactory(SOLVER_NAME)
         results = solver.solve(model)
+        
+        # To check constraint feasibility after solving problem
+        # check_constraints(model, Yline, B,dic_G, dic_Bus_CDA, DABus, c_g, dic_G_Bus, dic_CDA_Bus, 
+        #                   c_d_o[j-1], c_d_b[j-1], c_DA_o, c_DA_b, 1000, 1000, g_s, F_d_o, F_d_b, FMAX )
+        
         #print(results)
         
         solver_time=time.time()-solver_time
@@ -370,8 +393,9 @@ for n in range(no_iteration):
             feasible_offer[j] = new_d_o
         else:
             infeasibility_counter+=1
-            new_d_o = feasible_offer[j]
-            new_d_b = feasible_bid[j]
+            infeasibility_counter_DA[j-1] += 1
+            new_d_o = random_offer(ncda, horizon)[0][j]
+            new_d_b = random_offer(ncda, horizon)[1][j]
         
         new_offers[j]=new_d_o
         new_bids[j]= new_d_b
@@ -434,3 +458,4 @@ else:
 #                         sum(value(model.w_line_low[i,t])*FMAX[i-1] for i in model.LINES) +\
 #                             sum(value(model.w_line_up[i,t])*FMAX[i-1] for i in model.LINES)
 #     print(sum1," ",sum2," ",round(sum1,4)==-round(sum2,4))
+

@@ -36,12 +36,13 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     MVA = 1  # Power Base
     PU_DA = 1/(1000*MVA)
     
+ 
 
     """
     Defining Parameters
     """
-    bigM =1000.0
-    bigF = 1000.0
+    bigM =100.0
+    bigF = 100.0
     NO_prosumers = len(IN_loads)
     
     # defining the model
@@ -213,14 +214,14 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     """
     PU power
     """
-    model.b2_1 = Var(model.BUS, model.T, within=NonNegativeReals, initialize=0)
-    model.b2_2 = Var(model.BUS, model.T, within=NonNegativeReals, initialize=0)
+    # model.b2_1 = Var(model.BUS, model.T, within=NonNegativeReals, initialize=0)
+    # model.b2_2 = Var(model.BUS, model.T, within=NonNegativeReals, initialize=0)
     
-    model.b8_1 = Var(model.LINES, model.T, within=NonNegativeReals, initialize=0)
-    model.b8_2 = Var(model.LINES, model.T, within=NonNegativeReals, initialize=0)
+    # model.b8_1 = Var(model.LINES, model.T, within=NonNegativeReals, initialize=0)
+    # model.b8_2 = Var(model.LINES, model.T, within=NonNegativeReals, initialize=0)
     
-    model.c1_1 = Var(model.G, model.T, within=NonNegativeReals, initialize=0)
-    model.c1_2 = Var(model.G, model.T, within=NonNegativeReals, initialize=0)
+    # model.c1_1 = Var(model.G, model.T, within=NonNegativeReals, initialize=0)
+    # model.c1_2 = Var(model.G, model.T, within=NonNegativeReals, initialize=0)
     """
     Upper Level constraints
     """
@@ -497,7 +498,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     #KKT Constraint(D.3.2)
     def KKT_gen_up_3_2_rule (model, i, t):
-        return  g_s[i][t-16] - model.g[i,t] >= 0
+        return  g_s[i][t-16] - model.g[i,t] >= 0.0
     model.KKT_gen_up_3_2_con = Constraint (model.G, model.T, rule= KKT_gen_up_3_2_rule)
     
     # KKT Constraint (D.4)
@@ -522,7 +523,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     # KKT Constraint (D.7.2)
     def KKT_DAs_supply_offer_up_3_rule (model, i, t):
-        return F_d_o[i][t-16] - model.d_o[i,t] >= 0
+        return F_d_o[i][t-16] - model.d_o[i,t] >= 0.0
     model.KKT_DAs_supply_offer_up_3_con = Constraint(model.NCDA, model.T, rule=KKT_DAs_supply_offer_up_3_rule )
     
     
@@ -549,7 +550,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     #KKT Constraint (D.11.2)
     def KKT_DAs_demand_bid_up_3_rule (model, i, t):
-        return F_d_b[i][t-16] - model.d_b[i,t] >= 0
+        return F_d_b[i][t-16] - model.d_b[i,t] >= 0.0
     model.KKT_DAs_demand_bid_up_3_con = Constraint(model.NCDA, model.T, rule=KKT_DAs_demand_bid_up_3_rule)
     
     # KKT Constraint (D.12)
@@ -576,7 +577,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     # KKT Constraint (D.15.2)
     def KKT_stKrategic_DA_bid_up_3_rule (model,t):
-        return model.DA_supply[t] - model.E_DA_G[t] >= 0
+        return model.DA_supply[t] - model.E_DA_G[t] >= 0.0
     model.KKT_stKrategic_DA_bid_up_3_con = Constraint (model.T, rule=KKT_stKrategic_DA_bid_up_3_rule)
     
     # KKT Constraint (D.16)
@@ -601,7 +602,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     # KKT Constraint (D.19.2)
     def KKT_strategic_demand_up_3_rule (model,t):
-        return model.DA_demand[t] - model.E_DA_L[t] >= 0
+        return model.DA_demand[t] - model.E_DA_L[t] >= 0.0
     model.KKT_strategic_demand_up_3_con = Constraint(model.T, rule=KKT_strategic_demand_up_3_rule)
     
     # KKT Constraint (D.20)
@@ -619,7 +620,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     # KKT Transmission line Constraint (D.21.2)
     def KKT_transmission_low_3_rule (model, i, t):
         #Yline[i-1, j-1]
-        return sum(Yline[i-1, j-1]*model.teta[j,t] for j in model.BUS ) + FMAX[i-1] >= 0
+        return sum(Yline[i-1, j-1]*model.teta[j,t] for j in model.BUS ) + FMAX[i-1] >= 0.0
     model.KKT_transmission_low_3_con = Constraint (model.LINES, model.T, rule=KKT_transmission_low_3_rule)
     
     # KKT Transmission line Constraint (D.22)
@@ -634,7 +635,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     # KKT Transmission line Constraint (D.23.2)
     def KKT_transmission_up_3_rule(model, i, t):
-        return sum(-Yline[i-1,j-1]* model.teta[j,t] for j in model.BUS) + FMAX[i-1] >= 0
+        return sum(-Yline[i-1,j-1]* model.teta[j,t] for j in model.BUS) + FMAX[i-1] >= 0.0
     model.KKT_transmission_up_3_con = Constraint(model.LINES, model.T, rule=KKT_transmission_up_3_rule)
     
     

@@ -1,0 +1,122 @@
+Constraint b.2: power balance at each bus
+	check=1
+	error=
+
+Constraint C.1:generators dual price
+	check=0
+	error=(Gen:1,time:16,value:16.000000), (Gen:1,time:17,value:16.000000), (Gen:1,time:18,value:16.000000), (Gen:1,time:19,value:16.000000), (Gen:1,time:20,value:16.000000), (Gen:1,time:21,value:16.000000), (Gen:1,time:22,value:16.000000), (Gen:1,time:23,value:16.000000), (Gen:1,time:24,value:16.000000), (Gen:1,time:25,value:16.000000), (Gen:1,time:26,value:16.000000), (Gen:1,time:27,value:16.000000), (Gen:1,time:28,value:16.000000), (Gen:1,time:29,value:16.000000), (Gen:1,time:30,value:16.000000), (Gen:1,time:31,value:16.000000), (Gen:1,time:32,value:16.000000), (Gen:1,time:33,value:16.000000), (Gen:1,time:34,value:16.000000), (Gen:1,time:35,value:16.000000), (Gen:1,time:36,value:16.000000), (Gen:1,time:37,value:16.000000), (Gen:1,time:38,value:16.000000), (Gen:1,time:39,value:16.000000), (Gen:2,time:16,value:19.000000), (Gen:2,time:17,value:19.000000), (Gen:2,time:18,value:19.000000), (Gen:2,time:19,value:19.000000), (Gen:2,time:20,value:19.000000), (Gen:2,time:21,value:19.000000), (Gen:2,time:22,value:19.000000), (Gen:2,time:23,value:19.000000), (Gen:2,time:24,value:19.000000), (Gen:2,time:25,value:19.000000), (Gen:2,time:26,value:19.000000), (Gen:2,time:27,value:19.000000), (Gen:2,time:28,value:19.000000), (Gen:2,time:29,value:19.000000), (Gen:2,time:30,value:19.000000), (Gen:2,time:31,value:19.000000), (Gen:2,time:32,value:19.000000), (Gen:2,time:33,value:19.000000), (Gen:2,time:34,value:19.000000), (Gen:2,time:35,value:19.000000), (Gen:2,time:36,value:19.000000), (Gen:2,time:37,value:19.000000), (Gen:2,time:38,value:19.000000), (Gen:2,time:39,value:19.000000), (Gen:3,time:16,value:25.000000), (Gen:3,time:17,value:25.000000), (Gen:3,time:18,value:25.000000), (Gen:3,time:19,value:25.000000), (Gen:3,time:20,value:25.000000), (Gen:3,time:21,value:25.000000), (Gen:3,time:22,value:25.000000), (Gen:3,time:23,value:25.000000), (Gen:3,time:24,value:25.000000), (Gen:3,time:25,value:25.000000), (Gen:3,time:26,value:25.000000), (Gen:3,time:27,value:25.000000), (Gen:3,time:28,value:25.000000), (Gen:3,time:29,value:25.000000), (Gen:3,time:30,value:25.000000), (Gen:3,time:31,value:25.000000), (Gen:3,time:32,value:25.000000), (Gen:3,time:33,value:25.000000), (Gen:3,time:34,value:25.000000), (Gen:3,time:35,value:25.000000), (Gen:3,time:36,value:25.000000), (Gen:3,time:37,value:25.000000), (Gen:3,time:38,value:25.000000), (Gen:3,time:39,value:25.000000), 
+
+Constraint C.2:competitor suuply to grid offer
+	check=0
+	error=(CDA:1,time:16,value:13.000000), (CDA:1,time:17,value:1.000000), (CDA:1,time:18,value:10.000000), (CDA:1,time:19,value:10.000000), (CDA:1,time:20,value:7.000000), (CDA:1,time:21,value:14.000000), (CDA:1,time:22,value:11.000000), (CDA:1,time:23,value:15.000000), (CDA:1,time:24,value:15.000000), (CDA:1,time:25,value:15.000000), (CDA:1,time:26,value:7.000000), (CDA:1,time:27,value:16.000000), (CDA:1,time:28,value:6.000000), (CDA:1,time:29,value:3.000000), (CDA:1,time:30,value:10.000000), (CDA:1,time:31,value:11.000000), (CDA:1,time:32,value:3.000000), (CDA:1,time:33,value:8.000000), (CDA:1,time:34,value:10.000000), (CDA:1,time:35,value:8.000000), (CDA:1,time:36,value:7.000000), (CDA:1,time:37,value:5.000000), (CDA:1,time:38,value:1.000000), (CDA:1,time:39,value:2.000000), (CDA:2,time:16,value:8.000000), (CDA:2,time:17,value:16.000000), (CDA:2,time:18,value:3.000000), (CDA:2,time:19,value:15.000000), (CDA:2,time:20,value:14.000000), (CDA:2,time:21,value:7.000000), (CDA:2,time:22,value:13.000000), (CDA:2,time:23,value:16.000000), (CDA:2,time:24,value:13.000000), (CDA:2,time:25,value:8.000000), (CDA:2,time:26,value:5.000000), (CDA:2,time:27,value:1.000000), (CDA:2,time:28,value:4.000000), (CDA:2,time:29,value:14.000000), (CDA:2,time:30,value:8.000000), (CDA:2,time:31,value:6.000000), (CDA:2,time:32,value:15.000000), (CDA:2,time:33,value:2.000000), (CDA:2,time:34,value:8.000000), (CDA:2,time:35,value:4.000000), (CDA:2,time:36,value:15.000000), (CDA:2,time:37,value:5.000000), (CDA:2,time:38,value:15.000000), (CDA:2,time:39,value:11.000000), 
+
+Constraint C.3:competitors demand bid
+	check=0
+	error=(CDA:1,time:16,value:-87.000000), (CDA:1,time:17,value:-90.000000), (CDA:1,time:18,value:-85.000000), (CDA:1,time:19,value:-75.000000), (CDA:1,time:20,value:-87.000000), (CDA:1,time:21,value:-98.000000), (CDA:1,time:22,value:-85.000000), (CDA:1,time:23,value:-99.000000), (CDA:1,time:24,value:-106.000000), (CDA:1,time:25,value:-109.000000), (CDA:1,time:26,value:-94.000000), (CDA:1,time:27,value:-91.000000), (CDA:1,time:28,value:-71.000000), (CDA:1,time:29,value:-101.000000), (CDA:1,time:30,value:-90.000000), (CDA:1,time:31,value:-81.000000), (CDA:1,time:32,value:-101.000000), (CDA:1,time:33,value:-83.000000), (CDA:1,time:34,value:-92.000000), (CDA:1,time:35,value:-86.000000), (CDA:1,time:36,value:-91.000000), (CDA:1,time:37,value:-87.000000), (CDA:1,time:38,value:-108.000000), (CDA:1,time:39,value:-87.000000), (CDA:2,time:16,value:-105.000000), (CDA:2,time:17,value:-70.000000), (CDA:2,time:18,value:-103.000000), (CDA:2,time:19,value:-82.000000), (CDA:2,time:20,value:-75.000000), (CDA:2,time:21,value:-85.000000), (CDA:2,time:22,value:-96.000000), (CDA:2,time:23,value:-101.000000), (CDA:2,time:24,value:-105.000000), (CDA:2,time:25,value:-85.000000), (CDA:2,time:26,value:-100.000000), (CDA:2,time:27,value:-101.000000), (CDA:2,time:28,value:-98.000000), (CDA:2,time:29,value:-71.000000), (CDA:2,time:30,value:-75.000000), (CDA:2,time:31,value:-88.000000), (CDA:2,time:32,value:-84.000000), (CDA:2,time:33,value:-95.000000), (CDA:2,time:34,value:-85.000000), (CDA:2,time:35,value:-89.000000), (CDA:2,time:36,value:-107.000000), (CDA:2,time:37,value:-93.000000), (CDA:2,time:38,value:-100.000000), (CDA:2,time:39,value:-105.000000), 
+
+Constraint C.4:Strategic Aggregator supply into grid offer
+	check=0
+	error=(time:16,value:7.000000), (time:17,value:9.000000), (time:18,value:2.000000), (time:19,value:14.000000), (time:20,value:1.000000), (time:21,value:7.000000), (time:22,value:12.000000), (time:23,value:14.000000), (time:24,value:3.000000), (time:25,value:11.000000), (time:26,value:11.000000), (time:27,value:4.000000), (time:28,value:10.000000), (time:29,value:10.000000), (time:30,value:14.000000), (time:31,value:11.000000), (time:32,value:13.000000), (time:33,value:10.000000), (time:34,value:5.000000), (time:35,value:7.000000), (time:36,value:14.000000), (time:37,value:13.000000), (time:38,value:6.000000), (time:39,value:10.000000), 
+Constraint C.5:Strategic aggregator demand bid from grid
+	check=0
+	error=(time:16,value:-97.000000), (time:17,value:-93.000000), (time:18,value:-74.000000), (time:19,value:-102.000000), (time:20,value:-91.000000), (time:21,value:-70.000000), (time:22,value:-96.000000), (time:23,value:-101.000000), (time:24,value:-76.000000), (time:25,value:-97.000000), (time:26,value:-93.000000), (time:27,value:-110.000000), (time:28,value:-99.000000), (time:29,value:-79.000000), (time:30,value:-97.000000), (time:31,value:-81.000000), (time:32,value:-103.000000), (time:33,value:-87.000000), (time:34,value:-109.000000), (time:35,value:-104.000000), (time:36,value:-100.000000), (time:37,value:-99.000000), (time:38,value:-97.000000), (time:39,value:-107.000000), 
+
+Constraint C.6:Transmission Line constraint
+	check=1
+	error=
+
+Constraint D.1:KKT Generator
+	check=1
+	error=
+
+Constraint D.2:KKT Generator
+	check=1
+	error=
+
+Constraint D.3:KKT_strategic_demand_up_rule
+	check=1
+	error=
+
+Constraint D.4:KKT_gen_up_2_rule
+	check=1
+	error=
+
+Constraint D.5:KKT_DAs_supply_offer_low_rule
+	check=1
+	error=
+
+Constraint D.6:KKT_DAs_supply_offer_low_2_rule
+	check=1
+	error=
+
+Constraint D.7:KKT_DAs_supply_offer_up_rule
+	check=0
+	error=CDA:1, time:16, CDA:1, time:34, CDA:1, time:37, CDA:1, time:39, CDA:2, time:16, CDA:2, time:35, CDA:2, time:39, 
+
+Constraint D.8:KKT_DAs_supply_offer_up_2_rule
+	check=1
+	error=
+
+Constraint D.9:KKT_DAs_demand_bid_low_rule
+	check=1
+	error=
+
+Constraint D.10:KKT_DAs_demand_bid_low_2_rule
+	check=1
+	error=
+
+Constraint D.11: KKT_DAs_demand_bid_up_rule
+	check=0
+	error=CDA:1, time:17, CDA:1, time:18, CDA:1, time:19, CDA:1, time:20, CDA:1, time:21, CDA:1, time:22, CDA:1, time:23, CDA:1, time:24, CDA:1, time:25, CDA:1, time:26, CDA:1, time:27, CDA:1, time:28, CDA:1, time:29, CDA:1, time:30, CDA:1, time:31, CDA:1, time:32, CDA:1, time:33, CDA:1, time:35, CDA:1, time:36, CDA:1, time:38, CDA:2, time:17, CDA:2, time:18, CDA:2, time:19, CDA:2, time:20, CDA:2, time:21, CDA:2, time:22, CDA:2, time:23, CDA:2, time:24, CDA:2, time:25, CDA:2, time:26, CDA:2, time:27, CDA:2, time:28, CDA:2, time:29, CDA:2, time:30, CDA:2, time:31, CDA:2, time:32, CDA:2, time:33, CDA:2, time:34, CDA:2, time:36, CDA:2, time:37, CDA:2, time:38, 
+
+Constraint D.12: KKT_DAs_demand_bid_up_2_rule
+	check=1
+	error=
+
+Constraint D.13: KKT_strategic_DA_bid_low_rule
+	check=1
+	error=
+
+Constraint D.14: KKT_strategic_DA_bid_low_2_rule
+	check=1
+	error=
+
+Constraint D.15:KKT_stKrategic_DA_bid_up_rule
+	check=1
+	error=
+
+Constraint D.16: KKT_strategic_DA_bid_up_2_rule
+	check=1
+	error=
+
+Constraint D.17: KKT_strategic_demand_low_rule
+	check=1
+	error=
+
+Constraint D.18: KKT_strategic_demand_low_2_rule
+	check=1
+	error=
+
+Constraint D.19:KKT_strategic_demand_up_rule
+	check=1
+	error=
+
+Constraint D.20:KKT_strategiv_demand_up_2_rule
+	check=1
+	error=
+
+Constraint D.21:KKT_transmission_low_rule
+	check=0
+	error=Line:1 ,Time:16), Line:1 ,Time:17), Line:1 ,Time:18), Line:1 ,Time:19), Line:1 ,Time:20), Line:1 ,Time:21), Line:1 ,Time:22), Line:1 ,Time:23), Line:1 ,Time:24), Line:1 ,Time:25), Line:1 ,Time:26), Line:1 ,Time:27), Line:1 ,Time:28), Line:1 ,Time:29), Line:1 ,Time:30), Line:1 ,Time:31), Line:1 ,Time:32), Line:1 ,Time:33), Line:1 ,Time:34), Line:1 ,Time:35), Line:1 ,Time:36), Line:1 ,Time:37), Line:1 ,Time:38), Line:1 ,Time:39), Line:2 ,Time:16), Line:2 ,Time:17), Line:2 ,Time:18), Line:2 ,Time:19), Line:2 ,Time:20), Line:2 ,Time:21), Line:2 ,Time:22), Line:2 ,Time:23), Line:2 ,Time:24), Line:2 ,Time:25), Line:2 ,Time:26), Line:2 ,Time:27), Line:2 ,Time:28), Line:2 ,Time:29), Line:2 ,Time:30), Line:2 ,Time:31), Line:2 ,Time:32), Line:2 ,Time:33), Line:2 ,Time:34), Line:2 ,Time:35), Line:2 ,Time:36), Line:2 ,Time:37), Line:2 ,Time:38), Line:2 ,Time:39), Line:3 ,Time:16), Line:3 ,Time:17), Line:3 ,Time:18), Line:3 ,Time:19), Line:3 ,Time:20), Line:3 ,Time:21), Line:3 ,Time:22), Line:3 ,Time:23), Line:3 ,Time:24), Line:3 ,Time:25), Line:3 ,Time:26), Line:3 ,Time:27), Line:3 ,Time:28), Line:3 ,Time:29), Line:3 ,Time:30), Line:3 ,Time:31), Line:3 ,Time:32), Line:3 ,Time:33), Line:3 ,Time:34), Line:3 ,Time:35), Line:3 ,Time:36), Line:3 ,Time:37), Line:3 ,Time:38), Line:3 ,Time:39), 
+
+Constraint D.22:KKT_transmission_low_2_rule
+	check=1
+	error=
+
+Constraint D.23:KKT_transmission_up_rule
+	check=0
+	error=Line:1 ,Time:16), Line:1 ,Time:17), Line:1 ,Time:18), Line:1 ,Time:19), Line:1 ,Time:20), Line:1 ,Time:21), Line:1 ,Time:22), Line:1 ,Time:23), Line:1 ,Time:24), Line:1 ,Time:25), Line:1 ,Time:26), Line:1 ,Time:27), Line:1 ,Time:28), Line:1 ,Time:29), Line:1 ,Time:30), Line:1 ,Time:31), Line:1 ,Time:32), Line:1 ,Time:33), Line:1 ,Time:34), Line:1 ,Time:35), Line:1 ,Time:36), Line:1 ,Time:37), Line:1 ,Time:38), Line:1 ,Time:39), Line:2 ,Time:16), Line:2 ,Time:17), Line:2 ,Time:18), Line:2 ,Time:19), Line:2 ,Time:20), Line:2 ,Time:21), Line:2 ,Time:22), Line:2 ,Time:23), Line:2 ,Time:24), Line:2 ,Time:25), Line:2 ,Time:26), Line:2 ,Time:27), Line:2 ,Time:28), Line:2 ,Time:29), Line:2 ,Time:30), Line:2 ,Time:31), Line:2 ,Time:32), Line:2 ,Time:33), Line:2 ,Time:34), Line:2 ,Time:35), Line:2 ,Time:36), Line:2 ,Time:37), Line:2 ,Time:38), Line:2 ,Time:39), Line:3 ,Time:16), Line:3 ,Time:17), Line:3 ,Time:18), Line:3 ,Time:19), Line:3 ,Time:20), Line:3 ,Time:21), Line:3 ,Time:22), Line:3 ,Time:23), Line:3 ,Time:24), Line:3 ,Time:25), Line:3 ,Time:26), Line:3 ,Time:27), Line:3 ,Time:28), Line:3 ,Time:29), Line:3 ,Time:30), Line:3 ,Time:31), Line:3 ,Time:32), Line:3 ,Time:33), Line:3 ,Time:34), Line:3 ,Time:35), Line:3 ,Time:36), Line:3 ,Time:37), Line:3 ,Time:38), Line:3 ,Time:39), 
+
+Constraint D.24:KKT_transmission_up_2_rule
+	check=1
+	error=
