@@ -78,7 +78,7 @@ def dictionar_bus(GenBus, CDABus, DABus):
 
 
 def load_data(file_index):
-    df1 = pd.read_csv('prosumers_data/inflexible_profiles_scen_'+file_index+'.csv').round(3)/10000
+    df1 = pd.read_csv('prosumers_data/inflexible_profiles_scen_'+file_index+'.csv').round(5)/1000
     # Just selecting some prosumers like 500 or 600 or 1000
     df1 = df1[:100]
     # print(df1.shape)
@@ -286,7 +286,7 @@ def solar_power_generator(index_len):
     
 
 def random_solar_power(in_loads, j):
-    random.seed(j)
+    random.seed((j+2)**2)
     length = len(in_loads)
     # Select 20 percent of households containt solar power
     random_index = [random.randrange(1, length, 1) for i in range(int(length/2))]
@@ -301,7 +301,7 @@ def random_solar_power(in_loads, j):
 
 
 check=False
-no_iteration = 3
+no_iteration = 1000
 
 infeasibility_counter_DA =[0,0,0]
 
@@ -326,7 +326,7 @@ for n in range(no_iteration):
         EV_soc_low   = profiles['EV_soc_low']
         EV_soc_up   = profiles['EV_soc_up']
         EV_soc_arrive = profiles['EV_soc_arr']
-        EV_demand = profiles['EV_demand']
+        EV_demand = profiles['EV_demand']/2
         
                 
         # Shiftable loads

@@ -136,12 +136,12 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     # DAs competitor supply offer
     def supply_offer_bounds(model, i, t):
         return (0, F_d_o[i][t-16])
-    model.d_o = Var(model.NCDA, model.T, within=NonNegativeReals, initialize=0, bounds=supply_offer_bounds)  # , bounds=supply_offer_bounds
+    model.d_o = Var(model.NCDA, model.T, within=NonNegativeReals, initialize=0)  # , bounds=supply_offer_bounds
     
     # DAs competitor demand 
     def demand_bid_bouds(model, i, t):
         return (0, F_d_b[i][t-16])
-    model.d_b = Var(model.NCDA, model.T, within=NonNegativeReals, initialize=0, bounds=demand_bid_bouds) #, bounds=demand_bid_bouds
+    model.d_b = Var(model.NCDA, model.T, within=NonNegativeReals, initialize=0) #, bounds=demand_bid_bouds
     
     # voltage phase angle
     model.teta = Var(model.BUS, model.T, within=NonNegativeReals, initialize=0)
@@ -548,7 +548,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
         return F_d_b[i][t-16] - model.d_b[i,t] <= model.u_db_up[i,t] * bigM
     model.KKT_DAs_demand_bid_up_con = Constraint(model.NCDA, model.T, rule=KKT_DAs_demand_bid_up_rule)
     
-    #KKT Constraint (D.11.2)
+    # #KKT Constraint (D.11.2)   ### Test disabled and model worked
     def KKT_DAs_demand_bid_up_3_rule (model, i, t):
         return F_d_b[i][t-16] - model.d_b[i,t] >= 0.0
     model.KKT_DAs_demand_bid_up_3_con = Constraint(model.NCDA, model.T, rule=KKT_DAs_demand_bid_up_3_rule)
@@ -646,7 +646,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     
     ## ***************************************
-    #  refrense angel set
+    # refrense angel set
     # def set_ref_angel_rule(model, t):
     #     return model.teta[ref_angel,t]==0
     # model.set_ref_angel_con = Constraint(model.T, rule=set_ref_angel_rule)
@@ -666,7 +666,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     def social_welfare_optimization_rule(model):
         return sum(sum(c_g[i][t-16]*model.g[i,t] for i in model.G) +\
-                    sum(c_d_o[i][t-16]*model.d_o[i,t] for i in model.NCDA ) +\
+                    sum(c_d_o[i][t-16]*model.d_o[i,t] for i in model.NCDA ) -\
                         sum(c_d_b[i][t-16]*model.d_b[i,t]*100 for i in model.NCDA) +\
                             sum(model.w_g_up[i,t] * g_s[i][t-16] for i in model.G) +\
                                 sum(model.w_do_up[i,t]* F_d_o[i][t-16] for i in model.NCDA) +\
