@@ -300,8 +300,9 @@ def random_solar_power(in_loads, j):
     return in_loads
 
 
+
 check=False
-no_iteration = 1000
+no_iteration = 4
 
 infeasibility_counter_DA =[0,0,0]
 
@@ -317,7 +318,7 @@ for n in range(no_iteration):
         
         # Adding random solar power
         # if j == 1:
-        # IN_loads = random_solar_power(IN_loads, j)
+        IN_loads = random_solar_power(IN_loads, j)
         
         # EVs properties 
         arrival = profiles['Arrival']
@@ -326,7 +327,7 @@ for n in range(no_iteration):
         EV_soc_low   = profiles['EV_soc_low']
         EV_soc_up   = profiles['EV_soc_up']
         EV_soc_arrive = profiles['EV_soc_arr']
-        EV_demand = profiles['EV_demand']/2
+        EV_demand = profiles['EV_demand']/10
         
                 
         # Shiftable loads
@@ -400,6 +401,8 @@ for n in range(no_iteration):
         new_offers[j]=new_d_o
         new_bids[j]= new_d_b
         
+        
+        
         # model_to_csv(model, IN_loads.sum(0))
         
         # Finishing Step 3
@@ -414,6 +417,9 @@ for n in range(no_iteration):
         print('\nno EPEC, End of round:',n,'\n******************')
         
     # Step 6
+    
+    # if j==3:
+    #     break
     
     if (not check) and (n < no_iteration-1):
         offers_bid = new_offers
@@ -434,7 +440,88 @@ else:
     print(pd.DataFrame.from_dict(offers_bid) - pd.DataFrame.from_dict(feasible_offer))
     print("Bid Differences:")
     print(pd.DataFrame.from_dict(demand_bid) - pd.DataFrame.from_dict(feasible_bid))
+
+
+# pd.concat([pd.DataFrame.from_dict(offers_bid), pd.DataFrame.from_dict(feasible_offer)], axis=1)
+# pd.concat([pd.DataFrame.from_dict(demand_bid), pd.DataFrame.from_dict(feasible_bid)], axis=1)
+
+"""
+Check model feasibility after solving agents MPEC for first time
+"""
+# for j in range(1,ncda+2):
     
+#     IN_loads, profiles = load_data(str(j))
+        
+#     # Adding random solar power
+#     # if j == 1:
+#     IN_loads = random_solar_power(IN_loads, j)
+    
+#     # EVs properties 
+#     arrival = profiles['Arrival']
+#     depart  = profiles['Depart']
+#     charge_power = profiles['EV_Power']
+#     EV_soc_low   = profiles['EV_soc_low']
+#     EV_soc_up   = profiles['EV_soc_up']
+#     EV_soc_arrive = profiles['EV_soc_arr']
+#     EV_demand = profiles['EV_demand']/2
+    
+            
+#     # Shiftable loads
+#     SL_loads=[]
+#     SL_loads.append(profiles['SL_loads1'])
+#     SL_loads.append(profiles['SL_loads2'])
+#     SL_low   = profiles['SL_low']
+#     SL_up    = profiles['SL_up']
+#     SL_cycle = len(SL_loads)
+    
+#     # Thermostatically loads
+#     TCL_R   = profiles['TCL_R']
+#     TCL_C   = profiles['TCL_C']
+#     TCL_COP = profiles['TCL_COP']
+#     TCL_Max = profiles['TCL_MAX']
+#     TCL_Beta= profiles['TCL_Beta']
+#     TCL_temp_low = profiles['TCL_temp_low']
+#     TCL_temp_up  = profiles['TCL_temp_up']
+
+#     # Creating dictionary mapping current DA as strategic in MPEC model
+#     dic_CDA_Bus, dic_Bus_CDA, dic_G, dic_G_Bus = dictionar_bus(GenBus, CDABus, j)
+
+#     DABus=j
+#     # offers_bid , demand_bid = random_offer(ncda, horizon)
+#     F_d_o, F_d_b = select_bid(j, offers_bid, demand_bid)
+    
+#     #F_d_b = demand_bid[j-1]
+    
+#     # Price bid for supplying power of strategic DA in time t
+#     c_DA_o = c_d_o[DABus-1]['DAS'] # random_price(time)
+    
+#     # Price bid for buying power of strategic DA in time t
+#     c_DA_b = c_d_b[DABus-1]['DAS'] # random_price(time)
+    
+#     ##Timer
+#     solver_time = time.time()
+    
+#     model = mpec_model(ng, nb, nl, ncda,IN_loads, gen_capacity, 
+#                     arrival, depart, charge_power,EV_soc_arrive,EV_soc_low, EV_soc_up, 
+#                     TCL_Max, TCL_R, TCL_Beta, TCL_temp_low, outside_temp, 
+#                     SL_low, SL_up, SL_cycle, SL_loads,
+#                     dic_G, dic_Bus_CDA, DABus, B, Yline, dic_G_Bus, 
+#                     c_g, c_d_o[j-1], c_d_b[j-1], 
+#                     dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX,
+#                     c_DA_o, c_DA_b)
+    
+   
+#     SOLVER_NAME="gurobi"  #'cplex'
+#     solver=SolverFactory(SOLVER_NAME)
+#     results = solver.solve(model)
+    
+#     bigM =100.0
+#     bigF = 100.0
+#     check_constraints(model, Yline, 
+#                       B,dic_G, dic_Bus_CDA, 
+#                       DABus, c_g, dic_G_Bus, 
+#                       dic_CDA_Bus, c_d_o[j-1], c_d_b[j-1], c_DA_o, 
+#                       c_DA_b, bigM, bigF, g_s, F_d_o, F_d_b, FMAX )    
 
 # """
 # check strong duality

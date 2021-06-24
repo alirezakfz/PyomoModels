@@ -41,8 +41,8 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     """
     Defining Parameters
     """
-    bigM =100.0
-    bigF = 100.0
+    bigM =100000.0
+    bigF = 100000.0
     NO_prosumers = len(IN_loads)
     
     # defining the model
