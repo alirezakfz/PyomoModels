@@ -302,7 +302,7 @@ def random_solar_power(in_loads, j):
 
 
 check=False
-no_iteration = 4
+no_iteration = 10000
 
 infeasibility_counter_DA =[0,0,0]
 
@@ -318,7 +318,7 @@ for n in range(no_iteration):
         
         # Adding random solar power
         # if j == 1:
-        IN_loads = random_solar_power(IN_loads, j)
+        # IN_loads = random_solar_power(IN_loads, j)
         
         # EVs properties 
         arrival = profiles['Arrival']
