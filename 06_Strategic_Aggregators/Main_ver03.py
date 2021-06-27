@@ -280,7 +280,7 @@ feasible_offer = dict()
 
 # Adding solar power to randomly selected houses.
 def solar_power_generator(index_len):
-    return [random.random()*0.5 for i in range(index_len)]
+    return [random.random()*1.0 for i in range(index_len)]
     
     
     
@@ -302,7 +302,7 @@ def random_solar_power(in_loads, j):
 
 
 check=False
-no_iteration = 3
+no_iteration = 1
 
 infeasibility_counter_DA =[0,0,0]
 
@@ -403,7 +403,7 @@ for n in range(no_iteration):
         
         
         
-        # model_to_csv(model, IN_loads.sum(0))
+        model_to_csv(model, IN_loads.sum(0))
         
         # Finishing Step 3
     # Step 4 check if epsilon difference exist
