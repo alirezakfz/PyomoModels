@@ -302,7 +302,7 @@ def random_solar_power(in_loads, j):
 
 
 check=False
-no_iteration = 1
+no_iteration =100
 
 infeasibility_counter_DA =[0,0,0]
 
@@ -403,7 +403,7 @@ for n in range(no_iteration):
         
         
         
-        model_to_csv(model, IN_loads.sum(0))
+        # model_to_csv(model, IN_loads.sum(0))
         
         # Finishing Step 3
     # Step 4 check if epsilon difference exist
@@ -414,6 +414,8 @@ for n in range(no_iteration):
         print("solution found in iteration:",n)
         break
     else:
+        # print(pd.concat([pd.DataFrame.from_dict(offers_bid), pd.DataFrame.from_dict(new_offers)], axis=1))
+        # print(pd.concat([pd.DataFrame.from_dict(demand_bid), pd.DataFrame.from_dict(new_bids)], axis=1))
         print('\nno EPEC, End of round:',n,'\n******************')
         
     # Step 6
@@ -421,10 +423,14 @@ for n in range(no_iteration):
     # if j==3:
     #     break
     
+    
+        
     if (not check) and (n < no_iteration-1):
         offers_bid = new_offers
         demand_bid = new_bids
     
+    if (infeasibility_counter == ncda+1):
+        offers_bid , demand_bid = random_offer(ncda, horizon)
 
 if check:
     print('Solution is found:')

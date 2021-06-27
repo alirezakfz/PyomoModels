@@ -550,7 +550,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     # #KKT Constraint (D.11.2)   ### Test disabled and model worked
     def KKT_DAs_demand_bid_up_3_rule (model, i, t):
-        return F_d_b[i][t-16] - model.d_b[i,t] >= 0
+        return -F_d_b[i][t-16] + model.d_b[i,t] >= 0
     model.KKT_DAs_demand_bid_up_3_con = Constraint(model.NCDA, model.T, rule=KKT_DAs_demand_bid_up_3_rule)
     
     # KKT Constraint (D.12)
