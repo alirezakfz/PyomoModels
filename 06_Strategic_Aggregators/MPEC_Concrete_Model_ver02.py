@@ -23,7 +23,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
                dic_G, dic_Bus_CDA, DABus, B, Yline, dic_G_Bus, 
                c_g, c_d_o, c_d_b, 
                dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX,
-               c_DA_o, c_DA_b):
+               c_DA_o, c_DA_b,solar_power):
     
     
     time=24
@@ -41,8 +41,8 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     """
     Defining Parameters
     """
-    bigM =100000.0
-    bigF = 100000.0
+    bigM =10000.0
+    bigF = 10000.0
     NO_prosumers = len(IN_loads)
     
     # defining the model
@@ -107,6 +107,11 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     model.u_SL     = Var(model.N, model.T, within=Binary, initialize=0)
     
     
+    # ****************************************
+    #  Solar Power
+    def solar_power_bounds(model, i, t):
+        return(0, solar_power[i-1,t-16])
+    model.solar_power=Var(model.N, model.T,  within=NonNegativeReals, bounds=solar_power_bounds)
     
     """
     Lower Level Sets &Parameters
@@ -364,7 +369,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     # Equality constraint (a.13) for power balance in strategic DA
     def DA_power_balance_rule(model, t):
         return model.E_DA_L[t]-model.E_DA_G[t] == \
-                sum(model.E_EV_CH[i,t]-model.E_EV_DIS[i,t]+ model.POWER_TCL[i,t]+ model.POWER_SL[i,t]+ IN_loads.loc[i-1,str(t)] for i in model.N) * PU_DA
+                sum(model.E_EV_CH[i,t]-model.E_EV_DIS[i,t]+ model.POWER_TCL[i,t]+ model.POWER_SL[i,t]+ IN_loads.loc[i-1,str(t)]+ model.solar_power[i,t] for i in model.N) * PU_DA
     model.DA_power_balance_con = Constraint(model.T, rule=DA_power_balance_rule)
     
     # def DA_power_balance_rule(model, t):
@@ -550,7 +555,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     # #KKT Constraint (D.11.2)   ### Test disabled and model worked
     def KKT_DAs_demand_bid_up_3_rule (model, i, t):
-        return -F_d_b[i][t-16] + model.d_b[i,t] >= 0
+        return F_d_b[i][t-16] - model.d_b[i,t] >= 0
     model.KKT_DAs_demand_bid_up_3_con = Constraint(model.NCDA, model.T, rule=KKT_DAs_demand_bid_up_3_rule)
     
     # KKT Constraint (D.12)

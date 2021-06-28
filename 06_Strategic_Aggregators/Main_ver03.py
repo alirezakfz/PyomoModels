@@ -80,10 +80,10 @@ def dictionar_bus(GenBus, CDABus, DABus):
 def load_data(file_index):
     df1 = pd.read_csv('prosumers_data/inflexible_profiles_scen_'+file_index+'.csv').round(5)/1000
     # Just selecting some prosumers like 500 or 600 or 1000
-    df1 = df1[:100]
+    df1 = df1[:1000]
     # print(df1.shape)
     df2 = pd.read_csv('prosumers_data/prosumers_profiles_scen_'+file_index+'.csv')
-    df2 = df2[:100]
+    df2 = df2[:1000]
     return df1 , df2
 
 
@@ -280,11 +280,12 @@ feasible_offer = dict()
 
 # Adding solar power to randomly selected houses.
 def solar_power_generator(index_len):
-    return [random.random()*1.0 for i in range(index_len)]
+    return [random.random()*0.05 for i in range(index_len)]
     
     
     
-
+# This function adds solar power into inflexible loads
+# It is raplaced by adding new variable as solar power into model
 def random_solar_power(in_loads, j):
     random.seed((j+2)**2)
     length = len(in_loads)
@@ -299,10 +300,34 @@ def random_solar_power(in_loads, j):
         
     return in_loads
 
+def random_solar_power_var(in_loads, j):
+    random.seed((j+2)**2)
+    length = len(in_loads)
+    # Select 20 percent of households containt solar power
+    random_index = [random.randrange(1, length, 1) for i in range(int(length/4))]
+    
+    selected_time = ['16','17','18','19','30','31','32','33','34','35','36','37','38','39']
+    
+    solar_power = np.zeros(in_loads.shape)
+    
+    for i in range(len(selected_time)):
+        random_power = solar_power_generator(len(random_index))
+        counter = 0
+        for j in random_index:
+            solar_power[j,i] = random_power[counter]
+            counter +=1
+    
+    return solar_power
 
+# List of solar powers
+DA_solar_power =[]        
+for j in range(1,ncda+2):
+    IN_loads, profiles = load_data(str(j))
+    DA_solar_power.append(random_solar_power_var(IN_loads, j))
+    
 
 check=False
-no_iteration =100
+no_iteration =20
 
 infeasibility_counter_DA =[0,0,0]
 
@@ -318,7 +343,8 @@ for n in range(no_iteration):
         
         # Adding random solar power
         # if j == 1:
-        IN_loads = random_solar_power(IN_loads, j)
+        # IN_loads = random_solar_power(IN_loads, j)
+        
         
         # EVs properties 
         arrival = profiles['Arrival']
@@ -372,7 +398,7 @@ for n in range(no_iteration):
                         dic_G, dic_Bus_CDA, DABus, B, Yline, dic_G_Bus, 
                         c_g, c_d_o[j-1], c_d_b[j-1], 
                         dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX,
-                        c_DA_o, c_DA_b)
+                        c_DA_o, c_DA_b, DA_solar_power[j-1])
        
         SOLVER_NAME="gurobi"  #'cplex'
         solver=SolverFactory(SOLVER_NAME)
@@ -416,6 +442,7 @@ for n in range(no_iteration):
     else:
         # print(pd.concat([pd.DataFrame.from_dict(offers_bid), pd.DataFrame.from_dict(new_offers)], axis=1))
         # print(pd.concat([pd.DataFrame.from_dict(demand_bid), pd.DataFrame.from_dict(new_bids)], axis=1))
+        print(pd.concat([pd.DataFrame.from_dict(new_offers), pd.DataFrame.from_dict(new_bids)], axis=1))
         print('\nno EPEC, End of round:',n,'\n******************')
         
     # Step 6
