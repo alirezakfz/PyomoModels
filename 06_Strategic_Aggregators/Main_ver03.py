@@ -50,7 +50,18 @@ def check_bids(old, new):
             return False
     return check
             
-      
+
+def results_to_csv(data_pd, j_iter):
+    data_pd['Time'] =[x for x in range(1,25)]
+    data_pd['Iteration'] = j_iter
+    if j_iter==0:
+        data_pd.to_csv('diagonalizaton_results.csv', header=True, mode='w')
+    else:
+        data_pd.to_csv('diagonalizaton_results.csv', header=False, mode='a')
+    
+    pass
+
+        
 def dictionar_bus(GenBus, CDABus, DABus):
     """
     This function creates dictionary mapping BUS and DAs on that bus
@@ -327,7 +338,7 @@ for j in range(1,ncda+2):
     
 
 check=False
-no_iteration =20
+no_iteration =100
 
 infeasibility_counter_DA =[0,0,0]
 
@@ -442,7 +453,11 @@ for n in range(no_iteration):
     else:
         # print(pd.concat([pd.DataFrame.from_dict(offers_bid), pd.DataFrame.from_dict(new_offers)], axis=1))
         # print(pd.concat([pd.DataFrame.from_dict(demand_bid), pd.DataFrame.from_dict(new_bids)], axis=1))
-        print(pd.concat([pd.DataFrame.from_dict(new_offers), pd.DataFrame.from_dict(new_bids)], axis=1))
+        #print(pd.concat([pd.DataFrame.from_dict(new_offers), pd.DataFrame.from_dict(new_bids)], axis=1))
+        diag_df = pd.concat([pd.DataFrame.from_dict(new_offers), pd.DataFrame.from_dict(new_bids)], axis=1)
+        diag_df.columns=['offer_01','offer_02','offer_03', 'bids_01','bids_02', 'bids_03']
+        results_to_csv(diag_df, n)
+        
         print('\nno EPEC, End of round:',n,'\n******************')
         
     # Step 6
