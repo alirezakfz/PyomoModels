@@ -427,7 +427,6 @@ for n in range(no_iteration):
     
     for j in range(1,ncda+2):
         
-        
         IN_loads, profiles = load_data(str(j))
                
         # EVs properties 
@@ -495,6 +494,20 @@ for n in range(no_iteration):
         #print(results)
         
         solver_time=time.time()-solver_time
+
+        if (results.solver.status == SolverStatus.ok) and (results.solver.termination_condition == TerminationCondition.optimal):
+            print('Model solved and is optimal for DA:',j,'   Time taken:', solver_time)
+            # model_to_csv(model,IN_loads.sum(0))
+            new_d_o, new_d_b = solved_model_bids(model)
+        #     feasible_bid[j] =  new_d_b
+        #     feasible_offer[j] = new_d_o
+        # else:
+        #     infeasibility_counter+=1
+        #     infeasibility_counter_DA[j-1] += 1
+        #     new_d_o = random_offer(ncda, horizon)[0][j]
+        #     new_d_b = random_offer(ncda, horizon)[1][j]
         
+        # new_offers[j]=new_d_o
+        # new_bids[j]= new_d_b        
         
         
