@@ -338,7 +338,7 @@ for j in range(1,ncda+2):
     
 
 check=False
-no_iteration =100
+no_iteration =5
 
 infeasibility_counter_DA =[0,0,0]
 
