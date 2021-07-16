@@ -364,7 +364,7 @@ for n in range(no_iteration):
         EV_soc_low   = profiles['EV_soc_low']
         EV_soc_up   = profiles['EV_soc_up']
         EV_soc_arrive = profiles['EV_soc_arr']
-        EV_demand = profiles['EV_demand']/10
+        EV_demand = profiles['EV_demand']
         
                 
         # Shiftable loads

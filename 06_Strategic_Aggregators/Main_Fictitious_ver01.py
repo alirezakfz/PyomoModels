@@ -10,6 +10,7 @@ import time
 import pandas as pd
 import numpy as np
 import collections
+from collections import Counter
 
 from MPEC_Concrete_Model_ver02 import mpec_model
 from pyomo.environ import *
@@ -60,10 +61,10 @@ def dictionar_bus(GenBus, CDABus, DABus):
 def load_data(file_index):
     df1 = pd.read_csv('prosumers_data/inflexible_profiles_scen_'+file_index+'.csv').round(5)/1000
     # Just selecting some prosumers like 500 or 600 or 1000
-    df1 = df1[:1000]
+    df1 = df1[:100]
     # print(df1.shape)
     df2 = pd.read_csv('prosumers_data/prosumers_profiles_scen_'+file_index+'.csv')
-    df2 = df2[:1000]
+    df2 = df2[:100]
     return df1 , df2
 
 
@@ -243,7 +244,7 @@ outside_temp=[16.784803,16.094803,15.764802,14.774801,14.834802,14.184802,14.144
 
 # Adding solar power to randomly selected houses.
 def solar_power_generator(index_len):
-    return [random.random()*0.05 for i in range(index_len)]
+    return [random.random()*0.008 for i in range(index_len)]
 
 
 # This function adds solar power into inflexible loads
@@ -252,7 +253,7 @@ def random_solar_power_var(in_loads, j):
     random.seed((j+2)**2)
     length = len(in_loads)
     # Select 20 percent of households containt solar power
-    random_index = [random.randrange(1, length, 1) for i in range(int(length/2))]
+    random_index = [random.randrange(1, length, 1) for i in range(int(length/4))]
     
     selected_time = ['16','17','18','19','30','31','32','33','34','35','36','37','38','39']
     
@@ -282,116 +283,137 @@ using diagonalization method
 check=False
 no_iteration =5
 
-# for n in range(no_iteration):
-#     new_offers=dict()
-#     new_bids=dict()
-#     infeasibility_counter=0
+print("Running diagonalization for calibrating offers and bids prediction")
+
+for n in range(no_iteration):
+    new_offers=dict()
+    new_bids=dict()
+    infeasibility_counter=0
     
-#     for j in range(1,ncda+2):
+    for j in range(1,ncda+2):
         
         
-#         IN_loads, profiles = load_data(str(j))
+        IN_loads, profiles = load_data(str(j))
         
-#         # Adding random solar power
-#         # if j == 1:
-#         # IN_loads = random_solar_power(IN_loads, j)
+        # Adding random solar power
+        # if j == 1:
+        # IN_loads = random_solar_power(IN_loads, j)
         
         
-#         # EVs properties 
-#         arrival = profiles['Arrival']
-#         depart  = profiles['Depart']
-#         charge_power = profiles['EV_Power']
-#         EV_soc_low   = profiles['EV_soc_low']
-#         EV_soc_up   = profiles['EV_soc_up']
-#         EV_soc_arrive = profiles['EV_soc_arr']
-#         EV_demand = profiles['EV_demand']/10
+        # EVs properties 
+        arrival = profiles['Arrival']
+        depart  = profiles['Depart']
+        charge_power = profiles['EV_Power']
+        EV_soc_low   = profiles['EV_soc_low']
+        EV_soc_up   = profiles['EV_soc_up']
+        EV_soc_arrive = profiles['EV_soc_arr']
+        EV_demand = profiles['EV_demand']
         
                 
-#         # Shiftable loads
-#         SL_loads=[]
-#         SL_loads.append(profiles['SL_loads1'])
-#         SL_loads.append(profiles['SL_loads2'])
-#         SL_low   = profiles['SL_low']
-#         SL_up    = profiles['SL_up']
-#         SL_cycle = len(SL_loads)
+        # Shiftable loads
+        SL_loads=[]
+        SL_loads.append(profiles['SL_loads1'])
+        SL_loads.append(profiles['SL_loads2'])
+        SL_low   = profiles['SL_low']
+        SL_up    = profiles['SL_up']
+        SL_cycle = len(SL_loads)
         
-#         # Thermostatically loads
-#         TCL_R   = profiles['TCL_R']
-#         TCL_C   = profiles['TCL_C']
-#         TCL_COP = profiles['TCL_COP']
-#         TCL_Max = profiles['TCL_MAX']
-#         TCL_Beta= profiles['TCL_Beta']
-#         TCL_temp_low = profiles['TCL_temp_low']
-#         TCL_temp_up  = profiles['TCL_temp_up']
+        # Thermostatically loads
+        TCL_R   = profiles['TCL_R']
+        TCL_C   = profiles['TCL_C']
+        TCL_COP = profiles['TCL_COP']
+        TCL_Max = profiles['TCL_MAX']
+        TCL_Beta= profiles['TCL_Beta']
+        TCL_temp_low = profiles['TCL_temp_low']
+        TCL_temp_up  = profiles['TCL_temp_up']
 
-#         # Creating dictionary mapping current DA as strategic in MPEC model
-#         dic_CDA_Bus, dic_Bus_CDA, dic_G, dic_G_Bus = dictionar_bus(GenBus, CDABus, j)
+        # Creating dictionary mapping current DA as strategic in MPEC model
+        dic_CDA_Bus, dic_Bus_CDA, dic_G, dic_G_Bus = dictionar_bus(GenBus, CDABus, j)
 
-#         DABus=j
-#         # offers_bid , demand_bid = random_offer(ncda, horizon)
-#         F_d_o, F_d_b = select_bid(j, offers_bid, demand_bid)
+        DABus=j
+        # offers_bid , demand_bid = random_offer(ncda, horizon)
+        F_d_o, F_d_b = select_bid(j, offers_bid, demand_bid)
         
-#         #F_d_b = demand_bid[j-1]
+        #F_d_b = demand_bid[j-1]
         
-#         # Price bid for supplying power of strategic DA in time t
-#         c_DA_o = c_d_o[DABus-1]['DAS'] # random_price(time)
+        # Price bid for supplying power of strategic DA in time t
+        c_DA_o = c_d_o[DABus-1]['DAS'] # random_price(time)
         
-#         # Price bid for buying power of strategic DA in time t
-#         c_DA_b = c_d_b[DABus-1]['DAS'] # random_price(time)
+        # Price bid for buying power of strategic DA in time t
+        c_DA_b = c_d_b[DABus-1]['DAS'] # random_price(time)
         
-#         ##Timer
-#         solver_time = time.time()
+        ##Timer
+        solver_time = time.time()
         
-#         model = mpec_model(ng, nb, nl, ncda,IN_loads, gen_capacity, 
-#                         arrival, depart, charge_power,EV_soc_arrive,EV_soc_low, EV_soc_up, 
-#                         TCL_Max, TCL_R, TCL_Beta, TCL_temp_low, outside_temp, 
-#                         SL_low, SL_up, SL_cycle, SL_loads,
-#                         dic_G, dic_Bus_CDA, DABus, B, Yline, dic_G_Bus, 
-#                         c_g, c_d_o[j-1], c_d_b[j-1], 
-#                         dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX,
-#                         c_DA_o, c_DA_b, DA_solar_power[j-1])
+        model = mpec_model(ng, nb, nl, ncda,IN_loads, gen_capacity, 
+                        arrival, depart, charge_power,EV_soc_arrive,EV_soc_low, EV_soc_up, 
+                        TCL_Max, TCL_R, TCL_Beta, TCL_temp_low, outside_temp, 
+                        SL_low, SL_up, SL_cycle, SL_loads,
+                        dic_G, dic_Bus_CDA, DABus, B, Yline, dic_G_Bus, 
+                        c_g, c_d_o[j-1], c_d_b[j-1], 
+                        dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX,
+                        c_DA_o, c_DA_b, DA_solar_power[j-1])
        
-#         SOLVER_NAME="gurobi"  #'cplex'
-#         solver=SolverFactory(SOLVER_NAME)
-#         results = solver.solve(model)
+        SOLVER_NAME="gurobi"  #'cplex'
+        solver=SolverFactory(SOLVER_NAME)
+        results = solver.solve(model)
         
-#         # To check constraint feasibility after solving problem
-#         # check_constraints(model, Yline, B,dic_G, dic_Bus_CDA, DABus, c_g, dic_G_Bus, dic_CDA_Bus, 
-#         #                   c_d_o[j-1], c_d_b[j-1], c_DA_o, c_DA_b, 1000, 1000, g_s, F_d_o, F_d_b, FMAX )
+        # To check constraint feasibility after solving problem
+        # check_constraints(model, Yline, B,dic_G, dic_Bus_CDA, DABus, c_g, dic_G_Bus, dic_CDA_Bus, 
+        #                   c_d_o[j-1], c_d_b[j-1], c_DA_o, c_DA_b, 1000, 1000, g_s, F_d_o, F_d_b, FMAX )
         
-#         #print(results)
+        #print(results)
         
-#         solver_time=time.time()-solver_time
+        solver_time=time.time()-solver_time
         
-#         if (results.solver.status == SolverStatus.ok) and (results.solver.termination_condition == TerminationCondition.optimal):
-#             print('Model solved and is optimal for DA:',j,'   Time taken:', solver_time)
-#             # model_to_csv(model,IN_loads.sum(0))
-#             new_d_o, new_d_b = solved_model_bids(model)
-#         #     feasible_bid[j] =  new_d_b
-#         #     feasible_offer[j] = new_d_o
-#         # else:
-#         #     infeasibility_counter+=1
-#         #     infeasibility_counter_DA[j-1] += 1
-#         #     new_d_o = random_offer(ncda, horizon)[0][j]
-#         #     new_d_b = random_offer(ncda, horizon)[1][j]
+        if (results.solver.status == SolverStatus.ok) and (results.solver.termination_condition == TerminationCondition.optimal):
+            print('Model solved and is optimal for DA:',j,'   Time taken:', solver_time)
+            # model_to_csv(model,IN_loads.sum(0))
+            new_d_o, new_d_b = solved_model_bids(model)
+        #     feasible_bid[j] =  new_d_b
+        #     feasible_offer[j] = new_d_o
+        # else:
+        #     infeasibility_counter+=1
+        #     infeasibility_counter_DA[j-1] += 1
+        #     new_d_o = random_offer(ncda, horizon)[0][j]
+        #     new_d_b = random_offer(ncda, horizon)[1][j]
         
-#         new_offers[j]=new_d_o
-#         new_bids[j]= new_d_b
+        new_offers[j]=new_d_o
+        new_bids[j]= new_d_b
         
         
         
-#         # model_to_csv(model, IN_loads.sum(0))
+        # model_to_csv(model, IN_loads.sum(0))
         
-#         # Finishing Step 3
-#     # Step 4 check if epsilon difference exist
-#     offers_bid = new_offers
-#     demand_bid = new_bids
+        # Finishing Step 3
+    # Step 4 check if epsilon difference exist
+    for key in new_offers:
+        zipped_lists = zip(offers_bid[key], new_offers[key])
+        sum_zip =  [(x + y)/2 for (x, y) in zipped_lists]
+        offers_bid[key] = sum_zip
+        
+        zipped_lists = zip(demand_bid[key], new_bids[key])
+        sum_zip =  [(x + y)/2 for (x, y) in zipped_lists]
+        demand_bid[key] = sum_zip
 
+# Double the values
+for key in new_offers:
+        # zipped_lists = zip(offers_bid[key], new_offers[key])
+        # sum_zip =  [(x + y)/2 for (x, y) in zipped_lists]
+        offers_bid[key] =  offers_bid[key]*2
+        
+        # zipped_lists = zip(demand_bid[key], new_bids[key])
+        # sum_zip =  [(x + y)/2 for (x, y) in zipped_lists]
+        demand_bid[key] = demand_bid[key] *2
 
+"""
+going for FICTITIOUS PLAY algortihm
+"""
 # Discretizing offers and bids
 discrete_bid = dict()
 discrete_offer = dict()
 
+# Create dictionary for each strategic DA counting it's discrete value
 def make_discrte_value(step):
     for i in range(1, ncda+2):
         discrete_bid[i]={}
@@ -403,7 +425,10 @@ def make_discrte_value(step):
             offers_temp[t] = {}
             demand_temp[t] = {}
             offers = np.linspace(0, offers_bid[i][t], step).tolist()
+            offers = np.around(offers, 4)
+            
             demands = np.linspace(0, demand_bid[i][t], step).tolist()
+            demands = np.around(demands, 4)
             
             offers_temp[t][(0,0)] = 0
             demand_temp[t][(0,0)] = 0
@@ -413,17 +438,61 @@ def make_discrte_value(step):
         
         discrete_bid[i] = demand_temp
         discrete_offer[i] = offers_temp
-        
-    
     pass
+# Calling thins function to make values
+make_discrte_value(20)
+
+# After each iteration update discrete offers and bids by counting them
+def check_boundry(new_d_o, new_d_b, j):
+    for i in range(len(new_d_o)):
+        for key in discrete_offer[j][i]:
+            if new_d_o[i] == 0.0:
+                discrete_offer[j][i][(0,0)] += 1
+                break
+            elif new_d_o[i] > key[0] and new_d_o[i]<= key[1]:
+                discrete_offer[j][i][key] += 1
+            
+        
+    for i in range(len(new_d_b)):
+        for key in discrete_bid[j][i]:
+            if new_d_b[i] == 0.0:
+                discrete_bid[j][i][(0,0)] += 1
+                break
+            elif new_d_b[i] > key[0] and new_d_b[i]<= key[1]:
+                discrete_bid[j][i][key] += 1         
+    pass
+                
+# Update offers_bid, demand_bid dictionaries
+def keywithmaxval(d):
+     """ a) create a list of the dict's keys and values; 
+         b) return the key with the max value"""  
+     v=list(d.values())
+     k=list(d.keys())
+     return k[v.index(max(v))]
+ 
+def update_offers_demands():
     
-make_discrte_value(5)
+    for key in discrete_bid.keys():
+        temp_d_o = [] #offers_bid[key]
+        temp_d_b = [] #demand_bid[key]
+        for i in range(horizon):
+            max_key_d_b = keywithmaxval(discrete_bid[key][i])
+            max_key_d_o = keywithmaxval(discrete_offer[key][i])
+            temp_d_b.append((max_key_d_b[0]+max_key_d_b[1])/2)
+            temp_d_o.append((max_key_d_o[0]+max_key_d_o[1])/2)
+        
+        # Updarte demand and offer bids
+        offers_bid[key] = np.around(temp_d_o,4)
+        demand_bid[key] = np.around(temp_d_b,4)
+    pass
 
 check=False
-no_iteration =1
+no_iteration =10
 
-
+print("\n\n********** Starting FICTITIOUS PLAY algortihm ********")
 for n in range(no_iteration):
+    
+    print("********************* round {} *******************".format(n+1))
     
     for j in range(1,ncda+2):
         
@@ -436,7 +505,7 @@ for n in range(no_iteration):
         EV_soc_low   = profiles['EV_soc_low']
         EV_soc_up   = profiles['EV_soc_up']
         EV_soc_arrive = profiles['EV_soc_arr']
-        EV_demand = profiles['EV_demand']/10
+        EV_demand = profiles['EV_demand']
         
                 
         # Shiftable loads
@@ -499,6 +568,8 @@ for n in range(no_iteration):
             print('Model solved and is optimal for DA:',j,'   Time taken:', solver_time)
             # model_to_csv(model,IN_loads.sum(0))
             new_d_o, new_d_b = solved_model_bids(model)
+            check_boundry(new_d_o, new_d_b, j)
+            
         #     feasible_bid[j] =  new_d_b
         #     feasible_offer[j] = new_d_o
         # else:
@@ -510,4 +581,5 @@ for n in range(no_iteration):
         # new_offers[j]=new_d_o
         # new_bids[j]= new_d_b        
         
+        update_offers_demands()
         
