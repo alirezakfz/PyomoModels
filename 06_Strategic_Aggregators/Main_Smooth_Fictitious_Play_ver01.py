@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Jul 15 16:29:32 2021
+Created on Fri Jul 16 17:09:00 2021
 
 @author: Alireza
 """
+
 
 import random
 import time
@@ -12,7 +13,7 @@ import numpy as np
 import collections
 from collections import Counter
 
-from MPEC_Concrete_Model_ver02 import mpec_model
+from MPEC_Concrete_Model_Smooth_Fictitious_Play import mpec_model
 from pyomo.environ import *
 from pyomo.opt import SolverFactory
 
@@ -80,7 +81,7 @@ MVA = 1  # Power Base
 PU_DA = 1/(1000*MVA)
 
 # Number of strategies
-no_strategies = 20
+no_strategies = 5
 
 nl = 3    # Number of network lines
 nb = 3    # Number of network buses
@@ -283,7 +284,7 @@ using diagonalization method
 """
 
 check=False
-no_iteration =5
+no_iteration =2
 
 print("Running diagonalization for calibrating offers and bids prediction")
 
@@ -354,7 +355,7 @@ for n in range(no_iteration):
                         dic_G, dic_Bus_CDA, DABus, B, Yline, dic_G_Bus, 
                         c_g, c_d_o[j-1], c_d_b[j-1], 
                         dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX,
-                        c_DA_o, c_DA_b, DA_solar_power[j-1])
+                        c_DA_o, c_DA_b, DA_solar_power[j-1], no_strategies)
        
         SOLVER_NAME="gurobi"  #'cplex'
         solver=SolverFactory(SOLVER_NAME)
@@ -442,6 +443,7 @@ def make_discrte_value(step):
         discrete_offer[i] = offers_temp
     pass
 # Calling thins function to make values
+
 make_discrte_value(no_strategies)
 
 # After each iteration update discrete offers and bids by counting them
@@ -489,7 +491,7 @@ def update_offers_demands():
     pass
 
 check=False
-no_iteration =10
+no_iteration =2
 
 print("\n\n********** Starting FICTITIOUS PLAY algortihm ********")
 for n in range(no_iteration):
@@ -552,7 +554,7 @@ for n in range(no_iteration):
                         dic_G, dic_Bus_CDA, DABus, B, Yline, dic_G_Bus, 
                         c_g, c_d_o[j-1], c_d_b[j-1], 
                         dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX,
-                        c_DA_o, c_DA_b, DA_solar_power[j-1])
+                        c_DA_o, c_DA_b, DA_solar_power[j-1],no_strategies)
        
         SOLVER_NAME="gurobi"  #'cplex'
         solver=SolverFactory(SOLVER_NAME)
