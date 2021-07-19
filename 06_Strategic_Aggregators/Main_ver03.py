@@ -91,10 +91,10 @@ def dictionar_bus(GenBus, CDABus, DABus):
 def load_data(file_index):
     df1 = pd.read_csv('prosumers_data/inflexible_profiles_scen_'+file_index+'.csv').round(5)/1000
     # Just selecting some prosumers like 500 or 600 or 1000
-    df1 = df1[:1000]
+    df1 = df1[:100]
     # print(df1.shape)
     df2 = pd.read_csv('prosumers_data/prosumers_profiles_scen_'+file_index+'.csv')
-    df2 = df2[:1000]
+    df2 = df2[:100]
     return df1 , df2
 
 
@@ -252,9 +252,9 @@ c_g[4]=[100 for x in range(0,horizon)]
 
 
 #Price bid for supplying power of competing DA  i in time t
-c_d_o = [{'DAS':random_price(horizon,1,16), 1:random_price(horizon,1,16), 2:random_price(horizon,1,16)},
-         {'DAS':random_price(horizon,1,16), 1:random_price(horizon,1,16), 2:random_price(horizon,1,16)},
-          {'DAS':random_price(horizon,1,16), 1:random_price(horizon,1,16), 2:random_price(horizon,1,16)}]
+c_d_o = [{'DAS':random_price(horizon,1,10), 1:random_price(horizon,1,11), 2:random_price(horizon,1,12)},
+         {'DAS':random_price(horizon,1,10), 1:random_price(horizon,1,11), 2:random_price(horizon,1,12)},
+          {'DAS':random_price(horizon,1,10), 1:random_price(horizon,1,11), 2:random_price(horizon,1,12)}]
 
 # c_d_o = {'DAS':random_price(horizon,1,2),
 #           1:random_price(horizon,1,2),
@@ -291,7 +291,7 @@ feasible_offer = dict()
 
 # Adding solar power to randomly selected houses.
 def solar_power_generator(index_len):
-    return [random.random()*0.05 for i in range(index_len)]
+    return [random.random()*0.5 for i in range(index_len)]
     
     
     
@@ -315,7 +315,7 @@ def random_solar_power_var(in_loads, j):
     random.seed((j+2)**2)
     length = len(in_loads)
     # Select 20 percent of households containt solar power
-    random_index = [random.randrange(1, length, 1) for i in range(int(length/4))]
+    random_index = [random.randrange(1, length, 1) for i in range(int(length/2))]
     
     selected_time = ['16','17','18','19','30','31','32','33','34','35','36','37','38','39']
     
@@ -338,7 +338,7 @@ for j in range(1,ncda+2):
     
 
 check=False
-no_iteration =5
+no_iteration = 3
 
 infeasibility_counter_DA =[0,0,0]
 
@@ -456,7 +456,7 @@ for n in range(no_iteration):
         #print(pd.concat([pd.DataFrame.from_dict(new_offers), pd.DataFrame.from_dict(new_bids)], axis=1))
         diag_df = pd.concat([pd.DataFrame.from_dict(new_offers), pd.DataFrame.from_dict(new_bids)], axis=1)
         diag_df.columns=['offer_01','offer_02','offer_03', 'bids_01','bids_02', 'bids_03']
-        results_to_csv(diag_df, n)
+        # results_to_csv(diag_df, n)
         
         print('\nno EPEC, End of round:',n,'\n******************')
         
