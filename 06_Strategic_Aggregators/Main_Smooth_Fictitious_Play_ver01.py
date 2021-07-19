@@ -621,7 +621,7 @@ for n in range(no_iteration):
             # model_to_csv(model,IN_loads.sum(0))
             new_d_o, new_d_b = solved_model_bids(model)
             check_boundry(new_d_o, new_d_b, j)
-            load_bids_probs(model)
+            load_bids_probs(model, j)
             
         #     feasible_bid[j] =  new_d_b
         #     feasible_offer[j] = new_d_o
