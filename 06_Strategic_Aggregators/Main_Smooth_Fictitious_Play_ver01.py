@@ -14,6 +14,7 @@ import collections
 from collections import Counter
 
 from MPEC_Concrete_Model_Smooth_Fictitious_Play import mpec_model
+from MPEC_Concrete_Model_ver02 import mpec_model as diagonalization
 from pyomo.environ import *
 from pyomo.opt import SolverFactory
 
@@ -27,8 +28,8 @@ def solved_model_bids(model):
     for t in model.T:
         # new_d_b.append(value(model.E_DA_L[t]))
         # new_d_o.append(value(model.E_DA_G[t]))
-        new_d_b.append(round(value(model.E_DA_L[t]),6))
-        new_d_o.append(round(value(model.E_DA_G[t]),6))
+        new_d_b.append(round(value(model.E_DA_L[t]),4))
+        new_d_o.append(round(value(model.E_DA_G[t]),4))
     return new_d_o, new_d_b
 
 
@@ -81,7 +82,7 @@ MVA = 1  # Power Base
 PU_DA = 1/(1000*MVA)
 
 # Number of strategies
-no_strategies = 5
+no_strategies = 20
 
 nl = 3    # Number of network lines
 nb = 3    # Number of network buses
@@ -214,9 +215,9 @@ c_g[4]=[100 for x in range(0,horizon)]
 
 
 #Price bid for supplying power of competing DA  i in time t
-c_d_o = [{'DAS':random_price(horizon,1,16), 1:random_price(horizon,1,16), 2:random_price(horizon,1,16)},
-         {'DAS':random_price(horizon,1,16), 1:random_price(horizon,1,16), 2:random_price(horizon,1,16)},
-          {'DAS':random_price(horizon,1,16), 1:random_price(horizon,1,16), 2:random_price(horizon,1,16)}]
+c_d_o = [{'DAS':random_price(horizon,1,10), 1:random_price(horizon,1,11), 2:random_price(horizon,1,12)},
+         {'DAS':random_price(horizon,1,10), 1:random_price(horizon,1,11), 2:random_price(horizon,1,12)},
+          {'DAS':random_price(horizon,1,10), 1:random_price(horizon,1,11), 2:random_price(horizon,1,12)}]
 
 # c_d_o = {'DAS':random_price(horizon,1,2),
 #           1:random_price(horizon,1,2),
@@ -284,7 +285,7 @@ using diagonalization method
 """
 
 check=False
-no_iteration =2
+no_iteration =3
 
 print("Running diagonalization for calibrating offers and bids prediction")
 
@@ -348,14 +349,14 @@ for n in range(no_iteration):
         ##Timer
         solver_time = time.time()
         
-        model = mpec_model(ng, nb, nl, ncda,IN_loads, gen_capacity, 
+        model = diagonalization(ng, nb, nl, ncda,IN_loads, gen_capacity, 
                         arrival, depart, charge_power,EV_soc_arrive,EV_soc_low, EV_soc_up, 
                         TCL_Max, TCL_R, TCL_Beta, TCL_temp_low, outside_temp, 
                         SL_low, SL_up, SL_cycle, SL_loads,
                         dic_G, dic_Bus_CDA, DABus, B, Yline, dic_G_Bus, 
                         c_g, c_d_o[j-1], c_d_b[j-1], 
                         dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX,
-                        c_DA_o, c_DA_b, DA_solar_power[j-1], no_strategies)
+                        c_DA_o, c_DA_b, DA_solar_power[j-1])
        
         SOLVER_NAME="gurobi"  #'cplex'
         solver=SolverFactory(SOLVER_NAME)
@@ -389,15 +390,19 @@ for n in range(no_iteration):
         # model_to_csv(model, IN_loads.sum(0))
         
         # Finishing Step 3
-    # Step 4 check if epsilon difference exist
-    for key in new_offers:
-        zipped_lists = zip(offers_bid[key], new_offers[key])
-        sum_zip =  [(x + y)/2 for (x, y) in zipped_lists]
-        offers_bid[key] = sum_zip
-        
-        zipped_lists = zip(demand_bid[key], new_bids[key])
-        sum_zip =  [(x + y)/2 for (x, y) in zipped_lists]
-        demand_bid[key] = sum_zip
+    # 
+    if n == 1:
+        offers_bid= new_offers
+        demand_bid = new_bids
+    else:
+        for key in new_offers:
+            zipped_lists = zip(offers_bid[key], new_offers[key])
+            sum_zip =  [(x + y)/2 for (x, y) in zipped_lists]
+            offers_bid[key] = sum_zip
+            
+            zipped_lists = zip(demand_bid[key], new_bids[key])
+            sum_zip =  [(x + y)/2 for (x, y) in zipped_lists]
+            demand_bid[key] = sum_zip
 
 # Double the values
 for key in new_offers:
@@ -407,7 +412,7 @@ for key in new_offers:
         
         # zipped_lists = zip(demand_bid[key], new_bids[key])
         # sum_zip =  [(x + y)/2 for (x, y) in zipped_lists]
-        demand_bid[key] = demand_bid[key] *2
+        demand_bid[key] = demand_bid[key] *3
 
 """
 going for FICTITIOUS PLAY algortihm
@@ -416,6 +421,8 @@ going for FICTITIOUS PLAY algortihm
 discrete_bid = dict()
 discrete_offer = dict()
 
+demand_probability=dict()
+supply_probability=dict()
 # Create dictionary for each strategic DA counting it's discrete value
 def make_discrte_value(step):
     for i in range(1, ncda+2):
@@ -424,9 +431,16 @@ def make_discrte_value(step):
         
         offers_temp = dict()
         demand_temp= dict()
+        
+        demand_prob_temp=[]
+        supply_prob_temp=[]
         for t in range(horizon):
             offers_temp[t] = {}
             demand_temp[t] = {}
+            
+            demand_p_temp=[]
+            supply_p_temp=[]
+            
             offers = np.linspace(0, offers_bid[i][t], step).tolist()
             offers = np.around(offers, 4)
             
@@ -435,12 +449,24 @@ def make_discrte_value(step):
             
             offers_temp[t][(0,0)] = 0
             demand_temp[t][(0,0)] = 0
+            
+            demand_p_temp.append(0)
+            supply_p_temp.append(0)
+            
             for value in range(step-1):
                 offers_temp[t][(offers[value], offers[value+1])] = 0
                 demand_temp[t][(demands[value], demands[value+1])] = 0
+                supply_p_temp.append(round((offers[value]+offers[value+1])/2, 4))
+                demand_p_temp.append(round((demands[value]+demands[value+1])/2, 4))
+            
+            demand_prob_temp.append(demand_p_temp)
+            supply_prob_temp.append(supply_p_temp)
         
         discrete_bid[i] = demand_temp
         discrete_offer[i] = offers_temp
+        
+        demand_probability[i]= demand_prob_temp
+        supply_probability[i]= supply_prob_temp
     pass
 # Calling thins function to make values
 
@@ -490,8 +516,10 @@ def update_offers_demands():
         demand_bid[key] = np.around(temp_d_b,4)
     pass
 
+# Create two
+
 check=False
-no_iteration =2
+no_iteration =1
 
 print("\n\n********** Starting FICTITIOUS PLAY algortihm ********")
 for n in range(no_iteration):
@@ -554,7 +582,8 @@ for n in range(no_iteration):
                         dic_G, dic_Bus_CDA, DABus, B, Yline, dic_G_Bus, 
                         c_g, c_d_o[j-1], c_d_b[j-1], 
                         dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX,
-                        c_DA_o, c_DA_b, DA_solar_power[j-1],no_strategies)
+                        c_DA_o, c_DA_b, DA_solar_power[j-1],
+                        no_strategies, demand_probability[j], supply_probability[j] )
        
         SOLVER_NAME="gurobi"  #'cplex'
         solver=SolverFactory(SOLVER_NAME)
@@ -587,3 +616,22 @@ for n in range(no_iteration):
         
         update_offers_demands()
         
+
+# Supply probability
+for t in model.T:
+    for s in model.S:
+        print(value(model.da_b_p[s,t]),' ',end="")
+    print()
+
+# demand probability
+for t in model.T:
+    for s in model.S:
+        print(value(model.da_o_p[s,t]),' ',end="")
+    print()
+    
+for t in model.T:
+    print(value(model.DA_supply[t]))
+    
+    
+for t in model.T:
+    print(value(model.DA_demand[t]))

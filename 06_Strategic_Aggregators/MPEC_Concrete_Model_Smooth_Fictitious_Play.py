@@ -26,7 +26,8 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
                dic_G, dic_Bus_CDA, DABus, B, Yline, dic_G_Bus, 
                c_g, c_d_o, c_d_b, 
                dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX,
-               c_DA_o, c_DA_b,solar_power, no_strategies):
+               c_DA_o, c_DA_b,solar_power, no_strategies,
+               demand_strategy, supply_strategy):
     
     
     time=24
@@ -228,13 +229,21 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     model.da_b_p = Var(model.S, model.T,  within= NonNegativeReals, initialize=0)
     
     def sum_DAs_offer_probability_rule(model, t):
-        return sum(model.da_o_p[s,t] for s in model.S) == 1
+        return sum(model.da_o_p[s,t] for s in model.S) == 1.0
     model.sum_DAs_offer_probability_con = Constraint(model.T, rule=sum_DAs_offer_probability_rule)
     
     def sum_DAs_bid_probability_rule(model, t):
-        return sum(model.da_b_p[s,t] for s in model.S) == 1
+        return sum(model.da_b_p[s,t] for s in model.S) == 1.0
     model.sum_DAs_bid_probability_con = Constraint(model.T, rule=sum_DAs_bid_probability_rule)
     
+    def demand_probability_rule(model, t):
+        return model.DA_demand[t] == sum(model.da_b_p[s,t] * demand_strategy[t-16][s-1] for s in model.S)
+    model.demand_probability_con = Constraint(model.T, rule=demand_probability_rule)
+    
+    def offer_probability_rule(model, t):
+        return  model.DA_supply[t] == sum(model.da_o_p[s,t] * supply_strategy[t-16][s-1] for s in model.S)
+    model.offer_probability_con = Constraint(model.T, rule=offer_probability_rule)
+        
     
     """
     Upper Level constraints
