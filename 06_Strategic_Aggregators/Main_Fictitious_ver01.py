@@ -213,9 +213,9 @@ c_g[4]=[100 for x in range(0,horizon)]
 
 
 #Price bid for supplying power of competing DA  i in time t
-c_d_o = [{'DAS':random_price(horizon,1,16), 1:random_price(horizon,1,16), 2:random_price(horizon,1,16)},
-         {'DAS':random_price(horizon,1,16), 1:random_price(horizon,1,16), 2:random_price(horizon,1,16)},
-          {'DAS':random_price(horizon,1,16), 1:random_price(horizon,1,16), 2:random_price(horizon,1,16)}]
+c_d_o = [{'DAS':random_price(horizon,1,12), 1:random_price(horizon,1,12), 2:random_price(horizon,1,12)},
+         {'DAS':random_price(horizon,1,12), 1:random_price(horizon,1,12), 2:random_price(horizon,1,12)},
+          {'DAS':random_price(horizon,1,12), 1:random_price(horizon,1,12), 2:random_price(horizon,1,12)}]
 
 # c_d_o = {'DAS':random_price(horizon,1,2),
 #           1:random_price(horizon,1,2),
@@ -283,7 +283,7 @@ using diagonalization method
 """
 
 check=False
-no_iteration =5
+no_iteration =2
 
 print("Running diagonalization for calibrating offers and bids prediction")
 
@@ -489,7 +489,7 @@ def update_offers_demands():
     pass
 
 check=False
-no_iteration =10
+no_iteration =2
 
 print("\n\n********** Starting FICTITIOUS PLAY algortihm ********")
 for n in range(no_iteration):

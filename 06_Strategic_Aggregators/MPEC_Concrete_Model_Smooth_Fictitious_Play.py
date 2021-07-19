@@ -696,7 +696,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
                                     sum(model.w_db_up[i,t]*F_d_b[i][t-16] for i in model.NCDA) +\
                                         sum(FMAX[i-1]*model.w_line_low[i,t] for i in model.LINES) +\
                                             sum(FMAX[i-1]*model.w_line_up[i,t] for i in model.LINES)  for t in model.T ) +\
-            10*sum(model.da_b_p[s,t] + model.da_b_p[s,t]*100 for s in model.S for t in model.T) # pyo.log10((model.da_p[s,t]))
+            10*sum(model.da_o_p[s,t]*supply_strategy[t-16][s-1]*100 + model.da_b_p[s,t]*demand_strategy[t-16][s-1] for s in model.S for t in model.T) # pyo.log10((model.da_p[s,t]))
     model.obj = Objective(rule=social_welfare_optimization_rule, sense=minimize)
     
     return model

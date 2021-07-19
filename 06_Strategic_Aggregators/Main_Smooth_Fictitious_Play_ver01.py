@@ -215,9 +215,9 @@ c_g[4]=[100 for x in range(0,horizon)]
 
 
 #Price bid for supplying power of competing DA  i in time t
-c_d_o = [{'DAS':random_price(horizon,1,10), 1:random_price(horizon,1,11), 2:random_price(horizon,1,12)},
-         {'DAS':random_price(horizon,1,10), 1:random_price(horizon,1,11), 2:random_price(horizon,1,12)},
-          {'DAS':random_price(horizon,1,10), 1:random_price(horizon,1,11), 2:random_price(horizon,1,12)}]
+c_d_o = [{'DAS':random_price(horizon,1,16), 1:random_price(horizon,1,16), 2:random_price(horizon,1,16)},
+         {'DAS':random_price(horizon,1,16), 1:random_price(horizon,1,16), 2:random_price(horizon,1,16)},
+          {'DAS':random_price(horizon,1,16), 1:random_price(horizon,1,16), 2:random_price(horizon,1,16)}]
 
 # c_d_o = {'DAS':random_price(horizon,1,2),
 #           1:random_price(horizon,1,2),
@@ -248,7 +248,7 @@ outside_temp=[16.784803,16.094803,15.764802,14.774801,14.834802,14.184802,14.144
 
 # Adding solar power to randomly selected houses.
 def solar_power_generator(index_len):
-    return [random.random()*0.008 for i in range(index_len)]
+    return [random.random()*0.5 for i in range(index_len)]
 
 
 # This function adds solar power into inflexible loads
@@ -257,7 +257,7 @@ def random_solar_power_var(in_loads, j):
     random.seed((j+2)**2)
     length = len(in_loads)
     # Select 20 percent of households containt solar power
-    random_index = [random.randrange(1, length, 1) for i in range(int(length/4))]
+    random_index = [random.randrange(1, length, 1) for i in range(int(length/2))]
     
     selected_time = ['16','17','18','19','30','31','32','33','34','35','36','37','38','39']
     
@@ -285,7 +285,7 @@ using diagonalization method
 """
 
 check=False
-no_iteration =3
+no_iteration =5
 
 print("Running diagonalization for calibrating offers and bids prediction")
 
@@ -358,7 +358,7 @@ for n in range(no_iteration):
                         dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX,
                         c_DA_o, c_DA_b, DA_solar_power[j-1])
        
-        SOLVER_NAME="gurobi"  #'cplex'
+        SOLVER_NAME= "gurobi"  #'cplex'
         solver=SolverFactory(SOLVER_NAME)
         results = solver.solve(model)
         
@@ -391,18 +391,15 @@ for n in range(no_iteration):
         
         # Finishing Step 3
     # 
-    if n == 1:
-        offers_bid= new_offers
-        demand_bid = new_bids
-    else:
-        for key in new_offers:
-            zipped_lists = zip(offers_bid[key], new_offers[key])
-            sum_zip =  [(x + y)/2 for (x, y) in zipped_lists]
-            offers_bid[key] = sum_zip
-            
-            zipped_lists = zip(demand_bid[key], new_bids[key])
-            sum_zip =  [(x + y)/2 for (x, y) in zipped_lists]
-            demand_bid[key] = sum_zip
+    
+    for key in new_offers:
+        zipped_lists = zip(offers_bid[key], new_offers[key])
+        sum_zip =  [(x + y)/2 for (x, y) in zipped_lists]
+        offers_bid[key] = sum_zip
+        
+        zipped_lists = zip(demand_bid[key], new_bids[key])
+        sum_zip =  [(x + y)/2 for (x, y) in zipped_lists]
+        demand_bid[key] = sum_zip
 
 # Double the values
 for key in new_offers:
@@ -412,7 +409,7 @@ for key in new_offers:
         
         # zipped_lists = zip(demand_bid[key], new_bids[key])
         # sum_zip =  [(x + y)/2 for (x, y) in zipped_lists]
-        demand_bid[key] = demand_bid[key] *3
+        demand_bid[key] = demand_bid[key] *2
 
 """
 going for FICTITIOUS PLAY algortihm
@@ -472,7 +469,7 @@ def make_discrte_value(step):
 
 make_discrte_value(no_strategies)
 
-# After each iteration update discrete offers and bids by counting them
+# After each iteration solving MPEC update discrete offers and bids by counting them
 def check_boundry(new_d_o, new_d_b, j):
     for i in range(len(new_d_o)):
         for key in discrete_offer[j][i]:
@@ -517,9 +514,31 @@ def update_offers_demands():
     pass
 
 # Create two
+average_demand_prob = dict()
+average_supply_prob = dict()
+
+for j in range(1,ncda+2):
+    average_demand_prob[j] = np.zeros((horizon,no_strategies))
+    average_supply_prob[j] = np.zeros((horizon,no_strategies))
+
+# Updating probability values after solve
+def load_bids_probs(model,j):
+    temp_demand = np.zeros((horizon,no_strategies))
+    temp_supply = np.zeros((horizon,no_strategies))
+    
+    for t in model.T:
+        for s in model.S:
+            temp_demand[t-16][s-1] = round(value(model.da_b_p[s,t]), 4)
+            temp_supply[t-16][s-1] = round(value(model.da_o_p[s,t]), 4)
+    
+    average_demand_prob[j] = (temp_demand + average_demand_prob[j])/2
+    average_supply_prob[j] = (temp_supply + average_supply_prob[j])/2
+    
+    pass
+
 
 check=False
-no_iteration =1
+no_iteration =3
 
 print("\n\n********** Starting FICTITIOUS PLAY algortihm ********")
 for n in range(no_iteration):
@@ -585,7 +604,7 @@ for n in range(no_iteration):
                         c_DA_o, c_DA_b, DA_solar_power[j-1],
                         no_strategies, demand_probability[j], supply_probability[j] )
        
-        SOLVER_NAME="gurobi"  #'cplex'
+        SOLVER_NAME= "gurobi"  #'cplex'
         solver=SolverFactory(SOLVER_NAME)
         results = solver.solve(model)
         
@@ -602,6 +621,7 @@ for n in range(no_iteration):
             # model_to_csv(model,IN_loads.sum(0))
             new_d_o, new_d_b = solved_model_bids(model)
             check_boundry(new_d_o, new_d_b, j)
+            load_bids_probs(model)
             
         #     feasible_bid[j] =  new_d_b
         #     feasible_offer[j] = new_d_o
