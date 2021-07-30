@@ -285,7 +285,7 @@ using diagonalization method
 """
 
 check=False
-no_iteration =5
+no_iteration =3
 
 print("Running diagonalization for calibrating offers and bids prediction")
 
@@ -358,7 +358,7 @@ for n in range(no_iteration):
                         dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX,
                         c_DA_o, c_DA_b, DA_solar_power[j-1])
        
-        SOLVER_NAME= "gurobi"  #'cplex'
+        SOLVER_NAME= "gurobi" #"gurobi"  #'cplex'
         solver=SolverFactory(SOLVER_NAME)
         results = solver.solve(model)
         
@@ -538,7 +538,7 @@ def load_bids_probs(model,j):
 
 
 check=False
-no_iteration =3
+no_iteration =5
 
 print("\n\n********** Starting FICTITIOUS PLAY algortihm ********")
 for n in range(no_iteration):
@@ -604,7 +604,7 @@ for n in range(no_iteration):
                         c_DA_o, c_DA_b, DA_solar_power[j-1],
                         no_strategies, demand_probability[j], supply_probability[j] )
        
-        SOLVER_NAME= "gurobi"  #'cplex'
+        SOLVER_NAME="gurobi" # "gurobi"  #'cplex'
         solver=SolverFactory(SOLVER_NAME)
         results = solver.solve(model)
         
