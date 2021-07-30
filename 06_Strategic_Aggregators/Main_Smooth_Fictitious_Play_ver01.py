@@ -513,13 +513,20 @@ def update_offers_demands():
         demand_bid[key] = np.around(temp_d_b,4)
     pass
 
+
+        
 # Create two
 average_demand_prob = dict()
 average_supply_prob = dict()
 
+total_demand_prob = dict()
+total_supply_prob = dict()
+
 for j in range(1,ncda+2):
     average_demand_prob[j] = np.zeros((horizon,no_strategies))
     average_supply_prob[j] = np.zeros((horizon,no_strategies))
+    total_demand_prob[j] = np.zeros((horizon,no_strategies))
+    total_supply_prob[j] = np.zeros((horizon,no_strategies))
 
 # Updating probability values after solve
 def load_bids_probs(model,j):
@@ -532,8 +539,12 @@ def load_bids_probs(model,j):
             temp_supply[t-16][s-1] = round(value(model.da_o_p[s,t]), 4)
     
     average_demand_prob[j] = (temp_demand + average_demand_prob[j])/2
+    average_demand_prob[j] =average_demand_prob[j].round(4)
     average_supply_prob[j] = (temp_supply + average_supply_prob[j])/2
+    average_supply_prob[j] = average_supply_prob[j].round(4)
     
+    total_demand_prob[j] += temp_demand
+    total_supply_prob[j] += temp_supply
     pass
 
 
