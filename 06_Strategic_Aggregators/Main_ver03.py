@@ -28,7 +28,7 @@ def solved_model_bids(model):
         # new_d_o.append(value(model.E_DA_G[t]))
         new_d_b.append(round(value(model.E_DA_L[t]),6))
         new_d_o.append(round(value(model.E_DA_G[t]),6))
-    return new_d_o, new_d_b
+    return np.array(new_d_o), np.array(new_d_b)
 
 
 
@@ -91,14 +91,14 @@ def dictionar_bus(GenBus, CDABus, DABus):
 def load_data(file_index):
     df1 = pd.read_csv('prosumers_data/inflexible_profiles_scen_'+file_index+'.csv').round(5)/1000
     # Just selecting some prosumers like 500 or 600 or 1000
-    df1 = df1[:100]
+    df1 = df1[:1000]
     # print(df1.shape)
     df2 = pd.read_csv('prosumers_data/prosumers_profiles_scen_'+file_index+'.csv')
-    df2 = df2[:100]
+    df2 = df2[:1000]
     return df1 , df2
 
 
-gen_capacity =[50, 50, 50]
+gen_capacity =[4, 3, 2]
 # gen_capacity =[50000, 50000, 50000]
 
 random.seed(42)
@@ -186,8 +186,8 @@ def random_offer(NO_CDA, horizon):
                 temp_bid.append(0)
                 # temp_offer.append(random.randint(1, 4))
                 temp_offer.append(round(random.random()/MVA,3)) # Mega Watt
-        offer_dict[competitor]=temp_offer
-        bid_dict[competitor]=temp_bid
+        offer_dict[competitor]=np.array(temp_offer)
+        bid_dict[competitor]=np.array(temp_bid)
     
     return offer_dict, bid_dict
 
@@ -338,8 +338,8 @@ for j in range(1,ncda+2):
     
 
 check=False
-no_iteration = 3
-
+no_iteration = 2
+rate=0.01  #learning rate like gradient descent
 infeasibility_counter_DA =[0,0,0]
 
 for n in range(no_iteration):
@@ -427,7 +427,7 @@ for n in range(no_iteration):
             print('Model solved and is optimal for DA:',j,'   Time taken:', solver_time)
             # model_to_csv(model,IN_loads.sum(0))
             new_d_o, new_d_b = solved_model_bids(model)
-            feasible_bid[j] =  new_d_b
+            feasible_bid[j] =   new_d_b
             feasible_offer[j] = new_d_o
         else:
             infeasibility_counter+=1
@@ -468,11 +468,18 @@ for n in range(no_iteration):
     
         
     if (not check) and (n < no_iteration-1):
-        offers_bid = new_offers
-        demand_bid = new_bids
+        for j in range(1,ncda+2):
+            offers_bid[j] = offers_bid[j]*rate + (1-rate)*new_offers[j]
+            demand_bid[j] = demand_bid[j]*rate +(1-rate)*new_bids[j]
     
     if (infeasibility_counter == ncda+1):
         offers_bid , demand_bid = random_offer(ncda, horizon)
+
+
+
+model_to_csv(model, IN_loads.sum(0))
+
+
 
 if check:
     print('Solution is found:')
