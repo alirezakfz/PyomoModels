@@ -23,7 +23,8 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
                dic_G, dic_Bus_CDA, DABus, B, Yline, dic_G_Bus, 
                c_g, c_d_o, c_d_b, 
                dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX,
-               c_DA_o, c_DA_b,solar_power):
+               c_DA_o, c_DA_b,solar_power,
+               EVs_list):
     
     
     time=24
@@ -36,7 +37,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     MVA = 1  # Power Base
     PU_DA = 1/(1000*MVA)
     
- 
+    
 
     """
     Defining Parameters
@@ -44,6 +45,8 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     bigM =10000.0
     bigF = 10000.0
     NO_prosumers = len(IN_loads)
+    
+    
     
     # defining the model
     model = ConcreteModel(name='bilevel')
@@ -57,6 +60,8 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     # Set of prosumers as customers for DA aggregator 
     model.N = RangeSet(NO_prosumers)
     
+    # Set of EVs in the selected DA
+    # model.M = frozenset(EVs_list)
     
     # Energy bid as load from the grid
     model.E_DA_L = Var(model.T, within=NonNegativeReals, initialize=0)
@@ -236,25 +241,29 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     # Constraint (a.2): Ensure that charging of EV don't exceed maximum value of EV_Power
     def ev_charging_rule(model,i,t):
-        if t >= arrival[i-1] and t < depart[i-1]:
-            return model.E_EV_CH[i,t] <= model.u_EV[i,t] * charge_power[i-1]*delta_t
+        if i in EVs_list:
+            if t >= arrival[i-1] and t < depart[i-1]:
+                return model.E_EV_CH[i,t] <= model.u_EV[i,t] * charge_power[i-1]*delta_t
+            else:
+                return model.E_EV_CH[i,t]==0
         else:
-            return model.E_EV_CH[i,t]==0
-            # return Constraint.Skip
+            return Constraint.Skip
     model.ev_charging_con=Constraint(model.N, model.T, rule=ev_charging_rule)
     
     # Constraint (a.3): Ensure that charging of EV don't exceed maximum value of EV_Power
     def ev_discharging_rule(model,i,t):
-        if t >= arrival[i-1] and t < depart[i-1]:
-            return model.E_EV_DIS[i,t] <= (1-model.u_EV[i,t]) * charge_power[i-1]*delta_t
+        if i in EVs_list:
+            if t >= arrival[i-1] and t < depart[i-1]:
+                return model.E_EV_DIS[i,t] <= (1-model.u_EV[i,t]) * charge_power[i-1]*delta_t
+            else:
+                return model.E_EV_DIS[i,t]==0
         else:
-            return model.E_EV_DIS[i,t]==0
-            # return Constraint.Skip
+            return Constraint.Skip
     model.ev_discharging_con=Constraint(model.N, model.T, rule=ev_discharging_rule)
     
     # Constraint (a.4): set the SOC 
     def ev_soc_rule(model, i, t):
-        if t >= arrival[i-1] and t < depart[i-1]: 
+        if t >= arrival[i-1] and t < depart[i-1] and (i in EVs_list) : 
             return model.SOC[i,t+1] == model.SOC[i,t] + ch_rate*model.E_EV_CH[i,t] - model.E_EV_DIS[i,t]/ch_rate 
         else:
             return Constraint.Skip
@@ -262,12 +271,15 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     # Constraint (a.4_1): Set the start soc to arrival soc
     def EV_arrival_soc_rule(model, i):
-        return model.SOC[i, arrival[i-1]]== EV_soc_arrive[i-1]
+        if i in EVs_list:
+            return model.SOC[i, arrival[i-1]]== EV_soc_arrive[i-1]
+        else:
+            return Constraint.Skip
     model.EV_arrival_soc_con = Constraint(model.N, rule= EV_arrival_soc_rule)
     
     # Constraint (a.5_1): Limit the SOC, Lower Bound
     def ev_soc_low_rule(model, i, t):
-        if t >= arrival[i-1] and t < depart[i-1]: 
+        if t >= arrival[i-1] and t < depart[i-1] and (i in EVs_list): 
             return model.SOC[i,t] >=  EV_soc_low[i-1]
         else:
             return Constraint.Skip
@@ -276,7 +288,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     # Constraint (a.5_2): Limit the SOC, Upper Bound
     def ev_soc_low2_rule(model, i, t):
-        if t >= arrival[i-1] and t < depart[i-1]: 
+        if t >= arrival[i-1] and t < depart[i-1] and (i in EVs_list): 
             return model.SOC[i,t] <=  EV_soc_up[i-1]
         else:
             return Constraint.Skip
@@ -284,12 +296,15 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     # Constraint (a.6): Set the target SOC to be as desired(full charge) at departure time
     def ev_traget_rule(model,i):
-        return model.SOC[i,depart[i-1]] == EV_soc_up[i-1] #model.ev_demand[i]
+        if (i in EVs_list):
+            return model.SOC[i,depart[i-1]] == EV_soc_up[i-1] #model.ev_demand[i]
+        else:
+            return Constraint.Skip
     model.ev_target_con = Constraint(model.N, rule=ev_traget_rule)
     
     # Constraint (Custom_1): Set the binary variable to zero outside the [arrival, depart] boundary
     def ev_binary_zero_rule(model,i,t):
-        if t < arrival[i-1] or t >= depart[i-1]:
+        if t < arrival[i-1] or t >= depart[i-1] and (i in EVs_list):
             return model.u_EV[i,t]==0
         else:
             return Constraint.Skip
@@ -301,32 +316,32 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     #                  TCL Constraints
     #********************************************************
     
-    # Constraint (a.7): Limit TCL maximum load
-    def TCL_power_limit_rule(model,i,t):
-        return model.POWER_TCL[i,t] <= TCL_Max[i-1] 
-    model.TCL_power_limit_con= Constraint(model.N, model.T, rule=TCL_power_limit_rule)
+    # # Constraint (a.7): Limit TCL maximum load
+    # def TCL_power_limit_rule(model,i,t):
+    #     return model.POWER_TCL[i,t] <= TCL_Max[i-1] 
+    # model.TCL_power_limit_con= Constraint(model.N, model.T, rule=TCL_power_limit_rule)
     
-    # Constraint (a.8): Set inside temprature for residence
-    def TCL_room_temp_rule(model,i,t):
-        if t >= arrival[i-1] and t < depart[i-1]:                                                                 # model.TCL_occ[i,t]
-            return model.TCL_TEMP[i,t+1]== TCL_Beta[i-1] * model.TCL_TEMP[i,t] + (1-TCL_Beta[i-1])*(outside_temp[t-16]+ TCL_R[i-1]*model.POWER_TCL[i,t])
-        else:
-            return model.POWER_TCL[i,t] == 0
-            # return Constraint.Skip
-    model.TCL_room_temp_con= Constraint(model.N, model.T, rule=TCL_room_temp_rule)
+    # # Constraint (a.8): Set inside temprature for residence
+    # def TCL_room_temp_rule(model,i,t):
+    #     if t >= arrival[i-1] and t < depart[i-1]:                                                                 # model.TCL_occ[i,t]
+    #         return model.TCL_TEMP[i,t+1]== TCL_Beta[i-1] * model.TCL_TEMP[i,t] + (1-TCL_Beta[i-1])*(outside_temp[t-16]+ TCL_R[i-1]*model.POWER_TCL[i,t])
+    #     else:
+    #         return model.POWER_TCL[i,t] == 0
+    #         # return Constraint.Skip
+    # model.TCL_room_temp_con= Constraint(model.N, model.T, rule=TCL_room_temp_rule)
     
-    # Constraint (a.9):
-    def TCL_low_preference_rule(model,i,t):
-        if t >= arrival[i-1] and t < depart[i-1]:
-            return model.TCL_TEMP[i,t] >= TCL_temp_low[i-1]
-        else:
-            return Constraint.Skip
-    model.TCL_low_preference_con = Constraint(model.N, model.T, rule=TCL_low_preference_rule)
+    # # Constraint (a.9):
+    # def TCL_low_preference_rule(model,i,t):
+    #     if t >= arrival[i-1] and t < depart[i-1]:
+    #         return model.TCL_TEMP[i,t] >= TCL_temp_low[i-1]
+    #     else:
+    #         return Constraint.Skip
+    # model.TCL_low_preference_con = Constraint(model.N, model.T, rule=TCL_low_preference_rule)
     
-    # Constraint (a.9_1): Set the temperature of the room to the outside temp
-    def TCL_set_start_temp_rule(model, i):
-            return model.TCL_TEMP[i,arrival[i-1]]== TCL_temp_low[i-1]# model.out_temp[model.arrival[i]]
-    model.TCL_set_start_temp_con= Constraint(model.N, rule=TCL_set_start_temp_rule)
+    # # Constraint (a.9_1): Set the temperature of the room to the outside temp
+    # def TCL_set_start_temp_rule(model, i):
+    #         return model.TCL_TEMP[i,arrival[i-1]]== TCL_temp_low[i-1]# model.out_temp[model.arrival[i]]
+    # model.TCL_set_start_temp_con= Constraint(model.N, rule=TCL_set_start_temp_rule)
     
     
     #********************************************************
@@ -368,8 +383,18 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     # Equality constraint (a.13) for power balance in strategic DA
     def DA_power_balance_rule(model, t):
-        return model.E_DA_L[t]-model.E_DA_G[t] == \
-                sum(model.E_EV_CH[i,t]-model.E_EV_DIS[i,t]+ model.POWER_TCL[i,t]+ model.POWER_SL[i,t]+ IN_loads.loc[i-1,str(t)] - model.solar_power[i,t] for i in model.N) * PU_DA    # + model.solar_power[i,t]
+        ##model.POWER_TCL[i,t]
+        
+        sum_total = sum( model.POWER_SL[i,t]+ IN_loads.loc[i-1,str(t)] - model.solar_power[i,t] for i in model.N)
+        
+        for i in model.N:
+            if i in EVs_list:
+                sum_total += model.E_EV_CH[i,t]-model.E_EV_DIS[i,t]
+        
+        return model.E_DA_L[t]-model.E_DA_G[t] == sum_total * PU_DA
+    
+        # return model.E_DA_L[t]-model.E_DA_G[t] == \
+        #         sum(model.E_EV_CH[i,t]-model.E_EV_DIS[i,t]+ model.POWER_TCL[i,t]+ model.POWER_SL[i,t]+ IN_loads.loc[i-1,str(t)] - model.solar_power[i,t] for i in model.N) * PU_DA    # + model.solar_power[i,t]
     model.DA_power_balance_con = Constraint(model.T, rule=DA_power_balance_rule)
     
     # def DA_power_balance_rule(model, t):

@@ -12,7 +12,7 @@ import numpy as np
 import collections
 from samples_gen import generate_price, generate_temp
 #from MPEC_Concrete_Model_ver01 import mpec_model
-from MPEC_Concrete_Model_ver02 import mpec_model
+from MPEC_Concrete_Model_ver03 import mpec_model
 from pyomo.environ import *
 from pyomo.opt import SolverFactory
 
@@ -91,19 +91,20 @@ def dictionar_bus(GenBus, CDABus, DABus):
 def load_data(file_index):
     df1 = pd.read_csv('prosumers_data/inflexible_profiles_scen_'+file_index+'.csv').round(5)/100 #/1000
     # Just selecting some prosumers like 500 or 600 or 1000
-    df1 = df1[:1000]
+    df1 = df1[:NO_prosumers]
     # print(df1.shape)
     df2 = pd.read_csv('prosumers_data/prosumers_profiles_scen_'+file_index+'.csv')
-    df2 = df2[:1000]
+    df2 = df2[:NO_prosumers]
     return df1 , df2
 
 
-gen_capacity =[5,3, 2]
+gen_capacity =[10,10, 10]
 # gen_capacity =[50000, 50000, 50000]
 
 random.seed(42)
 
 # Time Horizon
+NO_prosumers=2000
 horizon=24
 H = range(16,horizon+16)    
 MVA = 1  # Power Base
@@ -314,6 +315,7 @@ def random_solar_power(in_loads, j):
 def random_solar_power_var(in_loads, j):
     random.seed((j+2)**2)
     length = len(in_loads)
+    
     # Select 20 percent of households containt solar power
     random_index = [random.randrange(1, length, 1) for i in range(int(length/3))]
     
@@ -338,11 +340,34 @@ for j in range(1,ncda+2):
     DA_solar_power.append(random_solar_power_var(IN_loads, j))
     
 
+# Penetration of EVs in each strategic DA prosumers
+# Select EVs for scheduling
+EVs_percentage=None
+EVs_list = dict()
+
+
+for j in range(1,ncda+2):
+    # Number of prosumers
+    
+    if j==1:
+        EVs_percentage=0.75
+    elif j==2:
+        EVs_percentage=0.50
+    elif j==3:
+        EVs_percentage=0.30
+        
+    NO_of_EVs = int(EVs_percentage * NO_prosumers)
+    EVs_list[j] = random.choices([i+1 for i in range(NO_prosumers)],k=NO_of_EVs )
+
+
+
 check=False
-no_iteration = 500
+no_iteration = 1
 rate=0.01  #learning rate like gradient descent
 infeasibility_counter_DA =[0,0,0]
 timestr = time.strftime("%Y%m%d-%H%M%S")
+
+
 
 for n in range(no_iteration):
     new_offers=dict()
@@ -354,6 +379,12 @@ for n in range(no_iteration):
         
         IN_loads, profiles = load_data(str(j))
         
+        if j==1:
+            EVs_percentage=0.75
+        elif j==2:
+            EVs_percentage=0.50
+        elif j==3:
+            EVs_percentage=0.30
         # Adding random solar power
         # if j == 1:
         # IN_loads = random_solar_power(IN_loads, j)
@@ -411,7 +442,8 @@ for n in range(no_iteration):
                         dic_G, dic_Bus_CDA, DABus, B, Yline, dic_G_Bus, 
                         c_g, c_d_o[j-1], c_d_b[j-1], 
                         dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX,
-                        c_DA_o, c_DA_b, DA_solar_power[j-1])
+                        c_DA_o, c_DA_b, DA_solar_power[j-1],
+                        EVs_list[j])
        
         SOLVER_NAME="gurobi"  #'cplex'
         solver=SolverFactory(SOLVER_NAME)
@@ -428,7 +460,7 @@ for n in range(no_iteration):
         if (results.solver.status == SolverStatus.ok) and (results.solver.termination_condition == TerminationCondition.optimal):
             print('Model solved and is optimal for DA:',j,'   Time taken:', solver_time)
             # model_to_csv(model,IN_loads.sum(0))
-            model_to_csv_iteration(model, IN_loads.sum(0), n, str(j), timestr)
+            model_to_csv_iteration(model, IN_loads.sum(0), n, str(j), timestr, EVs_list[j])
             new_d_o, new_d_b = solved_model_bids(model)
             feasible_bid[j] =   new_d_b
             feasible_offer[j] = new_d_o
@@ -460,7 +492,7 @@ for n in range(no_iteration):
         # saving results of the iterations
         diag_df = pd.concat([pd.DataFrame.from_dict(new_offers), pd.DataFrame.from_dict(new_bids)], axis=1)
         diag_df.columns=['offer_01','offer_02','offer_03', 'bids_01','bids_02', 'bids_03']
-        results_to_csv(diag_df, n)
+        # results_to_csv(diag_df, n)
         
         print('\nno EPEC, End of round:',n,'\n******************')
         

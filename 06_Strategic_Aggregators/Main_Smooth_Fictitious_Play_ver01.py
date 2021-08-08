@@ -13,8 +13,10 @@ import numpy as np
 import collections
 from collections import Counter
 
+
 from MPEC_Concrete_Model_Smooth_Fictitious_Play import mpec_model
 from MPEC_Concrete_Model_ver02 import mpec_model as diagonalization
+from Model_to_CSV import model_to_csv, model_to_csv_iteration
 from pyomo.environ import *
 from pyomo.opt import SolverFactory
 
@@ -630,7 +632,7 @@ for n in range(no_iteration):
 
         if (results.solver.status == SolverStatus.ok) and (results.solver.termination_condition == TerminationCondition.optimal):
             print('Model solved and is optimal for DA:',j,'   Time taken:', solver_time)
-            # model_to_csv(model,IN_loads.sum(0))
+            model_to_csv(model,IN_loads.sum(0))
             new_d_o, new_d_b = solved_model_bids(model)
             check_boundry(new_d_o, new_d_b, j)
             load_bids_probs(model, j)
