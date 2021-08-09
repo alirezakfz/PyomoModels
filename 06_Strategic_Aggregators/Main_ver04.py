@@ -98,13 +98,13 @@ def load_data(file_index):
     return df1 , df2
 
 
-gen_capacity =[10,10, 10]
+gen_capacity =[2,2, 2]
 # gen_capacity =[50000, 50000, 50000]
 
 random.seed(42)
 
 # Time Horizon
-NO_prosumers=2000
+NO_prosumers=1000
 horizon=24
 H = range(16,horizon+16)    
 MVA = 1  # Power Base
@@ -342,27 +342,38 @@ for j in range(1,ncda+2):
 
 # Penetration of EVs in each strategic DA prosumers
 # Select EVs for scheduling
-EVs_percentage=None
+EVs_penetration=None
 EVs_list = dict()
 
 
 for j in range(1,ncda+2):
-    # Number of prosumers
-    
     if j==1:
-        EVs_percentage=0.75
+        EVs_penetration=0.75
     elif j==2:
-        EVs_percentage=0.50
+        EVs_penetration=0.50
     elif j==3:
-        EVs_percentage=0.30
-        
-    NO_of_EVs = int(EVs_percentage * NO_prosumers)
+        EVs_penetration=0.30
+    # Adding random EVs for prosumers
+    NO_of_EVs = int(EVs_penetration * NO_prosumers)
     EVs_list[j] = random.choices([i+1 for i in range(NO_prosumers)],k=NO_of_EVs )
 
+# Solar power penetration.
+Solar_penetration= None
+Solar_list=dict()
 
+for j in range(1,ncda+2):
+    if j==1:
+        Solar_penetration=0.50
+    elif j==2:
+        Solar_penetration=0.30
+    elif j==3:
+        Solar_penetration=0.15
+    # Adding random solar panels to prosumers
+    NO_solar_prosumers = int(Solar_penetration * NO_prosumers)
+    Solar_list[j] = random.choices([i+1 for i in range(NO_prosumers)],k=NO_solar_prosumers )
 
 check=False
-no_iteration = 1
+no_iteration = 5
 rate=0.01  #learning rate like gradient descent
 infeasibility_counter_DA =[0,0,0]
 timestr = time.strftime("%Y%m%d-%H%M%S")
@@ -443,7 +454,7 @@ for n in range(no_iteration):
                         c_g, c_d_o[j-1], c_d_b[j-1], 
                         dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX,
                         c_DA_o, c_DA_b, DA_solar_power[j-1],
-                        EVs_list[j])
+                        EVs_list[j], Solar_list[j])
        
         SOLVER_NAME="gurobi"  #'cplex'
         solver=SolverFactory(SOLVER_NAME)

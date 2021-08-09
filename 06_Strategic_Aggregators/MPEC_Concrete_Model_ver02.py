@@ -16,6 +16,7 @@ from pyomo.environ import *
 from pyomo.opt import SolverFactory
 
 
+
 def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
                arrival, depart, charge_power,EV_soc_arrive,EV_soc_low, EV_soc_up, 
                TCL_Max, TCL_R, TCL_Beta, TCL_temp_low, outside_temp, 

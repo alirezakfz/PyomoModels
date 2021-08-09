@@ -24,7 +24,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
                c_g, c_d_o, c_d_b, 
                dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX,
                c_DA_o, c_DA_b,solar_power,
-               EVs_list):
+               EVs_list, Solar_list):
     
     
     time=24
@@ -316,32 +316,32 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     #                  TCL Constraints
     #********************************************************
     
-    # # Constraint (a.7): Limit TCL maximum load
-    # def TCL_power_limit_rule(model,i,t):
-    #     return model.POWER_TCL[i,t] <= TCL_Max[i-1] 
-    # model.TCL_power_limit_con= Constraint(model.N, model.T, rule=TCL_power_limit_rule)
+    # Constraint (a.7): Limit TCL maximum load
+    def TCL_power_limit_rule(model,i,t):
+        return model.POWER_TCL[i,t] <= TCL_Max[i-1] 
+    model.TCL_power_limit_con= Constraint(model.N, model.T, rule=TCL_power_limit_rule)
     
-    # # Constraint (a.8): Set inside temprature for residence
-    # def TCL_room_temp_rule(model,i,t):
-    #     if t >= arrival[i-1] and t < depart[i-1]:                                                                 # model.TCL_occ[i,t]
-    #         return model.TCL_TEMP[i,t+1]== TCL_Beta[i-1] * model.TCL_TEMP[i,t] + (1-TCL_Beta[i-1])*(outside_temp[t-16]+ TCL_R[i-1]*model.POWER_TCL[i,t])
-    #     else:
-    #         return model.POWER_TCL[i,t] == 0
-    #         # return Constraint.Skip
-    # model.TCL_room_temp_con= Constraint(model.N, model.T, rule=TCL_room_temp_rule)
+    # Constraint (a.8): Set inside temprature for residence
+    def TCL_room_temp_rule(model,i,t):
+        if t >= arrival[i-1] and t < depart[i-1]:                                                                 # model.TCL_occ[i,t]
+            return model.TCL_TEMP[i,t+1]== TCL_Beta[i-1] * model.TCL_TEMP[i,t] + (1-TCL_Beta[i-1])*(outside_temp[t-16]+ TCL_R[i-1]*model.POWER_TCL[i,t])
+        else:
+            return model.POWER_TCL[i,t] == 0
+            # return Constraint.Skip
+    model.TCL_room_temp_con= Constraint(model.N, model.T, rule=TCL_room_temp_rule)
     
-    # # Constraint (a.9):
-    # def TCL_low_preference_rule(model,i,t):
-    #     if t >= arrival[i-1] and t < depart[i-1]:
-    #         return model.TCL_TEMP[i,t] >= TCL_temp_low[i-1]
-    #     else:
-    #         return Constraint.Skip
-    # model.TCL_low_preference_con = Constraint(model.N, model.T, rule=TCL_low_preference_rule)
+    # Constraint (a.9):
+    def TCL_low_preference_rule(model,i,t):
+        if t >= arrival[i-1] and t < depart[i-1]:
+            return model.TCL_TEMP[i,t] >= TCL_temp_low[i-1]
+        else:
+            return Constraint.Skip
+    model.TCL_low_preference_con = Constraint(model.N, model.T, rule=TCL_low_preference_rule)
     
-    # # Constraint (a.9_1): Set the temperature of the room to the outside temp
-    # def TCL_set_start_temp_rule(model, i):
-    #         return model.TCL_TEMP[i,arrival[i-1]]== TCL_temp_low[i-1]# model.out_temp[model.arrival[i]]
-    # model.TCL_set_start_temp_con= Constraint(model.N, rule=TCL_set_start_temp_rule)
+    # Constraint (a.9_1): Set the temperature of the room to the outside temp
+    def TCL_set_start_temp_rule(model, i):
+            return model.TCL_TEMP[i,arrival[i-1]]== TCL_temp_low[i-1]# model.out_temp[model.arrival[i]]
+    model.TCL_set_start_temp_con= Constraint(model.N, rule=TCL_set_start_temp_rule)
     
     
     #********************************************************
@@ -385,11 +385,13 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     def DA_power_balance_rule(model, t):
         ##model.POWER_TCL[i,t]
         
-        sum_total = sum( model.POWER_SL[i,t]+ IN_loads.loc[i-1,str(t)] - model.solar_power[i,t] for i in model.N)
+        sum_total = sum( model.POWER_SL[i,t] + IN_loads.loc[i-1,str(t)] + model.POWER_TCL[i,t]  for i in model.N)
         
         for i in model.N:
             if i in EVs_list:
                 sum_total += model.E_EV_CH[i,t]-model.E_EV_DIS[i,t]
+            if i in Solar_list:
+                sum_total -= model.solar_power[i,t]
         
         return model.E_DA_L[t]-model.E_DA_G[t] == sum_total * PU_DA
     
