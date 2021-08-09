@@ -706,9 +706,9 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     # ***************************************
     # refrense angel set
-    def set_ref_angel_rule(model, t):
-        return model.teta[ref_angel,t]==0
-    model.set_ref_angel_con = Constraint(model.T, rule=set_ref_angel_rule)
+    # def set_ref_angel_rule(model, t):
+    #     return model.teta[ref_angel,t]==0
+    # model.set_ref_angel_con = Constraint(model.T, rule=set_ref_angel_rule)
     
     """
     Objective Functioon

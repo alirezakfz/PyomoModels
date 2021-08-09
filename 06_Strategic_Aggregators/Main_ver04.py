@@ -104,7 +104,7 @@ gen_capacity =[2,2, 2]
 random.seed(42)
 
 # Time Horizon
-NO_prosumers=1000
+NO_prosumers=2000
 horizon=24
 H = range(16,horizon+16)    
 MVA = 1  # Power Base
@@ -373,7 +373,7 @@ for j in range(1,ncda+2):
     Solar_list[j] = random.choices([i+1 for i in range(NO_prosumers)],k=NO_solar_prosumers )
 
 check=False
-no_iteration = 5
+no_iteration =2
 rate=0.01  #learning rate like gradient descent
 infeasibility_counter_DA =[0,0,0]
 timestr = time.strftime("%Y%m%d-%H%M%S")
