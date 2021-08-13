@@ -157,6 +157,7 @@ def model_to_csv_iteration(model, IN_loads, iteration, da_index, file_time_str, 
         
         for b in model.BUS:
             row.append('Theta_bus_'+str(value(b)))
+        
     else:
         row=[]
         write_mode='a'
@@ -271,4 +272,5 @@ def model_to_csv_iteration(model, IN_loads, iteration, da_index, file_time_str, 
         csv_writer = writer(file)
         for rw in list_row:
                 csv_writer.writerow(rw)
+    
     

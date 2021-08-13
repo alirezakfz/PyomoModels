@@ -98,7 +98,7 @@ def load_data(file_index):
     return df1 , df2
 
 
-gen_capacity =[2,2, 2]
+gen_capacity =[3 , 2 , 2]
 # gen_capacity =[50000, 50000, 50000]
 
 random.seed(42)
@@ -245,8 +245,8 @@ c_g = { 1:random_price(horizon,12,20),
         2:random_price(horizon,20,30),
         3:random_price(horizon,50,70),
         4:random_price(horizon,100,110)}  
-c_g[1]=[16 for x in range(0,horizon)]
-c_g[2]=[19 for x in range(0,horizon)]
+c_g[1]=[15 for x in range(0,horizon)]
+c_g[2]=[20 for x in range(0,horizon)]
 c_g[3]=[25 for x in range(0,horizon)]
 c_g[4]=[100 for x in range(0,horizon)]
 
@@ -286,6 +286,7 @@ g_s = { 1:random_generation(horizon,10, 12),
 
 # 2019 November 15 forecasted temprature
 outside_temp=[16.784803,16.094803,15.764802,14.774801,14.834802,14.184802,14.144801,15.314801,16.694803,19.734802,24.414803,25.384802,26.744802,27.144802,27.524803,27.694803,26.834803,26.594803,25.664803,22.594803,21.394802,20.164803,19.584803,20.334803]
+outside_temp = [i+1 for i in outside_temp]
 
 feasible_bid = dict()
 feasible_offer = dict()
@@ -373,10 +374,12 @@ for j in range(1,ncda+2):
     Solar_list[j] = random.choices([i+1 for i in range(NO_prosumers)],k=NO_solar_prosumers )
 
 check=False
-no_iteration =2
+no_iteration = 500
 rate=0.01  #learning rate like gradient descent
 infeasibility_counter_DA =[0,0,0]
 timestr = time.strftime("%Y%m%d-%H%M%S")
+
+objective_function = dict()
 
 
 
@@ -385,7 +388,10 @@ for n in range(no_iteration):
     new_bids=dict()
     infeasibility_counter=0
     
+    
+    
     for j in range(1,ncda+2):
+        
         
         
         IN_loads, profiles = load_data(str(j))
@@ -475,11 +481,18 @@ for n in range(no_iteration):
             new_d_o, new_d_b = solved_model_bids(model)
             feasible_bid[j] =   new_d_b
             feasible_offer[j] = new_d_o
+            
+            if j in objective_function.keys():
+                objective_function[j].append(value(model.obj))
+            else:
+                objective_function[j] = [value(model.obj)]
         else:
             infeasibility_counter+=1
             infeasibility_counter_DA[j-1] += 1
-            new_d_o = random_offer(ncda, horizon)[0][j]
-            new_d_b = random_offer(ncda, horizon)[1][j]
+            new_d_o = feasible_offer[j] # random_offer(ncda, horizon)[0][j]
+            new_d_b = feasible_bid[j]   # random_offer(ncda, horizon)[1][j]
+            objective_function[j].append('NAN')
+            
         
         new_offers[j]=new_d_o
         new_bids[j]= new_d_b
@@ -503,7 +516,7 @@ for n in range(no_iteration):
         # saving results of the iterations
         diag_df = pd.concat([pd.DataFrame.from_dict(new_offers), pd.DataFrame.from_dict(new_bids)], axis=1)
         diag_df.columns=['offer_01','offer_02','offer_03', 'bids_01','bids_02', 'bids_03']
-        # results_to_csv(diag_df, n)
+        results_to_csv(diag_df, n)
         
         print('\nno EPEC, End of round:',n,'\n******************')
         
@@ -526,6 +539,8 @@ for n in range(no_iteration):
 
 # model_to_csv(model, IN_loads.sum(0))
 
+# save model objective function results
+pd.DataFrame.from_dict(objective_function).to_csv('Model_CSV/objective_'+timestr+'.csv', index=False)
 
 
 if check:
