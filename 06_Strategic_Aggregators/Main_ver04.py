@@ -10,6 +10,7 @@ import time
 import pandas as pd
 import numpy as np
 import collections
+from csv import writer
 from samples_gen import generate_price, generate_temp
 #from MPEC_Concrete_Model_ver01 import mpec_model
 from MPEC_Concrete_Model_ver03 import mpec_model
@@ -98,7 +99,7 @@ def load_data(file_index):
     return df1 , df2
 
 
-gen_capacity =[3 , 2 , 2]
+gen_capacity =[5 , 10 , 6]
 # gen_capacity =[50000, 50000, 50000]
 
 random.seed(42)
@@ -285,8 +286,8 @@ g_s = { 1:random_generation(horizon,10, 12),
 
 
 # 2019 November 15 forecasted temprature
-outside_temp=[16.784803,16.094803,15.764802,14.774801,14.834802,14.184802,14.144801,15.314801,16.694803,19.734802,24.414803,25.384802,26.744802,27.144802,27.524803,27.694803,26.834803,26.594803,25.664803,22.594803,21.394802,20.164803,19.584803,20.334803]
-outside_temp = [i+1 for i in outside_temp]
+outside_temp=[27.694803,26.834803,26.594803,25.664803,22.594803,21.394802,20.164803,19.584803,20.334803,16.784803,16.094803,15.764802,14.774801,14.834802,14.184802,14.144801,15.314801,16.694803,19.734802,24.414803,25.384802,26.744802,27.144802,27.524803]
+# outside_temp = [i+1 for i in outside_temp]
 
 feasible_bid = dict()
 feasible_offer = dict()
@@ -396,15 +397,6 @@ for n in range(no_iteration):
         
         IN_loads, profiles = load_data(str(j))
         
-        if j==1:
-            EVs_percentage=0.75
-        elif j==2:
-            EVs_percentage=0.50
-        elif j==3:
-            EVs_percentage=0.30
-        # Adding random solar power
-        # if j == 1:
-        # IN_loads = random_solar_power(IN_loads, j)
         
         
         # EVs properties 
@@ -541,6 +533,16 @@ for n in range(no_iteration):
 
 # save model objective function results
 pd.DataFrame.from_dict(objective_function).to_csv('Model_CSV/objective_'+timestr+'.csv', index=False)
+
+with open('Model_CSV/EVs_list_'+timestr+'.csv','w', newline='') as file:          
+    csv_writer = writer(file)
+    for j in EVs_list.keys():
+        csv_writer.writerow(EVs_list[j])
+
+with open('Model_CSV/Solar_list_'+timestr+'.csv','w', newline='') as file:          
+    csv_writer = writer(file)
+    for j in EVs_list.keys():
+        csv_writer.writerow(Solar_list[j])
 
 
 if check:
