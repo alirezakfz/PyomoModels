@@ -99,13 +99,13 @@ def load_data(file_index):
     return df1 , df2
 
 
-gen_capacity =[5 , 10 , 6]
+gen_capacity =[1 , 1 , 50]
 # gen_capacity =[50000, 50000, 50000]
 
 random.seed(42)
 
 # Time Horizon
-NO_prosumers=2000
+NO_prosumers=1000
 horizon=24
 H = range(16,horizon+16)    
 MVA = 1  # Power Base
@@ -294,7 +294,7 @@ feasible_offer = dict()
 
 # Adding solar power to randomly selected houses.
 def solar_power_generator(index_len):
-    return [random.random()*0.01 for i in range(index_len)]
+    return [random.random()*0.05 for i in range(index_len)]
     
     
     
@@ -369,13 +369,13 @@ for j in range(1,ncda+2):
     elif j==2:
         Solar_penetration=0.30
     elif j==3:
-        Solar_penetration=0.15
+        Solar_penetration=0.20
     # Adding random solar panels to prosumers
     NO_solar_prosumers = int(Solar_penetration * NO_prosumers)
     Solar_list[j] = random.choices([i+1 for i in range(NO_prosumers)],k=NO_solar_prosumers )
 
 check=False
-no_iteration = 500
+no_iteration = 2
 rate=0.01  #learning rate like gradient descent
 infeasibility_counter_DA =[0,0,0]
 timestr = time.strftime("%Y%m%d-%H%M%S")
@@ -384,7 +384,7 @@ objective_function = dict()
 
 
 
-for n in range(no_iteration):
+for n in range(no_iteration+1):
     new_offers=dict()
     new_bids=dict()
     infeasibility_counter=0
@@ -454,7 +454,7 @@ for n in range(no_iteration):
                         c_DA_o, c_DA_b, DA_solar_power[j-1],
                         EVs_list[j], Solar_list[j])
        
-        SOLVER_NAME="gurobi"  #'cplex'
+        SOLVER_NAME= "gurobi"  #'cplex'
         solver=SolverFactory(SOLVER_NAME)
         results = solver.solve(model)
         

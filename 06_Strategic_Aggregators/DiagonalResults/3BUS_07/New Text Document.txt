@@ -1,0 +1,67 @@
+1000 prosumers license expired at 439
+
+gen_capacity =[1 , 1 , 50]
+# gen_capacity =[50000, 50000, 50000]
+
+random.seed(42)
+
+# Time Horizon
+NO_prosumers=1000
+horizon=24
+H = range(16,horizon+16)    
+MVA = 1  # Power Base
+PU_DA = 1/(1000*MVA)
+
+
+nl = 3    # Number of network lines
+nb = 3    # Number of network buses
+
+FromBus = [1,1,2] # Vector with network lines' "sending buses"
+ToBus = [2,3,3]   # Vector with network lines' "receiving buses"
+
+LinesSusc = [100,125,150]  #Vector with per unit susceptance of the network 
+
+
+ng = 3    # Number of Generators
+ncda = 2  # Number of competing 
+
+GenBus = [1,1,3]  # Vector with Generation Buses
+CDABus = [[2, 3], [1,3], [1,2]]      # Vector with competing DAs Buses
+DABus = 1           # DA Bus
+
+FMAX = [50, 50, 50]
+# FMAX = [50000, 50000, 50000] # Vector with Capacities of Network Lines in pu
+FMAX = [i/MVA for i in FMAX]
+
+
+for j in range(1,ncda+2):
+    if j==1:
+        EVs_penetration=0.75
+    elif j==2:
+        EVs_penetration=0.50
+    elif j==3:
+        EVs_penetration=0.30
+    # Adding random EVs for prosumers
+    NO_of_EVs = int(EVs_penetration * NO_prosumers)
+    EVs_list[j] = random.choices([i+1 for i in range(NO_prosumers)],k=NO_of_EVs )
+
+# Solar power penetration.
+Solar_penetration= None
+Solar_list=dict()
+
+for j in range(1,ncda+2):
+    if j==1:
+        Solar_penetration=0.50
+    elif j==2:
+        Solar_penetration=0.30
+    elif j==3:
+        Solar_penetration=0.20
+    # Adding random solar panels to prosumers
+    NO_solar_prosumers = int(Solar_penetration * NO_prosumers)
+    Solar_list[j] = random.choices([i+1 for i in range(NO_prosumers)],k=NO_solar_prosumers )
+
+check=False
+no_iteration = 439
+rate=0.01  #learning rate like gradient descent
+infeasibility_counter_DA =[0,0,0]
+timestr = time.strftime("%Y%m%d-%H%M%S")
