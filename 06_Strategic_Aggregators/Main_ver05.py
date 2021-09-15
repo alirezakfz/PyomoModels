@@ -473,7 +473,7 @@ for n in range(no_iteration+1):
         
         # offers_bid , demand_bid = random_offer(ncda, horizon)
         
-        if( random.random() < 0.9 and n > 3):
+        if( random.random() < 0.9 and n > 2):
             F_d_o, F_d_b = select_best_action(j, objective_function, ncda, n )
             
         else:
