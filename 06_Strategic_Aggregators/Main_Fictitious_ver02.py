@@ -639,15 +639,26 @@ feasible_bid = dict()
 feasible_offer = dict()
 
 check=False
-no_iteration =2
+no_iteration =100
 
 infeasibility_counter=0
 infeasibility_counter_DA =[0,0,0]
 
+#Store Value of model objective function in each iteration
 objective_function = dict()
+
+# Store number of acction played by looking into it's hash action dictionary
+# Check action_hash_set dictionary below to find number of action based on hash a1, a2, ...
 action_played=dict()
-action_set=dict()
-counter_played_actions=[]
+
+
+# Store hash of the vectore and it's corresponding label as action number
+action_hash_set = dict()
+for j in range(1,ncda+2):
+    action_hash_set[j]=dict()
+
+# Count number of discrete actions played by each DA
+counter_played_actions=np.zeros(ncda+1)
 
 
 print("\n\n********** Starting FICTITIOUS PLAY algortihm ********")
@@ -732,7 +743,7 @@ for n in range(no_iteration):
             model_to_csv_iteration(model, IN_loads.sum(0), n, str(j), timestr, EVs_list[j])
             new_d_o, new_d_b = solved_model_bids(model)
             bid_action, offer_action =check_boundry(new_d_o, new_d_b, j)
-            print(bid_action)
+            #print(bid_action)
             feasible_bid[j] =   new_d_b
             feasible_offer[j] = new_d_o
             
@@ -741,10 +752,24 @@ for n in range(no_iteration):
             else:
                 objective_function[j] = [value(model.obj)]
             
+            # Create hash bid
             hash_bid = array_id(bid_action)
-            if j in action_set.keys():
-                
             
+            # If hash bid exist it's not unique action otherwise it's unique
+            if hash_bid in action_hash_set[j].keys():
+                action_hash_set[j][hash_bid]+=1
+                if j in action_played.keys():
+                    action_played[j].append(action_hash_set[j][hash_bid])
+                else:
+                    action_played[j]=[action_hash_set[j][hash_bid]]
+            else:
+                counter_played_actions[j-1]+=1
+                action_hash_set[j][hash_bid]= 1# counter_played_actions[j-1]
+                if j in action_played.keys():
+                    action_played[j].append(counter_played_actions[j-1])
+                else:
+                    action_played[j]=[counter_played_actions[j-1]]
+                        
         else:
              infeasibility_counter+=1
              infeasibility_counter_DA[j-1] += 1
@@ -786,3 +811,17 @@ for n in range(no_iteration):
             # for j in range(1,ncda+2):
             #     offers_bid[j] = offers_bid[j]*rate + (1-rate)*new_offers[j]
             #     demand_bid[j] = demand_bid[j]*rate +(1-rate)*new_bids[j]
+
+
+# save model objective function results
+pd.DataFrame.from_dict(objective_function).to_csv('Model_CSV/objective_'+timestr+'.csv', index=False)
+
+with open('Model_CSV/EVs_list_'+timestr+'.csv','w', newline='') as file:          
+    csv_writer = writer(file)
+    for j in EVs_list.keys():
+        csv_writer.writerow(EVs_list[j])
+
+with open('Model_CSV/Solar_list_'+timestr+'.csv','w', newline='') as file:          
+    csv_writer = writer(file)
+    for j in EVs_list.keys():
+        csv_writer.writerow(Solar_list[j])
