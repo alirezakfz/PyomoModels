@@ -634,12 +634,33 @@ def update_offers_demands():
         demand_bid[key] = np.around(temp_d_b,4)
     pass
 
+# Serach for best action set by looking to number of played actions and objective function
+def select_best_bids_by_actions(action_hash_set, action_played, action_hash_count, j, demand_bid, offers_bid, obj_df):
+    
+    counter_list=[]
+    for k in action_hash_count[j].keys():
+        counter_list.append(action_hash_count[j][k])
+        
+    max_count_played_actions = max(counter_list)
+    
+    max_actions_played = []
+    for h in action_hash_set[j].keys():
+        if action_hash_count[j][h] == max_count_played_actions:
+            max_actions_played.append(action_hash_set[j][h])
+    
+    index_list_max_played_actions =[]
+    for action in max_actions_played:
+        for index in range(len(action_played[j])):
+            if action_played[j][index] == action:
+                index_list_max_played_actions.append(index)
+    
+    pass    
 
 feasible_bid = dict()
 feasible_offer = dict()
 
 check=False
-no_iteration =100
+no_iteration =3
 
 infeasibility_counter=0
 infeasibility_counter_DA =[0,0,0]
@@ -656,6 +677,12 @@ action_played=dict()
 action_hash_set = dict()
 for j in range(1,ncda+2):
     action_hash_set[j]=dict()
+
+# Store counter of occurance for each hashed action
+action_hash_count = dict()
+for j in range(1,ncda+2):
+    action_hash_count[j]=dict()
+
 
 # Count number of discrete actions played by each DA
 counter_played_actions=np.zeros(ncda+1)
@@ -757,14 +784,15 @@ for n in range(no_iteration):
             
             # If hash bid exist it's not unique action otherwise it's unique
             if hash_bid in action_hash_set[j].keys():
-                action_hash_set[j][hash_bid]+=1
+                action_hash_count[j][hash_bid]+=1
                 if j in action_played.keys():
                     action_played[j].append(action_hash_set[j][hash_bid])
                 else:
                     action_played[j]=[action_hash_set[j][hash_bid]]
             else:
                 counter_played_actions[j-1]+=1
-                action_hash_set[j][hash_bid]= 1# counter_played_actions[j-1]
+                action_hash_count[j][hash_bid]=1
+                action_hash_set[j][hash_bid] = counter_played_actions[j-1]
                 if j in action_played.keys():
                     action_played[j].append(counter_played_actions[j-1])
                 else:
@@ -777,6 +805,13 @@ for n in range(no_iteration):
              new_d_b = feasible_bid[j]   # random_offer(ncda, horizon)[1][j]
              objective_function[j].append('NAN')
      
+        
+        # After adding actions to the dictionaries,
+        # Search for best action to use
+        # first based on the number each action hash played
+        # If there are several ones with same played actions, choose one with minimum objective function
+        select_best_bids_by_actions(action_hash_set, action_played, action_hash_count, j, demand_bid, offers_bid, pd.DataFrame.from_dict(objective_function))
+        
         new_offers[j]=new_d_o
         new_bids[j]= new_d_b        
         
