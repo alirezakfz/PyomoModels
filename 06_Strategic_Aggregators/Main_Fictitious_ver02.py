@@ -107,14 +107,14 @@ gen_capacity =[1, 0.5, 10]
 random.seed(42)
 
 # Time Horizon
-NO_prosumers=100
+NO_prosumers = 1000
 horizon=24
 H = range(16,horizon+16)    
 MVA = 1  # Power Base
 PU_DA = 1/(1000*MVA)
 
 # Number of strategies
-no_strategies = 30
+no_strategies = 50
 
 nl = 3    # Number of network lines
 nb = 3    # Number of network buses
@@ -474,11 +474,12 @@ for n in range(no_iteration):
             new_d_o, new_d_b = solved_model_bids(model)
         #     feasible_bid[j] =  new_d_b
         #     feasible_offer[j] = new_d_o
-        # else:
-        #     infeasibility_counter+=1
-        #     infeasibility_counter_DA[j-1] += 1
-        #     new_d_o = random_offer(ncda, horizon)[0][j]
-        #     new_d_b = random_offer(ncda, horizon)[1][j]
+        else:
+            print("\n Model not solved optimally")
+            infeasibility_counter+=1
+            infeasibility_counter_DA[j-1] += 1
+            new_d_o = random_offer(ncda, horizon)[0][j]
+            new_d_b = random_offer(ncda, horizon)[1][j]
         
         new_offers[j]=new_d_o
         new_bids[j]= new_d_b
@@ -491,11 +492,11 @@ for n in range(no_iteration):
     # Step 4 check if epsilon difference exist
     for key in new_offers:
         zipped_lists = zip(offers_bid[key], new_offers[key])
-        sum_zip =  [(x + y)/2 for (x, y) in zipped_lists]
+        sum_zip =  [round((x + y),6) for (x, y) in zipped_lists]
         offers_bid[key] = sum_zip
         
         zipped_lists = zip(demand_bid[key], new_bids[key])
-        sum_zip =  [(x + y)/2 for (x, y) in zipped_lists]
+        sum_zip =  [round((x + y),6) for (x, y) in zipped_lists]
         demand_bid[key] = sum_zip
 
 # Double the values
@@ -518,19 +519,22 @@ discrete_offer = dict()
 
 # Create dictionary for each strategic DA counting it's discrete value
 def make_discrte_value(step):
+     
     for i in range(1, ncda+2):
         discrete_bid[i]={}
         discrete_offer[i]={}
-        
+        max_offer_t = max(offers_bid[i])
+        max_bid_t = max(demand_bid[i])
         offers_temp = dict()
         demand_temp= dict()
+        
         for t in range(horizon):
             offers_temp[t] = {}
             demand_temp[t] = {}
-            offers = np.linspace(0, offers_bid[i][t]*5, step).tolist()
+            offers = np.linspace(0, (offers_bid[i][t]+max_offer_t)*3, step).tolist()
             offers = np.around(offers, 6)
             
-            demands = np.linspace(0, demand_bid[i][t]*5, step).tolist()
+            demands = np.linspace(0, (demand_bid[i][t]*max_bid_t)*3, step).tolist()
             demands = np.around(demands, 6)
             
             offers_temp[t][(0,0)] = 0
@@ -549,6 +553,9 @@ make_discrte_value(no_strategies)
 def check_boundry(new_d_o, new_d_b, j):
     bid_action = np.zeros((horizon,no_strategies), dtype=np.int8)
     offer_action= np.zeros((horizon,no_strategies), dtype=np.int8)
+    
+    # Check number of boundaries become true
+    check_found_boundary = np.zeros(len(new_d_o))
 
     for i in range(len(new_d_o)):
         count_row=0
@@ -556,23 +563,38 @@ def check_boundry(new_d_o, new_d_b, j):
             if new_d_o[i] == 0.0:
                 discrete_offer[j][i][(0,0)] += 1
                 offer_action[i,count_row]=1
+                check_found_boundary[i] = 1
                 break
             elif new_d_o[i] > key[0] and new_d_o[i]<= key[1]:
                 discrete_offer[j][i][key] += 1
-                offer_action[i,count_row]=1  
+                offer_action[i,count_row]=1 
+                check_found_boundary[i] = 1
             count_row+=1 
-        
+    
+    if sum(check_found_boundary) != len(new_d_o):
+        print('\n !!!!!!!! Problem in  offer boundary !!!!!!!!!!', sum(check_found_boundary))
+        # print(offer_action)
+    
+    # Check number of boundaries become true
+    check_found_boundary = np.zeros(len(new_d_o))
+    
     for i in range(len(new_d_b)):
         count_row=0
         for key in discrete_bid[j][i]:
             if new_d_b[i] == 0.0:
                 discrete_bid[j][i][(0,0)] += 1
                 bid_action[i,count_row]=1
+                check_found_boundary[i] = 1
                 break
             elif new_d_b[i] > key[0] and new_d_b[i]<= key[1]:
                 discrete_bid[j][i][key] += 1
                 bid_action[i,count_row]=1
+                check_found_boundary[i] = 1
             count_row+=1 
+    if sum(check_found_boundary) != len(new_d_o):
+        print('\n !!!!!!!! Problem in bid boundary !!!!!!!!!!', sum(check_found_boundary))
+        # print(bid_action)
+        
     return bid_action.flatten(), offer_action.flatten()
 
 
@@ -637,11 +659,17 @@ def update_offers_demands():
 # Serach for best action set by looking to number of played actions and objective function
 def select_best_bids_by_actions(action_hash_set, action_played, action_hash_count, j, demand_bid, offers_bid, obj_df):
     
-    counter_list=[]
-    for k in action_hash_count[j].keys():
-        counter_list.append(action_hash_count[j][k])
+    # counter_list=[]
+    # for k in action_hash_count[j].keys():
+    #     counter_list.append(action_hash_count[j][k])
         
-    max_count_played_actions = max(counter_list)
+    # max_count_played_actions = max(counter_list)
+    # Find the maximum number played by using same action
+    
+    file_name='diagonalizaton_results.csv'
+    diagonal_df = pd.read_csv(file_name)
+    
+    max_count_played_actions = max(list(action_hash_count[j].values()))
     
     max_actions_played = []
     for h in action_hash_set[j].keys():
@@ -654,13 +682,32 @@ def select_best_bids_by_actions(action_hash_set, action_played, action_hash_coun
             if action_played[j][index] == action:
                 index_list_max_played_actions.append(index)
     
+    max_obj=np.Inf
+    select_iter=np.NAN
+    
+    for index in index_list_max_played_actions:
+        if obj_df[index] < max_obj:
+            max_obj=obj_df[index]
+            select_iter = index
+    
+    bid_action = diagonal_df.loc[diagonal_df['Iteration']==select_iter,'bids_0'+str(j)].tolist()
+    offer_action= diagonal_df.loc[diagonal_df['Iteration']==select_iter,'offer_0'+str(j)].tolist()
+    
+    if len(bid_action) < 24:
+        print("Wrong bid action for iteration", select_iter)
+    
+    if len(offer_action) < 24:
+        print("Wrong offer action for iteration", select_iter)
+    
+    demand_bid[j] = bid_action
+    offers_bid[j] = offer_action
     pass    
 
 feasible_bid = dict()
 feasible_offer = dict()
 
 check=False
-no_iteration =3
+no_iteration = 500
 
 infeasibility_counter=0
 infeasibility_counter_DA =[0,0,0]
@@ -799,18 +846,15 @@ for n in range(no_iteration):
                     action_played[j]=[counter_played_actions[j-1]]
                         
         else:
-             infeasibility_counter+=1
-             infeasibility_counter_DA[j-1] += 1
-             new_d_o = feasible_offer[j] # random_offer(ncda, horizon)[0][j]
-             new_d_b = feasible_bid[j]   # random_offer(ncda, horizon)[1][j]
-             objective_function[j].append('NAN')
-     
+            print("\n   Problem In solving model")
+            # infeasibility_counter+=1
+            # infeasibility_counter_DA[j-1] += 1
+            # new_d_o = feasible_offer[j] # random_offer(ncda, horizon)[0][j]
+            # new_d_b = feasible_bid[j]   # random_offer(ncda, horizon)[1][j]
+            # objective_function[j].append('NAN')
+    
         
-        # After adding actions to the dictionaries,
-        # Search for best action to use
-        # first based on the number each action hash played
-        # If there are several ones with same played actions, choose one with minimum objective function
-        select_best_bids_by_actions(action_hash_set, action_played, action_hash_count, j, demand_bid, offers_bid, pd.DataFrame.from_dict(objective_function))
+        
         
         new_offers[j]=new_d_o
         new_bids[j]= new_d_b        
@@ -833,20 +877,38 @@ for n in range(no_iteration):
         
         print('\nno EPEC, End of round:',n+1,'\n********************')
     
-    if (n < no_iteration-1): # (not check) and
+    # After adding actions to the dictionaries,
+        # Search for best action to use
+        # first based on the number each action hash played
+        # If there are several ones with same played actions, choose one with minimum objective function
+        if n>=2:
+            for j in range(1,ncda+2):
+                select_best_bids_by_actions(action_hash_set, action_played, action_hash_count, j, demand_bid, offers_bid, objective_function[j])
+            
+    if (not check) and (n < no_iteration-1):
         for key in new_offers:
             zipped_lists = zip(offers_bid[key], new_offers[key])
-            sum_zip =  [x*rate + (1-rate)*y for (x, y) in zipped_lists]
+            sum_zip =  [x*rate + y*(1-rate) for (x, y) in zipped_lists]
             offers_bid[key] = sum_zip
             
             zipped_lists = zip(demand_bid[key], new_bids[key])
-            sum_zip =  [x*rate + (1-rate)*y for (x, y) in zipped_lists]
+            sum_zip =  [x*rate + y*(1-rate) for (x, y) in zipped_lists]
             demand_bid[key] = sum_zip
+    
+    # if (n < no_iteration-1): # (not check) and
+    #     for key in new_offers:
+    #         zipped_lists = zip(offers_bid[key], new_offers[key])
+    #         sum_zip =  [x*rate + (1-rate)*y for (x, y) in zipped_lists]
+    #         offers_bid[key] = sum_zip
             
-            # for j in range(1,ncda+2):
-            #     offers_bid[j] = offers_bid[j]*rate + (1-rate)*new_offers[j]
-            #     demand_bid[j] = demand_bid[j]*rate +(1-rate)*new_bids[j]
-
+    #         zipped_lists = zip(demand_bid[key], new_bids[key])
+    #         sum_zip =  [x*rate + (1-rate)*y for (x, y) in zipped_lists]
+    #         demand_bid[key] = sum_zip
+            
+    #         # for j in range(1,ncda+2):
+    #         #     offers_bid[j] = offers_bid[j]*rate + (1-rate)*new_offers[j]
+    #         #     demand_bid[j] = demand_bid[j]*rate +(1-rate)*new_bids[j]
+    
 
 # save model objective function results
 pd.DataFrame.from_dict(objective_function).to_csv('Model_CSV/objective_'+timestr+'.csv', index=False)
