@@ -101,20 +101,20 @@ def load_data(file_index):
     return df1 , df2
 
 
-gen_capacity =[1, 0.5, 10]
+gen_capacity =[0.2, 0.1, 10]
 # gen_capacity =[50000, 50000, 50000]
 
 random.seed(42)
 
 # Time Horizon
-NO_prosumers = 1000
+NO_prosumers = 300
 horizon=24
 H = range(16,horizon+16)    
 MVA = 1  # Power Base
 PU_DA = 1/(1000*MVA)
 
 # Number of strategies
-no_strategies = 50
+no_strategies = 30
 
 nl = 3    # Number of network lines
 nb = 3    # Number of network buses
@@ -378,7 +378,7 @@ using diagonalization method
 """
 
 check=False
-no_iteration = 2
+no_iteration = 3
 rate=0.01  #learning rate like gradient descent
 infeasibility_counter_DA =[0,0,0]
 timestr = time.strftime("%Y%m%d-%H%M%S")
@@ -912,6 +912,13 @@ for n in range(no_iteration):
 
 # save model objective function results
 pd.DataFrame.from_dict(objective_function).to_csv('Model_CSV/objective_'+timestr+'.csv', index=False)
+
+pd.DataFrame.from_dict(action_hash_set).to_csv('Model_CSV/Action_hash_set'+timestr+'.csv', index=False)
+
+pd.DataFrame.from_dict(action_hash_count).to_csv('Model_CSV/Action_hash_count'+timestr+'.csv', index=False)
+
+pd.DataFrame.from_dict(action_played).to_csv('Model_CSV/Action_hash_played'+timestr+'.csv', index=False)
+
 
 with open('Model_CSV/EVs_list_'+timestr+'.csv','w', newline='') as file:          
     csv_writer = writer(file)
