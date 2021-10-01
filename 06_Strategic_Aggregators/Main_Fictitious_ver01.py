@@ -12,6 +12,8 @@ import numpy as np
 import collections
 from csv import writer
 from collections import Counter
+import hashlib
+
 
 from MPEC_Concrete_Model_ver03 import mpec_model
 from pyomo.environ import *
@@ -101,20 +103,20 @@ def load_data(file_index):
     return df1 , df2
 
 
-gen_capacity =[1, 0.5, 10]
+gen_capacity =[0.1,0.1, 10]
 # gen_capacity =[50000, 50000, 50000]
 
 random.seed(42)
 
 # Time Horizon
-NO_prosumers=1000
+NO_prosumers=100
 horizon=24
 H = range(16,horizon+16)    
 MVA = 1  # Power Base
 PU_DA = 1/(1000*MVA)
 
 # Number of strategies
-no_strategies = 30
+no_strategies = 50
 
 nl = 3    # Number of network lines
 nb = 3    # Number of network buses
@@ -378,7 +380,7 @@ using diagonalization method
 """
 
 check=False
-no_iteration = 2
+no_iteration = 3
 rate=0.01  #learning rate like gradient descent
 infeasibility_counter_DA =[0,0,0]
 timestr = time.strftime("%Y%m%d-%H%M%S")
@@ -491,11 +493,11 @@ for n in range(no_iteration):
     # Step 4 check if epsilon difference exist
     for key in new_offers:
         zipped_lists = zip(offers_bid[key], new_offers[key])
-        sum_zip =  [(x + y)/2 for (x, y) in zipped_lists]
+        sum_zip =  [round((x + y),6) for (x, y) in zipped_lists]
         offers_bid[key] = sum_zip
         
         zipped_lists = zip(demand_bid[key], new_bids[key])
-        sum_zip =  [(x + y)/2 for (x, y) in zipped_lists]
+        sum_zip =  [round((x + y),6) for (x, y) in zipped_lists]
         demand_bid[key] = sum_zip
 
 # Double the values
@@ -517,19 +519,22 @@ discrete_offer = dict()
 
 # Create dictionary for each strategic DA counting it's discrete value
 def make_discrte_value(step):
+     
     for i in range(1, ncda+2):
         discrete_bid[i]={}
         discrete_offer[i]={}
-        
+        max_offer_t = max(offers_bid[i])
+        max_bid_t = max(demand_bid[i])
         offers_temp = dict()
         demand_temp= dict()
+        
         for t in range(horizon):
             offers_temp[t] = {}
             demand_temp[t] = {}
-            offers = np.linspace(0, offers_bid[i][t]*5, step).tolist()
+            offers = np.linspace(0, (offers_bid[i][t]+max_offer_t)*3, step).tolist()
             offers = np.around(offers, 6)
             
-            demands = np.linspace(0, demand_bid[i][t]*5, step).tolist()
+            demands = np.linspace(0, (demand_bid[i][t]*max_bid_t)*3, step).tolist()
             demands = np.around(demands, 6)
             
             offers_temp[t][(0,0)] = 0
@@ -544,26 +549,190 @@ def make_discrte_value(step):
 # Calling this function to make values discrete
 make_discrte_value(no_strategies)
 
+# Discretize not based on strategies but based on epsilon difference
+def make_epsilon_discrete_value(epsilon):
+    for i in range(1, ncda+2):
+        discrete_bid[i]={}
+        discrete_offer[i]={}
+        max_offer_t = max(offers_bid[i])
+        max_bid_t = max(demand_bid[i])
+        offers_temp = dict()
+        demand_temp= dict()
+        
+        for t in range(horizon):
+            offers_temp[t] = {}
+            demand_temp[t] = {}
+            offers = np.arange(0, (offers_bid[i][t]+max_offer_t)*3, epsilon).tolist()
+            offers = np.around(offers, 6)
+            
+            demands = np.arange(0, (demand_bid[i][t]*max_bid_t)*3, epsilon).tolist()
+            demands = np.around(demands, 6)
+            
+            offers_temp[t][(0,0)] = 0
+            demand_temp[t][(0,0)] = 0
+            for v in range(len(offers)-1):
+                offers_temp[t][(offers[v], offers[v+1])] = 0
+        
+            for v in range(len(demands)-1):
+                demand_temp[t][(demands[v], demands[v+1])] = 0
+            
+        discrete_bid[i] = demand_temp
+        discrete_offer[i] = offers_temp
+    pass
+
+make_epsilon_discrete_value(0.001)
+
 # After each iteration update discrete offers and bids by counting them
 def check_boundry(new_d_o, new_d_b, j):
+    bid_action = np.zeros((horizon,no_strategies), dtype=np.int8)
+    offer_action= np.zeros((horizon,no_strategies), dtype=np.int8)
+    
+    # Check number of boundaries become true
+    check_found_boundary = np.zeros(len(new_d_o))
+
     for i in range(len(new_d_o)):
+        count_row=0
         for key in discrete_offer[j][i]:
             if new_d_o[i] == 0.0:
                 discrete_offer[j][i][(0,0)] += 1
+                offer_action[i,count_row]=1
+                check_found_boundary[i] = 1
                 break
             elif new_d_o[i] > key[0] and new_d_o[i]<= key[1]:
                 discrete_offer[j][i][key] += 1
-            
-        
+                offer_action[i,count_row]=1 
+                check_found_boundary[i] = 1
+            count_row+=1 
+    
+    if sum(check_found_boundary) != len(new_d_o):
+        print('\n !!!!!!!! Problem in  offer boundary !!!!!!!!!!', sum(check_found_boundary))
+        # print(offer_action)
+    
+    # Check number of boundaries become true
+    check_found_boundary = np.zeros(len(new_d_o))
+    
     for i in range(len(new_d_b)):
+        count_row=0
         for key in discrete_bid[j][i]:
             if new_d_b[i] == 0.0:
                 discrete_bid[j][i][(0,0)] += 1
+                bid_action[i,count_row]=1
+                check_found_boundary[i] = 1
                 break
             elif new_d_b[i] > key[0] and new_d_b[i]<= key[1]:
-                discrete_bid[j][i][key] += 1         
+                discrete_bid[j][i][key] += 1
+                bid_action[i,count_row]=1
+                check_found_boundary[i] = 1
+            count_row+=1 
+    if sum(check_found_boundary) != len(new_d_o):
+        print('\n !!!!!!!! Problem in bid boundary !!!!!!!!!!', sum(check_found_boundary))
+        # print(bid_action)
+        
+    return bid_action.flatten(), offer_action.flatten()
+
+def check_epsilon_boundry(new_d_o, new_d_b, j):
+    
+    bid_action = []
+    offer_action= []
+    # Check number of boundaries become true
+    check_found_boundary = np.zeros(len(new_d_o))
+    
+    for i in range(len(new_d_o)):
+        count_row=0
+        offer_action_row = np.zeros(len(discrete_offer[j][i]))
+        for key in discrete_offer[j][i]:
+            if new_d_o[i] == 0.0:
+                discrete_offer[j][i][(0,0)] += 1
+                offer_action_row[count_row]=1
+                check_found_boundary[i] = 1
+                break
+            elif new_d_o[i] > key[0] and new_d_o[i]<= key[1]:
+                discrete_offer[j][i][key] += 1
+                offer_action_row[count_row]=1
+                # offer_action[i,count_row]=1 
+                check_found_boundary[i] = 1
+            count_row+=1
+        for value in offer_action_row.tolist():
+            offer_action.append(value)
+    
+    if sum(check_found_boundary) != len(new_d_o):
+        print('\n !!!!!!!! Problem in  offer boundary !!!!!!!!!!', sum(check_found_boundary))
+        # print(offer_action)
+    
+    # Check number of boundaries become true
+    check_found_boundary = np.zeros(len(new_d_o))
+    
+    for i in range(len(new_d_b)):
+        count_row=0
+        bid_action_row = np.zeros(len(discrete_bid[j][i]))
+        for key in discrete_bid[j][i]:
+            if new_d_b[i] == 0.0:
+                discrete_bid[j][i][(0,0)] += 1
+                bid_action_row[count_row] = 1
+                # bid_action[i,count_row]=1
+                check_found_boundary[i] = 1
+                break
+            elif new_d_b[i] > key[0] and new_d_b[i]<= key[1]:
+                discrete_bid[j][i][key] += 1
+                # bid_action[i,count_row]=1
+                bid_action_row[count_row] = 1
+                check_found_boundary[i] = 1
+            count_row+=1
+        for value in bid_action_row.tolist():
+            bid_action.append(value)
+    if sum(check_found_boundary) != len(new_d_o):
+        print('\n !!!!!!!! Problem in bid boundary !!!!!!!!!!', sum(check_found_boundary))
+        # print(bid_action)
+        
+    return np.array(bid_action), np.array(offer_action)
     pass
-                
+    
+# hash function to unique id for each action with zero or one
+# Needs: python -m pip install numpy xxhash
+def array_id(a, *, include_dtype = False, include_shape = False, algo = 'sha256'):
+    data = bytes()
+    if include_dtype:
+        data += str(a.dtype).encode('ascii')
+    data += b','
+    if include_shape:
+        data += str(a.shape).encode('ascii')
+    data += b','
+    data += a.tobytes()
+    if algo == 'sha256':
+        #import hashlib
+        return hashlib.sha256(data).hexdigest().upper()
+    else:
+        assert False, algo
+    
+    pass
+
+# After finishing inner iteration for solving MPECs and updating boundry
+# Before next round update ooffers and demands based on prbability
+# of discrete values 
+def update_offers_demands_by_prob(iter_n):
+    
+    for DA in offers_bid.keys():
+        temp_d_o=[]
+        for t in range(horizon):
+            sum_BIDs=0
+            for BID in discrete_offer[DA][t]:
+                prob = discrete_offer[DA][t][BID]/iter_n
+                sum_BIDs += prob*BID[1]
+            temp_d_o.append(sum_BIDs)
+        offers_bid[DA]=temp_d_o
+    
+    for DA in demand_bid.keys():
+        temp_d_b=[]
+        for t in range(horizon):
+            sum_BIDs=0
+            for BID in discrete_bid[DA][t]:
+                prob = discrete_bid[DA][t][BID]/iter_n
+                sum_BIDs += prob*BID[1]
+            temp_d_b.append(sum_BIDs)
+        demand_bid[DA] = temp_d_b
+    pass
+        
+               
 # Update offers_bid, demand_bid dictionaries
 def keywithmaxval(d):
      """ a) create a list of the dict's keys and values; 
@@ -628,14 +797,63 @@ feasible_bid = dict()
 feasible_offer = dict()
 
 check=False
-no_iteration =20
+no_iteration =500
 
 infeasibility_counter=0
 infeasibility_counter_DA =[0,0,0]
 objective_function = dict()
 
+# store action selection in action history
+# at each iteration which action vector is used
+action_history = np.zeros((ncda+1,no_iteration))
+
+# Store number of acction played by looking into it's hash action dictionary
+# Check action_hash_set dictionary below to find number of action based on hash a1, a2, ...
+action_played=dict()
+
+
+# Store hash of the vectore and it's corresponding label as action number
+action_hash_set = dict()
+for j in range(1,ncda+2):
+    action_hash_set[j]=dict()
+
+# Store counter of occurance for each hashed action
+action_hash_count = dict()
+for j in range(1,ncda+2):
+    action_hash_count[j]=dict()
+
+
+# # Store action vectores in ditionaries
+# file_name_bid=dict()
+# for key in discrete_bid.keys():
+#     file_name_bid[key] = "Model_CSV/discrete_bid_DA"+str(key)+"_"+timestr+".csv"
+#     temp_bid=[]
+#     for t in discrete_bid[key].keys():
+#         for BID in discrete_bid[key][t]:
+#             temp_bid.append(BID[1])
+#     with open(file_name_bid[key],'w', newline='') as file:          
+#         csv_writer = writer(file)
+#         csv_writer.writerow(temp_bid)
+
+# # Store action vectores in ditionaries
+# file_name_offer=dict()
+# for key in discrete_offer.keys():
+#     file_name_offer[key] = "Model_CSV/discrete_offer_DA"+str(key)+"_"+timestr+".csv"
+#     temp_bid=[]
+#     for t in discrete_offer[key].keys():
+#         for BID in discrete_offer[key][t]:
+#             temp_bid.append(BID[1])
+#     with open(file_name_offer[key],'w', newline='') as file:          
+#         csv_writer = writer(file)
+#         csv_writer.writerow(temp_bid)
+
+
+# Count number of discrete actions played by each DA
+counter_played_actions=np.zeros(ncda+1)
+
 print("\n\n********** Starting FICTITIOUS PLAY algortihm ********")
-for n in range(no_iteration):
+# for n in range(no_iteration):
+for n in range(501,1000):
     
     print("********************* start round {} *******************".format(n+1))
     
@@ -715,7 +933,8 @@ for n in range(no_iteration):
             # model_to_csv(model,IN_loads.sum(0))
             model_to_csv_iteration(model, IN_loads.sum(0), n, str(j), timestr, EVs_list[j])
             new_d_o, new_d_b = solved_model_bids(model)
-            check_boundry(new_d_o, new_d_b, j)
+            # bid_action_vec, offer_action_vec = check_boundry(new_d_o, new_d_b, j)
+            bid_action_vec, offer_action_vec = check_epsilon_boundry(new_d_o, new_d_b, j)
             feasible_bid[j] =   new_d_b
             feasible_offer[j] = new_d_o
             
@@ -724,6 +943,34 @@ for n in range(no_iteration):
             else:
                 objective_function[j] = [value(model.obj)]
             
+             # Create hash bid
+            hash_bid = array_id(bid_action_vec)
+            
+            # If hash bid exist it's not unique action otherwise it's unique
+            if hash_bid in action_hash_set[j].keys():
+                action_hash_count[j][hash_bid]+=1
+                if j in action_played.keys():
+                    action_played[j].append(action_hash_set[j][hash_bid])
+                else:
+                    action_played[j]=[action_hash_set[j][hash_bid]]
+            else:
+                counter_played_actions[j-1]+=1
+                action_hash_count[j][hash_bid]=1
+                action_hash_set[j][hash_bid] = counter_played_actions[j-1]
+                if j in action_played.keys():
+                    action_played[j].append(counter_played_actions[j-1])
+                else:
+                    action_played[j]=[counter_played_actions[j-1]]
+            
+            # # Store action vectors in related files
+            # with open(file_name_bid[j],'a', newline='') as file:          
+            #     csv_writer = writer(file)
+            #     csv_writer.writerow(list(bid_action_vec))
+            
+            # with open(file_name_offer[j],'a', newline='') as file:          
+            #     csv_writer = writer(file)
+            #     csv_writer.writerow(list(offer_action_vec))
+        
         else:
              infeasibility_counter+=1
              infeasibility_counter_DA[j-1] += 1
@@ -752,14 +999,17 @@ for n in range(no_iteration):
         
         print('\nno EPEC, End of round:',n+1,'\n********************')
     
+    # update offers and bids
+    update_offers_demands_by_prob(n+1)
+    
     if (n < no_iteration-1): # (not check) and
         for key in new_offers:
             zipped_lists = zip(offers_bid[key], new_offers[key])
-            sum_zip =  [x*rate + (1-rate)*y for (x, y) in zipped_lists]
+            sum_zip =  [y*rate + (1-rate)*x for (x, y) in zipped_lists]
             offers_bid[key] = sum_zip
             
             zipped_lists = zip(demand_bid[key], new_bids[key])
-            sum_zip =  [x*rate + (1-rate)*y for (x, y) in zipped_lists]
+            sum_zip =  [y*rate + (1-rate)*x for (x, y) in zipped_lists]
             demand_bid[key] = sum_zip
             
             # for j in range(1,ncda+2):
@@ -769,6 +1019,13 @@ for n in range(no_iteration):
 
 # save model objective function results
 pd.DataFrame.from_dict(objective_function).to_csv('Model_CSV/objective_'+timestr+'.csv', index=False)
+
+pd.DataFrame.from_dict(action_hash_set).to_csv('Model_CSV/Action_hash_set_'+timestr+'.csv', index=False)
+
+pd.DataFrame.from_dict(action_hash_count).to_csv('Model_CSV/Action_hash_count_'+timestr+'.csv', index=False)
+
+pd.DataFrame.from_dict(action_played).to_csv('Model_CSV/Action_hash_played_'+timestr+'.csv', index=False)
+
 
 with open('Model_CSV/EVs_list_'+timestr+'.csv','w', newline='') as file:          
     csv_writer = writer(file)
@@ -795,3 +1052,5 @@ else:
     print(pd.DataFrame.from_dict(offers_bid) - pd.DataFrame.from_dict(feasible_offer))
     print("Bid Differences:")
     print(pd.DataFrame.from_dict(demand_bid) - pd.DataFrame.from_dict(feasible_bid))
+
+
