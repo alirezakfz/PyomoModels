@@ -140,7 +140,11 @@ for kk in range(0,nl):
     LineFlows[kk,FromBus[kk]-1] = 1
     LineFlows[kk,ToBus[kk]-1] = -1
     
-Yline = (LineFlows.conj().transpose()*LinesSusc).conj().transpose()
+    
+# Yline = (LineFlows.conj().transpose()*LinesSusc).conj().transpose()
+LinesSusc = np.array(LinesSusc).transpose()
+Yline=LineFlows*LinesSusc
+
 
 
 # # RAndom Supply and bid offer of competing DA i in time t

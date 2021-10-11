@@ -154,7 +154,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     model.d_b = Var(model.NCDA, model.T, within=NonNegativeReals, initialize=0) #, bounds=demand_bid_bouds
     
     # voltage phase angle
-    model.teta = Var(model.BUS, model.T, within=NonNegativeReals, initialize=0)
+    model.teta = Var(model.BUS, model.T, within=Reals, initialize=0, bounds=(-180,180))
     
     # Dual price 
     model.Lambda = Var(model.BUS, model.T, within=NonNegativeReals, initialize=0)
@@ -421,57 +421,62 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     Lower level Constraints
     """
     
-    # # Constraint (b.2), power balance at each bus i of the power grid, that must hold at every timeslot t. 
-    # def network_power_balance_rule(model, i, t):
-    #     sum1=0
-    #     if i in dic_G.keys():
-    #         sum1=sum(-model.g[x,t] for x in dic_G[i])
+    # Constraint (b.2), power balance at each bus i of the power grid, that must hold at every timeslot t. 
+    def network_power_balance_rule(model, i, t):
+        sum1=0
+        if i in dic_G.keys():
+            sum1=sum(-model.g[x,t] for x in dic_G[i])
         
-    #     sum3=0
-    #     sum2=0
-    #     if i in dic_Bus_CDA.keys() :
-    #         if i == DABus:
-    #             sum2= -model.E_DA_G[t]
-    #             sum3= model.E_DA_L[t]
-    #         else:
-    #             x=dic_Bus_CDA[i]
-    #             sum3 = model.d_b[x,t]   # Demand Load by competetive DA i     if x != 'DAs'
-    #             sum2 = -model.d_o[x,t]  # Supply offer by competetive DA i
+        sum3=0
+        sum2=0
+        if i in dic_Bus_CDA.keys() :
+            if i == DABus:
+                sum2= -model.E_DA_G[t]
+                sum3= model.E_DA_L[t]
+            else:
+                x=dic_Bus_CDA[i]
+                sum3 = model.d_b[x,t]   # Demand Load by competetive DA i     if x != 'DAs'
+                sum2 = -model.d_o[x,t]  # Supply offer by competetive DA i
         
-    #     sumB = sum(B[i-1,j-1]*model.teta[j,t] for j in model.BUS)
+        sumB = sum(B[i-1,j-1]*model.teta[j,t] for j in model.BUS)
         
-    #     return sum1+sum2+sum3+sumB  == 0  #+ model.b2_1[i,t] - model.b2_2[i,t]
-    # model.network_power_balance_con = Constraint(model.BUS, model.T, rule=network_power_balance_rule)    
+        return sum1+sum2+sum3+sumB  == 0  #+ model.b2_1[i,t] - model.b2_2[i,t]
+    model.network_power_balance_con = Constraint(model.BUS, model.T, rule=network_power_balance_rule)    
     
-    def network_power_balance_rule(model, t):
-        sum_t=0
-        for i in model.BUS:
-            sum1=0
-            if i in dic_G.keys():
-                sum1=sum(-model.g[x,t] for x in dic_G[i])
-            
-            sum3=0
-            sum2=0
-            if i in dic_Bus_CDA.keys():
-                if i == DABus:
-                    sum2= -model.E_DA_G[t]
-                    sum3= model.E_DA_L[t]
-                else:
-                    x=dic_Bus_CDA[i]
-                    sum3 = model.d_b[x,t]   # Demand Load by competetive DA i     if x != 'DAs'
-                    sum2 = -model.d_o[x,t]  # Supply offer by competetive DA i
-            
-            sumB = sum(B[i-1,j-1]*model.teta[j,t] for j in model.BUS)
-            
-            sum_t += sum1+sum2+sum3 +sumB 
-        
-        # sumB = sum(B[i-1,j-1]*model.teta[j,t] for j in model.BUS)
-        # sum_t += sumB
-        
-        return sum_t  == 0  #+ model.b2_1[i,t] - model.b2_2[i,t]
-    model.network_power_balance_con = Constraint(model.T, rule=network_power_balance_rule)  
     
-    # # Constraint (b.8), Line Flow Bounds (b.8)  ******************
+    
+    # def network_power_balance_rule(model, t):
+    #     sum_t=0
+    #     for i in model.BUS:
+    #         sum1=0
+    #         if i in dic_G.keys():
+    #             sum1=sum(-model.g[x,t] for x in dic_G[i])
+            
+    #         sum3=0
+    #         sum2=0
+    #         if i in dic_Bus_CDA.keys():
+    #             if i == DABus:
+    #                 sum2= -model.E_DA_G[t]
+    #                 sum3= model.E_DA_L[t]
+    #             else:
+    #                 x=dic_Bus_CDA[i]
+    #                 sum3 = model.d_b[x,t]   # Demand Load by competetive DA i     if x != 'DAs'
+    #                 sum2 = -model.d_o[x,t]  # Supply offer by competetive DA i
+            
+    #         sumB = sum(B[i-1,j-1]*model.teta[j,t] for j in model.BUS)
+            
+    #         sum_t += sum1+sum2+sum3 +sumB 
+        
+    #     # sumB = sum(B[i-1,j-1]*model.teta[j,t] for j in model.BUS)
+    #     # sum_t += sumB
+     
+    
+    #     return sum_t  == 0  #+ model.b2_1[i,t] - model.b2_2[i,t]
+    # model.network_power_balance_con = Constraint(model.T, rule=network_power_balance_rule)  
+    
+   
+    
+   # # Constraint (b.8), Line Flow Bounds (b.8)  ******************
     # def line_flow_lower_bound_rule(model, i, t):
     #     return sum(-Yline[i-1,j-1]*model.teta[j,t] for j in model.BUS) - model.b8_1[i,t] <= FMAX[i-1]
     # model.line_flow_lower_bound_con = Constraint(model.LINES, model.T, rule=line_flow_lower_bound_rule)
@@ -481,7 +486,9 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     #     return sum(Yline[i-1,j-1]*model.teta[j,t] for j in model.BUS) - model.b8_2[i,t] <= FMAX[i-1]
     # model.line_flow_upper_bound_con = Constraint(model.LINES, model.T, rule=line_flow_upper_bound_rule)
     
-    # Constraint (C.1) generators dual price
+   
+    
+   # Constraint (C.1) generators dual price
     def generator_dual_price_rule(model, i, t):
         bus=dic_G_Bus[i]        
         return c_g[i][t-16]-model.Lambda[bus,t] - model.w_g_low[i,t]+model.w_g_up[i,t]  ==0  #+ model.c1_1[i,t] - model.c1_2[i,t]
@@ -704,8 +711,8 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     model.KKT_transmission_up_2_con = Constraint(model.LINES, model.T, rule=KKT_transmission_up_2_rule)
     
     
-    # ***************************************
-    # refrense angel set
+    # #***************************************
+    # # refrense angel set
     # def set_ref_angel_rule(model, t):
     #     return model.teta[ref_angel,t]==0
     # model.set_ref_angel_con = Constraint(model.T, rule=set_ref_angel_rule)

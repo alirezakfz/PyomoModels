@@ -397,7 +397,8 @@ def demand_bid_bouds(model, i, t):
 model.d_b = Var(model.NCDA, model.T, within=NonNegativeReals, initialize=0, bounds=demand_bid_bouds)
 
 # voltage phase angle
-model.teta = Var(model.BUS, model.T, within=NonNegativeReals, initialize=0)
+# model.teta = Var(model.BUS, model.T, within=NonNegativeReals, initialize=0)
+model.teta = Var(model.BUS, model.T, within=Reals, initialize=0)
 
 # Dual price 
 model.Lambda = Var(model.BUS, model.T, within=NonNegativeReals, initialize=0)
