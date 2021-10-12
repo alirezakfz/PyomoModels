@@ -144,15 +144,15 @@ gen_capacity =[100, 75, 50, 50]
 random.seed(42)
 
 # Time Horizon
-NO_prosumers=300
+NO_prosumers=50
 horizon=24
 H = range(16,horizon+16)    
 MVA = 30  # Power Base
 PU_DA = 1/(1000*MVA)
-epsilon = 0.01
+epsilon = 0.001
 timestr = time.strftime("%Y%m%d-%H%M%S")
 # Number of strategies
-no_strategies = 5
+no_strategies = 15
 
 nl = 7    # Number of network lines
 nb = 6    # Number of network buses
@@ -590,8 +590,8 @@ demand_probability=dict()
 supply_probability=dict()
 
 # Store points for offers and deamands to multiply
-demand_points= dict()
-offer_points= dict()
+demand_points_dic= dict()
+offers_points_dic= dict()
 
 
 # Create dictionary for each strategic DA counting it's discrete value
@@ -603,8 +603,10 @@ def make_discrte_value(step):
         offers_temp = dict()
         demand_temp= dict()
         
-        demand_points[i]={}
-        offer_points[i]={}
+        demand_points_dic[i]={}
+        offers_points_dic[i]={}
+        temp_demand_points=np.zeros((horizon,step))
+        temp_offers_points=np.zeros((horizon,step))
         
         demand_prob_temp=[]
         supply_prob_temp=[]
@@ -627,7 +629,10 @@ def make_discrte_value(step):
             demand_p_temp.append(0)
             supply_p_temp.append(0)
             
+            temp_demand_points[t,0] = 0 
             for value in range(step-1):
+                temp_demand_points[t,value+1] =  demands[value+1] # Store point as np array for probability check
+                temp_offers_points[t,value+1] =  offers[value+1]
                 offers_temp[t][(offers[value], offers[value+1])] = 0
                 demand_temp[t][(demands[value], demands[value+1])] = 0
                 supply_p_temp.append(round((offers[value]+offers[value+1])/2, 6))
@@ -641,6 +646,9 @@ def make_discrte_value(step):
         
         demand_probability[i]= demand_prob_temp
         supply_probability[i]= supply_prob_temp
+        
+        demand_points_dic[i] = temp_demand_points
+        offers_points_dic[i] = temp_offers_points
     pass
 # Calling thins function to make values
 
@@ -697,8 +705,8 @@ def update_offers_demand_by_prob(n_iter):
         temp_d_o = []
         temp_d_b = []
         for i in range(horizon):
-            temp_d_b.append(round(sum(demand_probability[key][i]* total_demand_prob[key][i])/n_iter, 6))
-            temp_d_o(round(sum(supply_probability[key][i]*total_supply_prob[key][i]/n_iter),6))
+            temp_d_b.append(round(sum(demand_points_dic[key][i]* total_demand_prob[key][i])/n_iter, 6))
+            temp_d_o.append(round(sum(offers_points_dic[key][i]*total_supply_prob[key][i]/n_iter),6))
         
         offers_bid[key] = temp_d_o
         demand_bid[key] = temp_d_b
@@ -738,31 +746,40 @@ def load_bids_probs(model,j):
     pass
 
 
-# Store action vectores in ditionaries
-file_name_bid=dict()
-for key in discrete_bid.keys():
-    file_name_bid[key] = "Model_CSV/discrete_bid_DA"+str(key)+"_"+timestr+".csv"
-    temp_bid=[]
-    for t in discrete_bid[key].keys():
-        for BID in discrete_bid[key][t]:
-            temp_bid.append(BID[1])
-    with open(file_name_bid[key],'w', newline='') as file:          
-        csv_writer = writer(file)
-        csv_writer.writerow(temp_bid)
+# # Store action vectores in ditionaries
+# file_name_bid=dict()
+# for key in discrete_bid.keys():
+#     file_name_bid[key] = "Model_CSV/discrete_bid_DA"+str(key)+"_"+timestr+".csv"
+#     temp_bid=[]
+#     for t in discrete_bid[key].keys():
+#         for BID in discrete_bid[key][t]:
+#             temp_bid.append(BID[1])
+#     with open(file_name_bid[key],'w', newline='') as file:          
+#         csv_writer = writer(file)
+#         csv_writer.writerow(temp_bid)
 
-# Store action vectores in ditionaries
-file_name_offer=dict()
-for key in discrete_offer.keys():
-    file_name_offer[key] = "Model_CSV/discrete_offer_DA"+str(key)+"_"+timestr+".csv"
-    temp_bid=[]
-    for t in discrete_offer[key].keys():
-        for BID in discrete_offer[key][t]:
-            temp_bid.append(BID[1])
-    with open(file_name_offer[key],'w', newline='') as file:          
-        csv_writer = writer(file)
-        csv_writer.writerow(temp_bid)
+# # Store action vectores in ditionaries
+# file_name_offer=dict()
+# for key in discrete_offer.keys():
+#     file_name_offer[key] = "Model_CSV/discrete_offer_DA"+str(key)+"_"+timestr+".csv"
+#     temp_bid=[]
+#     for t in discrete_offer[key].keys():
+#         for BID in discrete_offer[key][t]:
+#             temp_bid.append(BID[1])
+#     with open(file_name_offer[key],'w', newline='') as file:          
+#         csv_writer = writer(file)
+#         csv_writer.writerow(temp_bid)
 
 
+# Columns to be added into diag file results
+['offer_01','offer_02','offer_03', 'bids_01','bids_02', 'bids_03']
+dig_col=[]
+for i in range(1,ncda+2):
+    dig_col.append('offer_0'+str(i))
+
+for i in range(1,ncda+2):
+    dig_col.append('bids_0'+str(i))
+    
 # Count number of discrete actions played by each DA
 counter_played_actions=np.zeros(ncda+1)
 
@@ -770,13 +787,16 @@ counter_played_actions=np.zeros(ncda+1)
 DAs_list=[]
 for j in range(1,ncda+2):
     DAs_list.append(j)
+
     
 objective_function = dict()
 
 offers_bid , demand_bid = random_offer(ncda, horizon)
 
+feasible_offer = dict()
+feasible_bid  = dict()
 check=False
-no_iteration = 2
+no_iteration = 2000
 
 print("\n\n********** Starting SMOOTH FICTITIOUS PLAY algortihm ********")
 for n in range(no_iteration):
@@ -879,6 +899,9 @@ for n in range(no_iteration):
             check_boundry(new_d_o, new_d_b, j)
             load_bids_probs(model, j)
             
+            feasible_offer[j] = new_d_o
+            feasible_bid[j] = new_d_b
+            
             if j in objective_function.keys():
                 objective_function[j].append(value(model.obj))
             else:
@@ -897,14 +920,12 @@ for n in range(no_iteration):
         new_bids[j]= new_d_b        
         
         
-    # update_offers_demands()
-    update_offers_demand_by_prob(n+1)
-        
+            
     check=False
     if check_bids(offers_bid,new_offers,epsilon) and check_bids(demand_bid,new_bids,epsilon) : # and (infeasibility_counter < ncda+1)
         check=True
         print("solution found in bids epsilon difference iteration:",n+1)
-        break
+        # break
     else:
         # print(pd.concat([pd.DataFrame.from_dict(offers_bid), pd.DataFrame.from_dict(new_offers)], axis=1))
         # print(pd.concat([pd.DataFrame.from_dict(demand_bid), pd.DataFrame.from_dict(new_bids)], axis=1))
@@ -913,23 +934,43 @@ for n in range(no_iteration):
         diag_df = pd.concat([pd.DataFrame.from_dict(new_offers), pd.DataFrame.from_dict(new_bids)], axis=1)
         diag_df.columns = dig_col
         results_to_csv(diag_df, n)
-        
+        print('\nno EPEC, End of round:',n+1,'\n********************')
+    
+    # update_offers_demands()
+    update_offers_demand_by_prob(n+1)
 
-# Supply probability
-for t in model.T:
-    for s in model.S:
-        print(value(model.da_b_p[s,t]),' ',end="")
-    print()
 
-# demand probability
-for t in model.T:
-    for s in model.S:
-        print(value(model.da_o_p[s,t]),' ',end="")
-    print()
+
+if check:
+    print('Solution is found:')
+    print(pd.DataFrame.from_dict(offers_bid))
+    print(pd.DataFrame.from_dict(demand_bid))
+    # print("Offers differences:")
+    # print(pd.DataFrame.from_dict(offers_bid) - pd.DataFrame.from_dict(feasible_offer))
+    # print("Bid Differences:")
+    # print(pd.DataFrame.from_dict(demand_bid) - pd.DataFrame.from_dict(feasible_bid))
+else:
+    print('No EPEC is found')
+    print("Offers differences:")
+    print(pd.DataFrame.from_dict(offers_bid) - pd.DataFrame.from_dict(feasible_offer))
+    print("Bid Differences:")
+    print(pd.DataFrame.from_dict(demand_bid) - pd.DataFrame.from_dict(feasible_bid))
+
+# # Supply probability
+# for t in model.T:
+#     for s in model.S:
+#         print(value(model.da_b_p[s,t]),' ',end="")
+#     print()
+
+# # demand probability
+# for t in model.T:
+#     for s in model.S:
+#         print(value(model.da_o_p[s,t]),' ',end="")
+#     print()
     
-for t in model.T:
-    print(value(model.DA_supply[t]))
+# for t in model.T:
+#     print(value(model.DA_supply[t]))
     
     
-for t in model.T:
-    print(value(model.DA_demand[t]))
+# for t in model.T:
+#     print(value(model.DA_demand[t]))
