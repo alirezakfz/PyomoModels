@@ -93,7 +93,27 @@ def check_bids(old, new, epsilon):
         else:
             return False
     return check
+
     
+def check_bids_dis_prob(file_name, curr_iter,distance, epsilon):
+    if curr_iter < 1.5*distance:
+        return False
+    
+    check = []
+    for key in file_name:
+        df_bids = pd.read_csv(file_name[key])
+        bool_prob_diff = abs(df_bids[curr_iter-distance+1:curr_iter+1].sum()/distance - df_bids[curr_iter-int(1.5*distance)+1:curr_iter-int(0.5*distance)+1].sum()/distance) <= epsilon
+        if sum(bool_prob_diff) == len(bool_prob_diff):
+            check.append(True)
+            print("DA"+str(key)+" Is reached to EQ ")
+        else:
+            check.append(False)
+    
+    if sum(check) == len(file_name.keys()):
+        return True
+    return False
+
+
 def dictionar_bus(GenBus, CDABus, DAs):
     """
     This function creates dictionary mapping BUS and DAs on that bus
@@ -144,12 +164,12 @@ gen_capacity =[100, 75, 50, 50]
 random.seed(42)
 
 # Time Horizon
-NO_prosumers=50
+NO_prosumers=300
 horizon=24
 H = range(16,horizon+16)    
 MVA = 30  # Power Base
 PU_DA = 1/(1000*MVA)
-epsilon = 0.001
+epsilon = 0.01
 timestr = time.strftime("%Y%m%d-%H%M%S")
 # Number of strategies
 no_strategies = 15
@@ -492,16 +512,17 @@ for n in range(no_iteration):
         dic_CDA_Bus, dic_Bus_CDA, dic_G, dic_G_Bus = dictionar_bus(GenBus, CDABus, j)
 
         DABus=CDABus[j-1][1]
+        
         # offers_bid , demand_bid = random_offer(ncda, horizon)
         F_d_o, F_d_b = select_bid(j, offers_bid, demand_bid)
         
-        #F_d_b = demand_bid[j-1]
-        
         # Price bid for supplying power of strategic DA in time t
-        c_DA_o = c_d_o[DABus-1]['DAS'] # random_price(time)
+        c_DA_o = c_d_o[CDABus[j-1][0]-1]['DAS'] # random_price(time)
         
         # Price bid for buying power of strategic DA in time t
-        c_DA_b = c_d_b[DABus-1]['DAS'] # random_price(time)
+        c_DA_b = c_d_b[CDABus[j-1][0]-1]['DAS'] # random_price(time)
+        
+       
         
         ##Timer
         solver_time = time.time()
@@ -586,8 +607,8 @@ going for FICTITIOUS PLAY algortihm
 discrete_bid = dict()
 discrete_offer = dict()
 
-demand_probability=dict()
-supply_probability=dict()
+demand_strategy=dict()
+supply_strategy=dict()
 
 # Store points for offers and deamands to multiply
 demand_points_dic= dict()
@@ -644,8 +665,8 @@ def make_discrte_value(step):
         discrete_bid[i] = demand_temp
         discrete_offer[i] = offers_temp
         
-        demand_probability[i]= demand_prob_temp
-        supply_probability[i]= supply_prob_temp
+        demand_strategy[i]= demand_prob_temp
+        supply_strategy[i]= supply_prob_temp
         
         demand_points_dic[i] = temp_demand_points
         offers_points_dic[i] = temp_offers_points
@@ -743,32 +764,33 @@ def load_bids_probs(model,j):
     
     total_demand_prob[j] += temp_demand
     total_supply_prob[j] += temp_supply
+    return temp_demand, temp_supply
     pass
 
 
-# # Store action vectores in ditionaries
-# file_name_bid=dict()
-# for key in discrete_bid.keys():
-#     file_name_bid[key] = "Model_CSV/discrete_bid_DA"+str(key)+"_"+timestr+".csv"
-#     temp_bid=[]
-#     for t in discrete_bid[key].keys():
-#         for BID in discrete_bid[key][t]:
-#             temp_bid.append(BID[1])
-#     with open(file_name_bid[key],'w', newline='') as file:          
-#         csv_writer = writer(file)
-#         csv_writer.writerow(temp_bid)
+# Store action vectores in ditionaries
+file_name_bid=dict()
+for key in discrete_bid.keys():
+    file_name_bid[key] = "Model_CSV/discrete_bid_DA"+str(key)+"_"+timestr+".csv"
+    temp_bid=[]
+    for t in discrete_bid[key].keys():
+        for BID in discrete_bid[key][t]:
+            temp_bid.append(BID[1])
+    with open(file_name_bid[key],'w', newline='') as file:          
+        csv_writer = writer(file)
+        csv_writer.writerow(temp_bid)
 
-# # Store action vectores in ditionaries
-# file_name_offer=dict()
-# for key in discrete_offer.keys():
-#     file_name_offer[key] = "Model_CSV/discrete_offer_DA"+str(key)+"_"+timestr+".csv"
-#     temp_bid=[]
-#     for t in discrete_offer[key].keys():
-#         for BID in discrete_offer[key][t]:
-#             temp_bid.append(BID[1])
-#     with open(file_name_offer[key],'w', newline='') as file:          
-#         csv_writer = writer(file)
-#         csv_writer.writerow(temp_bid)
+# Store action vectores in ditionaries
+file_name_offer=dict()
+for key in discrete_offer.keys():
+    file_name_offer[key] = "Model_CSV/discrete_offer_DA"+str(key)+"_"+timestr+".csv"
+    temp_bid=[]
+    for t in discrete_offer[key].keys():
+        for BID in discrete_offer[key][t]:
+            temp_bid.append(BID[1])
+    with open(file_name_offer[key],'w', newline='') as file:          
+        csv_writer = writer(file)
+        csv_writer.writerow(temp_bid)
 
 
 # Columns to be added into diag file results
@@ -796,6 +818,7 @@ offers_bid , demand_bid = random_offer(ncda, horizon)
 feasible_offer = dict()
 feasible_bid  = dict()
 check=False
+distance=50
 no_iteration = 2000
 
 print("\n\n********** Starting SMOOTH FICTITIOUS PLAY algortihm ********")
@@ -841,17 +864,17 @@ for n in range(no_iteration):
         # Creating dictionary mapping current DA as strategic in MPEC model
         dic_CDA_Bus, dic_Bus_CDA, dic_G, dic_G_Bus = dictionar_bus(GenBus, CDABus, j)
 
-        DABus=j
+        DABus=CDABus[j-1][1]
         # offers_bid , demand_bid = random_offer(ncda, horizon)
         F_d_o, F_d_b = select_bid(j, offers_bid, demand_bid)
         
         #F_d_b = demand_bid[j-1]
         
         # Price bid for supplying power of strategic DA in time t
-        c_DA_o = c_d_o[DABus-1]['DAS'] # random_price(time)
+        c_DA_o = c_d_o[CDABus[j-1][0]-1]['DAS'] # random_price(time)
         
         # Price bid for buying power of strategic DA in time t
-        c_DA_b = c_d_b[DABus-1]['DAS'] # random_price(time)
+        c_DA_b = c_d_b[CDABus[j-1][0]-1]['DAS'] # random_price(time)
         
         ##Timer
         solver_time = time.time()
@@ -864,7 +887,7 @@ for n in range(no_iteration):
         #                 c_g, c_d_o[j-1], c_d_b[j-1], 
         #                 dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX,
         #                 c_DA_o, c_DA_b, DA_solar_power[j-1],
-        #                 no_strategies, demand_probability[j], supply_probability[j] )
+        #                 no_strategies, demand_strategy[j], supply_strategy[j] )
        
         
         model = mpec_model(ng, nb, nl, ncda,IN_loads, gen_capacity, 
@@ -876,7 +899,7 @@ for n in range(no_iteration):
                         dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX,
                         c_DA_o, c_DA_b, DA_solar_power[j-1],
                         EVs_list[j], Solar_list[j],
-                        no_strategies, demand_probability[j], supply_probability[j] )
+                        no_strategies, demand_strategy[j], supply_strategy[j] )
         
         
         SOLVER_NAME="gurobi" # "gurobi"  #'cplex'
@@ -897,7 +920,7 @@ for n in range(no_iteration):
             model_to_csv_iteration(model, IN_loads.sum(0), n, str(j), timestr, EVs_list[j])
             new_d_o, new_d_b = solved_model_bids(model)
             check_boundry(new_d_o, new_d_b, j)
-            load_bids_probs(model, j)
+            demand_prob_temp, supply_prob_temp = load_bids_probs(model, j)
             
             feasible_offer[j] = new_d_o
             feasible_bid[j] = new_d_b
@@ -909,6 +932,16 @@ for n in range(no_iteration):
                 
         #     feasible_bid[j] =  new_d_b
         #     feasible_offer[j] = new_d_o
+            
+            
+            with open(file_name_bid[j],'a', newline='') as file:          
+                csv_writer = writer(file)
+                csv_writer.writerow(list(demand_prob_temp.flatten().tolist()))
+                
+            with open(file_name_offer[j],'a', newline='') as file:          
+                    csv_writer = writer(file)
+                    csv_writer.writerow(list(supply_prob_temp.flatten().tolist()))
+                    
         else:
              infeasibility_counter+=1
              infeasibility_counter_DA[j-1] += 1
@@ -917,7 +950,9 @@ for n in range(no_iteration):
              objective_function[j].append('NAN')
         
         new_offers[j]=new_d_o
-        new_bids[j]= new_d_b        
+        new_bids[j]= new_d_b
+        
+       
         
         
             
@@ -936,8 +971,16 @@ for n in range(no_iteration):
         results_to_csv(diag_df, n)
         print('\nno EPEC, End of round:',n+1,'\n********************')
     
+    
     # update_offers_demands()
     update_offers_demand_by_prob(n+1)
+    
+    if n>=1.5*distance and check_bids_dis_prob(file_name_offer,n,distance, epsilon) and check_bids_dis_prob(file_name_offer,n,distance, epsilon):
+        check=True
+        print("solution found in probability epsilon difference iteration:",n+1)
+        break
+    else:
+        print('\nno EPEC, End of round:',n+1,'\n********************')
 
 
 
@@ -956,6 +999,20 @@ else:
     print("Bid Differences:")
     print(pd.DataFrame.from_dict(demand_bid) - pd.DataFrame.from_dict(feasible_bid))
 
+
+# save model objective function results
+pd.DataFrame.from_dict(objective_function).to_csv('Model_CSV/objective_'+timestr+'.csv', index=False)
+
+with open('Model_CSV/EVs_list_'+timestr+'.csv','w', newline='') as file:          
+    csv_writer = writer(file)
+    for j in EVs_list.keys():
+        csv_writer.writerow(EVs_list[j])
+
+with open('Model_CSV/Solar_list_'+timestr+'.csv','w', newline='') as file:          
+    csv_writer = writer(file)
+    for j in EVs_list.keys():
+        csv_writer.writerow(Solar_list[j])
+        
 # # Supply probability
 # for t in model.T:
 #     for s in model.S:

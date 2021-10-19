@@ -527,11 +527,10 @@ for n in range(no_iteration):
         #F_d_b = demand_bid[j-1]
         
         # Price bid for supplying power of strategic DA in time t
-        c_DA_o = c_d_o[DABus-1]['DAS'] # random_price(time)
+        c_DA_o = c_d_o[CDABus[j-1][0]-1]['DAS'] # random_price(time)
         
         # Price bid for buying power of strategic DA in time t
-        c_DA_b = c_d_b[DABus-1]['DAS'] # random_price(time)
-        
+        c_DA_b = c_d_b[CDABus[j-1][0]-1]['DAS'] # random_price(time)        
         ##Timer
         solver_time = time.time()
         
@@ -1013,10 +1012,10 @@ for n in range(no_iteration):
         #F_d_b = demand_bid[j-1]
         
         # Price bid for supplying power of strategic DA in time t
-        c_DA_o = c_d_o[DABus-1]['DAS'] # random_price(time)
+        c_DA_o = c_d_o[CDABus[j-1][0]-1]['DAS'] # random_price(time)
         
         # Price bid for buying power of strategic DA in time t
-        c_DA_b = c_d_b[DABus-1]['DAS'] # random_price(time)
+        c_DA_b = c_d_b[CDABus[j-1][0]-1]['DAS'] # random_price(time)
         
         ##Timer
         solver_time = time.time()
@@ -1177,6 +1176,6 @@ else:
 #     f.write("Description of the Bilevel model for strategic day ahead aggregator:\n")
 #     model.display(ostream=f)
 
-with open('DA_Bilevel_pprint.txt', 'w') as f:
-    f.write("Description of the Bilevel model for strategic day ahead aggregator:\n")
-    model.pprint(ostream=f)
+# with open('DA_Bilevel_pprint.txt', 'w') as f:
+#     f.write("Description of the Bilevel model for strategic day ahead aggregator:\n")
+#     model.pprint(ostream=f)

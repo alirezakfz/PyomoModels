@@ -117,11 +117,11 @@ def load_data(file_index):
 gen_capacity =[100, 75, 50, 50]
 # gen_capacity =[50000, 50000, 50000]
 
-random.seed(42)
+random.seed(120) #42
 
 # Time Horizon
 NO_prosumers=300
-epsilon= 0.01
+epsilon= 0.001
 horizon=24
 H = range(16,horizon+16)    
 MVA = 30  # Power Base
@@ -406,7 +406,7 @@ objective_function = dict()
 
 
 check=False
-no_iteration = 300
+no_iteration = 10
 rate=0.01  #learning rate like gradient descent
 infeasibility_counter_DA =[0*i for i in range(ncda+1) ]
 timestr = time.strftime("%Y%m%d-%H%M%S")
@@ -473,6 +473,12 @@ for n in range(no_iteration+1):
         F_d_o, F_d_b = select_bid(j, offers_bid, demand_bid)
         
         #F_d_b = demand_bid[j-1]
+        
+        # # Price bid for supplying power of strategic DA in time t
+        # c_DA_o = c_d_o[CDABus[j-1][0]]['DAS'] # random_price(time)
+        
+        # # Price bid for buying power of strategic DA in time t
+        # c_DA_b = c_d_b[CDABus[j-1][0]]['DAS'] # random_price(time)
         
         # Price bid for supplying power of strategic DA in time t
         c_DA_o = c_d_o[DABus-1]['DAS'] # random_price(time)
@@ -560,7 +566,11 @@ for n in range(no_iteration+1):
         results_to_csv(diag_df, n)
         
         print('\nno EPEC, End of round:',n+1,'\n******************')
-        
+    
+    # Update old data bids with new bids
+    offers_bid = new_offers
+    demand_bid = new_bids
+    
     # Step 6
     
     # if j==3:

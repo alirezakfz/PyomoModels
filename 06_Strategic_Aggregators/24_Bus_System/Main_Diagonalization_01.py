@@ -138,6 +138,8 @@ LinesSusc = [68.49315068,4.438526409,11.02535832,7.374631268,4.87804878,7.867820
              11.9047619,20.49180328,23.4741784,20.49180328,10.15228426,11.31221719,16.83501684,58.13953488,
              40.16064257,18.90359168,38.02281369,42.73504274,69.93006993,9.35453695,75.75757576,
              49.26108374,89.28571429,14.45086705]  #Vector with per unit susceptance of the network 
+
+LinesSusc = [round(x,4) for x in LinesSusc]
 # LinesSusc = [5,6,7]
 
 ng = 12    # Number of Generators
@@ -264,6 +266,9 @@ c_g[2]=[19 for x in range(0,horizon)]
 c_g[3]=[25 for x in range(0,horizon)]
 c_g[4]=[100 for x in range(0,horizon)]
 
+price_g =1600
+for g in range(len(GenBus)):
+    c_g[g+1] = [price_g*(g+0.5) for x in range(0,horizon)]
 
 
 #Price bid for supplying power of competing DA  i in time t
@@ -304,8 +309,12 @@ g_s = { 1:random_generation(horizon,10, 12),
         4:random_generation(horizon,1, 50)}
 
 
+for g in range(len(GenBus)):
+    g_s[g+1] = random_generation(horizon,int(gen_capacity[g]/2), gen_capacity[g])
+
 # 2019 November 15 forecasted temprature
 outside_temp=[27.694803,26.834803,26.594803,25.664803,22.594803,21.394802,20.164803,19.584803,20.334803,16.784803,16.094803,15.764802,14.774801,14.834802,14.184802,14.144801,15.314801,16.694803,19.734802,24.414803,25.384802,26.744802,27.144802,27.524803]
+
 # outside_temp = [i+1 for i in outside_temp]
 
 feasible_bid = dict()
@@ -411,7 +420,7 @@ objective_function = dict()
 
 
 check=False
-no_iteration = 300
+no_iteration = 3
 rate=0.01  #learning rate like gradient descent
 infeasibility_counter_DA =[0*i for i in range(ncda+1) ]
 timestr = time.strftime("%Y%m%d-%H%M%S")
@@ -480,10 +489,10 @@ for n in range(no_iteration+1):
         #F_d_b = demand_bid[j-1]
         
         # Price bid for supplying power of strategic DA in time t
-        c_DA_o = c_d_o[DABus-1]['DAS'] # random_price(time)
+        c_DA_o = c_d_o[CDABus[j-1][0]-1]['DAS'] # random_price(time)
         
         # Price bid for buying power of strategic DA in time t
-        c_DA_b = c_d_b[DABus-1]['DAS'] # random_price(time)
+        c_DA_b = c_d_b[CDABus[j-1][0]-1]['DAS'] # random_price(time)
         
         ##Timer
         solver_time = time.time()
@@ -719,3 +728,6 @@ Check model feasibility after solving agents MPEC for first time
 #                             sum(value(model.w_line_up[i,t])*FMAX[i-1] for i in model.LINES)
 #     print(sum1," ",sum2," ",round(sum1,4)==-round(sum2,4))
 
+with open('DA_Bilevel_pprint.txt', 'w') as f:
+      f.write("Description of the Bilevel model for strategic day ahead aggregator:\n")
+      model.KKT_transmission_up_3_con.pprint(ostream=f)

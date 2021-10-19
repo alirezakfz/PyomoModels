@@ -29,13 +29,13 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     
     time=24
-    ref_angel=1
+    ref_angel=13
     
     delta_t =1
     ch_rate = 0.94
     
     
-    MVA = 30  # Power Base
+    MVA = 100 # Power Base
     PU_DA = 1/(1000*MVA)
     
     
@@ -43,7 +43,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     """
     Defining Parameters
     """
-    bigM =10000.0
+    bigM =100000.0
     bigF = 10000.0
     NO_prosumers = len(IN_loads)
     
