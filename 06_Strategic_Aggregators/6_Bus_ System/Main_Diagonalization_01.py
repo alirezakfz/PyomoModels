@@ -121,7 +121,7 @@ random.seed(120) #42
 
 # Time Horizon
 NO_prosumers=300
-epsilon= 0.001
+epsilon= 0.00001
 horizon=24
 H = range(16,horizon+16)    
 MVA = 30  # Power Base
@@ -406,7 +406,7 @@ objective_function = dict()
 
 
 check=False
-no_iteration = 10
+no_iteration = 400
 rate=0.01  #learning rate like gradient descent
 infeasibility_counter_DA =[0*i for i in range(ncda+1) ]
 timestr = time.strftime("%Y%m%d-%H%M%S")
