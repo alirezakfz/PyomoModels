@@ -172,10 +172,10 @@ gen_capacity =[100, 75, 50, 50]
 random.seed(42)
 
 # Time Horizon
-NO_prosumers=300
+NO_prosumers=500
 horizon=24
 H = range(16,horizon+16)    
-MVA = 30  # Power Base
+MVA = 1  # Power Base
 PU_DA = 1/(1000*MVA)
 
 # Number of strategies
@@ -194,11 +194,11 @@ ng = 4    # Number of Generators
 ncda = 8  # Number of competing 
 ndas = 9  # Number of participant DAs
 
-GenBus = [1,2,6,6]  # Vector with Generation Buses
-CDABus = [[1, 3], [2,3],[3,3],[4,4],[5,4],[6,4],[7,5],[8,5],[9,5]]      # Vector with competing DAs Buses
-DABus = 3           # DA Bus
+GenBus = [1,2,3,3]  # Vector with Generation Buses
+CDABus = [[1, 6], [2,6],[3,6],[4,4],[5,4],[6,4],[7,5],[8,5],[9,5]]      # Vector with competing DAs Buses
+DABus = 6           # DA Bus
 
-FMAX = [150,150,150,33,150,150,150]
+FMAX = [150,150,150,150,150,150,150]
 # FMAX = [50000, 50000, 50000] # Vector with Capacities of Network Lines in pu
 FMAX = [i/MVA for i in FMAX]
 
@@ -306,10 +306,10 @@ c_g = { 1:random_price(horizon,12,20),
         2:random_price(horizon,20,30),
         3:random_price(horizon,50,70),
         4:random_price(horizon,100,110)}  
-c_g[1]=[16 for x in range(0,horizon)]
-c_g[2]=[19 for x in range(0,horizon)]
-c_g[3]=[25 for x in range(0,horizon)]
-c_g[4]=[100 for x in range(0,horizon)]
+c_g[1]=[15 for x in range(0,horizon)]
+c_g[2]=[30 for x in range(0,horizon)]
+c_g[3]=[60 for x in range(0,horizon)]
+c_g[4]=[90 for x in range(0,horizon)]
 
 
 
@@ -358,14 +358,17 @@ c_DA_o = c_d_o[DABus-1]['DAS'] # random_price(horizon)
 c_DA_b = c_d_b[DABus-1]['DAS'] # random_price(horizon)
 
 # Supply offer of generator i in time t
-g_s = { 1:random_generation(horizon,10, 12),
-        2:random_generation(horizon,5, 10),
-        3:random_generation(horizon,15, 20),
-        4:random_generation(horizon,1, 50)}
+g_s = { 1:[100 for x in range(0,horizon)],
+        2:[75 for x in range(0,horizon)],
+        3:[50 for x in range(0,horizon)],
+        4:[50 for x in range(0,horizon)]}
 
 
 # 2019 November 15 forecasted temprature
 outside_temp=[16.784803,16.094803,15.764802,14.774801,14.834802,14.184802,14.144801,15.314801,16.694803,19.734802,24.414803,25.384802,26.744802,27.144802,27.524803,27.694803,26.834803,26.594803,25.664803,22.594803,21.394802,20.164803,19.584803,20.334803]
+irrediance_nov = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 101.55, 237.82, 290.98, 224.05, 96.78, 141.85, 60.03, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+irrediance_nov = np.roll(irrediance_nov,-15)
 
 # Adding solar power to randomly selected houses.
 def solar_power_generator(index_len):
@@ -421,11 +424,11 @@ def random_solar_power_var(in_loads, j):
     
     return solar_power
 
-# List of solar powers
-DA_solar_power =[]        
-for j in range(1,ncda+2):
-    IN_loads, profiles = load_data(str(j))
-    DA_solar_power.append(random_solar_power_var(IN_loads, j))
+# # List of solar powers
+# DA_solar_power =[]        
+# for j in range(1,ncda+2):
+#     IN_loads, profiles = load_data(str(j))
+#     DA_solar_power.append(random_solar_power_var(IN_loads, j))
 
 
 
@@ -441,7 +444,7 @@ for j in range(1,ncda+2):
     elif j % 3== 0:
         EVs_penetration=0.50
     else:
-        EVs_penetration=0.30
+        EVs_penetration=0.35
     # Adding random EVs for prosumers
     NO_of_EVs = int(EVs_penetration * NO_prosumers)
     EVs_list[j] = random.choices([i+1 for i in range(NO_prosumers)],k=NO_of_EVs )
@@ -461,6 +464,27 @@ for j in range(1,ncda+2):
     NO_solar_prosumers = int(Solar_penetration * NO_prosumers)
     Solar_list[j] = random.choices([i+1 for i in range(NO_prosumers)],k=NO_solar_prosumers )
 
+
+def random_irrediance_solar_power(irrediance, in_loads, j, solar_list):
+    random.seed((j+2)**2)
+    length = len(in_loads)
+    
+    
+    solar_power = np.zeros(in_loads.shape)
+    
+    for da in solar_list[j]:
+        for i in range(horizon):
+            area = random.choice([1,2])
+            solar_power[da-1,i] = 0.000157 * area * irrediance[i] * (1 - 0.001*random.random()* (outside_temp[i]-25))
+    
+    return solar_power
+        
+# List of solar powers
+DA_solar_power =[]        
+for j in range(1,ncda+2):
+    IN_loads, profiles = load_data(str(j))
+    DA_solar_power.append(random_irrediance_solar_power(irrediance_nov, IN_loads, j, Solar_list))
+    
 """
 Solve once and find range for offers and bids
 using diagonalization method
@@ -666,7 +690,7 @@ def make_epsilon_discrete_value(epsilon):
         discrete_offer[i] = offers_temp
     pass
 
-make_epsilon_discrete_value(0.0005)
+make_epsilon_discrete_value(0.1)
 
 # After each iteration update discrete offers and bids by counting them
 def check_boundry(new_d_o, new_d_b, j):
@@ -1100,6 +1124,9 @@ for n in range(no_iteration):
     check=False
     if check_bids(offers_bid,new_offers,epsilon) and check_bids(demand_bid,new_bids,epsilon) : # and (infeasibility_counter < ncda+1)
         check=True
+        diag_df = pd.concat([pd.DataFrame.from_dict(new_offers), pd.DataFrame.from_dict(new_bids)], axis=1)
+        diag_df.columns = dig_col
+        results_to_csv(diag_df, n)
         print("solution found in bids epsilon difference iteration:",n+1)
         break
     else:
