@@ -164,15 +164,15 @@ gen_capacity =[100, 75, 50, 50]
 random.seed(42)
 
 # Time Horizon
-NO_prosumers=500
+NO_prosumers=300
 horizon=24
 H = range(16,horizon+16)    
-MVA = 1  # Power Base
-PU_DA = 1/(1000*MVA)
+MVA = 60  # Power Base
+PU_DA = 1/(10*MVA)
 epsilon = 0.01
 timestr = time.strftime("%Y%m%d-%H%M%S")
 # Number of strategies
-no_strategies = 15
+no_strategies = 30
 
 nl = 7    # Number of network lines
 nb = 6    # Number of network buses
@@ -612,14 +612,23 @@ for n in range(no_iteration):
         # Finishing Step 3
     # 
     
-    for key in new_offers:
-        zipped_lists = zip(offers_bid[key], new_offers[key])
-        sum_zip =  [round((x + y),6) for (x, y) in zipped_lists]
-        offers_bid[key] = sum_zip
+    # for key in new_offers:
+    #     zipped_lists = zip(offers_bid[key], new_offers[key])
+    #     sum_zip =  [round((x + y),6) for (x, y) in zipped_lists]
+    #     offers_bid[key] = sum_zip
         
-        zipped_lists = zip(demand_bid[key], new_bids[key])
-        sum_zip =  [round((x + y),6) for (x, y) in zipped_lists]
-        demand_bid[key] = sum_zip
+    #     zipped_lists = zip(demand_bid[key], new_bids[key])
+    #     sum_zip =  [round((x + y),6) for (x, y) in zipped_lists]
+    #     demand_bid[key] = sum_zip
+    
+    for key in new_offers:
+       zipped_lists = zip(offers_bid[key], new_offers[key])
+       sum_zip =  [round((x + y+max(new_offers[key])),6) for (x, y) in zipped_lists]
+       offers_bid[key] = sum_zip
+       
+       zipped_lists = zip(demand_bid[key], new_bids[key])
+       sum_zip =  [round((x + y+ max(new_bids[key])),6) for (x, y) in zipped_lists]
+       demand_bid[key] = sum_zip
 
 # # Double the values
 # for key in new_offers:
@@ -630,6 +639,10 @@ for n in range(no_iteration):
 #         # zipped_lists = zip(demand_bid[key], new_bids[key])
 #         # sum_zip =  [(x + y)/2 for (x, y) in zipped_lists]
 #         demand_bid[key] = demand_bid[key] *2
+
+for key in new_offers:
+    offers_bid[key] =[x*30 for x in offers_bid[key]]
+#     demand_bid[key]  =[x*10 for x in demand_bid[key]]
 
 """
 going for FICTITIOUS PLAY algortihm
@@ -684,7 +697,7 @@ def make_discrte_value(step):
             temp_demand_points[t,0] = 0 
             for value in range(step-1):
                 temp_demand_points[t,value+1] =  demands[value+1] # Store point as np array for probability check
-                temp_offers_points[t,value+1] =  offers[value+1]
+                temp_offers_points[t,value+1] = offers[value+1]
                 offers_temp[t][(offers[value], offers[value+1])] = 0
                 demand_temp[t][(demands[value], demands[value+1])] = 0
                 supply_p_temp.append(round((offers[value]+offers[value+1])/2, 6))
@@ -849,8 +862,8 @@ offers_bid , demand_bid = random_offer(ncda, horizon)
 feasible_offer = dict()
 feasible_bid  = dict()
 check=False
-distance=50
-no_iteration = 4
+distance=100
+no_iteration = 300
 
 print("\n\n********** Starting SMOOTH FICTITIOUS PLAY algortihm ********")
 for n in range(no_iteration):

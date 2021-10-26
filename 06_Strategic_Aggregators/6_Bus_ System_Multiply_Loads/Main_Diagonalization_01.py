@@ -20,7 +20,7 @@ import collections
 from csv import writer
 # from samples_gen import generate_price, generate_temp
 #from MPEC_Concrete_Model_ver01 import mpec_model
-from MPEC_Concrete_Model_ver03 import mpec_model
+from MPEC_Concrete_Model_ver04 import mpec_model
 from pyomo.environ import *
 from pyomo.opt import SolverFactory
 
@@ -121,12 +121,12 @@ gen_capacity =[100, 75, 50, 50]
 random.seed(42)
 
 # Time Horizon
-NO_prosumers=500
+NO_prosumers=300
 epsilon= 0.01
 horizon=24
 H = range(16,horizon+16)    
-MVA = 1 # Power Base
-PU_DA = 1/(1000*MVA)
+MVA = 60 # Power Base
+PU_DA = 1/(10*MVA)
 load_multiply = 1
 
 nl = 7    # Number of network lines
@@ -441,7 +441,7 @@ objective_function = dict()
 
 
 check=False
-no_iteration = 400
+no_iteration = 300
 rate=0.01  #learning rate like gradient descent
 infeasibility_counter_DA =[0*i for i in range(ncda+1) ]
 timestr = time.strftime("%Y%m%d-%H%M%S")

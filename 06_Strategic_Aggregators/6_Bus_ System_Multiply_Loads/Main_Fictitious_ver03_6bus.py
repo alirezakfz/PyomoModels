@@ -52,7 +52,8 @@ from collections import Counter
 import hashlib
 
 
-from MPEC_Concrete_Model_ver03 import mpec_model
+from MPEC_Concrete_Model_ver03 import mpec_model as diag_model
+from MPEC_Concrete_Model_ver04 import mpec_model
 from pyomo.environ import *
 from pyomo.opt import SolverFactory
 from Model_to_CSV import model_to_csv, model_to_csv_iteration
@@ -172,10 +173,10 @@ gen_capacity =[100, 75, 50, 50]
 random.seed(42)
 
 # Time Horizon
-NO_prosumers=500
+NO_prosumers=300
 horizon=24
 H = range(16,horizon+16)    
-MVA = 1  # Power Base
+MVA = 60 # Power Base
 PU_DA = 1/(1000*MVA)
 
 # Number of strategies
@@ -491,7 +492,7 @@ using diagonalization method
 """
 
 check=False
-no_iteration = 4
+no_iteration = 3
 rate=0.01  #learning rate like gradient descent
 infeasibility_counter_DA =[0,0,0]
 timestr = time.strftime("%Y%m%d-%H%M%S")
@@ -558,7 +559,7 @@ for n in range(no_iteration):
         ##Timer
         solver_time = time.time()
         
-        model = mpec_model(ng, nb, nl, ncda,IN_loads, gen_capacity, 
+        model = diag_model(ng, nb, nl, ncda,IN_loads, gen_capacity, 
                         arrival, depart, charge_power,EV_soc_arrive,EV_soc_low, EV_soc_up, 
                         TCL_Max, TCL_R, TCL_Beta, TCL_temp_low, outside_temp, 
                         SL_low, SL_up, SL_cycle, SL_loads,
@@ -603,23 +604,20 @@ for n in range(no_iteration):
     # Step 4 check if epsilon difference exist
     for key in new_offers:
         zipped_lists = zip(offers_bid[key], new_offers[key])
-        sum_zip =  [round((x + y),6) for (x, y) in zipped_lists]
+        sum_zip =  [round((x + y+max(new_offers[key])),6) for (x, y) in zipped_lists]
         offers_bid[key] = sum_zip
         
         zipped_lists = zip(demand_bid[key], new_bids[key])
-        sum_zip =  [round((x + y),6) for (x, y) in zipped_lists]
+        sum_zip =  [round((x + y+ max(new_bids[key])),6) for (x, y) in zipped_lists]
         demand_bid[key] = sum_zip
 
-# Double the values
-for key in new_offers:
-        # zipped_lists = zip(offers_bid[key], new_offers[key])
-        # sum_zip =  [(x + y)/2 for (x, y) in zipped_lists]
-        offers_bid[key] =  offers_bid[key]
-        
-        # zipped_lists = zip(demand_bid[key], new_bids[key])
-        # sum_zip =  [(x + y)/2 for (x, y) in zipped_lists]
-        demand_bid[key] = demand_bid[key]
 
+
+for key in new_offers:
+    offers_bid[key] =[x*30 for x in offers_bid[key]]
+#     demand_bid[key]  =[x*2 for x in demand_bid[key]]
+    
+    
 """
 going for FICTITIOUS PLAY algortihm
 """
@@ -690,7 +688,7 @@ def make_epsilon_discrete_value(epsilon):
         discrete_offer[i] = offers_temp
     pass
 
-make_epsilon_discrete_value(0.1)
+make_epsilon_discrete_value(0.001)
 
 # After each iteration update discrete offers and bids by counting them
 def check_boundry(new_d_o, new_d_b, j):
@@ -907,8 +905,8 @@ feasible_bid = dict()
 feasible_offer = dict()
 
 check=False
-no_iteration = 2000
-epsilon= 0.001
+no_iteration = 3
+epsilon= 0.01
 # distance between current iteration and it's prevoius probabilities
 # FOR every bid "b" in D: Set the probability_of_b  = (times that "b" was played in epochs 901 - 1000) / 100
 # Set the PREVIOUS_probability_of_b = (times that "b" was played in epochs 851 - 950) / 100
@@ -973,6 +971,10 @@ counter_played_actions=np.zeros(ncda+1)
 DAs_list=[]
 for j in range(1,ncda+2):
     DAs_list.append(j)
+
+
+offers_bid , demand_bid = random_offer(ncda, horizon)
+
 
 # Columns to be added into diag file results
 ['offer_01','offer_02','offer_03', 'bids_01','bids_02', 'bids_03']
