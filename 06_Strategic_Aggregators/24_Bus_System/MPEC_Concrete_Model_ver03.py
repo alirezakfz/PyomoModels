@@ -29,22 +29,22 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     
     time=24
-    ref_angel=13
+    ref_angel=1
     
     delta_t =1
     ch_rate = 0.94
     
     
-    MVA = 100 # Power Base
-    PU_DA = 1/(1000*MVA)
+    MVA = 100  # Power Base
+    PU_DA = 1/(100*MVA)
     
     
 
     """
     Defining Parameters
     """
-    bigM =100000.0
-    bigF = 10000.0
+    bigM =1000.0
+    bigF = 1000.0
     NO_prosumers = len(IN_loads)
     
     
@@ -561,12 +561,12 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     #KKT Constraint (D.3)
     def KKT_gen_up_rule (model, i, t):
-        return  g_s[i][t-16] - model.g[i,t] <= model.u_g_up[i,t]*bigM
+        return  g_s[i][t-16]/MVA - model.g[i,t] <= model.u_g_up[i,t]*bigM
     model.KKT_gen_up_con = Constraint (model.G, model.T, rule= KKT_gen_up_rule)
     
     #KKT Constraint(D.3.2)
     def KKT_gen_up_3_2_rule (model, i, t):
-        return  g_s[i][t-16] - model.g[i,t] >= 0
+        return  g_s[i][t-16]/MVA - model.g[i,t] >= 0
     model.KKT_gen_up_3_2_con = Constraint (model.G, model.T, rule= KKT_gen_up_3_2_rule)
     
     # KKT Constraint (D.4)
@@ -736,7 +736,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
         return sum(sum(c_g[i][t-16]*model.g[i,t] for i in model.G) +\
                     sum(c_d_o[i][t-16]*model.d_o[i,t] for i in model.NCDA ) -\
                         sum(c_d_b[i][t-16]*model.d_b[i,t] for i in model.NCDA) +\
-                            sum(model.w_g_up[i,t] * g_s[i][t-16] for i in model.G) +\
+                            sum(model.w_g_up[i,t] * g_s[i][t-16]/MVA for i in model.G) +\
                                 sum(model.w_do_up[i,t]* F_d_o[i][t-16] for i in model.NCDA) +\
                                     sum(model.w_db_up[i,t]*F_d_b[i][t-16] for i in model.NCDA) +\
                                         sum(FMAX[i-1]*model.w_line_low[i,t] for i in model.LINES) +\

@@ -120,12 +120,12 @@ gen_capacity =[152,152,350,591,60,155,155,400,400,300,310,350]
 random.seed(42)
 
 # Time Horizon
-NO_prosumers=100
+NO_prosumers=1000
 epsilon= 0.01
 horizon=24
 H = range(16,horizon+16)    
-MVA = 100  # Power Base
-PU_DA = 1/(1000*MVA)
+MVA = 100 # Power Base
+PU_DA = 1/(100*MVA)
 
 nl = 34    # Number of network lines
 nb = 24    # Number of network buses
@@ -142,11 +142,11 @@ LinesSusc = [68.49315068,4.438526409,11.02535832,7.374631268,4.87804878,7.867820
 LinesSusc = [round(x,4) for x in LinesSusc]
 # LinesSusc = [5,6,7]
 
-ng = 12    # Number of Generators
+ng = 10   # Number of Generators
 ncda = 16  # Number of competing 
 ndas = 17  # Number of participant DAs
 
-GenBus = [1,2,7,13,15,15,16,18,21,22,23,23]  # Vector with Generation Buses
+GenBus = [1,2,7,13,15,16,18,21,22,23]  # Vector with Generation Buses
 # [1,2,3,4,5,6,7,8,9,10,13,14,15,16,18,19,20]
 CDABus = [[1, 1], [2,2],[3,3],[4,4],[5,5],[6,6],[7,7],[8,8],[9,9],[10,10],[11,13],[12,14],[13,15],[14,16],[15,18],[16,19],[17,20]]      # Vector with competing DAs Buses
 DABus = 1           # DA Bus
@@ -261,12 +261,13 @@ c_g = { 1:random_price(horizon,12,20),
         2:random_price(horizon,20,30),
         3:random_price(horizon,50,70),
         4:random_price(horizon,100,110)}  
+
 c_g[1]=[16 for x in range(0,horizon)]
 c_g[2]=[19 for x in range(0,horizon)]
 c_g[3]=[25 for x in range(0,horizon)]
 c_g[4]=[100 for x in range(0,horizon)]
 
-price_g =1600
+price_g =16
 for g in range(len(GenBus)):
     c_g[g+1] = [price_g*(g+0.5) for x in range(0,horizon)]
 
@@ -388,7 +389,7 @@ for j in range(1,ncda+2):
     elif j % 3== 0:
         EVs_penetration=0.50
     else:
-        EVs_penetration=0.30
+        EVs_penetration=0.35
     # Adding random EVs for prosumers
     NO_of_EVs = int(EVs_penetration * NO_prosumers)
     EVs_list[j] = random.choices([i+1 for i in range(NO_prosumers)],k=NO_of_EVs )
@@ -579,7 +580,8 @@ for n in range(no_iteration+1):
     
     # if j==3:
     #     break
-    
+    offers_bid = new_offers
+    demand_bid = new_bids
     
         
     # if (not check) and (n < no_iteration-1):
