@@ -269,7 +269,7 @@ c_g[4]=[100 for x in range(0,horizon)]
 
 price_g =16
 for g in range(len(GenBus)):
-    c_g[g+1] = [price_g*(g+0.5) for x in range(0,horizon)]
+    c_g[g+1] = [price_g + price_g*(g+0.5) for x in range(0,horizon)]
 
 
 #Price bid for supplying power of competing DA  i in time t

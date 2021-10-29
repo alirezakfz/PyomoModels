@@ -43,7 +43,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     ch_rate = 0.94
     
     
-    MVA = 60  # Power Base
+    MVA = 30 # Power Base
     PU_DA = 1/(10*MVA)
     
     
@@ -51,8 +51,8 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     """
     Defining Parameters
     """
-    bigM =10000.0
-    bigF = 10000.0
+    bigM =100000.0
+    bigF = 100000.0
     NO_prosumers = len(IN_loads)
     
     
@@ -280,6 +280,8 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
                 return model.E_EV_CH[i,t] <= model.u_EV[i,t] * charge_power[i-1]*delta_t
             else:
                 return model.E_EV_CH[i,t]==0
+        elif t >= arrival[i-1] and t < depart[i-1]:
+                return model.E_EV_CH[i,t] <= charge_power[i-1]*delta_t                
         else:
             return Constraint.Skip
     model.ev_charging_con=Constraint(model.N, model.T, rule=ev_charging_rule)
@@ -291,6 +293,8 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
                 return model.E_EV_DIS[i,t] <= (1-model.u_EV[i,t]) * charge_power[i-1]*delta_t
             else:
                 return model.E_EV_DIS[i,t]==0
+        elif i not in EVs_list:
+            return model.E_EV_DIS[i,t]==0            
         else:
             return Constraint.Skip
     model.ev_discharging_con=Constraint(model.N, model.T, rule=ev_discharging_rule)
@@ -305,44 +309,59 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     # Constraint (a.4_1): Set the start soc to arrival soc
     def EV_arrival_soc_rule(model, i):
-        if i in EVs_list:
-            return model.SOC[i, arrival[i-1]]== EV_soc_arrive[i-1]
-        else:
-            return Constraint.Skip
+        return model.SOC[i, arrival[i-1]]== EV_soc_arrive[i-1]
+        # if i in EVs_list:
+        #     return model.SOC[i, arrival[i-1]]== EV_soc_arrive[i-1]
+        # else:
+        #     return Constraint.Skip
     model.EV_arrival_soc_con = Constraint(model.N, rule= EV_arrival_soc_rule)
     
     # Constraint (a.5_1): Limit the SOC, Lower Bound
     def ev_soc_low_rule(model, i, t):
-        if t >= arrival[i-1] and t < depart[i-1] and (i in EVs_list): 
+        if t >= arrival[i-1] and t < depart[i-1]: 
             return model.SOC[i,t] >=  EV_soc_low[i-1]
         else:
             return Constraint.Skip
+        # if t >= arrival[i-1] and t < depart[i-1] and (i in EVs_list): 
+        #     return model.SOC[i,t] >=  EV_soc_low[i-1]
+        # else:
+        #     return Constraint.Skip
     model.ev_soc_low_con=Constraint(model.N, model.T, rule=ev_soc_low_rule)
     
     
     # Constraint (a.5_2): Limit the SOC, Upper Bound
     def ev_soc_low2_rule(model, i, t):
-        if t >= arrival[i-1] and t < depart[i-1] and (i in EVs_list): 
+        if t >= arrival[i-1] and t < depart[i-1]: 
             return model.SOC[i,t] <=  EV_soc_up[i-1]
         else:
             return Constraint.Skip
+        # if t >= arrival[i-1] and t < depart[i-1] and (i in EVs_list): 
+        #     return model.SOC[i,t] <=  EV_soc_up[i-1]
+        # else:
+        #     return Constraint.Skip
     model.ev_soc_low2_con=Constraint(model.N, model.T, rule=ev_soc_low2_rule)
     
     # Constraint (a.6): Set the target SOC to be as desired(full charge) at departure time
     def ev_traget_rule(model,i):
-        if (i in EVs_list):
-            return model.SOC[i,depart[i-1]] == EV_soc_up[i-1] #model.ev_demand[i]
-        else:
-            return Constraint.Skip
+        return model.SOC[i,depart[i-1]] == EV_soc_up[i-1]
+        # if (i in EVs_list):
+        #     return model.SOC[i,depart[i-1]] == EV_soc_up[i-1] #model.ev_demand[i]
+        # else:
+        #     return Constraint.Skip
     model.ev_target_con = Constraint(model.N, rule=ev_traget_rule)
     
     # Constraint (Custom_1): Set the binary variable to zero outside the [arrival, depart] boundary
     def ev_binary_zero_rule(model,i,t):
-        if t < arrival[i-1] or t >= depart[i-1] and (i in EVs_list):
-            return model.u_EV[i,t]==0
+        if t < arrival[i-1] or t >= depart[i-1]:
+             return model.u_EV[i,t]==0
         else:
-            return Constraint.Skip
+             return Constraint.Skip
+        # if t < arrival[i-1] or t >= depart[i-1] and (i in EVs_list):
+        #     return model.u_EV[i,t]==0
+        # else:
+        #     return Constraint.Skip
     model.ev_binary_zero_con = Constraint(model.N, model.T, rule=ev_binary_zero_rule)
+    
     
     
     
@@ -415,15 +434,15 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     #             DA Demand and Supply Constraints
     #********************************************************
     
-    # Equality constraint (a.13) for power balance in strategic DA
+     # Equality constraint (a.13) for power balance in strategic DA
     def DA_power_balance_rule(model, t):
         ##model.POWER_TCL[i,t]
         
-        sum_total = sum( model.POWER_SL[i,t] + IN_loads.loc[i-1,str(t)] + model.POWER_TCL[i,t]  for i in model.N)
+        sum_total = sum( model.POWER_SL[i,t] + IN_loads.loc[i-1,str(t)] + model.POWER_TCL[i,t] + model.E_EV_CH[i,t]- model.E_EV_DIS[i,t]  for i in model.N)
         
         for i in model.N:
-            if i in EVs_list:
-                sum_total += model.E_EV_CH[i,t]-model.E_EV_DIS[i,t]
+            # if i in EVs_list:
+            #     sum_total += model.E_EV_CH[i,t]-model.E_EV_DIS[i,t]
             if i in Solar_list:
                 sum_total -= model.solar_power[i,t]
         

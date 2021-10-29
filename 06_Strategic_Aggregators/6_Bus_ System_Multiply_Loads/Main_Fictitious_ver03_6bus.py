@@ -53,7 +53,7 @@ import hashlib
 
 
 from MPEC_Concrete_Model_ver03 import mpec_model as diag_model
-from MPEC_Concrete_Model_ver04 import mpec_model
+from MPEC_Concrete_Model_ver05 import mpec_model
 from pyomo.environ import *
 from pyomo.opt import SolverFactory
 from Model_to_CSV import model_to_csv, model_to_csv_iteration
@@ -173,11 +173,11 @@ gen_capacity =[100, 75, 50, 50]
 random.seed(42)
 
 # Time Horizon
-NO_prosumers=300
+NO_prosumers=500
 horizon=24
 H = range(16,horizon+16)    
-MVA = 60 # Power Base
-PU_DA = 1/(1000*MVA)
+MVA = 30 # Power Base
+PU_DA = 1/(100*MVA)
 
 # Number of strategies
 no_strategies = 100 
@@ -199,7 +199,7 @@ GenBus = [1,2,3,3]  # Vector with Generation Buses
 CDABus = [[1, 6], [2,6],[3,6],[4,4],[5,4],[6,4],[7,5],[8,5],[9,5]]      # Vector with competing DAs Buses
 DABus = 6           # DA Bus
 
-FMAX = [150,150,150,150,150,150,150]
+FMAX = [150,150,150,33,150,150,150]
 # FMAX = [50000, 50000, 50000] # Vector with Capacities of Network Lines in pu
 FMAX = [i/MVA for i in FMAX]
 
@@ -316,10 +316,10 @@ c_g[4]=[90 for x in range(0,horizon)]
 
 #Price bid for supplying power of competing DA  i in time t
 price_d_o=dict()
-price_d_o['DAS']= random_price(horizon,1,12)
+price_d_o['DAS']= random_price(horizon,12,15)
 
 for i in range(1,ncda+1):
-    price_d_o[i] = random_price(horizon,1,12)
+    price_d_o[i] = random_price(horizon,12,15)
 
 c_d_o=[]
 for i in range(ncda+1):
@@ -370,6 +370,9 @@ outside_temp=[16.784803,16.094803,15.764802,14.774801,14.834802,14.184802,14.144
 irrediance_nov = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 101.55, 237.82, 290.98, 224.05, 96.78, 141.85, 60.03, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
 irrediance_nov = np.roll(irrediance_nov,-15)
+
+irradiance_april = [0, 0, 0, 0, 0, 0, 211, 1200, 3188, 5954, 9317, 6609, 6178, 7082, 5790, 4117, 2321, 1399, 780, 186, 0, 0, 0, 0]
+irradiance_april = np.roll(irradiance_april,-15)
 
 # Adding solar power to randomly selected houses.
 def solar_power_generator(index_len):
@@ -484,7 +487,7 @@ def random_irrediance_solar_power(irrediance, in_loads, j, solar_list):
 DA_solar_power =[]        
 for j in range(1,ncda+2):
     IN_loads, profiles = load_data(str(j))
-    DA_solar_power.append(random_irrediance_solar_power(irrediance_nov, IN_loads, j, Solar_list))
+    DA_solar_power.append(random_irrediance_solar_power(irradiance_april, IN_loads, j, Solar_list))
     
 """
 Solve once and find range for offers and bids
@@ -559,7 +562,7 @@ for n in range(no_iteration):
         ##Timer
         solver_time = time.time()
         
-        model = diag_model(ng, nb, nl, ncda,IN_loads, gen_capacity, 
+        model = mpec_model(ng, nb, nl, ncda,IN_loads, gen_capacity, 
                         arrival, depart, charge_power,EV_soc_arrive,EV_soc_low, EV_soc_up, 
                         TCL_Max, TCL_R, TCL_Beta, TCL_temp_low, outside_temp, 
                         SL_low, SL_up, SL_cycle, SL_loads,
@@ -688,7 +691,7 @@ def make_epsilon_discrete_value(epsilon):
         discrete_offer[i] = offers_temp
     pass
 
-make_epsilon_discrete_value(0.001)
+make_epsilon_discrete_value(0.1)
 
 # After each iteration update discrete offers and bids by counting them
 def check_boundry(new_d_o, new_d_b, j):
@@ -905,7 +908,7 @@ feasible_bid = dict()
 feasible_offer = dict()
 
 check=False
-no_iteration = 3
+no_iteration = 300
 epsilon= 0.01
 # distance between current iteration and it's prevoius probabilities
 # FOR every bid "b" in D: Set the probability_of_b  = (times that "b" was played in epochs 901 - 1000) / 100

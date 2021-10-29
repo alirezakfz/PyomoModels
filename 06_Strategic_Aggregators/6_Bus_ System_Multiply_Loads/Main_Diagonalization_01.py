@@ -20,7 +20,7 @@ import collections
 from csv import writer
 # from samples_gen import generate_price, generate_temp
 #from MPEC_Concrete_Model_ver01 import mpec_model
-from MPEC_Concrete_Model_ver04 import mpec_model
+from MPEC_Concrete_Model_ver05 import mpec_model
 from pyomo.environ import *
 from pyomo.opt import SolverFactory
 
@@ -115,18 +115,19 @@ def load_data(file_index):
     return df1 , df2
 
 
+
 gen_capacity =[100, 75, 50, 50]
 # gen_capacity =[50000, 50000, 50000]
 
 random.seed(42)
 
 # Time Horizon
-NO_prosumers=300
+NO_prosumers=500
 epsilon= 0.01
 horizon=24
 H = range(16,horizon+16)    
-MVA = 60 # Power Base
-PU_DA = 1/(10*MVA)
+MVA = 30 # Power Base
+PU_DA = 1/(100*MVA)
 load_multiply = 1
 
 nl = 7    # Number of network lines
@@ -146,7 +147,7 @@ GenBus = [1,2,3,3]  # Vector with Generation Buses
 CDABus = [[1, 6], [2,6],[3,6],[4,4],[5,4],[6,4],[7,5],[8,5],[9,5]]      # Vector with competing DAs Buses
 DABus = 6           # DA Bus
 
-FMAX = [150,150,150,150,150,150,150]
+FMAX = [150,150,150,33,150,150,150]
 # FMAX = [50000, 50000, 50000] # Vector with Capacities of Network Lines in pu
 FMAX = [i/MVA for i in FMAX]
 
@@ -265,10 +266,10 @@ c_g[4]=[90 for x in range(0,horizon)]
 
 #Price bid for supplying power of competing DA  i in time t
 price_d_o=dict()
-price_d_o['DAS']= random_price(horizon,1,12)
+price_d_o['DAS']= random_price(horizon,12,15)
 
 for i in range(1,ncda+1):
-    price_d_o[i] = random_price(horizon,1,12)
+    price_d_o[i] = random_price(horizon,12,15)
 
 c_d_o=[]
 for i in range(ncda+1):
@@ -309,10 +310,14 @@ g_s = { 1:[100 for x in range(0,horizon)],
 
 # 2019 November 15 forecasted temprature
 outside_temp=[27.694803,26.834803,26.594803,25.664803,22.594803,21.394802,20.164803,19.584803,20.334803,16.784803,16.094803,15.764802,14.774801,14.834802,14.184802,14.144801,15.314801,16.694803,19.734802,24.414803,25.384802,26.744802,27.144802,27.524803]
+
+
 irrediance_nov = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 101.55, 237.82, 290.98, 224.05, 96.78, 141.85, 60.03, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
 irrediance_nov = np.roll(irrediance_nov,-15)
 
+irradiance_april = [0, 0, 0, 0, 0, 0, 211, 1200, 3188, 5954, 9317, 6609, 6178, 7082, 5790, 4117, 2321, 1399, 780, 186, 0, 0, 0, 0]
+irradiance_april = np.roll(irradiance_april,-15)
 # outside_temp = [i+1 for i in outside_temp]
 
 feasible_bid = dict()
@@ -427,7 +432,7 @@ def random_irrediance_solar_power(irrediance, in_loads, j, solar_list):
 DA_solar_power =[]        
 for j in range(1,ncda+2):
     IN_loads, profiles = load_data(str(j))
-    DA_solar_power.append(random_irrediance_solar_power(irrediance_nov, IN_loads, j, Solar_list))
+    DA_solar_power.append(random_irrediance_solar_power(irradiance_april, IN_loads, j, Solar_list)) # changed from irradiance_nov
 
 
 # Create DAs as agent number to shuffle before each round

@@ -46,7 +46,7 @@ from collections import Counter
 
 
 from MPEC_Concrete_Model_Smooth_Fictitious_Play_ver02 import mpec_model
-from MPEC_Concrete_Model_ver03 import mpec_model as diagonalization
+from MPEC_Concrete_Model_ver05 import mpec_model as diagonalization
 from Model_to_CSV import model_to_csv, model_to_csv_iteration
 from pyomo.environ import *
 from pyomo.opt import SolverFactory
@@ -164,10 +164,10 @@ gen_capacity =[100, 75, 50, 50]
 random.seed(42)
 
 # Time Horizon
-NO_prosumers=300
+NO_prosumers=500
 horizon=24
 H = range(16,horizon+16)    
-MVA = 60  # Power Base
+MVA = 30  # Power Base
 PU_DA = 1/(10*MVA)
 epsilon = 0.01
 timestr = time.strftime("%Y%m%d-%H%M%S")
@@ -191,7 +191,7 @@ GenBus = [1,2,3,3]  # Vector with Generation Buses
 CDABus = [[1, 6], [2,6],[3,6],[4,4],[5,4],[6,4],[7,5],[8,5],[9,5]]      # Vector with competing DAs Buses
 DABus = 6           # DA Bus
 
-FMAX = [150,150,150,150,150,150,150]
+FMAX = [150,150,150,33,150,150,150]
 # FMAX = [50000, 50000, 50000] # Vector with Capacities of Network Lines in pu
 FMAX = [i/MVA for i in FMAX]
 
@@ -311,10 +311,10 @@ c_g[4]=[90 for x in range(0,horizon)]
 
 #Price bid for supplying power of competing DA  i in time t
 price_d_o=dict()
-price_d_o['DAS']= random_price(horizon,1,12)
+price_d_o['DAS']= random_price(horizon,12,15)
 
 for i in range(1,ncda+1):
-    price_d_o[i] = random_price(horizon,1,12)
+    price_d_o[i] = random_price(horizon,12,15)
 
 c_d_o=[]
 for i in range(ncda+1):
@@ -371,6 +371,9 @@ irrediance_nov = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 101.55, 237.82, 2
 
 irrediance_nov = np.roll(irrediance_nov,-15)
 
+
+irradiance_april = [0, 0, 0, 0, 0, 0, 211, 1200, 3188, 5954, 9317, 6609, 6178, 7082, 5790, 4117, 2321, 1399, 780, 186, 0, 0, 0, 0]
+irradiance_april = np.roll(irradiance_april,-15)
 
 # Adding solar power to randomly selected houses.
 def solar_power_generator(index_len):
@@ -486,7 +489,7 @@ def random_irrediance_solar_power(irrediance, in_loads, j, solar_list):
 DA_solar_power =[]        
 for j in range(1,ncda+2):
     IN_loads, profiles = load_data(str(j))
-    DA_solar_power.append(random_irrediance_solar_power(irrediance_nov, IN_loads, j, Solar_list))
+    DA_solar_power.append(random_irrediance_solar_power(irradiance_april, IN_loads, j, Solar_list))
 
 """
 Solve once and find range for offers and bids
@@ -494,9 +497,11 @@ using diagonalization method
 """
 
 check=False
-no_iteration =4
+no_iteration = 3
 
 print("Running diagonalization for calibrating offers and bids prediction")
+temp_bid = demand_bid 
+temp_offer = offers_bid
 
 for n in range(no_iteration):
     new_offers=dict()
@@ -622,13 +627,16 @@ for n in range(no_iteration):
     #     demand_bid[key] = sum_zip
     
     for key in new_offers:
-       zipped_lists = zip(offers_bid[key], new_offers[key])
+       zipped_lists = zip(temp_offer[key], new_offers[key])
        sum_zip =  [round((x + y+max(new_offers[key])),6) for (x, y) in zipped_lists]
-       offers_bid[key] = sum_zip
+       temp_offer[key] = sum_zip
        
-       zipped_lists = zip(demand_bid[key], new_bids[key])
+       zipped_lists = zip(temp_bid[key], new_bids[key])
        sum_zip =  [round((x + y+ max(new_bids[key])),6) for (x, y) in zipped_lists]
-       demand_bid[key] = sum_zip
+       temp_bid[key] = sum_zip
+    
+    offers_bid = new_bids
+    demand_bid = new_offers
 
 # # Double the values
 # for key in new_offers:
@@ -640,9 +648,12 @@ for n in range(no_iteration):
 #         # sum_zip =  [(x + y)/2 for (x, y) in zipped_lists]
 #         demand_bid[key] = demand_bid[key] *2
 
-for key in new_offers:
-    offers_bid[key] =[x*30 for x in offers_bid[key]]
-#     demand_bid[key]  =[x*10 for x in demand_bid[key]]
+offers_bid =temp_offer
+demand_bid = temp_bid
+
+# for key in new_offers:
+#     offers_bid[key] =[x*30 for x in offers_bid[key]]
+#     # demand_bid[key]  =[x*10 for x in demand_bid[key]]
 
 """
 going for FICTITIOUS PLAY algortihm

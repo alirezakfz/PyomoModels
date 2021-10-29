@@ -59,7 +59,7 @@ from collections import Counter
 import hashlib
 
 
-from MPEC_Concrete_Model_ver03 import mpec_model
+from MPEC_Concrete_Model_ver05 import mpec_model
 from pyomo.environ import *
 from pyomo.opt import SolverFactory
 from Model_to_CSV import model_to_csv, model_to_csv_iteration
@@ -180,12 +180,13 @@ gen_capacity =[100, 75, 50, 50]
 random.seed(42)
 
 # Time Horizon
-NO_prosumers=300
+NO_prosumers=500
 epsilon= 0.01
 horizon=24
 H = range(16,horizon+16)    
-MVA = 60  # Power Base
-PU_DA = 1/(1000*MVA)
+MVA = 30  # Power Base
+PU_DA = 1/(100*MVA)
+load_multiply = 1
 
 # Number of strategies
 no_strategies = 100 
@@ -207,7 +208,7 @@ GenBus = [1,2,3,3]  # Vector with Generation Buses
 CDABus = [[1, 6], [2,6],[3,6],[4,4],[5,4],[6,4],[7,5],[8,5],[9,5]]      # Vector with competing DAs Buses
 DABus = 3           # DA Bus
 
-FMAX = [150,150,150,150,150,150,150]
+FMAX = [150,150,150,33,150,150,150]
 # FMAX = [50000, 50000, 50000] # Vector with Capacities of Network Lines in pu
 FMAX = [i/MVA for i in FMAX]
 
@@ -362,10 +363,10 @@ c_g[4]=[90 for x in range(0,horizon)]
 
 #Price bid for supplying power of competing DA  i in time t
 price_d_o=dict()
-price_d_o['DAS']= random_price(horizon,1,12)
+price_d_o['DAS']= random_price(horizon,12,15)
 
 for i in range(1,ncda+1):
-    price_d_o[i] = random_price(horizon,1,12)
+    price_d_o[i] = random_price(horizon,12,15)
 
 c_d_o=[]
 for i in range(ncda+1):
@@ -417,6 +418,10 @@ outside_temp=[16.784803,16.094803,15.764802,14.774801,14.834802,14.184802,14.144
 irrediance_nov = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 101.55, 237.82, 290.98, 224.05, 96.78, 141.85, 60.03, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
 irrediance_nov = np.roll(irrediance_nov,-15)
+
+
+irradiance_april = [0, 0, 0, 0, 0, 0, 211, 1200, 3188, 5954, 9317, 6609, 6178, 7082, 5790, 4117, 2321, 1399, 780, 186, 0, 0, 0, 0]
+irradiance_april = np.roll(irradiance_april,-15)
 
 # Adding solar power to randomly selected houses.
 def solar_power_generator(index_len):
@@ -532,21 +537,19 @@ def random_irrediance_solar_power(irrediance, in_loads, j, solar_list):
         for i in range(horizon):
             area = random.choice([1,2])
             solar_power[da-1,i] = 0.000157 * area * irrediance[i] * (1 - 0.001*random.random()* (outside_temp[i]-25))
-    
     return solar_power
         
 # List of solar powers
 DA_solar_power =[]        
 for j in range(1,ncda+2):
     IN_loads, profiles = load_data(str(j))
-    DA_solar_power.append(random_irrediance_solar_power(irrediance_nov, IN_loads, j, Solar_list))
-    
+    DA_solar_power.append(random_irrediance_solar_power(irradiance_april, IN_loads, j, Solar_list)) 
 
 
 objective_function = dict()
 
 check=False
-no_iteration = 300
+no_iteration = 5
 rate=0.001  #learning rate like gradient descent
 infeasibility_counter_DA =[0*i for i in range(ncda+1) ]
 timestr = time.strftime("%Y%m%d-%H%M%S")
@@ -676,7 +679,7 @@ for n in range(no_iteration+1):
             infeasibility_counter_DA[j-1] += 1
             new_d_o = feasible_offer[j] # random_offer(ncda, horizon)[0][j]
             new_d_b = feasible_bid[j]   # random_offer(ncda, horizon)[1][j]
-            objective_function[j].append('NAN')
+            objective_function[j].append(1000000) # 'NaN'
         
         new_offers[j]=new_d_o
         new_bids[j]= new_d_b
@@ -698,7 +701,9 @@ for n in range(no_iteration+1):
         
         print('\nno EPEC, End of round:',n+1,'\n******************')
         
-        
+    
+    offers_bid = new_offers
+    demand_bid = new_bids
     #     # Finishing Step 3
     # # Step 4 check if epsilon difference exist
     # if (n < no_iteration): # (not check) and
