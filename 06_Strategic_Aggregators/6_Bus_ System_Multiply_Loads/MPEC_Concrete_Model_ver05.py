@@ -36,7 +36,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     
     MVA = 30  # Power Base
-    PU_DA = 1/(10*MVA)
+    PU_DA = 1/(1000*MVA)
     
     
 
@@ -242,33 +242,44 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     # Constraint (a.2): Ensure that charging of EV don't exceed maximum value of EV_Power
     def ev_charging_rule(model,i,t):
-        if i in EVs_list:
-            if t >= arrival[i-1] and t < depart[i-1]:
-                return model.E_EV_CH[i,t] <= model.u_EV[i,t] * charge_power[i-1]*delta_t
-            else:
-                return model.E_EV_CH[i,t]==0
-        elif t >= arrival[i-1] and t < depart[i-1]:
-                return model.E_EV_CH[i,t] <= charge_power[i-1]*delta_t                
+        if t >= arrival[i-1] and t < depart[i-1]:
+            return model.E_EV_CH[i,t] <= model.u_EV[i,t] * charge_power[i-1]*delta_t
         else:
-            return Constraint.Skip
+            return model.E_EV_CH[i,t]==0
+        return Constraint.Skip
     model.ev_charging_con=Constraint(model.N, model.T, rule=ev_charging_rule)
     
     # Constraint (a.3): Ensure that charging of EV don't exceed maximum value of EV_Power
     def ev_discharging_rule(model,i,t):
-        if i in EVs_list:
-            if t >= arrival[i-1] and t < depart[i-1]:
-                return model.E_EV_DIS[i,t] <= (1-model.u_EV[i,t]) * charge_power[i-1]*delta_t
-            else:
-                return model.E_EV_DIS[i,t]==0
-        elif i not in EVs_list:
-            return model.E_EV_DIS[i,t]==0            
+        if t >= arrival[i-1] and t < depart[i-1]:
+            return model.E_EV_DIS[i,t] <= (1-model.u_EV[i,t]) * charge_power[i-1]*delta_t
         else:
-            return Constraint.Skip
+            return model.E_EV_DIS[i,t]==0
+            
+        # if i in EVs_list:
+        #     if t >= arrival[i-1] and t < depart[i-1]:
+        #         return model.E_EV_DIS[i,t] <= (1-model.u_EV[i,t]) * charge_power[i-1]*delta_t
+        #     else:
+        #         return model.E_EV_DIS[i,t]==0
+        
+        
+        # if i not in EVs_list:
+        #     return model.E_EV_DIS[i,t]==0
+        
+        return Constraint.Skip
     model.ev_discharging_con=Constraint(model.N, model.T, rule=ev_discharging_rule)
+    
+    # Constraint (4.3.1) EVS_list not participate in the market
+    def ev_discharging_list_rule(model, i, t):
+        if i not in EVs_list:
+            return model.E_EV_DIS[i,t]==0
+        return Constraint.Skip
+    model.ev_discharging_list_con=Constraint(model.N, model.T, rule=ev_discharging_list_rule)
+            
     
     # Constraint (a.4): set the SOC 
     def ev_soc_rule(model, i, t):
-        if t >= arrival[i-1] and t < depart[i-1] and (i in EVs_list) : 
+        if t >= arrival[i-1] and t < depart[i-1] : 
             return model.SOC[i,t+1] == model.SOC[i,t] + ch_rate*model.E_EV_CH[i,t] - model.E_EV_DIS[i,t]/ch_rate 
         else:
             return Constraint.Skip

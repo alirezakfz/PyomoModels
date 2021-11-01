@@ -59,7 +59,7 @@ from collections import Counter
 import hashlib
 
 
-from MPEC_Concrete_Model_ver05 import mpec_model
+from MPEC_Concrete_Model_ver04 import mpec_model
 from pyomo.environ import *
 from pyomo.opt import SolverFactory
 from Model_to_CSV import model_to_csv, model_to_csv_iteration
@@ -164,7 +164,7 @@ def dictionar_bus(GenBus, CDABus, DAs):
 
 
 def load_data(file_index):
-    df1 = pd.read_csv('prosumers_data/inflexible_profiles_scen_'+file_index+'.csv').round(5)/100 #/1000
+    df1 = pd.read_csv('prosumers_data/inflexible_profiles_scen_'+file_index+'.csv').round(5)*load_multiply/100 #/1000
     # Just selecting some prosumers like 500 or 600 or 1000
     df1 = df1[:NO_prosumers]
     # print(df1.shape)
@@ -174,13 +174,14 @@ def load_data(file_index):
     return df1 , df2
 
 
-gen_capacity =[100, 75, 50, 50]
+# gen_capacity =[100, 75, 50, 50]
+gen_capacity =[10, 7.5, 5, 5]
 # gen_capacity =[50000, 50000, 50000]
 
 random.seed(42)
 
 # Time Horizon
-NO_prosumers=500
+NO_prosumers=300
 epsilon= 0.01
 horizon=24
 H = range(16,horizon+16)    
@@ -495,7 +496,7 @@ EVs_list = dict()
 
 for j in range(1,ncda+2):
     if j %2 == 0:
-        EVs_penetration=0.75
+        EVs_penetration= 0.75
     elif j % 3== 0:
         EVs_penetration=0.50
     else:
@@ -504,6 +505,8 @@ for j in range(1,ncda+2):
     NO_of_EVs = int(EVs_penetration * NO_prosumers)
     EVs_list[j] = random.choices([i+1 for i in range(NO_prosumers)],k=NO_of_EVs )
 
+
+    
 # Solar power penetration.
 Solar_penetration= None
 Solar_list=dict()
@@ -536,7 +539,7 @@ def random_irrediance_solar_power(irrediance, in_loads, j, solar_list):
     for da in solar_list[j]:
         for i in range(horizon):
             area = random.choice([1,2])
-            solar_power[da-1,i] = 0.000157 * area * irrediance[i] * (1 - 0.001*random.random()* (outside_temp[i]-25))
+            solar_power[da-1,i] = 0.000157 * area * irrediance[i] * (1 - 0.001*random.random()* (outside_temp[i]-25))*load_multiply
     return solar_power
         
 # List of solar powers
@@ -549,7 +552,7 @@ for j in range(1,ncda+2):
 objective_function = dict()
 
 check=False
-no_iteration = 5
+no_iteration = 10
 rate=0.001  #learning rate like gradient descent
 infeasibility_counter_DA =[0*i for i in range(ncda+1) ]
 timestr = time.strftime("%Y%m%d-%H%M%S")
@@ -588,17 +591,17 @@ for n in range(no_iteration+1):
         # EVs properties 
         arrival = profiles['Arrival']
         depart  = profiles['Depart']
-        charge_power = profiles['EV_Power']
-        EV_soc_low   = profiles['EV_soc_low']
-        EV_soc_up   = profiles['EV_soc_up']
-        EV_soc_arrive = profiles['EV_soc_arr']
-        EV_demand = profiles['EV_demand']
+        charge_power = profiles['EV_Power']*load_multiply
+        EV_soc_low   = profiles['EV_soc_low']*load_multiply
+        EV_soc_up   = profiles['EV_soc_up']*load_multiply
+        EV_soc_arrive = profiles['EV_soc_arr']*load_multiply
+        EV_demand = profiles['EV_demand']*load_multiply
         
                 
         # Shiftable loads
         SL_loads=[]
-        SL_loads.append(profiles['SL_loads1']/10)
-        SL_loads.append(profiles['SL_loads2']/10)
+        SL_loads.append(profiles['SL_loads1']*load_multiply/10)
+        SL_loads.append(profiles['SL_loads2']*load_multiply/10)
         SL_low   = profiles['SL_low']
         SL_up    = profiles['SL_up']
         SL_cycle = len(SL_loads)
