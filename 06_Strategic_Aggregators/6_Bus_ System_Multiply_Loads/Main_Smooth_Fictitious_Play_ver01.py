@@ -998,8 +998,8 @@ for n in range(no_iteration):
                     csv_writer.writerow(list(supply_prob_temp.flatten().tolist()))
                     
         else:
-             infeasibility_counter+=1
-             infeasibility_counter_DA[j-1] += 1
+             # infeasibility_counter+=1
+             # infeasibility_counter_DA[j-1] += 1
              new_d_o = feasible_offer[j] # random_offer(ncda, horizon)[0][j]
              new_d_b = feasible_bid[j]   # random_offer(ncda, horizon)[1][j]
              objective_function[j].append('NAN')
