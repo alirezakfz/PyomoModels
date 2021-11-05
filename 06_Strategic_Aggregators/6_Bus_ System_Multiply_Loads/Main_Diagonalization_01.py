@@ -105,7 +105,7 @@ def dictionar_bus(GenBus, CDABus, DAs):
 
 
 def load_data(file_index):
-    df1 = pd.read_csv('prosumers_data/inflexible_profiles_scen_'+file_index+'.csv').round(5)/100 #*load_multiply #/1000
+    df1 = pd.read_csv('prosumers_data/inflexible_profiles_scen_'+file_index+'.csv').round(5)*load_multiply/100 #*load_multiply #/1000
     
     # Just selecting some prosumers like 500 or 600 or 1000
     df1 = df1[:NO_prosumers]
@@ -122,13 +122,13 @@ gen_capacity =[100, 75, 50, 50]
 random.seed(42)
 
 # Time Horizon
-NO_prosumers=500
-epsilon= 0.01
+NO_prosumers=400
+epsilon= 0.001
 horizon=24
 H = range(16,horizon+16)    
 MVA = 30 # Power Base
 PU_DA = 1/(100*MVA)
-load_multiply = 1
+load_multiply = 40
 
 nl = 7    # Number of network lines
 nb = 6    # Number of network buses
@@ -479,17 +479,17 @@ for n in range(no_iteration+1):
         # EVs properties 
         arrival = profiles['Arrival']
         depart  = profiles['Depart']
-        charge_power = profiles['EV_Power']
-        EV_soc_low   = profiles['EV_soc_low']
-        EV_soc_up   = profiles['EV_soc_up']
-        EV_soc_arrive = profiles['EV_soc_arr']
-        EV_demand = profiles['EV_demand']
+        charge_power = profiles['EV_Power']*load_multiply
+        EV_soc_low   = profiles['EV_soc_low']*load_multiply
+        EV_soc_up   = profiles['EV_soc_up']*load_multiply
+        EV_soc_arrive = profiles['EV_soc_arr']*load_multiply
+        EV_demand = profiles['EV_demand']*load_multiply
         
                 
         # Shiftable loads
         SL_loads=[]
-        SL_loads.append(profiles['SL_loads1']/10)
-        SL_loads.append(profiles['SL_loads2']/10)
+        SL_loads.append(profiles['SL_loads1']*load_multiply/10)
+        SL_loads.append(profiles['SL_loads2']*load_multiply/10)
         SL_low   = profiles['SL_low']
         SL_up    = profiles['SL_up']
         SL_cycle = len(SL_loads)

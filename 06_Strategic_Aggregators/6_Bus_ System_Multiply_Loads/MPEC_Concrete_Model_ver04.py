@@ -37,7 +37,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     MVA = 30  # Power Base
     PU_DA = 1/(1000*MVA)
-    
+    load_multiply=40
     
 
     """
@@ -325,7 +325,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     # Constraint (a.8): Set inside temprature for residence
     def TCL_room_temp_rule(model,i,t):
         if t >= arrival[i-1] and t < depart[i-1]:                                                                 # model.TCL_occ[i,t]
-            return model.TCL_TEMP[i,t+1]== TCL_Beta[i-1] * model.TCL_TEMP[i,t] + (1-TCL_Beta[i-1])*(outside_temp[t-16]+ TCL_R[i-1]*model.POWER_TCL[i,t])
+            return model.TCL_TEMP[i,t+1]== (TCL_Beta[i-1] * model.TCL_TEMP[i,t] + (1-TCL_Beta[i-1])*(outside_temp[t-16]+ TCL_R[i-1]*model.POWER_TCL[i,t]))*load_multiply
         else:
             return model.POWER_TCL[i,t] == 0
             # return Constraint.Skip

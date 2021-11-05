@@ -45,7 +45,7 @@ from csv import writer
 from collections import Counter
 
 
-from MPEC_Concrete_Model_Smooth_Fictitious_Play_ver02 import mpec_model
+from MPEC_Concrete_Model_Smooth_Fictitious_Play_ver04 import mpec_model
 from MPEC_Concrete_Model_ver05 import mpec_model as diagonalization
 from Model_to_CSV import model_to_csv, model_to_csv_iteration
 from pyomo.environ import *
@@ -148,7 +148,7 @@ def dictionar_bus(GenBus, CDABus, DAs):
     return dic_CDA_Bus, dic_Bus_CDA, dic_G, dic_G_Bus
 
 def load_data(file_index):
-    df1 = pd.read_csv('prosumers_data/inflexible_profiles_scen_'+file_index+'.csv').round(5)/100 #/1000
+    df1 = pd.read_csv('prosumers_data/inflexible_profiles_scen_'+file_index+'.csv').round(5)*load_multiply/100 #/1000
     # Just selecting some prosumers like 500 or 600 or 1000
     df1 = df1[:NO_prosumers]
     # print(df1.shape)
@@ -164,7 +164,7 @@ gen_capacity =[100, 75, 50, 50]
 random.seed(42)
 
 # Time Horizon
-NO_prosumers=500
+NO_prosumers=400
 horizon=24
 H = range(16,horizon+16)    
 MVA = 30  # Power Base
@@ -173,6 +173,7 @@ epsilon = 0.01
 timestr = time.strftime("%Y%m%d-%H%M%S")
 # Number of strategies
 no_strategies = 30
+load_multiply = 40
 
 nl = 7    # Number of network lines
 nb = 6    # Number of network buses
@@ -481,7 +482,7 @@ def random_irrediance_solar_power(irrediance, in_loads, j, solar_list):
     for da in solar_list[j]:
         for i in range(horizon):
             area = random.choice([1,2])
-            solar_power[da-1,i] = 0.000157 * area * irrediance[i] * (1 - 0.001*random.random()* (outside_temp[i]-25))
+            solar_power[da-1,i] = 0.000157 * area * irrediance[i] * (1 - 0.001*random.random()* (outside_temp[i]-25))*load_multiply
     
     return solar_power
         
@@ -497,7 +498,7 @@ using diagonalization method
 """
 
 check=False
-no_iteration = 3
+no_iteration = 4
 
 print("Running diagonalization for calibrating offers and bids prediction")
 temp_bid = demand_bid 
@@ -520,17 +521,17 @@ for n in range(no_iteration):
         # EVs properties 
         arrival = profiles['Arrival']
         depart  = profiles['Depart']
-        charge_power = profiles['EV_Power']
-        EV_soc_low   = profiles['EV_soc_low']
-        EV_soc_up   = profiles['EV_soc_up']
-        EV_soc_arrive = profiles['EV_soc_arr']
-        EV_demand = profiles['EV_demand']
+        charge_power = profiles['EV_Power']*load_multiply
+        EV_soc_low   = profiles['EV_soc_low']*load_multiply
+        EV_soc_up   = profiles['EV_soc_up']*load_multiply
+        EV_soc_arrive = profiles['EV_soc_arr']*load_multiply
+        EV_demand = profiles['EV_demand']*load_multiply
         
                 
         # Shiftable loads
         SL_loads=[]
-        SL_loads.append(profiles['SL_loads1']/10)
-        SL_loads.append(profiles['SL_loads2']/10)
+        SL_loads.append(profiles['SL_loads1']*load_multiply/10)
+        SL_loads.append(profiles['SL_loads2']*load_multiply/10)
         SL_low   = profiles['SL_low']
         SL_up    = profiles['SL_up']
         SL_cycle = len(SL_loads)
@@ -873,7 +874,7 @@ offers_bid , demand_bid = random_offer(ncda, horizon)
 feasible_offer = dict()
 feasible_bid  = dict()
 check=False
-distance=100
+distance=50
 no_iteration = 300
 
 print("\n\n********** Starting SMOOTH FICTITIOUS PLAY algortihm ********")
@@ -892,17 +893,17 @@ for n in range(no_iteration):
         # EVs properties 
         arrival = profiles['Arrival']
         depart  = profiles['Depart']
-        charge_power = profiles['EV_Power']
-        EV_soc_low   = profiles['EV_soc_low']
-        EV_soc_up   = profiles['EV_soc_up']
-        EV_soc_arrive = profiles['EV_soc_arr']
-        EV_demand = profiles['EV_demand']
+        charge_power = profiles['EV_Power']*load_multiply
+        EV_soc_low   = profiles['EV_soc_low']*load_multiply
+        EV_soc_up   = profiles['EV_soc_up']*load_multiply
+        EV_soc_arrive = profiles['EV_soc_arr']*load_multiply
+        EV_demand = profiles['EV_demand']*load_multiply
         
                 
         # Shiftable loads
         SL_loads=[]
-        SL_loads.append(profiles['SL_loads1']/10)
-        SL_loads.append(profiles['SL_loads2']/10)
+        SL_loads.append(profiles['SL_loads1']*load_multiply/10)
+        SL_loads.append(profiles['SL_loads2']*load_multiply/10)
         SL_low   = profiles['SL_low']
         SL_up    = profiles['SL_up']
         SL_cycle = len(SL_loads)
@@ -1012,22 +1013,22 @@ for n in range(no_iteration):
         
             
     check=False
-    if check_bids(offers_bid,new_offers,epsilon) and check_bids(demand_bid,new_bids,epsilon) : # and (infeasibility_counter < ncda+1)
-        check=True
-        print("solution found in bids epsilon difference iteration:",n+1)
-        diag_df = pd.concat([pd.DataFrame.from_dict(new_offers), pd.DataFrame.from_dict(new_bids)], axis=1)
-        diag_df.columns = dig_col
-        results_to_csv(diag_df, n)
-        break
-    else:
-        # print(pd.concat([pd.DataFrame.from_dict(offers_bid), pd.DataFrame.from_dict(new_offers)], axis=1))
-        # print(pd.concat([pd.DataFrame.from_dict(demand_bid), pd.DataFrame.from_dict(new_bids)], axis=1))
-        #print(pd.concat([pd.DataFrame.from_dict(new_offers), pd.DataFrame.from_dict(new_bids)], axis=1))
-        # saving results of the iterations
-        diag_df = pd.concat([pd.DataFrame.from_dict(new_offers), pd.DataFrame.from_dict(new_bids)], axis=1)
-        diag_df.columns = dig_col
-        results_to_csv(diag_df, n)
-        print('\nno EPEC, End of round:',n+1,'\n********************')
+    # if check_bids(offers_bid,new_offers,epsilon) and check_bids(demand_bid,new_bids,epsilon) : # and (infeasibility_counter < ncda+1)
+    #     check=True
+    #     print("solution found in bids epsilon difference iteration:",n+1)
+    #     diag_df = pd.concat([pd.DataFrame.from_dict(new_offers), pd.DataFrame.from_dict(new_bids)], axis=1)
+    #     diag_df.columns = dig_col
+    #     results_to_csv(diag_df, n)
+    #     break
+    # else:
+    #     # print(pd.concat([pd.DataFrame.from_dict(offers_bid), pd.DataFrame.from_dict(new_offers)], axis=1))
+    #     # print(pd.concat([pd.DataFrame.from_dict(demand_bid), pd.DataFrame.from_dict(new_bids)], axis=1))
+    #     #print(pd.concat([pd.DataFrame.from_dict(new_offers), pd.DataFrame.from_dict(new_bids)], axis=1))
+    #     # saving results of the iterations
+    #     diag_df = pd.concat([pd.DataFrame.from_dict(new_offers), pd.DataFrame.from_dict(new_bids)], axis=1)
+    #     diag_df.columns = dig_col
+    #     results_to_csv(diag_df, n)
+    #     print('\nno EPEC, End of round:',n+1,'\n********************')
     
     
     # update_offers_demands()

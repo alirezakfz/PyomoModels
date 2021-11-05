@@ -52,7 +52,7 @@ from collections import Counter
 import hashlib
 
 
-from MPEC_Concrete_Model_ver03 import mpec_model as diag_model
+from MPEC_Concrete_Model_ver04 import mpec_model as diag_model
 from MPEC_Concrete_Model_ver05 import mpec_model
 from pyomo.environ import *
 from pyomo.opt import SolverFactory
@@ -157,7 +157,7 @@ def dictionar_bus(GenBus, CDABus, DAs):
 
 
 def load_data(file_index):
-    df1 = pd.read_csv('prosumers_data/inflexible_profiles_scen_'+file_index+'.csv').round(5)/100 #/1000
+    df1 = pd.read_csv('prosumers_data/inflexible_profiles_scen_'+file_index+'.csv').round(5)*load_multiply/100 #/1000
     # Just selecting some prosumers like 500 or 600 or 1000
     df1 = df1[:NO_prosumers]
     # print(df1.shape)
@@ -178,6 +178,7 @@ horizon=24
 H = range(16,horizon+16)    
 MVA = 30 # Power Base
 PU_DA = 1/(100*MVA)
+load_multiply = 40
 
 # Number of strategies
 no_strategies = 100 
@@ -479,7 +480,7 @@ def random_irrediance_solar_power(irrediance, in_loads, j, solar_list):
     for da in solar_list[j]:
         for i in range(horizon):
             area = random.choice([1,2])
-            solar_power[da-1,i] = 0.000157 * area * irrediance[i] * (1 - 0.001*random.random()* (outside_temp[i]-25))
+            solar_power[da-1,i] = 0.000157 * area * irrediance[i] * (1 - 0.001*random.random()* (outside_temp[i]-25))*load_multiply
     
     return solar_power
         
@@ -500,6 +501,8 @@ rate=0.01  #learning rate like gradient descent
 infeasibility_counter_DA =[0,0,0]
 timestr = time.strftime("%Y%m%d-%H%M%S")
 
+temp_bid = demand_bid 
+temp_offer = offers_bid
 
 print("Running diagonalization for calibrating offers and bids prediction")
 
@@ -521,17 +524,17 @@ for n in range(no_iteration):
         # EVs properties 
         arrival = profiles['Arrival']
         depart  = profiles['Depart']
-        charge_power = profiles['EV_Power']
-        EV_soc_low   = profiles['EV_soc_low']
-        EV_soc_up   = profiles['EV_soc_up']
-        EV_soc_arrive = profiles['EV_soc_arr']
-        EV_demand = profiles['EV_demand']
+        charge_power = profiles['EV_Power']*load_multiply
+        EV_soc_low   = profiles['EV_soc_low']*load_multiply
+        EV_soc_up   = profiles['EV_soc_up']*load_multiply
+        EV_soc_arrive = profiles['EV_soc_arr']*load_multiply
+        EV_demand = profiles['EV_demand']*load_multiply
         
                 
         # Shiftable loads
         SL_loads=[]
-        SL_loads.append(profiles['SL_loads1']/10)
-        SL_loads.append(profiles['SL_loads2']/10)
+        SL_loads.append(profiles['SL_loads1']*load_multiply/10)
+        SL_loads.append(profiles['SL_loads2']*load_multiply/10)
         SL_low   = profiles['SL_low']
         SL_up    = profiles['SL_up']
         SL_cycle = len(SL_loads)
@@ -604,20 +607,35 @@ for n in range(no_iteration):
         # model_to_csv(model, IN_loads.sum(0))
         
         # Finishing Step 3
-    # Step 4 check if epsilon difference exist
-    for key in new_offers:
-        zipped_lists = zip(offers_bid[key], new_offers[key])
-        sum_zip =  [round((x + y+max(new_offers[key])),6) for (x, y) in zipped_lists]
-        offers_bid[key] = sum_zip
+    # # Step 4 check if epsilon difference exist
+    # for key in new_offers:
+    #     zipped_lists = zip(offers_bid[key], new_offers[key])
+    #     sum_zip =  [round((x + y+max(new_offers[key])),6) for (x, y) in zipped_lists]
+    #     offers_bid[key] = sum_zip
         
-        zipped_lists = zip(demand_bid[key], new_bids[key])
-        sum_zip =  [round((x + y+ max(new_bids[key])),6) for (x, y) in zipped_lists]
-        demand_bid[key] = sum_zip
+    #     zipped_lists = zip(demand_bid[key], new_bids[key])
+    #     sum_zip =  [round((x + y+ max(new_bids[key])),6) for (x, y) in zipped_lists]
+    #     demand_bid[key] = sum_zip
+    
+    for key in new_offers:
+       zipped_lists = zip(temp_offer[key], new_offers[key])
+       sum_zip =  [round((x + y+max(new_offers[key])),6) for (x, y) in zipped_lists]
+       temp_offer[key] = sum_zip
+       
+       zipped_lists = zip(temp_bid[key], new_bids[key])
+       sum_zip =  [round((x + y+ max(new_bids[key])),6) for (x, y) in zipped_lists]
+       temp_bid[key] = sum_zip
+    
+    offers_bid = new_bids
+    demand_bid = new_offers
 
 
 
-for key in new_offers:
-    offers_bid[key] =[x*30 for x in offers_bid[key]]
+offers_bid =temp_offer
+demand_bid = temp_bid
+
+# for key in new_offers:
+#     offers_bid[key] =[x*30 for x in offers_bid[key]]
 #     demand_bid[key]  =[x*2 for x in demand_bid[key]]
     
     
@@ -673,10 +691,12 @@ def make_epsilon_discrete_value(epsilon):
         for t in range(horizon):
             offers_temp[t] = {}
             demand_temp[t] = {}
-            offers = np.arange(0, (offers_bid[i][t]+max_offer_t)*3, epsilon).tolist()
+            offers = np.arange(0, (offers_bid[i][t]+max_offer_t)*2, epsilon).tolist()
+            # offers = np.arange(0, offers_bid[i][t], epsilon).tolist()
             offers = np.around(offers, 6)
             
-            demands = np.arange(0, (demand_bid[i][t]*max_bid_t)*30, epsilon).tolist()
+            demands = np.arange(0, (demand_bid[i][t]+max_bid_t), epsilon).tolist()
+            # demands = np.arange(0, demand_bid[i][t], epsilon).tolist()
             demands = np.around(demands, 6)
             
             offers_temp[t][(0,0)] = 0
@@ -691,7 +711,7 @@ def make_epsilon_discrete_value(epsilon):
         discrete_offer[i] = offers_temp
     pass
 
-make_epsilon_discrete_value(0.1)
+make_epsilon_discrete_value(0.01)
 
 # After each iteration update discrete offers and bids by counting them
 def check_boundry(new_d_o, new_d_b, j):
@@ -917,7 +937,7 @@ epsilon= 0.01
 # IF for every bid "b" in D, it is:
 #       | probability_of_b - PREVIOUS_probability_of_b | < epsilon   
 #            THEN we say that the algorithm has converged to an epsilon-CCEquilibrium 
-distance = 100
+distance = 50
 infeasibility_counter=0
 infeasibility_counter_DA =[0,0,0]
 objective_function = dict()
@@ -1006,17 +1026,17 @@ for n in range(no_iteration):
         # EVs properties 
         arrival = profiles['Arrival']
         depart  = profiles['Depart']
-        charge_power = profiles['EV_Power']
-        EV_soc_low   = profiles['EV_soc_low']
-        EV_soc_up   = profiles['EV_soc_up']
-        EV_soc_arrive = profiles['EV_soc_arr']
-        EV_demand = profiles['EV_demand']
+        charge_power = profiles['EV_Power']*load_multiply
+        EV_soc_low   = profiles['EV_soc_low']*load_multiply
+        EV_soc_up   = profiles['EV_soc_up']*load_multiply
+        EV_soc_arrive = profiles['EV_soc_arr']*load_multiply
+        EV_demand = profiles['EV_demand']*load_multiply
         
                 
         # Shiftable loads
         SL_loads=[]
-        SL_loads.append(profiles['SL_loads1']/10)
-        SL_loads.append(profiles['SL_loads2']/10)
+        SL_loads.append(profiles['SL_loads1']*load_multiply/10)
+        SL_loads.append(profiles['SL_loads2']*load_multiply/10)
         SL_low   = profiles['SL_low']
         SL_up    = profiles['SL_up']
         SL_cycle = len(SL_loads)
