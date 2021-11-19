@@ -172,7 +172,7 @@ PU_DA = 1/(10*MVA)
 epsilon = 0.01
 timestr = time.strftime("%Y%m%d-%H%M%S")
 # Number of strategies
-no_strategies = 30
+no_strategies = 15
 load_multiply = 40
 
 nl = 7    # Number of network lines
@@ -874,7 +874,7 @@ offers_bid , demand_bid = random_offer(ncda, horizon)
 feasible_offer = dict()
 feasible_bid  = dict()
 check=False
-distance=50
+distance=100
 no_iteration = 300
 
 print("\n\n********** Starting SMOOTH FICTITIOUS PLAY algortihm ********")
@@ -1037,8 +1037,14 @@ for n in range(no_iteration):
     if n>=1.5*distance and check_bids_dis_prob(file_name_offer,n,distance, epsilon) and check_bids_dis_prob(file_name_offer,n,distance, epsilon):
         check=True
         print("solution found in probability epsilon difference iteration:",n+1)
+        diag_df = pd.concat([pd.DataFrame.from_dict(new_offers), pd.DataFrame.from_dict(new_bids)], axis=1)
+        diag_df.columns = dig_col
+        results_to_csv(diag_df, n)
         break
     else:
+        diag_df = pd.concat([pd.DataFrame.from_dict(new_offers), pd.DataFrame.from_dict(new_bids)], axis=1)
+        diag_df.columns = dig_col
+        results_to_csv(diag_df, n)
         print('\nno EPEC, End of round:',n+1,'\n********************')
 
 
