@@ -127,7 +127,7 @@ epsilon= 0.001
 horizon=24
 H = range(16,horizon+16)    
 MVA = 30 # Power Base
-PU_DA = 1/(1000*MVA)
+PU_DA = 1/(100*MVA)
 load_multiply = 40
 
 nl = 7    # Number of network lines
@@ -389,9 +389,9 @@ EVs_list = dict()
 
 for j in range(1,ncda+2):
     if j %2 == 0:
-        EVs_penetration= 0.75
+        EVs_penetration= 0.35
     elif j % 3== 0:
-        EVs_penetration=0.50
+        EVs_penetration=0.35
     else:
         EVs_penetration=0.35
     # Adding random EVs for prosumers

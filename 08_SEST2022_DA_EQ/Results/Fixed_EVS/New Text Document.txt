@@ -1,0 +1,1 @@
+In Fixe EVs diag  PU was 1/100 so devide all the results of yhe loads to 10 to be same as others
