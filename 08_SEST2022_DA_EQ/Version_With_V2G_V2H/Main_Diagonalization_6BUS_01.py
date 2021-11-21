@@ -389,9 +389,9 @@ EVs_list = dict()
 
 for j in range(1,ncda+2):
     if j %2 == 0:
-        EVs_penetration= 0.75
+        EVs_penetration= 0.35#0.75
     elif j % 3== 0:
-        EVs_penetration=0.50
+        EVs_penetration=0.35#0.50
     else:
         EVs_penetration=0.35
     # Adding random EVs for prosumers
@@ -404,9 +404,9 @@ Solar_list=dict()
 
 for j in range(1,ncda+2):
     if j % 2 == 0:
-        Solar_penetration=0.50
+        Solar_penetration=0.20#0.50
     elif j % 3 == 0:
-        Solar_penetration=0.30
+        Solar_penetration=0.20#0.30
     else:
         Solar_penetration=0.20
     # Adding random solar panels to prosumers

@@ -667,7 +667,7 @@ for n in range(no_iteration+1):
         if (results.solver.status == SolverStatus.ok) and (results.solver.termination_condition == TerminationCondition.optimal):
             print('Model solved and is optimal for DA:',j,'   Time taken:', solver_time)
             # model_to_csv(model,IN_loads.sum(0))
-            model_to_csv_iteration(model, IN_loads.sum(0), n, str(j), timestr, EVs_list[j])
+            model_to_csv_iteration(model, IN_loads.sum(0), n, str(j), timestr, EVs_list[j],load_multiply*PU_DA)
             new_d_o, new_d_b = solved_model_bids(model)
             feasible_bid[j] =  new_d_b
             feasible_offer[j] = new_d_o
@@ -692,6 +692,9 @@ for n in range(no_iteration+1):
     if check_bids(offers_bid,new_offers,epsilon) and check_bids(demand_bid,new_bids,epsilon) and (infeasibility_counter < ncda+1):
         check=True
         print("solution found in iteration:",n)
+        diag_df = pd.concat([pd.DataFrame.from_dict(new_offers), pd.DataFrame.from_dict(new_bids)], axis=1)
+        diag_df.columns= dig_col
+        results_to_csv(diag_df, n)
         break
     else:
         # print(pd.concat([pd.DataFrame.from_dict(offers_bid), pd.DataFrame.from_dict(new_offers)], axis=1))
