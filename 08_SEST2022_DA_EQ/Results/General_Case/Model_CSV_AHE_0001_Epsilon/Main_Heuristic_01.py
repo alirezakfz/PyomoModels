@@ -182,7 +182,7 @@ random.seed(42)
 
 # Time Horizon
 NO_prosumers=400
-epsilon= 0.00001
+epsilon= 0.0001
 horizon=24
 H = range(16,horizon+16)    
 MVA = 30  # Power Base
