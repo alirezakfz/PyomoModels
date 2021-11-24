@@ -182,12 +182,12 @@ random.seed(42)
 
 # Time Horizon
 NO_prosumers=500
-epsilon= 0.0001
+epsilon= 0.00001
 horizon=24
 H = range(16,horizon+16)    
 MVA = 30  # Power Base
 PU_DA = 1/(1000*MVA)
-load_multiply = 30
+load_multiply = 20
 
 # Number of strategies
 no_strategies = 100 
@@ -207,7 +207,7 @@ ndas = 9  # Number of participant DAs
 
 GenBus = [1,2,3,3]  # Vector with Generation Buses
 CDABus = [[1, 6], [2,6],[3,6],[4,4],[5,4],[6,4],[7,5],[8,5],[9,5]]      # Vector with competing DAs Buses
-DABus = 3           # DA Bus
+DABus = 6           # DA Bus
 
 FMAX = [150,150,150,33,150,150,150]
 # FMAX = [50000, 50000, 50000] # Vector with Capacities of Network Lines in pu

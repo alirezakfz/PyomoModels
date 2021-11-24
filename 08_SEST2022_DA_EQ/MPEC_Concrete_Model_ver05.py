@@ -34,7 +34,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     delta_t =1
     ch_rate = 0.94
     
-    load_multiply=30
+    load_multiply=20
     
     MVA = 30  # Power Base
     PU_DA = 1/(1000*MVA)
@@ -44,8 +44,8 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     """
     Defining Parameters
     """
-    bigM =100000.0
-    bigF = 100000.0
+    bigM =10000.0
+    bigF = 10000.0
     NO_prosumers = len(IN_loads)
     
     
