@@ -181,13 +181,13 @@ gen_capacity =[100, 75, 50, 50]
 random.seed(42)
 
 # Time Horizon
-NO_prosumers=400
+NO_prosumers=500
 epsilon= 0.0001
 horizon=24
 H = range(16,horizon+16)    
 MVA = 30  # Power Base
 PU_DA = 1/(1000*MVA)
-load_multiply = 60
+load_multiply = 30
 
 # Number of strategies
 no_strategies = 100 

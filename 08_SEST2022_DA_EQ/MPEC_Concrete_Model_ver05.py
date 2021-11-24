@@ -34,7 +34,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     delta_t =1
     ch_rate = 0.94
     
-    load_multiply=60
+    load_multiply=30
     
     MVA = 30  # Power Base
     PU_DA = 1/(1000*MVA)
@@ -44,8 +44,8 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     """
     Defining Parameters
     """
-    bigM =10000.0
-    bigF = 10000.0
+    bigM =100000.0
+    bigF = 100000.0
     NO_prosumers = len(IN_loads)
     
     
@@ -170,7 +170,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     # Generators dual variable lower 
     model.w_g_low = Var(model.G, model.T, within=NonNegativeReals, initialize=0)
     #Generators dual variable upper
-    model.w_g_up = Var(model.G, model.T, within=NonNegativeReals, initialize=0)
+    model.w_g_up = Var(model.G, model.T, within=NonNegativeReals, initialize=0) #NonNegativeReals
     
     #Competetive aggregators supply offer dual
     model.w_do_low = Var(model.NCDA, model.T, within=NonNegativeReals, initialize=0)
