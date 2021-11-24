@@ -128,7 +128,7 @@ horizon=24
 H = range(16,horizon+16)    
 MVA = 30 # Power Base
 PU_DA = 1/(1000*MVA)
-load_multiply = 40
+load_multiply = 60
 
 nl = 7    # Number of network lines
 nb = 6    # Number of network buses
@@ -310,7 +310,7 @@ g_s = { 1:[100 for x in range(0,horizon)],
 
 # 2019 November 15 forecasted temprature
 outside_temp=[27.694803,26.834803,26.594803,25.664803,22.594803,21.394802,20.164803,19.584803,20.334803,16.784803,16.094803,15.764802,14.774801,14.834802,14.184802,14.144801,15.314801,16.694803,19.734802,24.414803,25.384802,26.744802,27.144802,27.524803]
-
+outside_temp = [x+0.8 for x in outside_temp]
 
 irrediance_nov = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 101.55, 237.82, 290.98, 224.05, 96.78, 141.85, 60.03, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
