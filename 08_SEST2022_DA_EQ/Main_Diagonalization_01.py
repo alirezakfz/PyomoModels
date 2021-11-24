@@ -432,7 +432,7 @@ def random_irrediance_solar_power(irrediance, in_loads, j, solar_list):
 DA_solar_power =[]        
 for j in range(1,ncda+2):
     IN_loads, profiles = load_data(str(j))
-    DA_solar_power.append(random_irrediance_solar_power(irradiance_april, IN_loads, j, Solar_list)) # changed from irradiance_nov
+    DA_solar_power.append(random_irrediance_solar_power(irrediance_nov, IN_loads, j, Solar_list)) # changed from irradiance_nov
 
 
 # Create DAs as agent number to shuffle before each round

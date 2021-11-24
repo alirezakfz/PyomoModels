@@ -127,7 +127,7 @@ epsilon= 0.001
 horizon=24
 H = range(16,horizon+16)    
 MVA = 30 # Power Base
-PU_DA = 1/(100*MVA)
+PU_DA = 1/(1000*MVA)
 load_multiply = 40
 
 nl = 7    # Number of network lines
@@ -424,7 +424,7 @@ def random_irrediance_solar_power(irrediance, in_loads, j, solar_list):
     for da in solar_list[j]:
         for i in range(horizon):
             area = random.choice([1,2])
-            solar_power[da-1,i] = 0.000157 * area * irrediance[i] * (1 - 0.001*random.random()* (outside_temp[i]-25))*load_multiply
+            solar_power[da-1,i] = 0.000157 * area * irrediance[i] * (1 - 0.0001*random.randint(4,8)* (outside_temp[i]-25))*load_multiply
     
     return solar_power
         
@@ -432,7 +432,7 @@ def random_irrediance_solar_power(irrediance, in_loads, j, solar_list):
 DA_solar_power =[]        
 for j in range(1,ncda+2):
     IN_loads, profiles = load_data(str(j))
-    DA_solar_power.append(random_irrediance_solar_power(irradiance_april, IN_loads, j, Solar_list)) # changed from irradiance_nov
+    DA_solar_power.append(random_irrediance_solar_power(irrediance_nov, IN_loads, j, Solar_list)) # changed from irradiance_nov
 
 
 # Create DAs as agent number to shuffle before each round
