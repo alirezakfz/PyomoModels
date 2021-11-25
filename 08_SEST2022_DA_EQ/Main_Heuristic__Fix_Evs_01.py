@@ -627,7 +627,7 @@ for n in range(no_iteration+1):
         # else:
         #     F_d_o, F_d_b = select_bid(j, offers_bid, demand_bid)
         
-        if( n > 1): # random.random() < 0.9 and
+        if( random.random() < 0.9 and n > 1): # random.random() < 0.9 and
             F_d_o, F_d_b = select_best_action(j, objective_function, ncda, n )      
         else:
             F_d_o, F_d_b = select_bid(j, offers_bid, demand_bid)
@@ -702,6 +702,16 @@ for n in range(no_iteration+1):
         # print(pd.concat([pd.DataFrame.from_dict(demand_bid), pd.DataFrame.from_dict(new_bids)], axis=1))
         #print(pd.concat([pd.DataFrame.from_dict(new_offers), pd.DataFrame.from_dict(new_bids)], axis=1))
         # saving results of the iterations
+        if (n < no_iteration): # (not check) and
+            for key in new_offers:
+                zipped_lists = zip(offers_bid[key], new_offers[key])
+                sum_zip =  [x*rate + (1-rate)*y for (x, y) in zipped_lists]
+                new_offers[key] = sum_zip
+                
+                zipped_lists = zip(demand_bid[key], new_bids[key])
+                sum_zip =  [x*rate + (1-rate)*y for (x, y) in zipped_lists]
+                new_bids[key] = sum_zip
+                
         diag_df = pd.concat([pd.DataFrame.from_dict(new_offers), pd.DataFrame.from_dict(new_bids)], axis=1)
         diag_df.columns= dig_col
         results_to_csv(diag_df, n)
