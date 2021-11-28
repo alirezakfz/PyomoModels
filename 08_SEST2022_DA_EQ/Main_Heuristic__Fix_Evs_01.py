@@ -59,7 +59,7 @@ from collections import Counter
 import hashlib
 
 
-from MPEC_Concrete_Model_ver05 import mpec_model
+from MPEC_Concrete_Model_ver06 import mpec_model
 from pyomo.environ import *
 from pyomo.opt import SolverFactory
 from Model_to_CSV import model_to_csv, model_to_csv_iteration
@@ -181,13 +181,13 @@ gen_capacity =[100, 75, 50, 50]
 random.seed(42)
 
 # Time Horizon
-NO_prosumers=500
+NO_prosumers=10
 epsilon= 0.00001
 horizon=24
 H = range(16,horizon+16)    
 MVA = 30  # Power Base
 PU_DA = 1/(1000*MVA)
-load_multiply = 20
+load_multiply = 1
 
 # Number of strategies
 no_strategies = 100 
@@ -553,7 +553,7 @@ for j in range(1,ncda+2):
 objective_function = dict()
 
 check=False
-no_iteration = 300
+no_iteration = 2
 rate=0.0001  #learning rate like gradient descent
 infeasibility_counter_DA =[0*i for i in range(ncda+1) ]
 timestr = time.strftime("%Y%m%d-%H%M%S")
