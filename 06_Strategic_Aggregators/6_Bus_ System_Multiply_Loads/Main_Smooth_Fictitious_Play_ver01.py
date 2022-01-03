@@ -1036,9 +1036,15 @@ for n in range(no_iteration):
     
     if n>=1.5*distance and check_bids_dis_prob(file_name_offer,n,distance, epsilon) and check_bids_dis_prob(file_name_offer,n,distance, epsilon):
         check=True
+        diag_df = pd.concat([pd.DataFrame.from_dict(new_offers), pd.DataFrame.from_dict(new_bids)], axis=1)
+        diag_df.columns = dig_col
+        results_to_csv(diag_df, n)
         print("solution found in probability epsilon difference iteration:",n+1)
         break
     else:
+        diag_df = pd.concat([pd.DataFrame.from_dict(new_offers), pd.DataFrame.from_dict(new_bids)], axis=1)
+        diag_df.columns = dig_col
+        results_to_csv(diag_df, n)
         print('\nno EPEC, End of round:',n+1,'\n********************')
 
 
