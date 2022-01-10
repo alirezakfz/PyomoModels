@@ -45,7 +45,7 @@ from csv import writer
 from collections import Counter
 
 
-from MPEC_Concrete_Model_Smooth_Fictitious_Play_ver04 import mpec_model
+from MPEC_Concrete_Model_Smooth_Fictitious_Play import mpec_model as SFP_model
 from MPEC_Concrete_Model_ver05 import mpec_model as diagonalization
 from Model_to_CSV import model_to_csv, model_to_csv_iteration
 from pyomo.environ import *
@@ -161,10 +161,10 @@ def load_data(file_index):
 gen_capacity =[100, 75, 50, 50]
 # gen_capacity =[50000, 50000, 50000]
 
-random.seed(42)
+random.seed(142)
 
 # Time Horizon
-NO_prosumers=400
+NO_prosumers=500
 horizon=24
 H = range(16,horizon+16)    
 MVA = 30  # Power Base
@@ -172,8 +172,8 @@ PU_DA = 1/(10*MVA)
 epsilon = 0.01
 timestr = time.strftime("%Y%m%d-%H%M%S")
 # Number of strategies
-no_strategies = 30
-load_multiply = 40
+no_strategies = 15
+load_multiply = 20
 
 nl = 7    # Number of network lines
 nb = 6    # Number of network buses
@@ -446,9 +446,9 @@ EVs_list = dict()
 
 for j in range(1,ncda+2):
     if j %2 == 0:
-        EVs_penetration=0.35
+        EVs_penetration=0.75
     elif j % 3== 0:
-        EVs_penetration=0.35
+        EVs_penetration=0.50
     else:
         EVs_penetration=0.35
     # Adding random EVs for prosumers
@@ -461,9 +461,9 @@ Solar_list=dict()
 
 for j in range(1,ncda+2):
     if j % 2 == 0:
-        Solar_penetration=0.50
+        Solar_penetration=0.20
     elif j % 3 == 0:
-        Solar_penetration=0.30
+        Solar_penetration=0.20
     else:
         Solar_penetration=0.20
     # Adding random solar panels to prosumers
@@ -474,7 +474,7 @@ for j in range(1,ncda+2):
 
 def random_irrediance_solar_power(irrediance, in_loads, j, solar_list):
     random.seed((j+2)**2)
-    length = len(in_loads)
+    #length = len(in_loads)
     
     
     solar_power = np.zeros(in_loads.shape)
@@ -652,8 +652,8 @@ for n in range(no_iteration):
 offers_bid =temp_offer
 demand_bid = temp_bid
 
-# for key in new_offers:
-#     offers_bid[key] =[x*30 for x in offers_bid[key]]
+for key in new_offers:
+    offers_bid[key] =[x*8 for x in offers_bid[key]]
 #     # demand_bid[key]  =[x*10 for x in demand_bid[key]]
 
 """
@@ -824,6 +824,8 @@ def load_bids_probs(model,j):
     pass
 
 
+
+
 # Store action vectores in ditionaries
 file_name_bid=dict()
 for key in discrete_bid.keys():
@@ -946,7 +948,7 @@ for n in range(no_iteration):
         #                 no_strategies, demand_strategy[j], supply_strategy[j] )
        
         
-        model = mpec_model(ng, nb, nl, ncda,IN_loads, gen_capacity, 
+        model = SFP_model(ng, nb, nl, ncda,IN_loads, gen_capacity, 
                         arrival, depart, charge_power,EV_soc_arrive,EV_soc_low, EV_soc_up, 
                         TCL_Max, TCL_R, TCL_Beta, TCL_temp_low, outside_temp, 
                         SL_low, SL_up, SL_cycle, SL_loads,
@@ -973,7 +975,7 @@ for n in range(no_iteration):
         if (results.solver.status == SolverStatus.ok) and (results.solver.termination_condition == TerminationCondition.optimal):
             print('Model solved and is optimal for DA:',j,'   Time taken:', solver_time)
             # model_to_csv(model,IN_loads.sum(0))
-            model_to_csv_iteration(model, IN_loads.sum(0), n, str(j), timestr, EVs_list[j])
+            model_to_csv_iteration(model, IN_loads.sum(0), n, str(j), timestr, EVs_list[j], load_multiply)
             new_d_o, new_d_b = solved_model_bids(model)
             check_boundry(new_d_o, new_d_b, j)
             demand_prob_temp, supply_prob_temp = load_bids_probs(model, j)
