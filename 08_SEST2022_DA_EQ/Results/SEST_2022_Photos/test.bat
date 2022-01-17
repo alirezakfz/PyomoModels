@@ -1,0 +1,1 @@
+C:\Program Files\gs\gs9.55.0\bin\gswin64.exe  -sDEVICE=pdfwrite 	-o C:\Users\alire\Pictures\SEST_2022_Photos\MPEC_EPEC_03.pdf 	C:\Users\alire\Pictures\SEST_2022_Photos\MPEC_EPEC_03.pdf
