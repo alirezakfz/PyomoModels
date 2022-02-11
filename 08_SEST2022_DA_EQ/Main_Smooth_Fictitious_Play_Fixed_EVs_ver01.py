@@ -161,19 +161,19 @@ def load_data(file_index):
 gen_capacity =[100, 75, 50, 50]
 # gen_capacity =[50000, 50000, 50000]
 
-random.seed(42)
+random.seed(142)
 
 # Time Horizon
 NO_prosumers=500
 horizon=24
 H = range(16,horizon+16)    
 MVA = 30  # Power Base
-PU_DA = 1/(10*MVA)
+PU_DA = 1/(1000*MVA)
 epsilon = 0.01
 timestr = time.strftime("%Y%m%d-%H%M%S")
 # Number of strategies
-no_strategies = 15
-load_multiply = 20
+no_strategies = 30
+load_multiply = 50
 
 nl = 7    # Number of network lines
 nb = 6    # Number of network buses
@@ -653,8 +653,8 @@ offers_bid =temp_offer
 demand_bid = temp_bid
 
 for key in new_offers:
-    offers_bid[key] =[x*8 for x in offers_bid[key]]
-#     # demand_bid[key]  =[x*10 for x in demand_bid[key]]
+    offers_bid[key] =[x*50 for x in offers_bid[key]]
+    demand_bid[key]  =[x*50 for x in demand_bid[key]]
 
 """
 going for FICTITIOUS PLAY algortihm
@@ -975,7 +975,7 @@ for n in range(no_iteration):
         if (results.solver.status == SolverStatus.ok) and (results.solver.termination_condition == TerminationCondition.optimal):
             print('Model solved and is optimal for DA:',j,'   Time taken:', solver_time)
             # model_to_csv(model,IN_loads.sum(0))
-            model_to_csv_iteration(model, IN_loads.sum(0), n, str(j), timestr, EVs_list[j], load_multiply)
+            model_to_csv_iteration(model, IN_loads.sum(0), n, str(j), timestr, EVs_list[j], load_multiply*PU_DA)
             new_d_o, new_d_b = solved_model_bids(model)
             check_boundry(new_d_o, new_d_b, j)
             demand_prob_temp, supply_prob_temp = load_bids_probs(model, j)

@@ -36,7 +36,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     delta_t =1
     ch_rate = 0.94
     
-    load_multiply=20
+    load_multiply=50
     
     MVA = 30  # Power Base
     PU_DA = 1/(1000*MVA)
