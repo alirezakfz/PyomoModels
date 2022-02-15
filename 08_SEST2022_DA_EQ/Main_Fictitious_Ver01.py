@@ -184,8 +184,8 @@ NO_prosumers=500
 horizon=24
 H = range(16,horizon+16)    
 MVA = 30 # Power Base
-PU_DA = 1/(100*MVA)
-load_multiply = 20
+PU_DA = 1/(1000*MVA)
+load_multiply = 50
 
 # Number of strategies
 no_strategies = 100 
@@ -642,8 +642,8 @@ offers_bid =temp_offer
 demand_bid = temp_bid
 
 for key in new_offers:
-    offers_bid[key] =[x*10 for x in offers_bid[key]]
-    #demand_bid[key]  =[x*2 for x in demand_bid[key]]
+    offers_bid[key] =[x*30 for x in offers_bid[key]]
+    demand_bid[key]  =[x*30 for x in demand_bid[key]]
     
     
 """
@@ -1146,7 +1146,7 @@ for n in range(no_iteration):
              infeasibility_counter_DA[j-1] += 1
              new_d_o = feasible_offer[j] # random_offer(ncda, horizon)[0][j]
              new_d_b = feasible_bid[j]   # random_offer(ncda, horizon)[1][j]
-             objective_function[j].append('NAN')
+             objective_function[j].append(objective_function[j][-1])
      
         new_offers[j]=new_d_o
         new_bids[j]= new_d_b        
