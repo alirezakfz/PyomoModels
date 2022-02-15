@@ -142,11 +142,11 @@ LinesSusc = [68.49315068,4.438526409,11.02535832,7.374631268,4.87804878,7.867820
 LinesSusc = [round(x,4) for x in LinesSusc]
 # LinesSusc = [5,6,7]
 
-ng = 10   # Number of Generators
+ng = 13   # Number of Generators
 ncda = 16  # Number of competing 
 ndas = 17  # Number of participant DAs
 
-GenBus = [1,2,7,13,15,16,18,21,22,23]  # Vector with Generation Buses
+GenBus = [1,2,7,13,15,15,16,18,21,22,23,23]  # Vector with Generation Buses
 # [1,2,3,4,5,6,7,8,9,10,13,14,15,16,18,19,20]
 CDABus = [[1, 1], [2,2],[3,3],[4,4],[5,5],[6,6],[7,7],[8,8],[9,9],[10,10],[11,13],[12,14],[13,15],[14,16],[15,18],[16,19],[17,20]]      # Vector with competing DAs Buses
 DABus = 1           # DA Bus
