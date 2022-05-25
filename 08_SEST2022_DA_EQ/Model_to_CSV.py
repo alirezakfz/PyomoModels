@@ -186,7 +186,8 @@ def model_to_csv_iteration(model, IN_loads, iteration, da_index, file_time_str, 
         row.append(sum(value(model.POWER_SL[i,t]) for i in model.N)*load_multiply)
         row.append(IN_loads[t-16]*load_multiply)
         
-        row.append(sum(value(model.solar_power[i,t]) for i in model.N)*load_multiply)
+        #row.append(sum(value(model.solar_power[i,t]) for i in model.N)*load_multiply)
+        row.append(value(model.solar_power[t])*load_multiply)
         
         for g in model.G:
             row.append(value(model.g[g,t]))

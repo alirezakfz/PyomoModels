@@ -20,7 +20,7 @@ import collections
 from csv import writer
 # from samples_gen import generate_price, generate_temp
 #from MPEC_Concrete_Model_ver01 import mpec_model
-from MPEC_Concrete_Model_ver05 import mpec_model
+from MPEC_Concrete_Model_ver07 import mpec_model
 from pyomo.environ import *
 from pyomo.opt import SolverFactory
 
@@ -63,9 +63,9 @@ def results_to_csv(data_pd, j_iter):
     data_pd['Time'] =[x for x in range(16,16+24)]
     data_pd['Iteration'] = j_iter
     if j_iter==0:
-        data_pd.to_csv('diagonalizaton_results.csv', header=True, mode='w')
+        data_pd.to_csv('Model_CSV/diagonalizaton_results.csv', header=True, mode='w')
     else:
-        data_pd.to_csv('diagonalizaton_results.csv', header=False, mode='a')
+        data_pd.to_csv('Model_CSV/diagonalizaton_results.csv', header=False, mode='a')
     
     pass
 
@@ -122,13 +122,13 @@ gen_capacity =[100, 75, 50, 50]
 random.seed(42)
 
 # Time Horizon
-NO_prosumers=500
-epsilon= 0.001
+NO_prosumers = 500
+epsilon= 0.0001
 horizon=24
 H = range(16,horizon+16)    
 MVA = 30 # Power Base
 PU_DA = 1/(1000*MVA)
-load_multiply = 20
+load_multiply = 100
 
 nl = 7    # Number of network lines
 nb = 6    # Number of network buses
@@ -310,7 +310,7 @@ g_s = { 1:[100 for x in range(0,horizon)],
 
 # 2019 November 15 forecasted temprature
 outside_temp=[27.694803,26.834803,26.594803,25.664803,22.594803,21.394802,20.164803,19.584803,20.334803,16.784803,16.094803,15.764802,14.774801,14.834802,14.184802,14.144801,15.314801,16.694803,19.734802,24.414803,25.384802,26.744802,27.144802,27.524803]
-outside_temp = [x+0.8 for x in outside_temp]
+#outside_temp = [x+0.8 for x in outside_temp]
 
 irrediance_nov = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 101.55, 237.82, 290.98, 224.05, 96.78, 141.85, 60.03, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
@@ -446,7 +446,7 @@ objective_function = dict()
 
 
 check=False
-no_iteration = 300
+no_iteration = 10
 rate=0.01  #learning rate like gradient descent
 infeasibility_counter_DA =[0*i for i in range(ncda+1) ]
 timestr = time.strftime("%Y%m%d-%H%M%S")
@@ -523,15 +523,6 @@ for n in range(no_iteration+1):
         ##Timer
         solver_time = time.time()
         
-        # model = mpec_model(ng, nb, nl, ncda,IN_loads, gen_capacity, 
-        #                 arrival, depart, charge_power,EV_soc_arrive,EV_soc_low, EV_soc_up, 
-        #                 TCL_Max, TCL_R, TCL_Beta, TCL_temp_low, outside_temp, 
-        #                 SL_low, SL_up, SL_cycle, SL_loads,
-        #                 dic_G, dic_Bus_CDA, DABus, B, Yline, dic_G_Bus, 
-        #                 c_g, c_d_o[j-1], c_d_b[j-1], 
-        #                 dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX,
-        #                 c_DA_o, c_DA_b, DA_solar_power[j-1],
-        #                 EVs_list[j], Solar_list[j])
         model = mpec_model(ng, nb, nl, ncda,IN_loads, gen_capacity, 
                         arrival, depart, charge_power,EV_soc_arrive,EV_soc_low, EV_soc_up, 
                         TCL_Max, TCL_R, TCL_Beta, TCL_temp_low, outside_temp, 
@@ -660,101 +651,3 @@ else:
 """
 Check model feasibility after solving agents MPEC for first time
 """
-# for j in range(1,ncda+2):
-    
-#     IN_loads, profiles = load_data(str(j))
-        
-#     # Adding random solar power
-#     # if j == 1:
-#     IN_loads = random_solar_power(IN_loads, j)
-    
-#     # EVs properties 
-#     arrival = profiles['Arrival']
-#     depart  = profiles['Depart']
-#     charge_power = profiles['EV_Power']
-#     EV_soc_low   = profiles['EV_soc_low']
-#     EV_soc_up   = profiles['EV_soc_up']
-#     EV_soc_arrive = profiles['EV_soc_arr']
-#     EV_demand = profiles['EV_demand']/2
-    
-            
-#     # Shiftable loads
-#     SL_loads=[]
-#     SL_loads.append(profiles['SL_loads1'])
-#     SL_loads.append(profiles['SL_loads2'])
-#     SL_low   = profiles['SL_low']
-#     SL_up    = profiles['SL_up']
-#     SL_cycle = len(SL_loads)
-    
-#     # Thermostatically loads
-#     TCL_R   = profiles['TCL_R']
-#     TCL_C   = profiles['TCL_C']
-#     TCL_COP = profiles['TCL_COP']
-#     TCL_Max = profiles['TCL_MAX']
-#     TCL_Beta= profiles['TCL_Beta']
-#     TCL_temp_low = profiles['TCL_temp_low']
-#     TCL_temp_up  = profiles['TCL_temp_up']
-
-#     # Creating dictionary mapping current DA as strategic in MPEC model
-#     dic_CDA_Bus, dic_Bus_CDA, dic_G, dic_G_Bus = dictionar_bus(GenBus, CDABus, j)
-
-#     DABus=j
-#     # offers_bid , demand_bid = random_offer(ncda, horizon)
-#     F_d_o, F_d_b = select_bid(j, offers_bid, demand_bid)
-    
-#     #F_d_b = demand_bid[j-1]
-    
-#     # Price bid for supplying power of strategic DA in time t
-#     c_DA_o = c_d_o[DABus-1]['DAS'] # random_price(time)
-    
-#     # Price bid for buying power of strategic DA in time t
-#     c_DA_b = c_d_b[DABus-1]['DAS'] # random_price(time)
-    
-#     ##Timer
-#     solver_time = time.time()
-    
-#     model = mpec_model(ng, nb, nl, ncda,IN_loads, gen_capacity, 
-#                     arrival, depart, charge_power,EV_soc_arrive,EV_soc_low, EV_soc_up, 
-#                     TCL_Max, TCL_R, TCL_Beta, TCL_temp_low, outside_temp, 
-#                     SL_low, SL_up, SL_cycle, SL_loads,
-#                     dic_G, dic_Bus_CDA, DABus, B, Yline, dic_G_Bus, 
-#                     c_g, c_d_o[j-1], c_d_b[j-1], 
-#                     dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX,
-#                     c_DA_o, c_DA_b)
-    
-   
-#     SOLVER_NAME="gurobi"  #'cplex'
-#     solver=SolverFactory(SOLVER_NAME)
-#     results = solver.solve(model)
-    
-#     bigM =100.0
-#     bigF = 100.0
-#     check_constraints(model, Yline, 
-#                       B,dic_G, dic_Bus_CDA, 
-#                       DABus, c_g, dic_G_Bus, 
-#                       dic_CDA_Bus, c_d_o[j-1], c_d_b[j-1], c_DA_o, 
-#                       c_DA_b, bigM, bigF, g_s, F_d_o, F_d_b, FMAX )    
-
-# """
-# check strong duality
-# """
-# check =True
-
-# print("\n************************\nChecking if strong duality holds")
-# print("Left_Hand_Side    Right_Hand_Side\n")
-# for t in model.T:
-#     sum1=sum(c_g[i][t-16]*value(model.g[i,t]) for i in model.G)+\
-#         sum(c_d_o[DABus-1][i][t-16]* value(model.d_o[i,t]) for i in model.NCDA) -\
-#             sum(c_d_b[DABus-1][i][t-16]* value(model.d_b[i,t]) for i in model.NCDA) +\
-#                 c_d_o[DABus-1]['DAS'][t-16]* value(model.E_DA_G[t]) -\
-#                     c_d_b[DABus-1]['DAS'][t-16] * value(model.E_DA_L[t])
-    
-#     sum2=sum(value(model.w_g_up[i,t])*value(model.g[i,t]) for i in model.G)+\
-#         sum( value(model.w_do_up[i,t]) * value(model.d_o[i,t]) for i in model.NCDA) +\
-#             sum( value(model.w_db_up[i,t]) * value(model.d_b[i,t]) for i in model.NCDA) +\
-#                 value(model.w_DAo_up[t]) * value(model.DA_supply[t]) +\
-#                     value(model.w_DAb_up[t]) * value(model.DA_demand[t]) +\
-#                         sum(value(model.w_line_low[i,t])*FMAX[i-1] for i in model.LINES) +\
-#                             sum(value(model.w_line_up[i,t])*FMAX[i-1] for i in model.LINES)
-#     print(sum1," ",sum2," ",round(sum1,4)==-round(sum2,4))
-

@@ -34,10 +34,11 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     delta_t =1
     ch_rate = 0.94
     
+    load_multiply= 100
     
     MVA = 30  # Power Base
     PU_DA = 1/(1000*MVA)
-    load_multiply = 1
+    
     
 
     """
@@ -48,7 +49,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     NO_prosumers = len(IN_loads)
     
     
-    contract = [100*load_multiply for x in range(NO_prosumers)]
+    
     # defining the model
     model = ConcreteModel(name='bilevel')
     
@@ -95,18 +96,6 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     # Binary control variable
     model.u_EV   = Var(model.N, model.T, within=Binary, initialize=0)
     
-    # Energy from discharging EV to home
-    model.E_EV_DIS2H = Var(model.N, model.T, within=NonNegativeReals, initialize=0)
-    
-    # Energy from discharging EV to Grid
-    model.E_EV_DIS2G = Var(model.N, model.T, within=NonNegativeReals, initialize=0)
-    
-    
-    # # EV discharge power
-    # model.P_EV_G = Var(model.N, model.T, within=NonNegativeReals, initialize=0)
-    
-    # # EV charge power
-    # model.P_EV_L = Var(model.N, model.T, within=NonNegativeReals, initialize=0)
     
     
     # ***********************************
@@ -127,28 +116,20 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     # ****************************************
     #  Solar Power
-    def solar_power_bounds(model, i, t):
-        if i in Solar_list:
-            return(0, solar_power[i-1,t-16])
-        else:
-            return (0,0)
-    model.solar_power=Var(model.N, model.T,  within=NonNegativeReals, bounds=solar_power_bounds, initialize=0)
+    # def solar_power_bounds(model, i, t):
+    #     if i in Solar_list:
+    #         return (0, solar_power[i-1,t-16])
+    #     else:
+    #         return (0,0)
+    # model.solar_power=Var(model.N, model.T,  within=NonNegativeReals, bounds=solar_power_bounds, initialize=0)
     
-    # Energy from PV to use in appliance home
-    model.E_PV_2H = Var(model.N, model.T, within=NonNegativeReals, initialize=0)
     
-    # Energy from PV to inject into the grid
-    model.E_PV_2G = Var(model.N, model.T, within=NonNegativeReals, initialize=0)
-    
-    #*****************************************
-    # Prosumers power supply and demand
-    model.supply_pros = Var(model.N, model.T, within=NonNegativeReals, initialize=0)
-    
-    model.demand_pros = Var(model.N, model.T, within=NonNegativeReals, initialize=0)
-    
-    # Binary control variable
-    model.u_PROS   = Var(model.N, model.T, within=Binary, initialize=0)
-    
+    # ***************************************
+    # Change solar power to be depend only on T
+    def solar_power_bounds(model, t):
+        return (0, sum(solar_power[i-1,t-16] for i in model.N if i in Solar_list))
+    model.solar_power=Var( model.T,  within=NonNegativeReals,  bounds=solar_power_bounds, initialize=0)
+     
     """
     Lower Level Sets &Parameters
         Plus
@@ -196,7 +177,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     # Generators dual variable lower 
     model.w_g_low = Var(model.G, model.T, within=NonNegativeReals, initialize=0)
     #Generators dual variable upper
-    model.w_g_up = Var(model.G, model.T, within=NonNegativeReals, initialize=0)
+    model.w_g_up = Var(model.G, model.T, within=NonNegativeReals, initialize=0) #NonNegativeReals
     
     #Competetive aggregators supply offer dual
     model.w_do_low = Var(model.NCDA, model.T, within=NonNegativeReals, initialize=0)
@@ -263,6 +244,8 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     # model.c1_1 = Var(model.G, model.T, within=NonNegativeReals, initialize=0)
     # model.c1_2 = Var(model.G, model.T, within=NonNegativeReals, initialize=0)
+   
+    
     """
     Upper Level constraints
     """
@@ -272,34 +255,33 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     # Constraint (a.2): Ensure that charging of EV don't exceed maximum value of EV_Power
     def ev_charging_rule(model,i,t):
-        if t >= arrival[i-1] and t < depart[i-1]:
+        if t >= arrival[i-1] and t < depart[i-1] :
             return model.E_EV_CH[i,t] <= model.u_EV[i,t] * charge_power[i-1]*delta_t
         else:
-            return model.E_EV_CH[i,t]==0#Constraint.Skip
-        # if i in EVs_list:
-        #     if t >= arrival[i-1] and t < depart[i-1]:
-        #         return model.E_EV_CH[i,t] <= model.u_EV[i,t] * charge_power[i-1]*delta_t  #model.P_EV_L[i,t] #charge_power[i-1]*delta_t
-        #     else:
-        #         return model.E_EV_CH[i,t]==0
-        # else:
-        #     return model.E_EV_CH[i,t]==0#Constraint.Skip
+            return model.E_EV_CH[i,t]==0
+        return model.E_EV_CH[i,t]==0 #Constraint.Skip
     model.ev_charging_con=Constraint(model.N, model.T, rule=ev_charging_rule)
     
     # Constraint (a.3): Ensure that charging of EV don't exceed maximum value of EV_Power
     def ev_discharging_rule(model,i,t):
-        if i in EVs_list:
-            if t >= arrival[i-1] and t < depart[i-1]:
-                return model.E_EV_DIS[i,t] <= (1-model.u_EV[i,t]) *charge_power[i-1]*delta_t # model.P_EV_G[i,t]#charge_power[i-1]*delta_t
-            else:
-                return model.E_EV_DIS[i,t]==0
+        if t >= arrival[i-1] and t < depart[i-1] :
+            return model.E_EV_DIS[i,t] <= (1-model.u_EV[i,t]) * charge_power[i-1]*delta_t
         else:
-            return model.E_EV_DIS[i,t]==0 #Constraint.Skip
+            return model.E_EV_DIS[i,t]==0
+        return model.E_EV_DIS[i,t]==0#Constraint.Skip
     model.ev_discharging_con=Constraint(model.N, model.T, rule=ev_discharging_rule)
     
+    # Constraint (4.3.1) EVS_list not participate in the market
+    def ev_discharging_list_rule(model, i, t):
+        if i not in EVs_list:
+            return model.E_EV_DIS[i,t]==0
+        return Constraint.Skip
+    model.ev_discharging_list_con=Constraint(model.N, model.T, rule=ev_discharging_list_rule)
+            
     
     # Constraint (a.4): set the SOC 
     def ev_soc_rule(model, i, t):
-        if t >= arrival[i-1] and t < depart[i-1] and (i in EVs_list) : 
+        if t >= arrival[i-1] and t < depart[i-1] : 
             return model.SOC[i,t+1] == model.SOC[i,t] + ch_rate*model.E_EV_CH[i,t] - model.E_EV_DIS[i,t]/ch_rate 
         else:
             return Constraint.Skip
@@ -307,15 +289,12 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     # Constraint (a.4_1): Set the start soc to arrival soc
     def EV_arrival_soc_rule(model, i):
-        if i in EVs_list:
-            return model.SOC[i, arrival[i-1]]== EV_soc_arrive[i-1]
-        else:
-            return Constraint.Skip
+        return model.SOC[i, arrival[i-1]]== EV_soc_arrive[i-1]
     model.EV_arrival_soc_con = Constraint(model.N, rule= EV_arrival_soc_rule)
     
     # Constraint (a.5_1): Limit the SOC, Lower Bound
     def ev_soc_low_rule(model, i, t):
-        if t >= arrival[i-1] and t < depart[i-1] and (i in EVs_list): 
+        if t >= arrival[i-1] and t < depart[i-1]: 
             return model.SOC[i,t] >=  EV_soc_low[i-1]
         else:
             return Constraint.Skip
@@ -324,7 +303,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     # Constraint (a.5_2): Limit the SOC, Upper Bound
     def ev_soc_low2_rule(model, i, t):
-        if t >= arrival[i-1] and t < depart[i-1] and (i in EVs_list): 
+        if t >= arrival[i-1] and t < depart[i-1]: 
             return model.SOC[i,t] <=  EV_soc_up[i-1]
         else:
             return Constraint.Skip
@@ -332,52 +311,19 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     # Constraint (a.6): Set the target SOC to be as desired(full charge) at departure time
     def ev_traget_rule(model,i):
-        if (i in EVs_list):
-            return model.SOC[i,depart[i-1]] == EV_soc_up[i-1] #model.ev_demand[i]
-        else:
-            return Constraint.Skip
+        return model.SOC[i,depart[i-1]] == EV_soc_up[i-1]   
     model.ev_target_con = Constraint(model.N, rule=ev_traget_rule)
     
     # Constraint (Custom_1): Set the binary variable to zero outside the [arrival, depart] boundary
     def ev_binary_zero_rule(model,i,t):
-        if t < arrival[i-1] or t >= depart[i-1] and (i in EVs_list):
-            return model.u_EV[i,t]==0
+        if t < arrival[i-1] or t >= depart[i-1]:
+             return model.u_EV[i,t]==0
         else:
-            return Constraint.Skip
+             return Constraint.Skip
     model.ev_binary_zero_con = Constraint(model.N, model.T, rule=ev_binary_zero_rule)
     
     
-    # Constraint for EV 2 Home and EV 2 Grid power
-    def EV_V2H_V2G_rule(model, i, t):
-         return model.E_EV_DIS2H[i,t] + model.E_EV_DIS2G[i,t] ==  model.E_EV_DIS[i,t]
-        # if t >= arrival[i-1] and t < depart[i-1] and (i in EVs_list):
-        #     return model.E_EV_DIS2H[i,t] + model.E_EV_DIS2G[i,t] ==  model.E_EV_DIS[i,t]#model.P_EV_G[i,t]
-        #     #return model.E_PV_2H[i,t] + model.E_PV_2G[i,t] == model.P_EV_G[i,t]
-        # else:
-        #     # return Constraint.Skip
-        #     return model.E_EV_DIS2H[i,t] + model.E_EV_DIS2G[i,t] ==0
-    model.EV_V2H_V2G_con = Constraint(model.N, model.T, rule=EV_V2H_V2G_rule)
     
-    # # Constraint for EV charge power limit
-    # def EV_charge_limit_rule(model, i, t):
-    #       if t >= arrival[i-1] and t < depart[i-1] and (i in EVs_list):
-    #           # return model.E_EV_DIS2H[i,t] <= charge_power[i-1]*delta_t
-    #           return Constraint.Skip 
-    #       else:
-    #           return model.E_EV_DIS2H[i,t]==0  
-    # model.EV_charge_limit_con = Constraint(model.N, model.T, rule=EV_charge_limit_rule)
-
-    # # Constraint for EV discharging rule
-    # def EV_discharge_limit_rule(model, i, t):
-    #     if t >= arrival[i-1] and t < depart[i-1] and (i in EVs_list):
-    #          # return model.E_EV_DIS2G[i,t] <= charge_power[i-1]*delta_t
-    #          return Constraint.Skip 
-    #     else:
-    #          return model.E_EV_DIS2G[i,t]==0
-    # model.EV_discharge_limit_con = Constraint(model.N, model.T, rule=EV_discharge_limit_rule)
-    
-        
- 
     #********************************************************
     #                  TCL Constraints
     #********************************************************
@@ -441,92 +387,22 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
             return Constraint.Skip
     model.SL_binary_zero_con =Constraint(model.N, model.T, rule=SL_binary_zero_rule)
     
-    #********************************************************
-    #             Solar Power Constraints
-    #********************************************************
-    def solar_power_balance_rule(model, i ,t):
-            return model.E_PV_2H[i,t] + model.E_PV_2G[i,t] == model.solar_power[i,t]
-    model.solar_power_balance_con = Constraint(model.N, model.T, rule=solar_power_balance_rule)
     
-    # # If the prosumer dose not have solar panel then it's power is zero otherwise Skip
-    # def solar_power_2home_rule(model, i, t):
-    #     if i in Solar_list:
-    #         # return model.E_PV_2H[i,t] <= solar_power[i-1,t-16]
-    #         return Constraint.Skip
-    #     else:
-    #         return model.E_PV_2H[i,t]==0
-    # model.solar_power_2home_con = Constraint(model.N, model.T, rule=solar_power_2home_rule)
-    
-    # If the prosumer dose not have solar panel then it's power is zero otherwise Skip
-    def solar_power_2grid_rule(model, i, t):
-        if i in Solar_list:
-            # return model.E_PV_2G[i,t] <= solar_power[i-1,t-16]
-            return Constraint.Skip
-        else:
-            return model.E_PV_2G[i,t]==0
-    model.solar_power_2grid_con = Constraint(model.N, model.T, rule=solar_power_2grid_rule)
-    
-    
-    
-    #********************************************************
-    #             prosumers supply and demand power balance
-    #********************************************************
-    def prosumers_demand_balance_rule(model, i, t):
-        return model.demand_pros[i,t]  - model.supply_pros[i,t]  == model.POWER_TCL[i,t]*load_multiply +model.POWER_SL[i,t] + IN_loads.loc[i-1,str(t)] - model.E_PV_2H[i,t] - model.E_EV_DIS2H[i,t] - model.E_PV_2G[i,t] - model.E_EV_DIS2G[i,t]
-    model.prosumers_demand_balance_con = Constraint(model.N, model.T, rule=prosumers_demand_balance_rule)
-    
-    def prosumers_supply_balance_rule(model, i, t):
-        return model.supply_pros[i,t] == model.E_PV_2G[i,t] + model.E_EV_DIS2G[i,t]
-    model.prosumers_supply_balance_con = Constraint(model.N, model.T, rule=prosumers_supply_balance_rule)
-    
-    def prosumer_contract_load_rule(model, i, t):
-        return model.demand_pros[i,t] <= contract[i-1]*model.u_PROS[i,t]
-    model.prosumer_contract_load_con = Constraint(model.N, model.T, rule=prosumer_contract_load_rule)
-    
-    def prosumer_contract_supply_rule(model, i, t):
-        return model.supply_pros[i,t] <= contract[i-1]*(1-model.u_PROS[i,t])
-    model.prosumer_contract_supply_con = Constraint(model.N, model.T, rule=prosumer_contract_supply_rule)
     
     #********************************************************
     #             DA Demand and Supply Constraints
     #********************************************************
     
-    
-        #         sum_total += model.E_EV_CH[i,t]-model.E_EV_DIS[i,t]
-        #     if i in Solar_list:
-        #         sum_total = sum_total - model.E_PV_2G[i,t] - model.# Equality constraint (a.13) for power balance in strategic DA
-    # def DA_power_balance_rule(model, t):
+    # Equality constraint (a.13) for power balance in strategic DA
+    def DA_power_balance_rule(model, t):
+               
+        sum_total = sum( model.POWER_SL[i,t] + IN_loads.loc[i-1,str(t)] + model.POWER_TCL[i,t]*load_multiply + model.E_EV_CH[i,t]- model.E_EV_DIS[i,t]  for i in model.N) - model.solar_power[t]*load_multiply
         
-    #     # return model.E_DA_L[t]-model.E_DA_G[t] == sum(model.POWER_TCL[i,t]*load_multiply +model.POWER_SL[i,t] + IN_loads.loc[i-1,str(t)] + 
-    #                                                   # model.E_EV_CH[i,t]-model.E_EV_DIS[i,t] - model.solar_power[i,t] for i in model.N)* PU_DA
-                                                      
-    #     return model.E_DA_L[t]-model.E_DA_G[t] == sum(model.demand_pros[i,t] for i in model.N)*PU_DA - sum(model.supply_pros[i,t] for i in model.N)*PU_DA
-    #     ##model.POWER_TCL[i,t]
-        
-    #     # sum_total = sum(model.POWER_SL[i,t] + IN_loads.loc[i-1,str(t)] + model.POWER_TCL[i,t]*load_multiply  for i in model.N)
-        
-    #     # for i in model.N:
-    #     #     if i in EVs_list:E_PV_2G[i,t]#model.solar_power[i,t]
-        
-    #     # return model.E_DA_L[t]-model.E_DA_G[t] == sum_total * PU_DA
+        return model.E_DA_L[t]-model.E_DA_G[t] == sum_total * PU_DA
+    model.DA_power_balance_con = Constraint(model.T, rule=DA_power_balance_rule)
     
-    #     # return model.E_DA_L[t]-model.E_DA_G[t] == \
-    #     #         sum(model.E_EV_CH[i,t]-model.E_EV_DIS[i,t]+ model.POWER_TCL[i,t]+ model.POWER_SL[i,t]+ IN_loads.loc[i-1,str(t)] - model.solar_power[i,t] for i in model.N) * PU_DA    # + model.solar_power[i,t]
-    # model.DA_power_balance_con = Constraint(model.T, rule=DA_power_balance_rule)
+      
     
-    def DA_power_balance_load_rule(model, t):
-        return model.E_DA_L[t]- model.E_DA_G[t] == sum(model.demand_pros[i,t] for i in model.N)*PU_DA -sum(model.supply_pros[i,t] for i in model.N)*PU_DA
-        # return model.E_DA_L[t] == sum( model.POWER_TCL[i,t]*load_multiply + model.POWER_SL[i,t] + IN_loads.loc[i-1,str(t)] -model.E_PV_2H[i,t] - model.E_EV_DIS2H[i,t] for i in model.N)*PU_DA
-    model.DA_power_balance_load_con = Constraint(model.T, rule=DA_power_balance_load_rule)
-    
-    
-    # def DA_power_balance_gen_rule(model, t):
-    #     return model.E_DA_G[t] == sum(model.supply_pros[i,t] for i in model.N)*PU_DA
-    #     # return model.E_DA_G[t] == sum( model.E_PV_2G[i,t] + model.E_EV_DIS2G[i,t] for i in model.N)*PU_DA
-    # model.DA_power_balance_gen_con = Constraint(model.T, rule=DA_power_balance_gen_rule)
-    
-    
-        
     # DA demand will draw from grid (a.14)
     def DA_demand_rule(model,t):
         return model.DA_demand[t] <= bigF*model.u_DA[t]
@@ -565,51 +441,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
         
         return sum1+sum2+sum3+sumB  == 0  #+ model.b2_1[i,t] - model.b2_2[i,t]
     model.network_power_balance_con = Constraint(model.BUS, model.T, rule=network_power_balance_rule)    
-    
-    
-    
-    # def network_power_balance_rule(model, t):
-    #     sum_t=0
-    #     for i in model.BUS:
-    #         sum1=0
-    #         if i in dic_G.keys():
-    #             sum1=sum(-model.g[x,t] for x in dic_G[i])
-            
-    #         sum3=0
-    #         sum2=0
-    #         if i in dic_Bus_CDA.keys():
-    #             if i == DABus:
-    #                 sum2= -model.E_DA_G[t]
-    #                 sum3= model.E_DA_L[t]
-    #             else:
-    #                 x=dic_Bus_CDA[i]
-    #                 sum3 = model.d_b[x,t]   # Demand Load by competetive DA i     if x != 'DAs'
-    #                 sum2 = -model.d_o[x,t]  # Supply offer by competetive DA i
-            
-    #         sumB = sum(B[i-1,j-1]*model.teta[j,t] for j in model.BUS)
-            
-    #         sum_t += sum1+sum2+sum3 +sumB 
-        
-    #     # sumB = sum(B[i-1,j-1]*model.teta[j,t] for j in model.BUS)
-    #     # sum_t += sumB
-     
-    
-    #     return sum_t  == 0  #+ model.b2_1[i,t] - model.b2_2[i,t]
-    # model.network_power_balance_con = Constraint(model.T, rule=network_power_balance_rule)  
-    
-   
-    
-   # # Constraint (b.8), Line Flow Bounds (b.8)  ******************
-    # def line_flow_lower_bound_rule(model, i, t):
-    #     return sum(-Yline[i-1,j-1]*model.teta[j,t] for j in model.BUS) - model.b8_1[i,t] <= FMAX[i-1]
-    # model.line_flow_lower_bound_con = Constraint(model.LINES, model.T, rule=line_flow_lower_bound_rule)
-    
-    # # Constraint (b.8.2) line Flows Bounds, Upper bound ***********
-    # def line_flow_upper_bound_rule(model, i, t):
-    #     return sum(Yline[i-1,j-1]*model.teta[j,t] for j in model.BUS) - model.b8_2[i,t] <= FMAX[i-1]
-    # model.line_flow_upper_bound_con = Constraint(model.LINES, model.T, rule=line_flow_upper_bound_rule)
-    
-   
+      
     
    # Constraint (C.1) generators dual price
     def generator_dual_price_rule(model, i, t):
@@ -637,8 +469,6 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     #////////////////////////////////////////////
     #********************************************
     
-    
-    #+ model.c2_1[t] - model.c2_2[t]
     
     # Constraint (c.4) Strategic Aggregator supply into grid offer
     def strategic_offer_dual_rule(model,t):
@@ -843,14 +673,6 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     """
     Objective Functioon
     """
-    
-    # def social_welfare_optimization_rule(model):
-    #     return sum(sum(c_g[i][t-16]*model.g[i,t] for i in model.G) +\
-    #                 sum(c_d_o[i][t-16]*model.d_o[i,t] for i in model.NCDA ) +\
-    #                     sum(c_d_b[i][t-16]*model.d_b[i,t] for i in model.NCDA) +\
-    #                         sum(FMAX[i-1]*model.w_line_low[i,t] for i in model.LINES) +\
-    #                                         sum(FMAX[i-1]*model.w_line_up[i,t] for i in model.LINES) for t in model.T )
-    # model.obj = Objective(rule=social_welfare_optimization_rule, sense=minimize)
     
     
     def social_welfare_optimization_rule(model):
