@@ -133,10 +133,11 @@ def model_to_csv(model, IN_loads):
                 csv_writer.writerow(rw)
 
 
-def model_to_csv_iteration(model, IN_loads, iteration, da_index, file_time_str, EVs_list, load_multiply):
+def model_to_csv_iteration(model, IN_loads, iteration, da_index, file_time_str, EVs_list, load_multiply, MVA):
     timestr = time.strftime("%Y%m%d-%H%M%S")
     timestr= file_time_str
-
+    
+    PU_DA = 1/(1000*MVA)
     # print("----------- model to CSV iteration:", iteration,"   DA is:",da_index)
     
     if iteration ==0:
@@ -179,15 +180,15 @@ def model_to_csv_iteration(model, IN_loads, iteration, da_index, file_time_str, 
         row.append(value(model.DA_demand[t]))
         row.append(value(model.DA_supply[t]))
         
-        row.append(sum(value(model.E_EV_CH[i,t]) for i in model.N if i in EVs_list)*load_multiply)
-        row.append(sum(value(model.E_EV_DIS[i,t]) for i in model.N if i in EVs_list)*load_multiply)
+        row.append(sum(value(model.E_EV_CH[i,t]) for i in model.N if i in EVs_list)*load_multiply*PU_DA)
+        row.append(sum(value(model.E_EV_DIS[i,t]) for i in model.N if i in EVs_list)*load_multiply*PU_DA)
         
-        row.append(sum(value(model.POWER_TCL[i,t]) for i in model.N)*load_multiply)
-        row.append(sum(value(model.POWER_SL[i,t]) for i in model.N)*load_multiply)
-        row.append(IN_loads[t-16]*load_multiply)
+        row.append(sum(value(model.POWER_TCL[i,t]) for i in model.N)*load_multiply*PU_DA)
+        row.append(sum(value(model.POWER_SL[i,t]) for i in model.N)*load_multiply*PU_DA)
+        row.append(IN_loads[t-16]*load_multiply*PU_DA)
         
         #row.append(sum(value(model.solar_power[i,t]) for i in model.N)*load_multiply)
-        row.append(value(model.solar_power[t])*load_multiply)
+        row.append(value(model.solar_power[t])*load_multiply*PU_DA)
         
         for g in model.G:
             row.append(value(model.g[g,t]))

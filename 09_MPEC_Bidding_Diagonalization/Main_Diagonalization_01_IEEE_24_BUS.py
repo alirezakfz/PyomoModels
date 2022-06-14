@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 """
+Created on Thu Jun  9 18:18:06 2022
+
+@author: Alireza
+"""
+
+# -*- coding: utf-8 -*-
+"""
 Created on Fri Oct  8 12:15:07 2021
 
 @author: Alireza
@@ -116,40 +123,49 @@ def load_data(file_index):
 
 
 
-gen_capacity =[100, 75, 50, 50]
+gen_capacity =[152,152,350,591,60,155,155,400,400,300,310,350]
 # gen_capacity =[50000, 50000, 50000]
 
 random.seed(42)
 
 # Time Horizon
-NO_prosumers = 500
+NO_prosumers = 300
 epsilon= 0.01
 horizon=24
 H = range(16,horizon+16)    
-MVA = 30 # Power Base
+
+load_multiply = 700
+MVA = 100 # Power Base
 PU_DA = 1/(1000*MVA)
-load_multiply = 50
 
-nl = 7    # Number of network lines
-nb = 6    # Number of network buses
+nl = 34    # Number of network lines
+nb = 24    # Number of network buses
 
-FromBus = [1,1,2,2,3,4,5] # Vector with network lines' "sending buses"
-ToBus = [2,4,3,4,6,5,6]   # Vector with network lines' "receiving buses"
+FromBus = [1,1,1,2,2,3,3,4,5,6,7,8,8,9,9,10,10,11,11,12,12,13,14,15,15,15,16,16,17,17,18,19,20,21] # Vector with network lines' "sending buses"
+ToBus = [2,3,5,4,6,9,24,9,10,10,8,9,10,11,12,11,12,13,14,13,23,23,16,16,21,24,17,19,18,22,21,20,23,22]   # Vector with network lines' "receiving buses"
 
-LinesSusc = [5.8824, 3.8760, 27.0270, 5.0761, 55.5556, 27.0270, 7.1429]  #Vector with per unit susceptance of the network 
+LinesSusc = [68.49315068,4.438526409,11.02535832,7.374631268,4.87804878,7.867820614,11.9047619,9.009009009,
+             10.63829787,15.57632399,15.33742331,5.675368899,5.675368899,11.9047619,11.9047619,11.9047619,
+             11.9047619,20.49180328,23.4741784,20.49180328,10.15228426,11.31221719,16.83501684,58.13953488,
+             40.16064257,18.90359168,38.02281369,42.73504274,69.93006993,9.35453695,75.75757576,
+             49.26108374,89.28571429,14.45086705]  #Vector with per unit susceptance of the network 
+
+LinesSusc = [round(x,4) for x in LinesSusc]
 # LinesSusc = [5,6,7]
 
-ng = 4    # Number of Generators
-ncda = 8  # Number of competing 
-ndas = 9  # Number of participant DAs
+ng = 12   # Number of Generators
+ncda = 16  # Number of competing 
+ndas = 17  # Number of participant DAs
 
-GenBus = [1,2,3,3]  # Vector with Generation Buses
-CDABus = [[1, 6], [2,6],[3,6],[4,4],[5,4],[6,4],[7,5],[8,5],[9,5]]      # Vector with competing DAs Buses
-DABus = 6           # DA Bus
+GenBus = [1,2,7,13,15,15,16,18,21,22,23,23]  # Vector with Generation Buses
+# [1,2,3,4,5,6,7,8,9,10,13,14,15,16,18,19,20]
+CDABus = [[1, 1], [2,2],[3,3],[4,4],[5,5],[6,6],[7,7],[8,8],[9,9],[10,10],[11,13],[12,14],[13,15],[14,16],[15,18],[16,19],[17,20]]      # Vector with competing DAs Buses
+DABus = 1           # DA Bus
 
-FMAX = [150,150,150,33,150,150,150]
+FMAX = [175,175,350,175,175,175,400,175,350,175,350,175,175,400,400,400,400,500,500,500,500,200,250,500,400,500,500,500,500,500,1000,1000,1000,500]
 # FMAX = [50000, 50000, 50000] # Vector with Capacities of Network Lines in pu
 FMAX = [i/MVA for i in FMAX]
+
 
 
 #1) Bus Admittance Matrix Construction
@@ -256,11 +272,13 @@ def random_price(n,min_g, max_g):
 c_g = { 1:random_price(horizon,12,20),
         2:random_price(horizon,20,30),
         3:random_price(horizon,50,70),
-        4:random_price(horizon,100,110)}  
-c_g[1]=[15 for x in range(0,horizon)]
-c_g[2]=[30 for x in range(0,horizon)]
-c_g[3]=[60 for x in range(0,horizon)]
-c_g[4]=[90 for x in range(0,horizon)]
+        4:random_price(horizon,100,110)}
+for g in range(len(gen_capacity)):
+    c_g[g+1] = [13 + 2*g for x in range(0,horizon)]
+# c_g[1]=[15 for x in range(0,horizon)]
+# c_g[2]=[30 for x in range(0,horizon)]
+# c_g[3]=[60 for x in range(0,horizon)]
+# c_g[4]=[90 for x in range(0,horizon)]
 
 
 
@@ -306,8 +324,10 @@ g_s = { 1:[100 for x in range(0,horizon)],
         2:[75 for x in range(0,horizon)],
         3:[50 for x in range(0,horizon)],
         4:[50 for x in range(0,horizon)]}
-
-
+for g in range(len(gen_capacity)):
+    g_s[g+1] = [gen_capacity[g] for x in range(0,horizon)]
+    
+    
 # 2019 November 15 forecasted temprature
 outside_temp=[27.694803,26.834803,26.594803,25.664803,22.594803,21.394802,20.164803,19.584803,20.334803,16.784803,16.094803,15.764802,14.774801,14.834802,14.184802,14.144801,15.314801,16.694803,19.734802,24.414803,25.384802,26.744802,27.144802,27.524803]
 outside_temp = [x+0.8 for x in outside_temp]
