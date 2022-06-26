@@ -122,13 +122,14 @@ gen_capacity =[100, 75, 50, 50]
 random.seed(42)
 
 # Time Horizon
-NO_prosumers = 200
+NO_prosumers = 500
+no_iteration = 10
 epsilon= 0.01
 horizon=24
 H = range(16,horizon+16)    
 MVA = 30 # Power Base
 PU_DA = 1/(1000*MVA)
-load_multiply = 100
+load_multiply = 30
 
 nl = 7    # Number of network lines
 nb = 6    # Number of network buses
@@ -446,7 +447,6 @@ objective_function = dict()
 
 
 check=False
-no_iteration = 1
 rate=0.01  #learning rate like gradient descent
 infeasibility_counter_DA =[0*i for i in range(ncda+1) ]
 timestr = time.strftime("%Y%m%d-%H%M%S")
