@@ -25,7 +25,8 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
                c_g, c_d_o, c_d_b, 
                dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX,
                c_DA_o, c_DA_b,solar_power,
-               EVs_list, Solar_list):
+               EVs_list, Solar_list, 
+               load_multiply, MVA):
     
     
     time=24
@@ -34,9 +35,9 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     delta_t =1
     ch_rate = 0.94
     
-    load_multiply= 100
+    #load_multiply= 100
     
-    MVA = 30  # Power Base
+    #MVA = 30  # Power Base
     PU_DA = 1/(1000*MVA)
     
     
@@ -396,9 +397,9 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     # Equality constraint (a.13) for power balance in strategic DA
     def DA_power_balance_rule(model, t):
                
-        sum_total = sum( model.POWER_SL[i,t] + IN_loads.loc[i-1,str(t)] + model.POWER_TCL[i,t]*load_multiply + model.E_EV_CH[i,t]- model.E_EV_DIS[i,t]  for i in model.N) - model.solar_power[t]
+        sum_total = sum( model.POWER_SL[i,t] + IN_loads.loc[i-1,str(t)] + model.POWER_TCL[i,t] + model.E_EV_CH[i,t]- model.E_EV_DIS[i,t]  for i in model.N) - model.solar_power[t]
         
-        return model.E_DA_L[t]-model.E_DA_G[t] == sum_total * PU_DA
+        return model.E_DA_L[t]-model.E_DA_G[t] == sum_total * PU_DA * load_multiply
     model.DA_power_balance_con = Constraint(model.T, rule=DA_power_balance_rule)
     
       
