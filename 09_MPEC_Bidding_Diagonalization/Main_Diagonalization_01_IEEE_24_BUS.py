@@ -444,7 +444,7 @@ def random_irrediance_solar_power(irrediance, in_loads, j, solar_list):
     for da in solar_list[j]:
         for i in range(horizon):
             area = random.choice([1,2])
-            solar_power[da-1,i] = 0.000157 * area * irrediance[i] * (1 - 0.001*random.random()* (outside_temp[i]-25))*load_multiply
+            solar_power[da-1,i] = 0.000157 * area * irrediance[i] * (1 - 0.001*random.random()* (outside_temp[i]-25))#*load_multiply
     
     return solar_power
         
@@ -508,8 +508,8 @@ for n in range(no_iteration+1):
                 
         # Shiftable loads
         SL_loads=[]
-        SL_loads.append(profiles['SL_loads1']/10)#*load_multiply/10)
-        SL_loads.append(profiles['SL_loads2']/10)#*load_multiply/10)
+        SL_loads.append(profiles['SL_loads1'])#*load_multiply/10)
+        SL_loads.append(profiles['SL_loads2'])#*load_multiply/10)
         SL_low   = profiles['SL_low']
         SL_up    = profiles['SL_up']
         SL_cycle = len(SL_loads)

@@ -105,7 +105,7 @@ def dictionar_bus(GenBus, CDABus, DAs):
 
 
 def load_data(file_index):
-    df1 = pd.read_csv('prosumers_data/inflexible_profiles_scen_'+file_index+'.csv').round(5)/100 #*load_multiply/100 #*load_multiply #/1000
+    df1 = pd.read_csv('prosumers_data/inflexible_profiles_scen_'+file_index+'.csv').round(5)/1000 #*load_multiply/100 #*load_multiply #/1000
     
     # Just selecting some prosumers like 500 or 600 or 1000
     df1 = df1[:NO_prosumers]
@@ -129,7 +129,7 @@ horizon=24
 H = range(16,horizon+16)    
 MVA = 30 # Power Base
 PU_DA = 1/(1000*MVA)
-load_multiply = 40
+load_multiply = 120
 
 nl = 7    # Number of network lines
 nb = 6    # Number of network buses
@@ -488,8 +488,8 @@ for n in range(no_iteration+1):
                 
         # Shiftable loads
         SL_loads=[]
-        SL_loads.append(profiles['SL_loads1']/10)#*load_multiply/10)
-        SL_loads.append(profiles['SL_loads2']/10)#*load_multiply/10)
+        SL_loads.append(profiles['SL_loads1']/100)#*load_multiply/10)
+        SL_loads.append(profiles['SL_loads2']/100)#*load_multiply/10)
         SL_low   = profiles['SL_low']
         SL_up    = profiles['SL_up']
         SL_cycle = len(SL_loads)
