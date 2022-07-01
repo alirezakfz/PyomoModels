@@ -392,11 +392,11 @@ for j in range(1,ncda+2):
     if j %2 == 0:
         EVs_penetration= 0.7
     elif j % 3== 0:
-        EVs_penetration= 1.0
+        EVs_penetration= 0.7
     elif j % 5 == 0:
-        EVs_penetration=0.35
+        EVs_penetration=0.7
     else:
-        EVs_penetration=0.10
+        EVs_penetration=0.7
     # Adding random EVs for prosumers
     NO_of_EVs = int(EVs_penetration * NO_prosumers)
     EVs_list[j] = random.choices([i+1 for i in range(NO_prosumers)],k=NO_of_EVs )
@@ -409,13 +409,13 @@ Solar_list=dict()
 
 for j in range(1,ncda+2):
     if j %2 == 0:
-        Solar_penetration= 0.7
+        Solar_penetration= 0.2
     elif j % 3== 0:
-        Solar_penetration= 0.1
+        Solar_penetration= 0.2
     elif j % 5 == 0:
-        Solar_penetration=0.35
+        Solar_penetration=0.2
     else:
-        Solar_penetration=0.1
+        Solar_penetration=0.2
     # Adding random solar panels to prosumers
     NO_solar_prosumers = int(Solar_penetration * NO_prosumers)
     Solar_list[j] = random.choices([i+1 for i in range(NO_prosumers)],k=NO_solar_prosumers )
@@ -482,8 +482,24 @@ for n in range(no_iteration+1):
         IN_loads, profiles = load_data(str(j))
         
         
+        if j %2 == 0:
+            arrival_time = 16
+        elif j % 3== 0:
+             arrival_time = 18
+        elif j % 5 == 0:
+            arrival_time = 20
+        else:
+            arrival_time = 22
         
-        # EVs properties 
+        # EVs properties
+        # new_arrival=[]
+        # for x in profiles['Arrival']:
+        #     if x > arrival_time:
+        #         new_arrival.append(arrival_time)
+        #     else:
+        #         new_arrival.append(x)
+        
+        profiles['Arrival'] = arrival_time 
         arrival = profiles['Arrival']
         depart  = profiles['Depart']
         charge_power = profiles['EV_Power']#*load_multiply
