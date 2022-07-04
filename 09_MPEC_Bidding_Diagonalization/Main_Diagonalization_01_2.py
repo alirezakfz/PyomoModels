@@ -391,13 +391,13 @@ EVs_list = dict()
 
 for j in range(1,ncda+2):
     if j %2 == 0:
-        EVs_penetration= 0.7
+        EVs_penetration= 1 #0.7
     elif j % 3== 0:
-        EVs_penetration= 1.0
+        EVs_penetration= 1 #1.0
     elif j % 5 == 0:
-        EVs_penetration= 0.35
+        EVs_penetration= 1 #0.35
     else:
-        EVs_penetration=  0.10
+        EVs_penetration= 1 # 0.10
     # Adding random EVs for prosumers
     NO_of_EVs = int(EVs_penetration * NO_prosumers)
     EVs_list[j] = random.choices([i+1 for i in range(NO_prosumers)],k=NO_of_EVs )
@@ -409,13 +409,13 @@ Solar_list=dict()
 
 for j in range(1,ncda+2):
     if j %2 == 0:
-        Solar_penetration=  0.7
+        Solar_penetration= 1 # 0.7
     elif j % 3== 0:
-        Solar_penetration=  0.1
+        Solar_penetration= 1 # 0.1
     elif j % 5 == 0:
-        Solar_penetration=  0.35
+        Solar_penetration= 1 # 0.35
     else:
-        Solar_penetration=  0.1
+        Solar_penetration= 1 # 0.1
     # Adding random solar panels to prosumers
     NO_solar_prosumers = int(Solar_penetration * NO_prosumers)
     Solar_list[j] = random.choices([i+1 for i in range(NO_prosumers)],k=NO_solar_prosumers )
