@@ -112,7 +112,10 @@ def load_data(file_index):
     # print(df1.shape)
     df2 = pd.read_csv('prosumers_data/prosumers_profiles_scen_'+file_index+'.csv')
     df2 = df2[:NO_prosumers]
-    return df1 , df2
+    
+    df3 = pd.read_csv('prosumers_data/occupancy_profiles_scen_'+file_index+'.csv')
+    df3 = df3[:NO_prosumers]
+    return df1 , df2, df3
 
 
 
@@ -311,7 +314,7 @@ g_s = { 1:[100 for x in range(0,horizon)],
 
 # 2019 November 15 forecasted temprature
 outside_temp=[27.694803,26.834803,26.594803,25.664803,22.594803,21.394802,20.164803,19.584803,20.334803,16.784803,16.094803,15.764802,14.774801,14.834802,14.184802,14.144801,15.314801,16.694803,19.734802,24.414803,25.384802,26.744802,27.144802,27.524803]
-outside_temp = [x+0.8 for x in outside_temp]
+outside_temp = [x for x in outside_temp]
 
 irrediance_nov = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 101.55, 237.82, 290.98, 224.05, 96.78, 141.85, 60.03, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
@@ -378,7 +381,7 @@ def random_solar_power_var(in_loads, j):
 # List of solar powers
 DA_solar_power =[]        
 for j in range(1,ncda+2):
-    IN_loads, profiles = load_data(str(j))
+    IN_loads, profiles, _ = load_data(str(j))
     DA_solar_power.append(random_solar_power_var(IN_loads, j))
     
     
@@ -437,7 +440,7 @@ def random_irrediance_solar_power(irrediance, in_loads, j, solar_list):
 # List of solar powers
 DA_solar_power =[]        
 for j in range(1,ncda+2):
-    IN_loads, profiles = load_data(str(j))
+    IN_loads, profiles, _ = load_data(str(j))
     DA_solar_power.append(random_irrediance_solar_power(irrediance_nov, IN_loads, j, Solar_list)) # changed from irradiance_nov
 
 
@@ -477,7 +480,7 @@ for n in range(no_iteration+1):
         
         
         
-        IN_loads, profiles = load_data(str(j))
+        IN_loads, profiles, oc_profiles = load_data(str(j))
         
         
         
@@ -530,14 +533,14 @@ for n in range(no_iteration+1):
         
         model = mpec_model(ng, nb, nl, ncda,IN_loads, gen_capacity, 
                         arrival, depart, charge_power,EV_soc_arrive,EV_soc_low, EV_soc_up, 
-                        TCL_Max, TCL_R, TCL_Beta, TCL_temp_low, outside_temp, 
+                        TCL_Max, TCL_R, TCL_Beta, TCL_temp_low, outside_temp, TCL_COP, 
                         SL_low, SL_up, SL_cycle, SL_loads,
                         dic_G, dic_Bus_CDA, DABus, B, Yline, dic_G_Bus, 
                         c_g, c_d_o[j-1], c_d_b[j-1], 
                         dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX,
                         c_DA_o, c_DA_b, DA_solar_power[j-1],
                         EVs_list[j], Solar_list[j],
-                        load_multiply, MVA)
+                        load_multiply, MVA, oc_profiles)
         
         
         SOLVER_NAME= "gurobi"  #'cplex'
