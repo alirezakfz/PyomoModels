@@ -336,8 +336,9 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
     
     # Constraint (a.8): Set inside temprature for residence
     def TCL_room_temp_rule(model,i,t):
-        if t<39 and outside_temp[t-16] < TCL_temp_low[i-1]: # and oc_profile.loc[i-1][t-16]:
-            return model.TCL_TEMP[i,t+1]== TCL_Beta[i-1] * model.TCL_TEMP[i,t] + (1-TCL_Beta[i-1])*(outside_temp[t-16]+ TCL_COP[i-1]*TCL_R[i-1]*model.POWER_TCL[i,t])
+        # (outside_temp[t-16]+TCL_COP[i-1]*TCL_R[i-1]*model.POWER_TCL[i,t])
+        if t<39  and outside_temp[t-16] < TCL_temp_low[i-1]: #and oc_profile.loc[i-1][t-16] 
+            return model.TCL_TEMP[i,t+1]== TCL_Beta[i-1] * model.TCL_TEMP[i,t] + (1-TCL_Beta[i-1])*(outside_temp[t-16]+ TCL_R[i-1]*model.POWER_TCL[i,t])
         else:
             return Constraint.Skip
             #return model.POWER_TCL[i,t] == 0
