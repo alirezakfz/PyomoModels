@@ -10,9 +10,6 @@ Created on Fri Oct  8 12:15:07 2021
 Created on Tue May 25 16:05:41 2021
 
 @author: alire
-
-Hourly radiation
-#https://joint-research-centre.ec.europa.eu/pvgis-photovoltaic-geographical-information-system/pvgis-tools/hourly-radiation_en
 """
 
 import random
