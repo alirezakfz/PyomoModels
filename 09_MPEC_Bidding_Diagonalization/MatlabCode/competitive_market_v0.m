@@ -1,6 +1,6 @@
 clear,clc,close all
 % The rivals' bids are updated after each algorithm's round
-RandomOrExcel = 'R';
+RandomOrExcel = 'E';
 CurtailableDemand = 0;
 load_factor = 1;
 gen_multiplier = 1;
@@ -10,8 +10,8 @@ Large_Random_Number = 10000;
 e_tol = 0.0001;
 e_tol_perc = 0.0001;
 %% Input
-% 'Ali Data':      1
-% 'Konster Data':  2
+% 'Ali Data': 1 'Konster Data': 2
+
 DatasetList = {'Ali Data','Konster Data','Test Data','Test Data 2'};
 DatasetSelection = 4;
 
@@ -194,9 +194,9 @@ comp_market.Objective = sum(sum(GenBids.*g))+sum(sum(da_price_offers.*da_sell))-
 
 % Solver
 [x_opt,Cost,output,exitflag]=solve(comp_market);
-
 %% Extract LMPs %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Model
+
 lin_comp_market = optimproblem('ObjectiveSense','min');
 
 % Relax Integrality Constraints

@@ -129,7 +129,7 @@ random.seed(42)
 
 # Time Horizon
 NO_prosumers = 500
-no_iteration = 1
+no_iteration = 3
 epsilon= 0.01
 horizon=24
 H = range(16,horizon+16)    
@@ -150,8 +150,8 @@ ng = 4    # Number of Generators
 ncda = 8  # Number of competing 
 ndas = 9  # Number of participant DAs
 
-GenBus = [1,2,3,3]  # Vector with Generation Buses
-CDABus = [[1, 6], [2,6],[3,6],[4,4],[5,4],[6,4],[7,5],[8,5],[9,5]]      # Vector with competing DAs Buses
+GenBus = [1,2,6,6]  # Vector with Generation Buses
+CDABus = [[1, 3], [2,3],[3,3],[4,4],[5,4],[6,4],[7,5],[8,5],[9,5]]      # Vector with competing DAs Buses
 DABus = 6           # DA Bus
 
 FMAX = [150,150,150,33,150,150,150]
