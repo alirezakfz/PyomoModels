@@ -129,7 +129,7 @@ random.seed(42)
 
 # Time Horizon
 NO_prosumers = 500
-no_iteration = 3
+no_iteration = 1
 epsilon= 0.01
 horizon=24
 H = range(16,horizon+16)    
@@ -663,3 +663,31 @@ else:
 """
 Check model feasibility after solving agents MPEC for first time
 """
+# save solar power for each DA for each Timeslot
+m_time = [t for t in range(16,40)]
+
+solar_production = dict()
+for i in range(0, ndas):
+    temp_df = pd.DataFrame().from_dict(DA_solar_power[i])
+    solar_production[i] = temp_df.sum().tolist()
+    
+solar_df = pd.DataFrame().from_dict(solar_production).T
+
+name_dic = dict()
+for i in range(len(solar_df.columns)):
+    name_dic[solar_df.columns[i]] = "t="+str(m_time[i])
+
+solar_df.rename(columns=name_dic, inplace=True)
+
+name_dic = dict()
+for i in range(len(solar_df.index)):
+    name_dic[solar_df.index[i]] = "SDA "+str(i+1)
+    
+solar_df.rename(index=name_dic, inplace=True)
+
+if os.path.exists("Model_CSV/Renewable Production.xlsx"):
+    with pd.ExcelWriter("Model_CSV/Renewable Production.xlsx",  engine='openpyxl', mode='a',if_sheet_exists="replace")  as writer: 
+        solar_df.to_excel(writer, sheet_name='Renewable' )
+else:
+    with pd.ExcelWriter("Model_CSV/Renewable Production.xlsx", engine='openpyxl')  as writer: 
+        solar_df.to_excel(writer, sheet_name='Renewable' )
