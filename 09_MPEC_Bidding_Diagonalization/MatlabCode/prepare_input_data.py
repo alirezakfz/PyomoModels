@@ -99,6 +99,17 @@ EVs_sheets =["max_soc", "min_soc", "Arrival Times", "Departure Times", " Chargin
 # Prosumers EVs Information
 prosumers_Evs = ["EV_soc_up","EV_soc_low", "Arrival", "Depart", "EV_Power", "EV_soc_arr"]
 
+# prosumers TCL Information
+prosumers_tcl=['TCL_R', "TCL_COP", "TCL_MAX", "TCL_Beta", "TCL_temp_low", "TCL_temp_up", "Arrival", "Depart"]
+TCL_sheets = ['R','COP','Max Consumption', 'Beta', 'Low Temps','Up Temps' , 'Start Times','End Times',]
+outside_temp=[27.694803,26.834803,26.594803,25.664803,22.594803,21.394802,20.164803,19.584803,20.334803,16.784803,16.094803,15.764802,14.774801,14.834802,14.184802,14.144801,15.314801,16.694803,19.734802,24.414803,25.384802,26.744802,27.144802,27.524803]
+
+
+#prosumers Shiftable loads
+prosumers_sl =["SL_loads1", "SL_loads2", "SL_low", "SL_up"]
+SL_sheets   = ['SL Consumption', 'SL Start', 'SL End']
+
+
 
 
 def create_EVs_input_Data(fileName, fileAdd):
@@ -137,7 +148,7 @@ def create_EVs_input_Data(fileName, fileAdd):
                 df.to_excel(writer, sheet_name=sheet )
      
         #df.to_excel(evs_excel_add, sheet_name=sheet)
-    
+    print("EVs Excell file is saved in: ", evs_excel_add)
 
 
 def create_inflexible_loads(fileName, fileAdd):
@@ -180,5 +191,85 @@ def create_inflexible_loads(fileName, fileAdd):
         with pd.ExcelWriter(evs_excel_add, engine='openpyxl')  as writer: 
             df.to_excel(writer, sheet_name="inflexible_load" )
     
+    print("Iflexible load data as Excell file is saved in: ", evs_excel_add)
+
+def create_TCL_Loads_sheets(fileName, fileAdd):
+    prosumers_file_add = os.path.join("..",  "prosumers_data")
+    pr_file_name = "prosumers_profiles_scen_"
+    
+    exclude = ['Outside Temperature']
+    
+    # results will save to this file
+    evs_excel_add = os.path.join(fileAdd, fileName)
+    
+    index = 0
+    for sheet in TCL_sheets:
+        dic_data = dict()
+        for i in range(1, nsda+1):
+            #print(sheet)
+            add_file = os.path.join(os.pardir,  "prosumers_data", pr_file_name+str(i)+".csv")
+            TCLs_Info = pd.read_csv(add_file, usecols=prosumers_tcl, nrows=no_prosumers)
+            dic_data[i] = TCLs_Info[prosumers_tcl[index]].tolist()
+                
+        
+        index += 1
+        df= pd.DataFrame().from_dict(dic_data)
+        
+        if os.path.exists(evs_excel_add):
+            with pd.ExcelWriter(evs_excel_add, engine='openpyxl', mode='a',if_sheet_exists="replace")  as writer: 
+                df.to_excel(writer, sheet_name=sheet )
+        else:
+            with pd.ExcelWriter(evs_excel_add, engine='openpyxl')  as writer: 
+                df.to_excel(writer, sheet_name=sheet )
+    
+    # Creating sheet for outside temprature
+    temp_time = ['t='+str(x) for x in range(16,40)]
+    index_temp = "θ(°C)"
+    dic_data=dict()
+    for t in range(len(temp_time)):
+        dic_data[temp_time[t]] = [outside_temp[t]]
+    
+    df = pd.DataFrame().from_dict(dic_data)
+    df.rename(index={0:index_temp}, inplace=True)
+    
+    if os.path.exists(evs_excel_add):
+        with pd.ExcelWriter(evs_excel_add, engine='openpyxl', mode='a',if_sheet_exists="replace")  as writer: 
+            df.to_excel(writer, sheet_name="Outside Temperature" )
+    else:
+        with pd.ExcelWriter(evs_excel_add, engine='openpyxl')  as writer: 
+            df.to_excel(writer, sheet_name="Outside Temperature" )
+    
+    print("TCL data as Excell file is saved in: ", evs_excel_add)
+
+def create_SL_Loads_sheets(fileName, fileAdd):
+    exclude = ["Charging Efficiency" , "Discharging Efficiency"]
+    
+    prosumers_file_add = os.path.join("..",  "prosumers_data")
+    pr_file_name = "prosumers_profiles_scen_"
+    
+    # results will save to this file
+    evs_excel_add = os.path.join(fileAdd, fileName)
+    
+    index = 0
+    for sheet in SL_sheets:
+        dic_data = dict()
+        for i in range(1, nsda+1):
+            #print(sheet)
+            add_file = os.path.join(os.pardir,  "prosumers_data", pr_file_name+str(i)+".csv")
+            TCLs_Info = pd.read_csv(add_file, usecols=prosumers_sl, nrows=no_prosumers)
+            dic_data[i] = TCLs_Info[prosumers_tcl[index]].tolist()
+                
+        
+        index += 1
+        df= pd.DataFrame().from_dict(dic_data)
+        
+        if os.path.exists(evs_excel_add):
+            with pd.ExcelWriter(evs_excel_add, engine='openpyxl', mode='a',if_sheet_exists="replace")  as writer: 
+                df.to_excel(writer, sheet_name=sheet )
+        else:
+            with pd.ExcelWriter(evs_excel_add, engine='openpyxl')  as writer: 
+                df.to_excel(writer, sheet_name=sheet )
+         
 create_EVs_input_Data("text.xlsx", "Test Data 2")
 create_inflexible_loads("text222.xlsx", "Test Data 2")
+create_TCL_Loads_sheets("text444.xlsx", "Test Data")
