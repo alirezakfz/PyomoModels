@@ -130,13 +130,13 @@ random.seed(42)
 
 # Time Horizon
 NO_prosumers = 500
-no_iteration = 1
+no_iteration = 25
 epsilon= 0.01
 horizon=24
 H = range(16,horizon+16)    
 MVA = 30 # Power Base
 PU_DA = 1/(1000*MVA)
-load_multiply = 120
+load_multiply = 150
 
 nl = 7    # Number of network lines
 nb = 6    # Number of network buses
@@ -279,6 +279,9 @@ price_d_o['DAS']= random_price(horizon,12,15)
 for i in range(1,ncda+1):
     price_d_o[i] = random_price(horizon,12,15)
 
+df_price = pd.DataFrame().from_dict( price_d_o)
+df_price.to_csv("Model_CSV/price_d_o.csv",index=False)
+
 c_d_o=[]
 for i in range(ncda+1):
     c_d_o.append(price_d_o)
@@ -290,6 +293,9 @@ price_d_b['DAS']= random_price(horizon,70,110)
 
 for i in range(1,ncda+1):
     price_d_b[i] = random_price(horizon,70,110)
+
+df_price = pd.DataFrame().from_dict(price_d_b)
+df_price.to_csv("Model_CSV/price_d_b.csv",index=False)
 
 c_d_b=[]
 for i in range(ncda+1):
@@ -688,7 +694,7 @@ solar_df.rename(index=name_dic, inplace=True)
 
 if os.path.exists("Model_CSV/Renewable Production.xlsx"):
     with pd.ExcelWriter("Model_CSV/Renewable Production.xlsx",  engine='openpyxl', mode='a',if_sheet_exists="replace")  as writer: 
-        solar_df.to_excel(writer, sheet_name='Renewable' )
+        solar_df.to_excel(writer, sheet_name='Sheet1' )
 else:
     with pd.ExcelWriter("Model_CSV/Renewable Production.xlsx", engine='openpyxl')  as writer: 
-        solar_df.to_excel(writer, sheet_name='Renewable' )
+        solar_df.to_excel(writer, sheet_name='Sheet1' )

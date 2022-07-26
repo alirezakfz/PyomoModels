@@ -1,5 +1,6 @@
 currentFolder = pwd
 TestSystemXLFile = [currentFolder,'\','Test Data 2\','\',TestSystemList{TestSystemSelection}];
+TestSystemXLFile = [currentFolder,'\','Test Data\','\',TestSystemList{TestSystemSelection}];
 SDAOffersXLFile = [currentFolder,'\',DatasetList{DatasetSelection},'\Strategic DA Quantity Offers.xlsx'];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Transmission Grid %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Grid Structure
@@ -193,7 +194,7 @@ if RandomOrExcel=='E'
     SL_end = xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\SL.xlsx'],'SL End',xlRC2A1(2,2,max(nsl)+1,2+nsda-1));
     SL_end(isnan(SL_end)) = 0;
     % SL profiles
-    SL_profile = xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\SL.xlsx'],'SL Consumption',xlRC2A1(3,2,max(nsl)+2,T*nsda+1))./(MVA);
+    SL_profile = xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\SL.xlsx'],'SL Consumption',xlRC2A1(2,2,max(nsl)+2,T*nsda+1))./(MVA);
     SL_profile(isnan(SL_profile)) = -1;
     % SL cycle
     SL_cycle = zeros(max(nsl),nsda);

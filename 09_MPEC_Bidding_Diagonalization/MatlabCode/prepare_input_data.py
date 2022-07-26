@@ -6,6 +6,7 @@ Created on Fri Jul 22 16:55:22 2022
 """
 import os
 import pandas as pd
+import numpy as np
 nsda = 9
 no_prosumers = 500
 header = [i for i in range(1, nsda+1)]
@@ -94,7 +95,7 @@ def append_df_to_excel(filename, df, sheet_name='Sheet1', startrow=None,
     writer.save()
     
 # Electric Vehicles Information
-EVs_sheets =["max_soc", "min_soc", "Arrival Times", "Departure Times", " Charging Power", "Arrival SOS", "Charging Efficiency" , "Discharging Efficiency"]
+EVs_sheets =["max_soc", "min_soc", "Arrival Times", "Departure Times", "Charging Power", "Arrival SOC", "Charging Efficiency" , "Discharging Efficiency"]
 
 # Prosumers EVs Information
 prosumers_Evs = ["EV_soc_up","EV_soc_low", "Arrival", "Depart", "EV_Power", "EV_soc_arr"]
@@ -165,7 +166,7 @@ def create_inflexible_loads(fileName, fileAdd):
     for i in range(1, nsda+1):
         add_file = os.path.join(os.pardir,  "prosumers_data", pr_file_name+str(i)+".csv")
         inf_info = pd.read_csv(add_file,  nrows=no_prosumers)
-        inf_info = inf_info.sum(axis=0)
+        inf_info = inf_info.sum(axis=0)/1000
         data_dic[i] = inf_info.tolist()
         
     df = pd.DataFrame().from_dict(data_dic).T
@@ -186,10 +187,10 @@ def create_inflexible_loads(fileName, fileAdd):
     
     if os.path.exists(evs_excel_add):
         with pd.ExcelWriter(evs_excel_add, engine='openpyxl', mode='a',if_sheet_exists="replace")  as writer: 
-            df.to_excel(writer, sheet_name='inflexible_load' )
+            df.to_excel(writer, sheet_name='Sheet1' )
     else:
         with pd.ExcelWriter(evs_excel_add, engine='openpyxl')  as writer: 
-            df.to_excel(writer, sheet_name="inflexible_load" )
+            df.to_excel(writer, sheet_name="Sheet1" )
     
     print("Iflexible load data as Excell file is saved in: ", evs_excel_add)
 
@@ -239,8 +240,11 @@ def create_TCL_Loads_sheets(fileName, fileAdd):
         with pd.ExcelWriter(evs_excel_add, engine='openpyxl')  as writer: 
             df.to_excel(writer, sheet_name="Outside Temperature" )
     
+    print("_-"*10)
     print("TCL data as Excell file is saved in: ", evs_excel_add)
 
+prosumers_sl =["SL_loads1", "SL_loads2", "SL_low", "SL_up"]
+SL_sheets   = ['SL Consumption', 'SL Start', 'SL End']
 def create_SL_Loads_sheets(fileName, fileAdd):
     exclude = ["Charging Efficiency" , "Discharging Efficiency"]
     
@@ -251,17 +255,38 @@ def create_SL_Loads_sheets(fileName, fileAdd):
     evs_excel_add = os.path.join(fileAdd, fileName)
     
     index = 0
+    
+    df = pd.DataFrame()
+    
     for sheet in SL_sheets:
         dic_data = dict()
         for i in range(1, nsda+1):
-            #print(sheet)
             add_file = os.path.join(os.pardir,  "prosumers_data", pr_file_name+str(i)+".csv")
-            TCLs_Info = pd.read_csv(add_file, usecols=prosumers_sl, nrows=no_prosumers)
-            dic_data[i] = TCLs_Info[prosumers_tcl[index]].tolist()
+            SLs_Info = pd.read_csv(add_file, usecols=prosumers_sl, nrows=no_prosumers)
+            if sheet == 'SL Consumption':
+                temp_df=None
+                temp_time = ['SDA_'+str(i)+' t='+str(x) for x in range(16,40)]
+                dump_loads = np.ones([no_prosumers, 24]) * -1
                 
+                cycle = SLs_Info['SL_up'] - SLs_Info['SL_low']
+                loads = (SLs_Info['SL_loads1'] + SLs_Info['SL_loads2'])/100
+                for j in range(no_prosumers):
+                    for t in range(SLs_Info['SL_low'][j], SLs_Info['SL_up'][j]+1):
+                        dump_loads[j,t-16] = loads[j]
+                temp_df=pd.DataFrame(dump_loads, columns = temp_time)
+                
+            if sheet == 'SL Start':
+                dic_data[i] = SLs_Info['SL_low'].tolist()
+            if sheet == 'SL End':
+                dic_data[i] = SLs_Info['SL_up'].tolist()
         
-        index += 1
-        df= pd.DataFrame().from_dict(dic_data)
+            if sheet == 'SL Consumption' and df.size > 0:
+                df = pd.concat([df, temp_df] , axis=1)
+            elif sheet == 'SL Consumption' and df.size ==0:
+                df = temp_df.copy(deep=True)
+       
+        if sheet != 'SL Consumption':
+            df= pd.DataFrame().from_dict(dic_data)
         
         if os.path.exists(evs_excel_add):
             with pd.ExcelWriter(evs_excel_add, engine='openpyxl', mode='a',if_sheet_exists="replace")  as writer: 
@@ -269,7 +294,8 @@ def create_SL_Loads_sheets(fileName, fileAdd):
         else:
             with pd.ExcelWriter(evs_excel_add, engine='openpyxl')  as writer: 
                 df.to_excel(writer, sheet_name=sheet )
-         
-create_EVs_input_Data("text.xlsx", "Test Data 2")
-create_inflexible_loads("text222.xlsx", "Test Data 2")
-create_TCL_Loads_sheets("text444.xlsx", "Test Data")
+        
+create_EVs_input_Data("EVs.xlsx", "Test Data")
+create_inflexible_loads("Inflexible Consumption.xlsx", "Test Data")
+create_TCL_Loads_sheets("TCL.xlsx", "Test Data")
+create_SL_Loads_sheets("SL.xlsx", "Test Data")
