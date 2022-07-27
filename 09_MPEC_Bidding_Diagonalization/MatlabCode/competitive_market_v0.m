@@ -111,6 +111,8 @@ for ii=1:nda
     end
 end
 
+%SL_profile_vec = max(SL_profile_vec, 0) %Alireza
+
 for ii=1:max([nev,ntcl,nsl])*nda
     if ii<=max(nev)*nda
         if EV_Arrivals_vec(ii)>0

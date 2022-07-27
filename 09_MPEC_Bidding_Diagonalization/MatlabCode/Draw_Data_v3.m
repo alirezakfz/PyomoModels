@@ -136,10 +136,10 @@ if RandomOrExcel=='E'
     EV_power_max = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\EVs.xlsx'],'Charging Power',xlRC2A1(2,2,max(nev)+1,2+nsda-1)))/MVA;
     EV_power_max(isnan(EV_power_max)) = 0;
     % Arrival Times
-    EV_Arrivals = xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\EVs.xlsx'],'Arrival Times',xlRC2A1(2,2,max(nev)+1,2+nsda-1));
+    EV_Arrivals = xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\EVs.xlsx'],'Arrival Times',xlRC2A1(2,2,max(nev)+1,2+nsda-1))-15;
     EV_Arrivals(isnan(EV_Arrivals)) = 0;
     % Departure Times
-    EV_Departures = xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\EVs.xlsx'],'Departure Times',xlRC2A1(2,2,max(nev)+1,2+nsda-1));
+    EV_Departures = xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\EVs.xlsx'],'Departure Times',xlRC2A1(2,2,max(nev)+1,2+nsda-1))-15;
     EV_Departures(isnan(EV_Departures)) = 0;
     % Initial SOE
     EV_Initial_SOC = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\EVs.xlsx'],'Arrival SOC',xlRC2A1(2,2,max(nev)+1,2+nsda-1)))/MVA;
@@ -172,10 +172,10 @@ if RandomOrExcel=='E'
     % Outside Temperature
     outside_temp = xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\TCL.xlsx'],'Outside Temperature','B2:Y2');
     % Start Times
-    TCL_start = xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\TCL.xlsx'],'Start Times',xlRC2A1(2,2,max(ntcl)+1,2+nsda-1));
+    TCL_start = xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\TCL.xlsx'],'Start Times',xlRC2A1(2,2,max(ntcl)+1,2+nsda-1))-15;
     TCL_start(isnan(TCL_start)) = 0;
     % End Times
-    TCL_end = xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\TCL.xlsx'],'End Times',xlRC2A1(2,2,max(ntcl)+1,2+nsda-1));
+    TCL_end = xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\TCL.xlsx'],'End Times',xlRC2A1(2,2,max(ntcl)+1,2+nsda-1))-15;
     TCL_end(isnan(TCL_end)) = 0;
     % COP
     TCL_COP = xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\TCL.xlsx'],'COP',xlRC2A1(2,2,max(ntcl)+1,2+nsda-1));
@@ -183,7 +183,7 @@ if RandomOrExcel=='E'
 %% SLs
 % Start Times
 
-    SL_start = xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\SL.xlsx'],'SL Start',xlRC2A1(2,2,Large_Random_Number+1,2+nsda-1));
+    SL_start = xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\SL.xlsx'],'SL Start',xlRC2A1(2,2,Large_Random_Number+1,2+nsda-1))-15;
     SL_start(isnan(SL_start)) = 0;
     % Number Of SLs per Strategic DA
     nsl = zeros(1,nsda);
@@ -191,7 +191,7 @@ if RandomOrExcel=='E'
         nsl(ii) = sum(SL_start(:,ii)>0);
     end
     % End Times
-    SL_end = xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\SL.xlsx'],'SL End',xlRC2A1(2,2,max(nsl)+1,2+nsda-1));
+    SL_end = xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\SL.xlsx'],'SL End',xlRC2A1(2,2,max(nsl)+1,2+nsda-1))-15;
     SL_end(isnan(SL_end)) = 0;
     % SL profiles
     SL_profile = xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\SL.xlsx'],'SL Consumption',xlRC2A1(2,2,max(nsl)+2,T*nsda+1))./(MVA);
