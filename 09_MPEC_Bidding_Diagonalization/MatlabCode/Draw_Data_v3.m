@@ -1,5 +1,5 @@
 currentFolder = pwd
-TestSystemXLFile = [currentFolder,'\','Test Data 2\','\',TestSystemList{TestSystemSelection}];
+TestSystemXLFile = [currentFolder,'\','Test Data\','\',TestSystemList{TestSystemSelection}];
 TestSystemXLFile = [currentFolder,'\','Test Data\','\',TestSystemList{TestSystemSelection}];
 SDAOffersXLFile = [currentFolder,'\',DatasetList{DatasetSelection},'\Strategic DA Quantity Offers.xlsx'];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Transmission Grid %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
