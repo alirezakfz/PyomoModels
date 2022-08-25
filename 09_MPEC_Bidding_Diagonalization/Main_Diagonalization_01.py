@@ -129,14 +129,14 @@ gen_capacity =[100, 75, 50, 50]
 random.seed(42)
 
 # Time Horizon
-NO_prosumers = 500
+NO_prosumers = 10
 no_iteration = 25
 epsilon= 0.01
 horizon=24
 H = range(16,horizon+16)    
 MVA = 30 # Power Base
 PU_DA = 1/(1000*MVA)
-load_multiply = 150
+load_multiply = 1
 
 nl = 7    # Number of network lines
 nb = 6    # Number of network buses

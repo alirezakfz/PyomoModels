@@ -7,8 +7,10 @@ Created on Fri Jul 22 16:55:22 2022
 import os
 import pandas as pd
 import numpy as np
+import glob
+
 nsda = 9
-no_prosumers = 500
+no_prosumers = 10
 header = [i for i in range(1, nsda+1)]
 horizon = [t for t in range(16,40)]
 
@@ -245,6 +247,7 @@ def create_TCL_Loads_sheets(fileName, fileAdd):
 
 prosumers_sl =["SL_loads1", "SL_loads2", "SL_low", "SL_up"]
 SL_sheets   = ['SL Consumption', 'SL Start', 'SL End']
+
 def create_SL_Loads_sheets(fileName, fileAdd):
     exclude = ["Charging Efficiency" , "Discharging Efficiency"]
     
@@ -294,8 +297,96 @@ def create_SL_Loads_sheets(fileName, fileAdd):
         else:
             with pd.ExcelWriter(evs_excel_add, engine='openpyxl')  as writer: 
                 df.to_excel(writer, sheet_name=sheet )
+
+def get_file_date_extension():
+    file_name ="Model_data_DA_1*"
+    data_dir = '../Model_CSV/*'
+    path = os.getcwd()
+    path = os.path.abspath(os.path.join(path, os.pardir))
+    path = os.path.join(path, 'Model_CSV')
+    file_path = glob.glob(path+"\\"+file_name)[0]
+    
+    onlyfiles = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
+    file = os.path.basename(file_path)
+    start = len(file_name)
+    end = len(file)-4
+    
+    return file[start:end]
+    
+def create_bids_offer(no_das, save_path):
+    file_name ="Model_data_DA_"
+    excel_file="Strategic DA Quantity Offers.xlsx"
+    
+    path = os.getcwd()
+    path = os.path.abspath(os.path.join(path, os.pardir))
+    path = os.path.join(path, 'Model_CSV')
+    
+    index=["SDA "+str(x) for x in range(1, no_das+1)]
+    
+    time_col = ["t="+str(x) for x in range(16,40)]
+    time_index=dict()
+    for i in range(len(time_col)):
+        time_index[i] = time_col[i]
+    
+    posterior = get_file_date_extension()
+    
+    column_offer=[]
+    column_offer.append('DAs_supply_offer\no_t')
+    for col in ["CDA"+str(x)+"_supply" for x in range(1, no_das)]:
+        column_offer.append(col)
         
-create_EVs_input_Data("EVs.xlsx", "Test Data")
-create_inflexible_loads("Inflexible Consumption.xlsx", "Test Data")
-create_TCL_Loads_sheets("TCL.xlsx", "Test Data")
-create_SL_Loads_sheets("SL.xlsx", "Test Data")
+    column_bid=[]
+    column_bid.append('DAs_demand_bid\nb_t')
+    for col in ["CDA"+str(x)+"_demand" for x in range(1, no_das)]:
+        column_bid.append(col)
+        
+    
+    data_offer = dict()
+    data_bid   = dict()
+    
+    f_name = file_name + str(1) +"_" + posterior +".csv"
+    f_name=os.path.join(path, f_name)
+    df = pd.read_csv(f_name, usecols = column_offer + column_bid + ['Iteration'])
+    
+    for j in range(len(column_offer)):
+        data_offer[index[j]]= df[df.Iteration==1][column_offer[j]].tolist()
+        data_bid[index[j]] = df[df.Iteration==1][column_bid[j]].tolist()   
+     
+    df_offer = pd.DataFrame().from_dict(data_offer)
+    df_offer.rename(index=time_index, inplace=True)
+    df_offer = df_offer.T
+    
+    df_bid  = pd.DataFrame().from_dict(data_bid)
+    df_bid.rename(index=time_index, inplace=True)
+    df_bid = df_bid.T
+    
+    excel_add = os.path.join(save_path, excel_file)
+    
+    if os.path.exists(excel_add):
+        with pd.ExcelWriter(excel_add, engine='openpyxl', mode='a',if_sheet_exists="replace")  as writer: 
+            df_offer.to_excel(writer, sheet_name="Offers" )
+    else:
+        with pd.ExcelWriter(excel_add, engine='openpyxl')  as writer: 
+            df_offer.to_excel(writer, sheet_name="Offers" )
+    
+    if os.path.exists(excel_add):
+        with pd.ExcelWriter(excel_add, engine='openpyxl', mode='a',if_sheet_exists="replace")  as writer: 
+            df_bid.to_excel(writer, sheet_name="Bids" )
+    else:
+        with pd.ExcelWriter(excel_add, engine='openpyxl')  as writer: 
+            df_bid.to_excel(writer, sheet_name="Bids" )
+    
+    # for i in range(1,no_das+1):
+    #     f_name = file_name + str(i) +"_" + posterior +".csv"
+    #     f_name=os.path.join(path, f_name)
+    #     df bid= pd.read_csv(f_name, columns = column_offer + column_bid)
+    #     for j in len(column_offer):
+    #         data_offer[index[j]]= df[column_offer].tolist()
+    #         data_bid[]
+
+save_path = 'Ali Data'
+create_EVs_input_Data("EVs.xlsx", save_path)
+create_inflexible_loads("Inflexible Consumption.xlsx", save_path)
+create_TCL_Loads_sheets("TCL.xlsx", save_path)
+create_SL_Loads_sheets("SL.xlsx", save_path)
+create_bids_offer(9, save_path)
