@@ -280,4 +280,4 @@ lin_comp_market.Objective = sum(sum(GenBids.*g))+sum(sum(da_price_offers.*da_sel
 
 Competitive_LMPs = duals.Constraints.power_balance;
 
-DA_Competitive_Profits = sum((x_opt.da_sell-x_opt.da_buy).*(DALoc'*Competitive_LMPs),2)
+DA_Competitive_Profits = sum((x_opt.da_sell-x_opt.da_buy).*(DALoc'*Competitive_LMPs),2);
