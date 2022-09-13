@@ -129,14 +129,14 @@ gen_capacity =[100, 75, 50, 50]
 random.seed(42)
 
 # Time Horizon
-NO_prosumers = 10
-no_iteration = 25
+NO_prosumers = 300
+no_iteration = 3
 epsilon= 0.01
 horizon=24
 H = range(16,horizon+16)    
 MVA = 30 # Power Base
 PU_DA = 1/(1000*MVA)
-load_multiply = 1
+load_multiply = 100
 
 nl = 7    # Number of network lines
 nb = 6    # Number of network buses
@@ -404,13 +404,13 @@ EVs_list = dict()
 
 for j in range(1,ncda+2):
     if j %2 == 0:
-        EVs_penetration= 0.7
+        EVs_penetration= 1 #0.7
     elif j % 3== 0:
-        EVs_penetration= 1.0
+        EVs_penetration= 1 #1.0
     elif j % 5 == 0:
-        EVs_penetration= 0.35
+        EVs_penetration= 1 #0.35
     else:
-        EVs_penetration=  0.10
+        EVs_penetration= 1 # 0.10
     # Adding random EVs for prosumers
     NO_of_EVs = int(EVs_penetration * NO_prosumers)
     EVs_list[j] = random.choices([i+1 for i in range(NO_prosumers)],k=NO_of_EVs )
@@ -422,13 +422,13 @@ Solar_list=dict()
 
 for j in range(1,ncda+2):
     if j %2 == 0:
-        Solar_penetration=  0.7
+        Solar_penetration=  1 # 0.7
     elif j % 3== 0:
-        Solar_penetration=  0.1
+        Solar_penetration= 1 # 0.1
     elif j % 5 == 0:
-        Solar_penetration=  0.35
+        Solar_penetration=  1 #0.35
     else:
-        Solar_penetration=  0.1
+        Solar_penetration=  1 #0.1
     # Adding random solar panels to prosumers
     NO_solar_prosumers = int(Solar_penetration * NO_prosumers)
     Solar_list[j] = random.choices([i+1 for i in range(NO_prosumers)],k=NO_solar_prosumers )

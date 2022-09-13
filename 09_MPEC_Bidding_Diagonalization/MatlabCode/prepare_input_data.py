@@ -10,7 +10,7 @@ import numpy as np
 import glob
 
 nsda = 9
-no_prosumers = 10
+no_prosumers = 300
 header = [i for i in range(1, nsda+1)]
 horizon = [t for t in range(16,40)]
 
@@ -385,6 +385,7 @@ def create_bids_offer(no_das, save_path):
     #         data_bid[]
 
 save_path = 'Ali Data'
+save_path = 'Test_01'
 create_EVs_input_Data("EVs.xlsx", save_path)
 create_inflexible_loads("Inflexible Consumption.xlsx", save_path)
 create_TCL_Loads_sheets("TCL.xlsx", save_path)
