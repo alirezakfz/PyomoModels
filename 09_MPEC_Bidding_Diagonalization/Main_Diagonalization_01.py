@@ -136,7 +136,7 @@ horizon=24
 H = range(16,horizon+16)    
 MVA = 30 # Power Base
 PU_DA = 1/(1000*MVA)
-load_multiply = 100
+load_multiply = 1
 
 nl = 7    # Number of network lines
 nb = 6    # Number of network buses
