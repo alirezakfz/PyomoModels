@@ -129,7 +129,7 @@ gen_capacity =[100, 75, 50, 50]
 random.seed(42)
 
 # Time Horizon
-NO_prosumers = 300
+NO_prosumers = 100
 no_iteration = 3
 epsilon= 0.01
 horizon=24
@@ -675,7 +675,7 @@ m_time = [t for t in range(16,40)]
 
 solar_production = dict()
 for i in range(0, ndas):
-    temp_df = pd.DataFrame().from_dict(DA_solar_power[i])
+    temp_df = pd.DataFrame().from_dict(DA_solar_power[i])/1000
     solar_production[i] = temp_df.sum().tolist()
     
 solar_df = pd.DataFrame().from_dict(solar_production).T
