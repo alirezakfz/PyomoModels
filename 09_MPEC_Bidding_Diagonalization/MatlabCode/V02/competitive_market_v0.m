@@ -4,7 +4,7 @@ RandomOrExcel = 'E';
 CurtailableDemand = 0;
 load_factor = 1;
 gen_multiplier = 1;
-dem_multiplier = 1;
+dem_multiplier = 500;
 prosumers_range = [100 100];
 Large_Random_Number = 10000; 
 e_tol = 0.0001;
@@ -16,8 +16,8 @@ temp_upper_bound = 0;
 %% Input
 % 'Ali Data':      1
 % 'Konster Data':  2
-DatasetList = {'Ali Data','Konster Data','Test_01','Test_02','Test Data 2','Test Data 4','Test Data 5'};
-DatasetSelection = 4;
+DatasetList = {'Ali Data','Konster Data','Test_01','Test_02','Test_03','Test Data 2','Test Data 4','Test Data 5'};
+DatasetSelection = 5;
 
 % '6_Bus_Transmission_Test_System.xlsx'     1
 TestSystemList = {'6_Bus_Transmission_Test_System.xlsx'};
@@ -204,7 +204,7 @@ for jj=1:nda
         sum_psl(jj,:) = sum(p_sl((jj-1)*max(nsl)+1:jj*max(nsl),:));
     end
 end
-comp_market.Constraints.DA_portfolio_balance = da_buy-da_sell == InfLoad-p_res+sum_ch-sum_dis+sum_ptcl+sum_psl;
+comp_market.Constraints.DA_portfolio_balance = da_buy-da_sell == (InfLoad-p_res+sum_ch-sum_dis+sum_ptcl+sum_psl)*dem_multiplier;
 
 comp_market.Constraints.offer_bigM1 = da_sell<=10000*u_bigM;
 comp_market.Constraints.offer_bigM2 = da_buy<=10000*(1-u_bigM);
@@ -283,7 +283,7 @@ lin_comp_market.Constraints.sl1 = lin_SL_bin_con;
 lin_comp_market.Constraints.sl2 = lin_a10;
 lin_comp_market.Constraints.sl3 = sum(lin_w,2)==1;
 
-lin_comp_market.Constraints.DA_portfolio_balance = da_buy-da_sell == InfLoad-p_res+sum_ch-sum_dis+sum_ptcl+sum_psl;
+lin_comp_market.Constraints.DA_portfolio_balance = da_buy-da_sell == (InfLoad-p_res+sum_ch-sum_dis+sum_ptcl+sum_psl)*dem_multiplier;
 
 lin_comp_market.Constraints.offer_bigM1 = da_sell<=10000*lin_u_bigM;
 lin_comp_market.Constraints.offer_bigM2 = da_buy<=10000*(1-lin_u_bigM);
@@ -294,8 +294,10 @@ lin_comp_market.Constraints.fix_u_bigM = lin_u_bigM == x_opt.u_bigM;
 % Objective
 lin_comp_market.Objective = sum(sum(GenBids.*g))+sum(sum(da_price_offers.*da_sell))-sum(sum(da_price_bids.*da_buy));
 
+options = optimoptions('MaxTime',172800);
+
 % Solver
-[lin_x_opt,lin_Cost,lin_output,lin_exitflag,duals]=solve(lin_comp_market);
+[lin_x_opt,lin_Cost,lin_output,lin_exitflag,duals]=solve(lin_comp_market,  'Options', options);
 
 Competitive_LMPs = duals.Constraints.power_balance;
 

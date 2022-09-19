@@ -210,8 +210,8 @@ end
 %% Inflexible Load
 
 LastRow = sprintf('%d',2+nsda-1);
-InfLoad = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\Inflexible Consumption.xlsx'],'Sheet1',strcat('B2:Y',LastRow))./MVA).*dem_multiplier;
+InfLoad = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\Inflexible Consumption.xlsx'],'Sheet1',strcat('B2:Y',LastRow))./MVA);%.*dem_multiplier;
 DRBids = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\Inflexible Consumption.xlsx'],'Sheet2',strcat('B2:Y',LastRow)));
 %% RES
 
-RES = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\Renewable Production.xlsx'],'Sheet1',strcat('B2:Y',LastRow))./MVA).*dem_multiplier;
+RES = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\Renewable Production.xlsx'],'Sheet1',strcat('B2:Y',LastRow))./MVA);%.*dem_multiplier;
