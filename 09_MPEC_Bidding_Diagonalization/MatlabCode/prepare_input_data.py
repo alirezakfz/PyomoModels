@@ -10,7 +10,7 @@ import numpy as np
 import glob
 
 nsda = 9
-no_prosumers = 30
+no_prosumers = 10
 header = [i for i in range(1, nsda+1)]
 horizon = [t for t in range(16,40)]
 

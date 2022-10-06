@@ -4,7 +4,7 @@ RandomOrExcel = 'E';
 CurtailableDemand = 0;
 load_factor = 1;
 gen_multiplier = 1;
-dem_multiplier = 1000;
+dem_multiplier = 1;
 prosumers_range = [100 100];
 Large_Random_Number = 10000; 
 e_tol = 0.0001;
@@ -16,16 +16,15 @@ temp_upper_bound = 0;
 %% Input
 % 'Ali Data':      1
 % 'Konster Data':  2
-DatasetList = {'Ali Data','Konster Data','Test_01','Test_02','Test_03','Test_04','Test_05','Test Data 2','Test Data 4','Test Data 5'};
-DatasetSelection = 7;
+DatasetList = {'Ali Data','Konsta Data'};
+DatasetSelection = 2;
 
 % '6_Bus_Transmission_Test_System.xlsx'     1
 TestSystemList = {'6_Bus_Transmission_Test_System.xlsx'};
 TestSystemSelection = 1;
 BIGF = 10000;
 BIGM = 10000;
-MVA = 30;
-PU_DA = 1/(1000*MVA);
+MVA = 30*1000;
 % npr = 500;
 T = 24;
 % Charge_eff = 0.94;
@@ -142,7 +141,7 @@ for ii=1:max([nev,ntcl,nsl])*nda
     end
     if ii<=max(ntcl)*nda
         if TCL_start_vec(ii)>0
-            a8(ii,TCL_start_vec(ii)+1:TCL_end_vec(ii)) = tcl_temp(ii,TCL_start_vec(ii)+1:TCL_end_vec(ii)) ==  TCL_beta_vec(ii)*tcl_temp(ii,TCL_start_vec(ii):TCL_end_vec(ii)-1)+(1-TCL_beta_vec(ii))*(outside_temp(TCL_start_vec(ii):TCL_end_vec(ii)-1)+TCL_COP_vec(ii)*TCL_R_vec(ii)*(p_tcl(ii,TCL_start_vec(ii):TCL_end_vec(ii)-1))); %MVA*1000*p_tcl
+            a8(ii,TCL_start_vec(ii)+1:TCL_end_vec(ii)) = tcl_temp(ii,TCL_start_vec(ii)+1:TCL_end_vec(ii)) ==  TCL_beta_vec(ii)*tcl_temp(ii,TCL_start_vec(ii):TCL_end_vec(ii)-1)+(1-TCL_beta_vec(ii))*(outside_temp(TCL_start_vec(ii):TCL_end_vec(ii)-1)+TCL_COP_vec(ii)*TCL_R_vec(ii)*(MVA*1000*p_tcl(ii,TCL_start_vec(ii):TCL_end_vec(ii)-1)));
             a9l(ii,TCL_start_vec(ii):TCL_end_vec(ii)) = tcl_temp(ii,TCL_start_vec(ii):TCL_end_vec(ii))>=TCL_temp_low_vec(ii);
             if temp_upper_bound
                 a9r(ii,TCL_start_vec(ii):TCL_end_vec(ii)) = tcl_temp(ii,TCL_start_vec(ii):TCL_end_vec(ii))<=TCL_temp_high_vec(ii);
@@ -205,7 +204,7 @@ for jj=1:nda
         sum_psl(jj,:) = sum(p_sl((jj-1)*max(nsl)+1:jj*max(nsl),:));
     end
 end
-comp_market.Constraints.DA_portfolio_balance = da_buy-da_sell == (InfLoad-p_res+sum_ch-sum_dis+sum_ptcl+sum_psl)*dem_multiplier*PU_DA;
+comp_market.Constraints.DA_portfolio_balance = da_buy-da_sell == InfLoad-p_res+sum_ch-sum_dis+sum_ptcl+sum_psl;
 
 comp_market.Constraints.offer_bigM1 = da_sell<=10000*u_bigM;
 comp_market.Constraints.offer_bigM2 = da_buy<=10000*(1-u_bigM);
@@ -213,10 +212,8 @@ comp_market.Constraints.offer_bigM2 = da_buy<=10000*(1-u_bigM);
 % Objective
 comp_market.Objective = sum(sum(GenBids.*g))+sum(sum(da_price_offers.*da_sell))-sum(sum(da_price_bids.*da_buy));
 
-options = optimoptions('intlinprog','MaxTime',172800);
-
 % Solver
-[x_opt,Cost,output,exitflag]=solve(comp_market, 'Options', options);
+[x_opt,Cost,output,exitflag]=solve(comp_market);
 
 %% Extract LMPs %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Model
@@ -286,7 +283,7 @@ lin_comp_market.Constraints.sl1 = lin_SL_bin_con;
 lin_comp_market.Constraints.sl2 = lin_a10;
 lin_comp_market.Constraints.sl3 = sum(lin_w,2)==1;
 
-lin_comp_market.Constraints.DA_portfolio_balance = da_buy-da_sell == (InfLoad-p_res+sum_ch-sum_dis+sum_ptcl+sum_psl)*dem_multiplier*PU_DA;
+lin_comp_market.Constraints.DA_portfolio_balance = da_buy-da_sell == InfLoad-p_res+sum_ch-sum_dis+sum_ptcl+sum_psl;
 
 lin_comp_market.Constraints.offer_bigM1 = da_sell<=10000*lin_u_bigM;
 lin_comp_market.Constraints.offer_bigM2 = da_buy<=10000*(1-lin_u_bigM);
@@ -297,19 +294,15 @@ lin_comp_market.Constraints.fix_u_bigM = lin_u_bigM == x_opt.u_bigM;
 % Objective
 lin_comp_market.Objective = sum(sum(GenBids.*g))+sum(sum(da_price_offers.*da_sell))-sum(sum(da_price_bids.*da_buy));
 
-options = optimoptions('linprog','MaxTime',172800);
-%options = optimoptions('MaxTime',172800);
-
 % Solver
-[lin_x_opt,lin_Cost,lin_output,lin_exitflag,duals]=solve(lin_comp_market, 'Options', options);
+[lin_x_opt,lin_Cost,lin_output,lin_exitflag,duals]=solve(lin_comp_market);
 
 Competitive_LMPs = duals.Constraints.power_balance;
 
-% DA_Competitive_Profits = sum((x_opt.da_sell*MVA-x_opt.da_buy*MVA).*(DALoc'*Competitive_LMPs),2);
-DA_Competitive_Profits = sum((x_opt.da_sell-x_opt.da_buy).*(DALoc'*Competitive_LMPs),2);
+DA_Competitive_Profits = sum((x_opt.da_sell*MVA-x_opt.da_buy*MVA).*(DALoc'*Competitive_LMPs),2);
+
 
 %% Plot
-%plot(sum(InfLoad,1)*MVA-sum(x_opt.p_res,1)*MVA)
-plot(sum(InfLoad,1)*dem_multiplier*PU_DA-sum(x_opt.p_res,1)*dem_multiplier*PU_DA)
+plot(sum(InfLoad,1)*MVA-sum(x_opt.p_res,1)*MVA)
 hold on
-plot(sum(x_opt.g,1))
+plot(sum(x_opt.g,1)*MVA)

@@ -104,8 +104,8 @@ sda_price_bids = xlsread(TestSystemXLFile,'SDA Price Offers_Bids',strcat('AB2:AY
 %% Strategic DA Quantity Offers/Bids
 
 LastRow = sprintf('%d',2+nsda-1);
-sda_quantity_offers = (xlsread(SDAOffersXLFile,'Offers',strcat('B2:Y',LastRow)));%./MVA);
-sda_quantity_bids = (xlsread(SDAOffersXLFile,'Bids',strcat('B2:Y',LastRow))).*gen_multiplier;%./MVA).*gen_multiplier;
+sda_quantity_offers = (xlsread(SDAOffersXLFile,'Offers',strcat('B2:Y',LastRow))./MVA);%./MVA);
+sda_quantity_bids = (xlsread(SDAOffersXLFile,'Bids',strcat('B2:Y',LastRow))./MVA).*gen_multiplier;%./MVA).*gen_multiplier;
 %% Competitive DA Price Offers/Bids
 
 LastRow = sprintf('%d',2+ncda-1);
@@ -114,17 +114,18 @@ cda_price_bids = xlsread(TestSystemXLFile,'CDA Price Offers_Bids',strcat(('AB2:A
 %% Competitive DA Quantity Offers/Bids
 
 LastRow = sprintf('%d',2+ncda-1);
-%cda_quantity_offers = (xlsread(TestSystemXLFile,'CDA Quantity Offers_Bids',strcat(('C2:Z'),LastRow))./MVA).*dem_multiplier;
-cda_quantity_offers = (xlsread(TestSystemXLFile,'CDA Quantity Offers_Bids',strcat(('C2:Z'),LastRow)));
-%cda_quantity_bids = (xlsread(TestSystemXLFile,'CDA Quantity Offers_Bids',strcat(('AB2:AY'),LastRow))./MVA).*dem_multiplier;
-cda_quantity_bids = (xlsread(TestSystemXLFile,'CDA Quantity Offers_Bids',strcat(('AB2:AY'),LastRow)));
+cda_quantity_offers = (xlsread(TestSystemXLFile,'CDA Quantity Offers_Bids',strcat(('C2:Z'),LastRow))./MVA).*dem_multiplier;
+%cda_quantity_offers = (xlsread(TestSystemXLFile,'CDA Quantity Offers_Bids',strcat(('C2:Z'),LastRow)));
+cda_quantity_bids = (xlsread(TestSystemXLFile,'CDA Quantity Offers_Bids',strcat(('AB2:AY'),LastRow))./MVA).*dem_multiplier;
+%cda_quantity_bids = (xlsread(TestSystemXLFile,'CDA Quantity Offers_Bids',strcat(('AB2:AY'),LastRow)));
 
 if RandomOrExcel=='E'
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Prosumers %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% EVs
 % Max SOE
 
-    EV_SOC_max = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\EVs.xlsx'],'max_soc',xlRC2A1(2,2,Large_Random_Number+1,2+nsda-1)));%/MVA;
+    %EV_SOC_max = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\EVs.xlsx'],'max_soc',xlRC2A1(2,2,Large_Random_Number+1,2+nsda-1)))/MVA;
+    EV_SOC_max = ((xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\EVs.xlsx'],'max_soc',xlRC2A1(2,2,Large_Random_Number+1,2+nsda-1)))/MVA).*dem_multiplier;
     EV_SOC_max(isnan(EV_SOC_max)) = 0;
     % Number Of EVs per Strategic DA
     nev = zeros(1,nsda);
@@ -132,10 +133,12 @@ if RandomOrExcel=='E'
         nev(ii) = sum(EV_SOC_max(:,ii)>0);
     end
     % Min SOE
-    EV_SOC_min = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\EVs.xlsx'],'min_soc',xlRC2A1(2,2,max(nev)+1,2+nsda-1)));%/MVA;
+    %EV_SOC_min = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\EVs.xlsx'],'min_soc',xlRC2A1(2,2,max(nev)+1,2+nsda-1)))/MVA;
+    EV_SOC_min = ((xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\EVs.xlsx'],'min_soc',xlRC2A1(2,2,max(nev)+1,2+nsda-1)))/MVA).*dem_multiplier;
     EV_SOC_min(isnan(EV_SOC_min)) = 0;
     % Charging Rate
-    EV_power_max = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\EVs.xlsx'],'Charging Power',xlRC2A1(2,2,max(nev)+1,2+nsda-1)));%/MVA;
+    %EV_power_max = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\EVs.xlsx'],'Charging Power',xlRC2A1(2,2,max(nev)+1,2+nsda-1)))/MVA;
+    EV_power_max = ((xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\EVs.xlsx'],'Charging Power',xlRC2A1(2,2,max(nev)+1,2+nsda-1)))/MVA).*dem_multiplier;
     EV_power_max(isnan(EV_power_max)) = 0;
     % Arrival Times
     EV_Arrivals = xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\EVs.xlsx'],'Arrival Times',xlRC2A1(2,2,max(nev)+1,2+nsda-1))-15;
@@ -144,7 +147,8 @@ if RandomOrExcel=='E'
     EV_Departures = xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\EVs.xlsx'],'Departure Times',xlRC2A1(2,2,max(nev)+1,2+nsda-1))-15;
     EV_Departures(isnan(EV_Departures)) = 0;
     % Initial SOE
-    EV_Initial_SOC = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\EVs.xlsx'],'Arrival SOC',xlRC2A1(2,2,max(nev)+1,2+nsda-1)));%/MVA;
+    %EV_Initial_SOC = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\EVs.xlsx'],'Arrival SOC',xlRC2A1(2,2,max(nev)+1,2+nsda-1)))/MVA;
+    EV_Initial_SOC = ((xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\EVs.xlsx'],'Arrival SOC',xlRC2A1(2,2,max(nev)+1,2+nsda-1)))/MVA).*dem_multiplier;
     EV_Initial_SOC(isnan(EV_Initial_SOC)) = 0;
     % Charging Efficiency
     Charging_eff = xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\EVs.xlsx'],'Charging Efficiency',xlRC2A1(2,2,max(nev)+1,2+nsda-1));
@@ -155,7 +159,7 @@ if RandomOrExcel=='E'
 %% TCLs
 % Max Consumption
 
-    TCL_max = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\TCL.xlsx'],'Max Consumption',xlRC2A1(2,2,Large_Random_Number+1,2+nsda-1)));%/MVA;
+    TCL_max = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\TCL.xlsx'],'Max Consumption',xlRC2A1(2,2,Large_Random_Number+1,2+nsda-1)))/MVA;
     TCL_max(isnan(TCL_max)) = 0;
     % Number Of TCLs per Strategic DA
     ntcl = zeros(1,nsda);
@@ -196,7 +200,8 @@ if RandomOrExcel=='E'
     SL_end = xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\SL.xlsx'],'SL End',xlRC2A1(2,2,max(nsl)+1,2+nsda-1))-15;
     SL_end(isnan(SL_end)) = 0;
     % SL profiles
-    SL_profile = xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\SL.xlsx'],'SL Consumption',xlRC2A1(2,2,max(nsl)+2,T*nsda+1));%./(MVA);
+    %SL_profile = xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\SL.xlsx'],'SL Consumption',xlRC2A1(2,2,max(nsl)+2,T*nsda+1))./(MVA);
+    SL_profile = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\SL.xlsx'],'SL Consumption',xlRC2A1(2,2,max(nsl)+2,T*nsda+1))./(MVA)).*dem_multiplier;
     SL_profile(isnan(SL_profile)) = -1;
     % SL cycle
     SL_cycle = zeros(max(nsl),nsda);
@@ -210,8 +215,8 @@ end
 %% Inflexible Load
 
 LastRow = sprintf('%d',2+nsda-1);
-InfLoad = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\Inflexible Consumption.xlsx'],'Sheet1',strcat('B2:Y',LastRow)));%./MVA);%.*dem_multiplier;
+InfLoad = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\Inflexible Consumption.xlsx'],'Sheet1',strcat('B2:Y',LastRow))./MVA).*dem_multiplier;
 DRBids = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\Inflexible Consumption.xlsx'],'Sheet2',strcat('B2:Y',LastRow)));
 %% RES
 
-RES = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\Renewable Production.xlsx'],'Sheet1',strcat('B2:Y',LastRow)));%./MVA);%.*dem_multiplier;
+RES = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\Renewable Production.xlsx'],'Sheet1',strcat('B2:Y',LastRow))./MVA).*dem_multiplier;
