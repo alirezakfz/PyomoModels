@@ -212,8 +212,10 @@ comp_market.Constraints.offer_bigM2 = da_buy<=10000*(1-u_bigM);
 % Objective
 comp_market.Objective = sum(sum(GenBids.*g))+sum(sum(da_price_offers.*da_sell))-sum(sum(da_price_bids.*da_buy));
 
-% Solver
-[x_opt,Cost,output,exitflag]=solve(comp_market);
+%% Solver
+[x_opt,Cost,output,exitflag] = solve(comp_market);
+%[x_opt,Cost,output,exitflag]=gurobi(comp_market);
+%results = gurobi(comp_market);
 
 %% Extract LMPs %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Model
@@ -295,7 +297,8 @@ lin_comp_market.Constraints.fix_u_bigM = lin_u_bigM == x_opt.u_bigM;
 lin_comp_market.Objective = sum(sum(GenBids.*g))+sum(sum(da_price_offers.*da_sell))-sum(sum(da_price_bids.*da_buy));
 
 % Solver
-[lin_x_opt,lin_Cost,lin_output,lin_exitflag,duals]=solve(lin_comp_market);
+%[lin_x_opt,lin_Cost,lin_output,lin_exitflag,duals]=solve(lin_comp_market);
+%results = gurobi(lin_comp_market);
 
 Competitive_LMPs = duals.Constraints.power_balance;
 

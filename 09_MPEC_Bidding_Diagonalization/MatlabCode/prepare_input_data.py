@@ -15,7 +15,8 @@ header = [i for i in range(1, nsda+1)]
 horizon = [t for t in range(16,40)]
 
 MVA = 30
-PU_DA = 1/(1000)
+PU_DA = 1/(1000*MVA)
+
 
 from openpyxl import load_workbook
 
@@ -138,7 +139,7 @@ def create_EVs_input_Data(fileName, fileAdd):
                 add_file = os.path.join(os.pardir,  "prosumers_data", pr_file_name+str(i)+".csv")
                 Evs_Info = pd.read_csv(add_file, usecols=prosumers_Evs, nrows=no_prosumers)
                 for info in ["EV_soc_up","EV_soc_low", "EV_Power", "EV_soc_arr"]:
-                    Evs_Info[info] = Evs_Info[info]#* PU_DA
+                    Evs_Info[info] = Evs_Info[info]*PU_DA
                 dic_data[i] = Evs_Info[prosumers_Evs[index]].tolist()
                 
             else:
@@ -147,6 +148,7 @@ def create_EVs_input_Data(fileName, fileAdd):
         
         index += 1
         df= pd.DataFrame().from_dict(dic_data)
+        
         
         if os.path.exists(evs_excel_add):
             with pd.ExcelWriter(evs_excel_add, engine='openpyxl', mode='a',if_sheet_exists="replace")  as writer: 
@@ -173,7 +175,7 @@ def create_inflexible_loads(fileName, fileAdd):
     for i in range(1, nsda+1):
         add_file = os.path.join(os.pardir,  "prosumers_data", pr_file_name+str(i)+".csv")
         inf_info = pd.read_csv(add_file,  nrows=no_prosumers)
-        inf_info = inf_info.sum(axis=0)/1000
+        inf_info = inf_info.sum(axis=0)
         inf_info = inf_info #* PU_DA
         #print(inf_info)
         data_dic[i] = inf_info.tolist()
@@ -193,7 +195,7 @@ def create_inflexible_loads(fileName, fileAdd):
         
     df.rename(index=dic_name, inplace=True)
     
-    
+    df = df*PU_DA
     if os.path.exists(evs_excel_add):
         with pd.ExcelWriter(evs_excel_add, engine='openpyxl', mode='a',if_sheet_exists="replace")  as writer: 
             df.to_excel(writer, sheet_name='Sheet1' )
@@ -280,7 +282,7 @@ def create_SL_Loads_sheets(fileName, fileAdd):
                 
                 cycle = SLs_Info['SL_up'] - SLs_Info['SL_low']
                 loads = (SLs_Info['SL_loads1'] + SLs_Info['SL_loads2'])/100
-                loads = loads #* PU_DA
+                loads = loads * PU_DA
                 for j in range(no_prosumers):
                     for t in range(SLs_Info['SL_low'][j], SLs_Info['SL_up'][j]+1):
                         dump_loads[j,t-16] = loads[j]
