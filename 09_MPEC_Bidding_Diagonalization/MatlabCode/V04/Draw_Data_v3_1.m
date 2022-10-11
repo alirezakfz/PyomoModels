@@ -121,10 +121,10 @@ cda_price_bids = xlsread(TestSystemXLFile,'CDA Price Offers_Bids',strcat(('AB2:A
 LastRow = sprintf('%d',2+ncda-1);
 
 %cda_quantity_offers = (xlsread(TestSystemXLFile,'CDA Quantity Offers_Bids',strcat(('C2:Z'),LastRow))./MVA).*dem_multiplier;
-cda_quantity_offers = (xlsread(TestSystemXLFile,'CDA Quantity Offers_Bids',strcat(('C2:Z'),LastRow)));
+cda_quantity_offers = (xlsread(TestSystemXLFile,'CDA Quantity Offers_Bids',strcat(('C2:Z'),LastRow))./MVA);
 
 %cda_quantity_bids = (xlsread(TestSystemXLFile,'CDA Quantity Offers_Bids',strcat(('AB2:AY'),LastRow))./MVA).*dem_multiplier;
-cda_quantity_bids = (xlsread(TestSystemXLFile,'CDA Quantity Offers_Bids',strcat(('AB2:AY'),LastRow)));
+cda_quantity_bids = (xlsread(TestSystemXLFile,'CDA Quantity Offers_Bids',strcat(('AB2:AY'),LastRow))./MVA);
 
 if RandomOrExcel=='E'
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Prosumers %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -147,7 +147,7 @@ if RandomOrExcel=='E'
     
     % Charging Rate
     %EV_power_max = (xlsread(['C:\Users\konster\OneDrive\Έγγραφα\Complementarity Models\EPEC-Learning paper\',DatasetList{DatasetSelection},'\EVs.xlsx'],'Charging Power',xlRC2A1(2,2,max(nev)+1,2+nsda-1)))/MVA;
-    EV_power_max = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\EVs.xlsx'],'Charging Power',xlRC2A1(2,2,max(nev)+1,2+nsda-1))).*dem_multiplier;;
+    EV_power_max = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\EVs.xlsx'],'Charging Power',xlRC2A1(2,2,max(nev)+1,2+nsda-1))).*dem_multiplier;
     EV_power_max(isnan(EV_power_max)) = 0;
     
     % Arrival Times
@@ -244,7 +244,7 @@ LastRow = sprintf('%d',2+nsda-1);
 %InfLoad = (xlsread(['C:\Users\konster\OneDrive\Έγγραφα\Complementarity Models\EPEC-Learning paper\',DatasetList{DatasetSelection},'\Inflexible Consumption.xlsx'],'Sheet1',strcat('B2:Y',LastRow))./MVA).*dem_multiplier;
 InfLoad = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\Inflexible Consumption.xlsx'],'Sheet1',strcat('B2:Y',LastRow))).*dem_multiplier;%./MVA);%.*dem_multiplier;
 %DRBids = (xlsread(['C:\Users\konster\OneDrive\Έγγραφα\Complementarity Models\EPEC-Learning paper\',DatasetList{DatasetSelection},'\Inflexible Consumption.xlsx'],'Sheet2',strcat('B2:Y',LastRow)));
-DRBids = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\Inflexible Consumption.xlsx'],'Sheet2',strcat('B2:Y',LastRow)));
+% DRBids = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\Inflexible Consumption.xlsx'],'Sheet2',strcat('B2:Y',LastRow)));
 %% RES
 %RES = (xlsread(['C:\Users\konster\OneDrive\Έγγραφα\Complementarity Models\EPEC-Learning paper\',DatasetList{DatasetSelection},'\Renewable Production.xlsx'],'Sheet1',strcat('B2:Y',LastRow))./MVA).*dem_multiplier;
 RES = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\Renewable Production.xlsx'],'Sheet1',strcat('B2:Y',LastRow))./MVA).*dem_multiplier;%./MVA);%.*dem_multiplier;

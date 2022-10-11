@@ -4,7 +4,7 @@ RandomOrExcel = 'E';
 CurtailableDemand = 0;
 load_factor = 1;
 gen_multiplier = 1;
-dem_multiplier = 10;
+dem_multiplier = 1;
 prosumers_range = [100 100];
 Large_Random_Number = 10000; 
 e_tol = 0.0001;
@@ -214,8 +214,9 @@ comp_market.Constraints.offer_bigM2 = da_buy<=10000*(1-u_bigM);
 % Objective
 comp_market.Objective = sum(sum(GenBids.*g))+sum(sum(da_price_offers.*da_sell))-sum(sum(da_price_bids.*da_buy));
 
-% Solver
+%% Solver
 [x_opt,Cost,output,exitflag]=solve(comp_market);
+%results = Gurobi(comp_market);
 
 %% Extract LMPs %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Model
@@ -296,7 +297,7 @@ lin_comp_market.Constraints.fix_u_bigM = lin_u_bigM == x_opt.u_bigM;
 % Objective
 lin_comp_market.Objective = sum(sum(GenBids.*g))+sum(sum(da_price_offers.*da_sell))-sum(sum(da_price_bids.*da_buy));
 
-% Solver
+%% Solver
 [lin_x_opt,lin_Cost,lin_output,lin_exitflag,duals]=solve(lin_comp_market);
 
 Competitive_LMPs = duals.Constraints.power_balance;

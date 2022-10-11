@@ -361,8 +361,8 @@ def create_bids_offer(no_das, save_path):
     df = pd.read_csv(f_name, usecols = column_offer + column_bid + ['Iteration'])
     
     for j in range(len(column_offer)):
-        data_offer[index[j]]= df[df.Iteration==1][column_offer[j]].tolist()
-        data_bid[index[j]] = df[df.Iteration==1][column_bid[j]].tolist()   
+        data_offer[index[j]]= df[df.Iteration==2][column_offer[j]].tolist()
+        data_bid[index[j]] = df[df.Iteration==2][column_bid[j]].tolist()   
      
     df_offer = pd.DataFrame().from_dict(data_offer)
     df_offer.rename(index=time_index, inplace=True)
