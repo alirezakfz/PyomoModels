@@ -373,6 +373,7 @@ def create_bids_offer(no_das, save_path):
     df_bid = df_bid.T
     
     excel_add = os.path.join(save_path, excel_file)
+    print(excel_add)
     
     if os.path.exists(excel_add):
         with pd.ExcelWriter(excel_add, engine='openpyxl', mode='a',if_sheet_exists="replace")  as writer: 
