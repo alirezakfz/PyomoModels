@@ -10,6 +10,9 @@ Created on Fri Oct  8 12:15:07 2021
 Created on Tue May 25 16:05:41 2021
 
 @author: alire
+
+Hourly radiation
+#https://joint-research-centre.ec.europa.eu/pvgis-photovoltaic-geographical-information-system/pvgis-tools/hourly-radiation_en
 """
 
 import random
@@ -18,9 +21,10 @@ import pandas as pd
 import numpy as np
 import collections
 from csv import writer
+import os
 # from samples_gen import generate_price, generate_temp
 #from MPEC_Concrete_Model_ver01 import mpec_model
-from MPEC_Concrete_Model_ver07 import mpec_model
+from MPEC_Concrete_Model_ver08 import mpec_model
 from pyomo.environ import *
 from pyomo.opt import SolverFactory
 
@@ -105,14 +109,17 @@ def dictionar_bus(GenBus, CDABus, DAs):
 
 
 def load_data(file_index):
-    df1 = pd.read_csv('prosumers_data/inflexible_profiles_scen_'+file_index+'.csv').round(5)/1000 #*load_multiply/100 #*load_multiply #/1000
+    df1 = pd.read_csv('prosumers_data/inflexible_profiles_scen_'+file_index+'.csv').round(5)*load_multiply/(1000*1000*MVA) #*load_multiply/100 #*load_multiply #/1000
     
     # Just selecting some prosumers like 500 or 600 or 1000
     df1 = df1[:NO_prosumers]
     # print(df1.shape)
     df2 = pd.read_csv('prosumers_data/prosumers_profiles_scen_'+file_index+'.csv')
     df2 = df2[:NO_prosumers]
-    return df1 , df2
+    
+    df3 = pd.read_csv('prosumers_data/occupancy_profiles_scen_'+file_index+'.csv')
+    df3 = df3[:NO_prosumers]
+    return df1 , df2, df3
 
 
 
@@ -122,14 +129,14 @@ gen_capacity =[100, 75, 50, 50]
 random.seed(42)
 
 # Time Horizon
-NO_prosumers = 500
-no_iteration = 1
-epsilon= 0.01
+NO_prosumers = 10
+no_iteration = 3
+epsilon= 0.0001
 horizon=24
 H = range(16,horizon+16)    
 MVA = 30 # Power Base
 PU_DA = 1/(1000*MVA)
-load_multiply = 120
+load_multiply = 1
 
 nl = 7    # Number of network lines
 nb = 6    # Number of network buses
@@ -144,8 +151,8 @@ ng = 4    # Number of Generators
 ncda = 8  # Number of competing 
 ndas = 9  # Number of participant DAs
 
-GenBus = [1,2,3,3]  # Vector with Generation Buses
-CDABus = [[1, 6], [2,6],[3,6],[4,4],[5,4],[6,4],[7,5],[8,5],[9,5]]      # Vector with competing DAs Buses
+GenBus = [1,2,6,6]  # Vector with Generation Buses
+CDABus = [[1, 3], [2,3],[3,3],[4,4],[5,4],[6,4],[7,5],[8,5],[9,5]]      # Vector with competing DAs Buses
 DABus = 6           # DA Bus
 
 FMAX = [150,150,150,33,150,150,150]
@@ -272,6 +279,9 @@ price_d_o['DAS']= random_price(horizon,12,15)
 for i in range(1,ncda+1):
     price_d_o[i] = random_price(horizon,12,15)
 
+df_price = pd.DataFrame().from_dict( price_d_o)
+df_price.to_csv("Model_CSV/price_d_o.csv",index=False)
+
 c_d_o=[]
 for i in range(ncda+1):
     c_d_o.append(price_d_o)
@@ -283,6 +293,9 @@ price_d_b['DAS']= random_price(horizon,70,110)
 
 for i in range(1,ncda+1):
     price_d_b[i] = random_price(horizon,70,110)
+
+df_price = pd.DataFrame().from_dict(price_d_b)
+df_price.to_csv("Model_CSV/price_d_b.csv",index=False)
 
 c_d_b=[]
 for i in range(ncda+1):
@@ -311,7 +324,7 @@ g_s = { 1:[100 for x in range(0,horizon)],
 
 # 2019 November 15 forecasted temprature
 outside_temp=[27.694803,26.834803,26.594803,25.664803,22.594803,21.394802,20.164803,19.584803,20.334803,16.784803,16.094803,15.764802,14.774801,14.834802,14.184802,14.144801,15.314801,16.694803,19.734802,24.414803,25.384802,26.744802,27.144802,27.524803]
-outside_temp = [x+0.8 for x in outside_temp]
+#outside_temp = [x for x in outside_temp]
 
 irrediance_nov = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 101.55, 237.82, 290.98, 224.05, 96.78, 141.85, 60.03, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
@@ -378,7 +391,7 @@ def random_solar_power_var(in_loads, j):
 # List of solar powers
 DA_solar_power =[]        
 for j in range(1,ncda+2):
-    IN_loads, profiles = load_data(str(j))
+    IN_loads, profiles, _ = load_data(str(j))
     DA_solar_power.append(random_solar_power_var(IN_loads, j))
     
     
@@ -409,13 +422,13 @@ Solar_list=dict()
 
 for j in range(1,ncda+2):
     if j %2 == 0:
-        Solar_penetration= 1 # 0.7
+        Solar_penetration=  1 # 0.7
     elif j % 3== 0:
         Solar_penetration= 1 # 0.1
     elif j % 5 == 0:
-        Solar_penetration= 1 # 0.35
+        Solar_penetration=  1 #0.35
     else:
-        Solar_penetration= 1 # 0.1
+        Solar_penetration=  1 #0.1
     # Adding random solar panels to prosumers
     NO_solar_prosumers = int(Solar_penetration * NO_prosumers)
     Solar_list[j] = random.choices([i+1 for i in range(NO_prosumers)],k=NO_solar_prosumers )
@@ -430,14 +443,14 @@ def random_irrediance_solar_power(irrediance, in_loads, j, solar_list):
     for da in solar_list[j]:
         for i in range(horizon):
             area = random.choice([1,2])
-            solar_power[da-1,i] = 0.000157 * area * irrediance[i] * (1 - 0.001*random.random()* (outside_temp[i]-25))#*load_multiply
+            solar_power[da-1,i] = 0.000157 * area * irrediance[i] * (1 - 0.001*random.random()* (outside_temp[i]-25))*load_multiply/(1000*MVA)
     
     return solar_power
         
 # List of solar powers
 DA_solar_power =[]        
 for j in range(1,ncda+2):
-    IN_loads, profiles = load_data(str(j))
+    IN_loads, profiles, _ = load_data(str(j))
     DA_solar_power.append(random_irrediance_solar_power(irrediance_nov, IN_loads, j, Solar_list)) # changed from irradiance_nov
 
 
@@ -477,24 +490,24 @@ for n in range(no_iteration+1):
         
         
         
-        IN_loads, profiles = load_data(str(j))
+        IN_loads, profiles, oc_profiles = load_data(str(j))
         
         
         
         # EVs properties 
         arrival = profiles['Arrival']
         depart  = profiles['Depart']
-        charge_power = profiles['EV_Power']#*load_multiply
-        EV_soc_low   = profiles['EV_soc_low']#*load_multiply
-        EV_soc_up   = profiles['EV_soc_up']#*load_multiply
-        EV_soc_arrive = profiles['EV_soc_arr']#*load_multiply
-        EV_demand = profiles['EV_demand']#*load_multiply
+        charge_power = profiles['EV_Power']*load_multiply/(1000*MVA)#*load_multiply
+        EV_soc_low   = profiles['EV_soc_low']*load_multiply/(1000*MVA)#*load_multiply
+        EV_soc_up   = profiles['EV_soc_up']*load_multiply/(1000*MVA)#*load_multiply
+        EV_soc_arrive = profiles['EV_soc_arr']*load_multiply/(1000*MVA)#*load_multiply
+        EV_demand = profiles['EV_demand']*load_multiply/(1000*MVA)#*load_multiply
         
                 
         # Shiftable loads
         SL_loads=[]
-        SL_loads.append(profiles['SL_loads1']/100)#*load_multiply/10)
-        SL_loads.append(profiles['SL_loads2']/100)#*load_multiply/10)
+        SL_loads.append(profiles['SL_loads1']*load_multiply/(1000*MVA*100))#*load_multiply/10)
+        SL_loads.append(profiles['SL_loads2']*load_multiply/(1000*MVA*100))#*load_multiply/10)
         SL_low   = profiles['SL_low']
         SL_up    = profiles['SL_up']
         SL_cycle = len(SL_loads)
@@ -503,7 +516,7 @@ for n in range(no_iteration+1):
         TCL_R   = profiles['TCL_R']
         TCL_C   = profiles['TCL_C']
         TCL_COP = profiles['TCL_COP']
-        TCL_Max = profiles['TCL_MAX']
+        TCL_Max = profiles['TCL_MAX']#*load_multiply/(1000*MVA)
         TCL_Beta= profiles['TCL_Beta']
         TCL_temp_low = profiles['TCL_temp_low']
         TCL_temp_up  = profiles['TCL_temp_up']
@@ -530,14 +543,14 @@ for n in range(no_iteration+1):
         
         model = mpec_model(ng, nb, nl, ncda,IN_loads, gen_capacity, 
                         arrival, depart, charge_power,EV_soc_arrive,EV_soc_low, EV_soc_up, 
-                        TCL_Max, TCL_R, TCL_Beta, TCL_temp_low, outside_temp, 
+                        TCL_Max, TCL_R, TCL_Beta, TCL_temp_low, outside_temp, TCL_COP, 
                         SL_low, SL_up, SL_cycle, SL_loads,
                         dic_G, dic_Bus_CDA, DABus, B, Yline, dic_G_Bus, 
                         c_g, c_d_o[j-1], c_d_b[j-1], 
                         dic_CDA_Bus, g_s, F_d_o, F_d_b, FMAX,
                         c_DA_o, c_DA_b, DA_solar_power[j-1],
                         EVs_list[j], Solar_list[j],
-                        load_multiply, MVA)
+                        load_multiply, MVA, oc_profiles)
         
         
         SOLVER_NAME= "gurobi"  #'cplex'
@@ -657,3 +670,32 @@ else:
 """
 Check model feasibility after solving agents MPEC for first time
 """
+# save solar power for each DA for each Timeslot
+m_time = [t for t in range(16,40)]
+
+solar_production = dict()
+for i in range(0, ndas):
+    temp_df = pd.DataFrame().from_dict(DA_solar_power[i])/1000
+    solar_production[i] = temp_df.sum().tolist()
+    
+solar_df = pd.DataFrame().from_dict(solar_production).T
+
+name_dic = dict()
+for i in range(len(solar_df.columns)):
+    name_dic[solar_df.columns[i]] = "t="+str(m_time[i])
+
+solar_df.rename(columns=name_dic, inplace=True)
+
+name_dic = dict()
+for i in range(len(solar_df.index)):
+    name_dic[solar_df.index[i]] = "SDA "+str(i+1)
+    
+solar_df.rename(index=name_dic, inplace=True)
+solar_df = solar_df/load_multiply
+
+if os.path.exists("Model_CSV/Renewable Production.xlsx"):
+    with pd.ExcelWriter("Model_CSV/Renewable Production.xlsx",  engine='openpyxl', mode='a',if_sheet_exists="replace")  as writer: 
+        solar_df.to_excel(writer, sheet_name='Sheet1' )
+else:
+    with pd.ExcelWriter("Model_CSV/Renewable Production.xlsx", engine='openpyxl')  as writer: 
+        solar_df.to_excel(writer, sheet_name='Sheet1' )
