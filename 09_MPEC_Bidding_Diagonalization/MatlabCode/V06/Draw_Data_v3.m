@@ -211,6 +211,9 @@ if RandomOrExcel=='E'
     %TCL_COP = xlsread(['C:\Users\konster\OneDrive\Έγγραφα\Complementarity Models\EPEC-Learning paper\',DatasetList{DatasetSelection},'\TCL.xlsx'],'COP',xlRC2A1(2,2,max(ntcl)+1,2+nsda-1));
     TCL_COP = xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\TCL.xlsx'],'COP',xlRC2A1(2,2,max(ntcl)+1,2+nsda-1));
     TCL_COP(isnan(TCL_COP)) = 0;
+    % High Temp
+    TCL_temp_high = xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\TCL.xlsx'],'Up Temps',xlRC2A1(2,2,max(ntcl)+1,2+nsda-1));
+    TCL_temp_high(isnan(TCL_temp_high)) = 27;
     %% SLs
     % Start Times
     %SL_start = xlsread(['C:\Users\konster\OneDrive\Έγγραφα\Complementarity Models\EPEC-Learning paper\',DatasetList{DatasetSelection},'\SL.xlsx'],'SL Start',xlRC2A1(2,2,Large_Random_Number+1,2+nsda-1));
@@ -244,7 +247,7 @@ LastRow = sprintf('%d',2+nsda-1);
 %InfLoad = (xlsread(['C:\Users\konster\OneDrive\Έγγραφα\Complementarity Models\EPEC-Learning paper\',DatasetList{DatasetSelection},'\Inflexible Consumption.xlsx'],'Sheet1',strcat('B2:Y',LastRow))./MVA).*dem_multiplier;
 InfLoad = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\Inflexible Consumption.xlsx'],'Sheet1',strcat('B2:Y',LastRow))./MVA).*dem_multiplier;%./MVA);%.*dem_multiplier;
 %DRBids = (xlsread(['C:\Users\konster\OneDrive\Έγγραφα\Complementarity Models\EPEC-Learning paper\',DatasetList{DatasetSelection},'\Inflexible Consumption.xlsx'],'Sheet2',strcat('B2:Y',LastRow)));
-DRBids = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\Inflexible Consumption.xlsx'],'Sheet2',strcat('B2:Y',LastRow)));
+%DRBids = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\Inflexible Consumption.xlsx'],'Sheet2',strcat('B2:Y',LastRow)));
 %% RES
 %RES = (xlsread(['C:\Users\konster\OneDrive\Έγγραφα\Complementarity Models\EPEC-Learning paper\',DatasetList{DatasetSelection},'\Renewable Production.xlsx'],'Sheet1',strcat('B2:Y',LastRow))./MVA).*dem_multiplier;
 RES = (xlsread([currentFolder,'\',DatasetList{DatasetSelection},'\Renewable Production.xlsx'],'Sheet1',strcat('B2:Y',LastRow))./MVA).*dem_multiplier;%./MVA);%.*dem_multiplier;

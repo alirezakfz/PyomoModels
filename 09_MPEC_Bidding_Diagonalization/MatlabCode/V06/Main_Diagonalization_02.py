@@ -129,14 +129,14 @@ gen_capacity =[100, 75, 50, 50]
 random.seed(42)
 
 # Time Horizon
-NO_prosumers = 10
-no_iteration = 3
+NO_prosumers = 30
+no_iteration = 25
 epsilon= 0.0001
 horizon=24
 H = range(16,horizon+16)    
 MVA = 30 # Power Base
 PU_DA = 1/(1000*MVA)
-load_multiply = 1
+load_multiply = 1500
 
 nl = 7    # Number of network lines
 nb = 6    # Number of network buses
@@ -516,10 +516,12 @@ for n in range(no_iteration+1):
         TCL_R   = profiles['TCL_R']
         TCL_C   = profiles['TCL_C']
         TCL_COP = profiles['TCL_COP']
-        TCL_Max = profiles['TCL_MAX']#*load_multiply/(1000*MVA)
+        TCL_Max = profiles['TCL_MAX'] + 30#*load_multiply/(1000*MVA)
         TCL_Beta= profiles['TCL_Beta']
         TCL_temp_low = profiles['TCL_temp_low']
-        TCL_temp_up  = profiles['TCL_temp_up']
+        
+        TCL_temp_up  = profiles['TCL_temp_up']+3
+        #TCL_temp_up  = profiles['TCL_temp_low']+4
 
         # Creating dictionary mapping current DA as strategic in MPEC model
         dic_CDA_Bus, dic_Bus_CDA, dic_G, dic_G_Bus = dictionar_bus(GenBus, CDABus, j)
@@ -543,7 +545,7 @@ for n in range(no_iteration+1):
         
         model = mpec_model(ng, nb, nl, ncda,IN_loads, gen_capacity, 
                         arrival, depart, charge_power,EV_soc_arrive,EV_soc_low, EV_soc_up, 
-                        TCL_Max, TCL_R, TCL_Beta, TCL_temp_low, outside_temp, TCL_COP, 
+                        TCL_Max, TCL_R, TCL_Beta, TCL_temp_low, TCL_temp_up, outside_temp, TCL_COP, 
                         SL_low, SL_up, SL_cycle, SL_loads,
                         dic_G, dic_Bus_CDA, DABus, B, Yline, dic_G_Bus, 
                         c_g, c_d_o[j-1], c_d_b[j-1], 

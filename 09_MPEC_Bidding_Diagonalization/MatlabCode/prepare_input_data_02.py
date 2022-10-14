@@ -229,6 +229,12 @@ def create_TCL_Loads_sheets(fileName, fileAdd):
         # if(sheet == 'Max Consumption'):
         #     df = df
         
+        if(sheet == 'Max Consumption'):
+            df = df+30
+        
+        if(sheet == 'Up Temps'):
+            df = df+3
+        
         if os.path.exists(evs_excel_add):
             with pd.ExcelWriter(evs_excel_add, engine='openpyxl', mode='a',if_sheet_exists="replace")  as writer: 
                 df.to_excel(writer, sheet_name=sheet )
@@ -316,6 +322,7 @@ def get_file_date_extension():
     path = os.getcwd()
     path = os.path.abspath(os.path.join(path, os.pardir))
     path = os.path.join(path, 'Model_CSV')
+    print("path is:", path)
     file_path = glob.glob(path+"\\"+file_name)[0]
     
     onlyfiles = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]

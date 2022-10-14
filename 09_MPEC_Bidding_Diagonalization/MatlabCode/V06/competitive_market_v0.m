@@ -4,20 +4,20 @@ RandomOrExcel = 'E';
 CurtailableDemand = 0;
 load_factor = 1;
 gen_multiplier = 1;
-dem_multiplier = 2000;
+dem_multiplier = 1500;
 prosumers_range = [100 100];
 Large_Random_Number = 10000; 
 e_tol = 0.0001;
 e_tol_perc = 0.0001;
 
 % Add an upper bound for indoors temperature or not?
-temp_upper_bound = 0;
+temp_upper_bound = 1;
 
 %% Input
 % 'Ali Data':      1
 % 'Konster Data':  2
-DatasetList = {'Ali Data','Konster Data','Test Data','Test Data 2','Test Data 4','Test Data 5'};
-DatasetSelection = 1;
+DatasetList = {'Ali Data','Konster Data','Ali Data2','Test Data','Test Data 2','Test Data 4','Test Data 5'};
+DatasetSelection = 3;
 
 % '6_Bus_Transmission_Test_System.xlsx'     1
 TestSystemList = {'6_Bus_Transmission_Test_System.xlsx'};
@@ -141,7 +141,9 @@ for ii=1:max([nev,ntcl,nsl])*nda
     end
     if ii<=max(ntcl)*nda
         if TCL_start_vec(ii)>0
-            a8(ii,TCL_start_vec(ii)+1:TCL_end_vec(ii)) = tcl_temp(ii,TCL_start_vec(ii)+1:TCL_end_vec(ii)) ==  TCL_beta_vec(ii)*tcl_temp(ii,TCL_start_vec(ii):TCL_end_vec(ii)-1)+(1-TCL_beta_vec(ii))*(outside_temp(TCL_start_vec(ii):TCL_end_vec(ii)-1)+TCL_COP_vec(ii)*TCL_R_vec(ii)*(MVA*1000*p_tcl(ii,TCL_start_vec(ii):TCL_end_vec(ii)-1)));
+            %a8(ii,TCL_start_vec(ii)+1:TCL_end_vec(ii)) = tcl_temp(ii,TCL_start_vec(ii)+1:TCL_end_vec(ii)) ==  TCL_beta_vec(ii)*tcl_temp(ii,TCL_start_vec(ii):TCL_end_vec(ii)-1)+(1-TCL_beta_vec(ii))*(outside_temp(TCL_start_vec(ii):TCL_end_vec(ii)-1)+TCL_COP_vec(ii)*TCL_R_vec(ii)*(MVA*1000*p_tcl(ii,TCL_start_vec(ii):TCL_end_vec(ii)-1)));
+            %a8(ii,TCL_start_vec(ii)+1:TCL_end_vec(ii)) = tcl_temp(ii,TCL_start_vec(ii)+1:TCL_end_vec(ii)) ==  TCL_beta_vec(ii)*tcl_temp(ii,TCL_start_vec(ii):TCL_end_vec(ii)-1)+(1-TCL_beta_vec(ii))*(outside_temp(TCL_start_vec(ii):TCL_end_vec(ii)-1)+TCL_COP_vec(ii)*TCL_R_vec(ii)*(MVA*p_tcl(ii,TCL_start_vec(ii):TCL_end_vec(ii)-1)));
+            a8(ii,TCL_start_vec(ii)+1:TCL_end_vec(ii)) = tcl_temp(ii,TCL_start_vec(ii)+1:TCL_end_vec(ii)) ==  TCL_beta_vec(ii)*tcl_temp(ii,TCL_start_vec(ii):TCL_end_vec(ii)-1)+(1-TCL_beta_vec(ii))*(outside_temp(TCL_start_vec(ii):TCL_end_vec(ii)-1)+ TCL_COP_vec(ii)*TCL_R_vec(ii)*(p_tcl(ii,TCL_start_vec(ii):TCL_end_vec(ii)-1)));
             a9l(ii,TCL_start_vec(ii):TCL_end_vec(ii)) = tcl_temp(ii,TCL_start_vec(ii):TCL_end_vec(ii))>=TCL_temp_low_vec(ii);
             if temp_upper_bound
                 a9r(ii,TCL_start_vec(ii):TCL_end_vec(ii)) = tcl_temp(ii,TCL_start_vec(ii):TCL_end_vec(ii))<=TCL_temp_high_vec(ii);
@@ -195,24 +197,27 @@ for jj=1:nda
     if jj==1
         sum_ch(jj,:) = sum(ch(1:max(nev),:));
         sum_dis(jj,:) = sum(dis(1:max(nev),:));
+        %sum_ptcl(jj,:) = sum(p_tcl(1:max(ntcl),:));
         sum_ptcl(jj,:) = sum(p_tcl(1:max(ntcl),:));
         sum_psl(jj,:) = sum(p_sl(1:max(nsl),:));
     elseif jj>1
         sum_ch(jj,:) = sum(ch((jj-1)*max(nev)+1:jj*max(nev),:));
         sum_dis(jj,:) = sum(dis((jj-1)*max(nev)+1:jj*max(nev),:));
+        %sum_ptcl(jj,:) = sum(p_tcl((jj-1)*max(ntcl)+1:jj*max(ntcl),:));
         sum_ptcl(jj,:) = sum(p_tcl((jj-1)*max(ntcl)+1:jj*max(ntcl),:));
         sum_psl(jj,:) = sum(p_sl((jj-1)*max(nsl)+1:jj*max(nsl),:));
     end
 end
 
-comp_market.Constraints.DA_portfolio_balance = da_buy-da_sell == (InfLoad-p_res+sum_ch-sum_dis+sum_ptcl+sum_psl);
-
+%comp_market.Constraints.DA_portfolio_balance = da_buy-da_sell == (InfLoad-p_res+sum_ch-sum_dis+sum_ptcl+sum_psl);
+comp_market.Constraints.DA_portfolio_balance = da_buy-da_sell ==(InfLoad-p_res+sum_ch-sum_dis+(sum_ptcl.*dem_multiplier)./(MVA*1000)+sum_psl);
 comp_market.Constraints.offer_bigM1 = da_sell<=10000*u_bigM;
 comp_market.Constraints.offer_bigM2 = da_buy<=10000*(1-u_bigM);
 
 % Objective
 comp_market.Objective = sum(sum(GenBids.*g))+sum(sum(da_price_offers.*da_sell))-sum(sum(da_price_bids.*da_buy));
 
+optiona = optimoptions('intlinprog','RelativeGapTolerance',0.2);
 % Solver
 [x_opt,Cost,output,exitflag]=solve(comp_market);
 
@@ -284,7 +289,8 @@ lin_comp_market.Constraints.sl1 = lin_SL_bin_con;
 lin_comp_market.Constraints.sl2 = lin_a10;
 lin_comp_market.Constraints.sl3 = sum(lin_w,2)==1;
 
-lin_comp_market.Constraints.DA_portfolio_balance = da_buy-da_sell == (InfLoad-p_res+sum_ch-sum_dis+sum_ptcl+sum_psl);
+%lin_comp_market.Constraints.DA_portfolio_balance = da_buy-da_sell == (InfLoad-p_res+sum_ch-sum_dis+sum_ptcl+sum_psl);
+lin_comp_market.Constraints.DA_portfolio_balance = da_buy-da_sell == (InfLoad-p_res+sum_ch-sum_dis+(sum_ptcl.*dem_multiplier)./(MVA*1000)+sum_psl);
 
 lin_comp_market.Constraints.offer_bigM1 = da_sell<=10000*lin_u_bigM;
 lin_comp_market.Constraints.offer_bigM2 = da_buy<=10000*(1-lin_u_bigM);
@@ -302,7 +308,22 @@ Competitive_LMPs = duals.Constraints.power_balance;
 
 DA_Competitive_Profits = sum((x_opt.da_sell*MVA-x_opt.da_buy*MVA).*(DALoc'*Competitive_LMPs),2);
 
+%% Save Results
+fn = fieldnames(x_opt);
+save_time = datestr(now,'mm-dd-yyyy@HH.MM');
+Filename = sprintf('results_comp_market_%s.xlsx',save_time);
+for k=1:numel(fn)
+    writematrix(x_opt.(fn{k}),Filename,'Sheet',fn{k})
+end
 
+fn = fieldnames(lin_x_opt);
+Filename = sprintf('results_lin_comp_market_%s.xlsx', save_time);
+for k=1:numel(fn)
+    writematrix(lin_x_opt.(fn{k}),Filename,'Sheet',fn{k})
+end
+% help intlinprog
+% OPTIONS.RelativeGapTolerance
+%writematrix(x_opt.da_buy,"results.xlsx",'Sheet','DA_Buy')
 % %% Plot
 % plot(sum(InfLoad,1)*MVA-sum(x_opt.p_res,1)*MVA)
 % hold on

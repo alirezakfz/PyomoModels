@@ -19,7 +19,7 @@ from pyomo.opt import SolverFactory
 
 def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
                arrival, depart, charge_power,EV_soc_arrive,EV_soc_low, EV_soc_up, 
-               TCL_Max, TCL_R, TCL_Beta, TCL_temp_low, outside_temp, TCL_COP,
+               TCL_Max, TCL_R, TCL_Beta, TCL_temp_low, TCL_temp_up,outside_temp, TCL_COP,
                SL_low, SL_up, SL_cycle, SL_loads,
                dic_G, dic_Bus_CDA, DABus, B, Yline, dic_G_Bus, 
                c_g, c_d_o, c_d_b, 
@@ -343,7 +343,7 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
         #     return Constraint.Skip
         #     #return model.POWER_TCL[i,t] == 0
         if t >= arrival[i-1] and t < depart[i-1] :                                                                 # model.TCL_occ[i,t]
-            return model.TCL_TEMP[i,t+1]== TCL_Beta[i-1] * model.TCL_TEMP[i,t] + (1-TCL_Beta[i-1])*(outside_temp[t-16]+ TCL_R[i-1]*model.POWER_TCL[i,t])
+            return model.TCL_TEMP[i,t+1]== TCL_Beta[i-1] * model.TCL_TEMP[i,t] + (1-TCL_Beta[i-1])*(outside_temp[t-16]+ TCL_COP[i-1]*TCL_R[i-1]*model.POWER_TCL[i,t])
         else:
             return model.POWER_TCL[i,t] == 0
             # return Constraint.Skip
@@ -367,6 +367,10 @@ def mpec_model(ng, nb, nl, ncda, IN_loads, gen_capacity,
             return model.TCL_TEMP[i,arrival[i-1]]== TCL_temp_low[i-1]# model.out_temp[model.arrival[i]]
     model.TCL_set_start_temp_con= Constraint(model.N, rule=TCL_set_start_temp_rule)
     
+    # Constraint(a.9.2): Set the maximum possible temprature
+    def TCL_set_up_temp_rule(model, i, t):
+        return model.TCL_TEMP[i,t] <= TCL_temp_up[i-1]
+    model.TCL_set_up_temp_con = Constraint(model.N, model.T, rule=TCL_set_up_temp_rule)
     
     #********************************************************
     #             Shiftable load Constraints
