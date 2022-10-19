@@ -11,7 +11,7 @@ e_tol = 0.0001;
 e_tol_perc = 0.0001;
 
 % Add an upper bound for indoors temperature or not?
-temp_upper_bound = 0;
+temp_upper_bound = 1;
 
 %% Input
 % 'Ali Data':      1
@@ -217,6 +217,7 @@ comp_market.Constraints.offer_bigM2 = da_buy<=10000*(1-u_bigM);
 % Objective
 comp_market.Objective = sum(sum(GenBids.*g))+sum(sum(da_price_offers.*da_sell))-sum(sum(da_price_bids.*da_buy));
 
+optiona = optimoptions('intlinprog','RelativeGapTolerance',0.2);
 % Solver
 [x_opt,Cost,output,exitflag]=solve(comp_market);
 
@@ -304,6 +305,7 @@ lin_comp_market.Objective = sum(sum(GenBids.*g))+sum(sum(da_price_offers.*da_sel
 [lin_x_opt,lin_Cost,lin_output,lin_exitflag,duals]=solve(lin_comp_market);
 
 Competitive_LMPs = duals.Constraints.power_balance;
+DA_portfolio_balance_duals = duals.Constraints.DA_portfolio_balance
 
 DA_Competitive_Profits = sum((x_opt.da_sell*MVA-x_opt.da_buy*MVA).*(DALoc'*Competitive_LMPs),2);
 
@@ -320,6 +322,9 @@ Filename = sprintf('results_lin_comp_market_%s.xlsx', save_time);
 for k=1:numel(fn)
     writematrix(lin_x_opt.(fn{k}),Filename,'Sheet',fn{k})
 end
+
+FileName=sprintf('results_Competitive_LMPs_%s.xlsx', save_time);
+writematrix(Competitive_LMPs,Filename,'Sheet','Competitive LMPs')
 % help intlinprog
 % OPTIONS.RelativeGapTolerance
 %writematrix(x_opt.da_buy,"results.xlsx",'Sheet','DA_Buy')

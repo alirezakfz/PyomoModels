@@ -16,8 +16,8 @@ temp_upper_bound = 1;
 %% Input
 % 'Ali Data':      1
 % 'Konster Data':  2
-DatasetList = {'Ali Data','Konster Data','Ali Data2','Test Data','Test Data 2','Test Data 4','Test Data 5'};
-DatasetSelection = 3;
+DatasetList = {'Ali Data','Konster Data','Ali Data2','Ali Data3','Test Data','Test Data 2','Test Data 4','Test Data 5'};
+DatasetSelection = 4;
 
 % '6_Bus_Transmission_Test_System.xlsx'     1
 TestSystemList = {'6_Bus_Transmission_Test_System.xlsx'};
@@ -305,6 +305,7 @@ lin_comp_market.Objective = sum(sum(GenBids.*g))+sum(sum(da_price_offers.*da_sel
 [lin_x_opt,lin_Cost,lin_output,lin_exitflag,duals]=solve(lin_comp_market);
 
 Competitive_LMPs = duals.Constraints.power_balance;
+DA_portfolio_balance_duals = duals.Constraints.DA_portfolio_balance;
 
 DA_Competitive_Profits = sum((x_opt.da_sell*MVA-x_opt.da_buy*MVA).*(DALoc'*Competitive_LMPs),2);
 
@@ -321,6 +322,15 @@ Filename = sprintf('results_lin_comp_market_%s.xlsx', save_time);
 for k=1:numel(fn)
     writematrix(lin_x_opt.(fn{k}),Filename,'Sheet',fn{k})
 end
+
+FileName=sprintf('results_Competitive_LMPs_%s.xlsx', save_time);
+writematrix(Competitive_LMPs,Filename,'Sheet','Competitive LMPs')
+
+FileName=sprintf('results_Competitive_LMPs_%s.xlsx', save_time);
+writematrix(DA_portfolio_balance_duals ,Filename,'Sheet','Protfolio Balance')
+
+DAs_Competitive_Profits = (x_opt.da_sell*MVA-x_opt.da_buy*MVA).*(DALoc'*Competitive_LMPs);
+writematrix(DA_portfolio_balance_duals ,Filename,'Sheet','Competitive Profit');
 % help intlinprog
 % OPTIONS.RelativeGapTolerance
 %writematrix(x_opt.da_buy,"results.xlsx",'Sheet','DA_Buy')
