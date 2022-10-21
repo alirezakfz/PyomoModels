@@ -8,6 +8,7 @@ Created on Wed Mar 31 13:38:51 2021
 from pyomo.environ import *
 from csv import writer
 import time
+import os
 
 def model_to_csv(model, IN_loads):
     timestr = time.strftime("%Y%m%d-%H%M%S")
@@ -276,4 +277,34 @@ def model_to_csv_iteration(model, IN_loads, iteration, da_index, file_time_str, 
         for rw in list_row:
                 csv_writer.writerow(rw)
     
+def model_obj_to_csv(model, it, DA_j, file_time_str, MVA, c_g, c_d_o, c_d_b, g_s, F_d_o, F_d_b, FMAX):
+    objective_value=[]
     
+    for t in model.T:
+        
+        test =sum(c_g[i][t-16]*value(model.g[i,t]) for i in model.G) +\
+                sum(c_d_o[i][t-16]*value(model.d_o[i,t]) for i in model.NCDA ) -\
+                    sum(c_d_b[i][t-16]*value(model.d_b[i,t]) for i in model.NCDA) +\
+                        sum(value(model.w_g_up[i,t]) * g_s[i][t-16]/MVA for i in model.G) +\
+                            sum(value(model.w_do_up[i,t])* F_d_o[i][t-16] for i in model.NCDA) +\
+                                sum(value(model.w_db_up[i,t])*F_d_b[i][t-16] for i in model.NCDA) +\
+                                    sum(FMAX[i-1]*value(model.w_line_low[i,t]) for i in model.LINES) +\
+                                        sum(FMAX[i-1]*value(model.w_line_up[i,t]) for i in model.LINES)
+    
+        objective_value.append(test)
+        
+    obj_file = 'Model_CSV/Model_obj_vlues_'+str(DA_j)+'_'+ file_time_str +'.csv'
+    
+    if os.path.exists(obj_file):
+        # Open our existing CSV file in append mode
+        # Create a file object for this file
+        with open(obj_file, 'a', newline='') as f_object:
+            # Pass this file object to csv.writer()
+            # and get a writer object
+            writer_object = writer(f_object)
+            writer_object.writerow(objective_value)
+    else:
+        with open(obj_file, 'w', newline='') as f_object:
+            writer_object = writer(f_object)
+            writer_object.writerow(objective_value)
+                

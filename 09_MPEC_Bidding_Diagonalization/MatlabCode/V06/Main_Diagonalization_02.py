@@ -28,7 +28,7 @@ from MPEC_Concrete_Model_ver08 import mpec_model
 from pyomo.environ import *
 from pyomo.opt import SolverFactory
 
-from Model_to_CSV import model_to_csv, model_to_csv_iteration
+from Model_to_CSV import model_to_csv, model_to_csv_iteration, model_obj_to_csv
 # from Model_Constraints import check_constraints
 
 
@@ -590,13 +590,16 @@ for n in range(no_iteration+1):
         new_offers[j]=new_d_o
         new_bids[j]= new_d_b
         
+        # Save model Objective function based on time
+        model_obj_to_csv(model, n, j, timestr, MVA, c_g, c_d_o[j-1], c_d_b[j-1], g_s, F_d_o, F_d_b, FMAX)
         
         
         # model_to_csv(model, IN_loads.sum(0))
         
         # Finishing Step 3
     # Step 4 check if epsilon difference exist
-        
+     
+    
     # check=False
     if check_bids(offers_bid,new_offers,epsilon) and check_bids(demand_bid,new_bids,epsilon) and (infeasibility_counter < ncda+1):
         check=True
