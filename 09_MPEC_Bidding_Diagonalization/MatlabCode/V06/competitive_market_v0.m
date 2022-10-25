@@ -331,6 +331,10 @@ writematrix(DA_portfolio_balance_duals ,Filename,'Sheet','Protfolio Balance')
 
 DAs_Competitive_Profits = (x_opt.da_sell*MVA-x_opt.da_buy*MVA).*(DALoc'*Competitive_LMPs);
 writematrix(DA_portfolio_balance_duals ,Filename,'Sheet','Competitive Profit');
+
+%% Social Welfare
+Obj_Social_Welfare = (sum(GenBids.*x_opt.g))+ (sum(da_price_offers.*x_opt.da_sell*MVA))- (sum(da_price_bids.*x_opt.da_buy*MVA));
+writematrix(Obj_Social_Welfare ,Filename,'Sheet','Objective_Function');
 % help intlinprog
 % OPTIONS.RelativeGapTolerance
 %writematrix(x_opt.da_buy,"results.xlsx",'Sheet','DA_Buy')
