@@ -130,7 +130,7 @@ random.seed(42)
 
 # Time Horizon
 NO_prosumers = 30
-no_iteration = 25
+no_iteration = 5000
 epsilon= 0.0001
 horizon=24
 H = range(16,horizon+16)    
