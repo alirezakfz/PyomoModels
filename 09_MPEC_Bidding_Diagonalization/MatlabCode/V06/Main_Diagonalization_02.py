@@ -130,13 +130,13 @@ random.seed(42)
 
 # Time Horizon
 NO_prosumers = 30
-no_iteration = 5000
+no_iteration = 5
 epsilon= 0.0001
 horizon=24
 H = range(16,horizon+16)    
 MVA = 30 # Power Base
 PU_DA = 1/(1000*MVA)
-load_multiply = 1500
+load_multiply = 3000
 
 nl = 7    # Number of network lines
 nb = 6    # Number of network buses
@@ -225,6 +225,10 @@ def select_bid(j, offers_bid, demand_bid):
             # print(i)
             temp_offer = offers_bid[i+1]
             temp_bid   = demand_bid[i+1]
+            
+            
+            temp_offer = [x/MVA for x in temp_offer]
+            temp_bid = [x/MVA for x in temp_bid]
             # for l in range(len(temp_offer)):
             #     if temp_offer[l] == 0 and temp_bid[l]==0 :
             #         temp_bid[l]= 0.11
@@ -531,6 +535,8 @@ for n in range(no_iteration+1):
         
         # offers_bid , demand_bid = random_offer(ncda, horizon)
         F_d_o, F_d_b = select_bid(j, offers_bid, demand_bid)
+        
+        
         
         #F_d_b = demand_bid[j-1]
         
